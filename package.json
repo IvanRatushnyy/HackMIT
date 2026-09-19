@@ -1,0 +1,9 @@
+{
+  "name": "couloir",
+  "private": true,
+  "description": "couloir, glacial hazard response. Design system and shared front-end dependencies; the app itself is not built yet.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "html2canvas": "1.4.1"
+  }
+}

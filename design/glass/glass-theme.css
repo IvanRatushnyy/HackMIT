@@ -1,0 +1,73 @@
+/* couloir — brand theme for liquid-glass-js
+ *
+ * Load after vendor/glass.css and after design/tokens/index.css.
+ * The library sets some styles inline from JavaScript (canvas shadow, text
+ * color), so a few rules below use !important on purpose.
+ */
+
+/* Containers sit on the 8px grid. The library's default gap 20 / padding 10 do not. */
+.glass-container {
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+}
+
+/* A quiet shadow instead of the library's 0 25px 50px at 25% */
+.glass-container > canvas,
+.glass-button {
+  box-shadow: 0 8px 24px oklch(13.1% 0.016 276 / 0.12) !important;
+}
+
+/* Labels on glass use Supreme, ink, −4% tracking, Medium weight */
+.glass-button-text {
+  font-family: var(--font-text) !important;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-text);
+  line-height: var(--line-3);
+  color: var(--color-ink) !important;
+  text-shadow: none;
+}
+
+/* The active choice in a glass control (horizon toggle, layer toggle) */
+.glass-button[aria-pressed="true"] .glass-button-text {
+  color: var(--color-accent-strong) !important;
+}
+
+/* Interaction: transform and opacity only */
+.glass-button {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .glass-button:hover { transform: translateY(-1px); }
+}
+.glass-button:active { transform: translateY(0) scale(0.98); }
+.glass-button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Fallback when WebGL is unavailable, or the person prefers less transparency:
+ * add .glass-fallback to <html> and the same markup becomes a solid-ish surface. */
+.glass-fallback .glass-container > canvas,
+.glass-fallback .glass-button > canvas {
+  display: none;
+}
+.glass-fallback .glass-container,
+.glass-fallback .glass-button {
+  background: oklch(99% 0.003 276 / 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: var(--line-width) solid var(--color-line);
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-container > canvas,
+  .glass-button > canvas { display: none; }
+  .glass-container,
+  .glass-button {
+    background: var(--color-surface);
+    border: var(--line-width) solid var(--color-line);
+    box-shadow: none !important;
+  }
+}

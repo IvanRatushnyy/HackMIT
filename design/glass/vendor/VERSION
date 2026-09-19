@@ -1,0 +1,6 @@
+liquid-glass-js by Armagan Amcalar (dashersw), MIT.
+Source: https://github.com/dashersw/liquid-glass-js
+Pinned commit: 78cb6ccb0b9987bb60a88b14ccbd13a9e6e8ab2a (2025-06-12)
+Files: container.js, button.js, glass.css, LICENSE (unmodified).
+The project is not published to npm and has no package.json, so it is vendored here.
+Runtime dependency: html2canvas 1.4.1 as a global (see ../README.md).

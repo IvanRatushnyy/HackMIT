@@ -10,8 +10,15 @@ A couloir is a steep, narrow gully in mountainous terrain, often filled with sno
 HackMIT/
 ├── DESIGN.md                 this document
 ├── .impeccable.md            design context for AI design tooling
+├── package.json              shared front-end dependencies (html2canvas for the glass layer)
 └── design/
     ├── palette.md            the four colors, roles, contrast, rules
+    ├── glass/
+    │   ├── README.md         how to load the glass layer, its constraints and fallbacks
+    │   ├── glass-theme.css   brand overrides for the glass controls
+    │   ├── glass.config.js   the couloir glass preset (window.glassControls)
+    │   ├── liquid-glass.d.ts ambient types for the library's globals
+    │   └── vendor/           liquid-glass-js, unmodified, pinned commit, MIT
     ├── fonts/
     │   ├── Aujournuit-VariableVF.ttf   display, width axis 50–200
     │   ├── Supreme-Variable.ttf        text, weight axis 100–800
@@ -84,6 +91,27 @@ All neutrals are tinted toward hue 276, the black's hue, at chroma 0.003 to 0.01
 
 The one unforgettable element is the composition from the mood board: large intersecting curved planes in black, slate, raspberry, and dust, evoking a couloir cut through a mountainside. It is the brand mark, the hero graphic, and, sparingly, an abstract terrain element behind a site header. It is never placed behind body text and it is the only decoration allowed.
 
+## Glass
+
+Glassmorphism is used in one place and for one reason: controls that float over the map must not hide the terrain beneath them. The map is the evidence, and a solid panel over it would cover the very thing the officer is reading. The effect comes from [liquid-glass-js](https://github.com/dashersw/liquid-glass-js), a WebGL refraction library vendored in `design/glass/vendor`, with the couloir preset in `design/glass/glass.config.js` and brand overrides in `design/glass/glass-theme.css`. Wiring and constraints are in `design/glass/README.md`.
+
+Where glass appears:
+
+- The horizon toggle (24 h, 72 h, 7 d) as one pill container with pill buttons.
+- The map control cluster (zoom, locate, layers) as circle buttons.
+- The handle and header of the phone bottom sheet, so the map stays visible while the sheet is collapsed.
+
+Where glass never appears: the site index, the detail rail, banners, tables, or any surface whose job is reading. Glass is a control material, not a panel material. At most three glass containers on screen at once, nested one level deep at most.
+
+Rules:
+
+- **Readable first.** Labels on glass are ink on a light tint. Keep `tintOpacity` at 0.3 or above so ink stays at 4.5:1 or better over the darkest part of the basemap.
+- **Quiet optics.** Low ripple, low centre distortion, soft blur. The refraction should be noticed on the second look, not the first. The preset in `glass.config.js` is the starting point; tune it over the real map.
+- **Grid holds.** Glass containers use 8px padding and gap; buttons are 40 or 48px tall. Pills and circles are the one place corners are round: solid surfaces are sharp like the shard, floating controls are soft like ice.
+- **Same states as everything else.** Hover lifts by 1px, press scales to 0.98, focus shows the slate ring. Transform and opacity only.
+- **Degrade honestly.** No WebGL or `prefers-reduced-transparency` gives a solid white surface with a 1px line and a light backdrop blur, same markup, same size.
+- **Know the cost.** The library snapshots the page once; the map must be created with `preserveDrawingBuffer` and the snapshot refreshed after the map settles. Few, small glass elements.
+
 ## Principles
 
 1. **Lead time is the headline.** Every site view answers "how long do we have?" before anything else.
@@ -113,4 +141,4 @@ Everything is built on an 8px grid, and consistency matters more than any single
 
 ## Not this
 
-Dark "mission control" dashboards with cyan glow. Icons above every heading. Red, amber, green traffic lights. Gradient text. Colored side stripes on cards. Anything that looks like a weather app.
+Dark "mission control" dashboards with cyan glow. Icons above every heading. Red, amber, green traffic lights. Gradient text. Colored side stripes on cards. Glass on reading surfaces or glass everywhere. Anything that looks like a weather app.
