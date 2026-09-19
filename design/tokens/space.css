@@ -1,4 +1,4 @@
-/* couloir — spacing and sizing tokens
+/* elute — spacing and sizing tokens
  *
  * Everything sits on an 8px grid. Spacing, control heights, icon sizes,
  * line heights and layout gutters are all multiples of 8. Do not invent
@@ -28,14 +28,14 @@
   /* ---- Layout ------------------------------------------------------------ */
   --gutter:        16px;     /* phone */
   --gutter-wide:   32px;     /* tablet and up */
-  --panel-index:   320px;    /* site index column */
-  --panel-detail:  384px;    /* site detail column */
+  --panel-index:   320px;    /* results list column */
+  --panel-detail:  384px;    /* detail rail: sources, confidence drivers */
   --header-height: 56px;
 
   /* ---- Shape ------------------------------------------------------------- */
   --radius:       0;         /* sharp by default, matching the shard geometry */
   --radius-sm:    4px;       /* half unit: small controls only */
-  --radius-round: 999px;     /* map markers, pills */
+  --radius-round: 999px;     /* pills, glass circle buttons */
 
   /* ---- Lines ------------------------------------------------------------- */
   --line-width: 1px;

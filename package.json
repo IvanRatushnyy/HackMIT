@@ -1,7 +1,7 @@
 {
-  "name": "couloir",
+  "name": "elute",
   "private": true,
-  "description": "couloir, glacial hazard response. Design system and shared front-end dependencies; the app itself is not built yet.",
+  "description": "elute, drug-repurposing decision support that always shows the case against. Design system and shared front-end dependencies; the app itself is not built yet.",
   "license": "UNLICENSED",
   "dependencies": {
     "html2canvas": "1.4.1"

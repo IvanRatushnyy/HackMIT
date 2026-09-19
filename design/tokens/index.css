@@ -1,4 +1,4 @@
-/* couloir — single entry point for the design tokens.
+/* elute — single entry point for the design tokens.
  * In a Vite/React app: `import "../design/tokens/index.css"` from main.tsx. */
 @import "../fonts/fonts.css";
 @import "./colors.css";

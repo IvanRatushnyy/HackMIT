@@ -1,6 +1,6 @@
 # Glass layer
 
-couloir uses [liquid-glass-js](https://github.com/dashersw/liquid-glass-js) for the few controls that float over the map. Design rules live in `DESIGN.md` under "Glass". This file is the wiring.
+elute uses [liquid-glass-js](https://github.com/dashersw/liquid-glass-js) for the few controls that float over something being read: the two entry choices over the shard hero, and the chain controls over the mechanism chain. Design rules live in `DESIGN.md` under "Glass". This file is the wiring.
 
 ## What is here
 
@@ -13,12 +13,12 @@ couloir uses [liquid-glass-js](https://github.com/dashersw/liquid-glass-js) for 
 
 ## How the library works
 
-It takes one `html2canvas` snapshot of `document.body` when the first `Container` is created, uploads it to WebGL, and each glass element refracts and blurs the part of the snapshot behind it. Scrolling is tracked. Resizing, map panning, and any DOM change after the snapshot are not.
+It takes one `html2canvas` snapshot of `document.body` when the first `Container` is created, uploads it to WebGL, and each glass element refracts and blurs the part of the snapshot behind it. Scrolling is tracked. Resizing, panning or zooming the chain, a link expanding, and any other DOM change after the snapshot are not.
 
 Consequences:
 
-- **The map must be capturable.** Create the MapLibre map with `preserveDrawingBuffer: true`, otherwise the snapshot sees an empty canvas.
-- **Re-capture after the background changes.** On the map's `moveend` (debounced, about 300 ms) set `Container.pageSnapshot = null`, call `capturePageSnapshot()` on one instance, and rebuild the affected glass elements. A snapshot costs tens to hundreds of milliseconds, so keep glass elements few and small.
+- **The background must be capturable.** The shard hero as inline SVG and a chain built from SVG or DOM elements are captured directly. If the chain is drawn on a canvas, create it with `preserveDrawingBuffer: true`, otherwise the snapshot sees an empty canvas.
+- **Re-capture after the background changes.** When the chain settles (debounced, about 300 ms after a pan, zoom, or a link expanding) set `Container.pageSnapshot = null`, call `capturePageSnapshot()` on one instance, and rebuild the affected glass elements. A snapshot costs tens to hundreds of milliseconds, so keep glass elements few and small.
 - **Set the preset before construction.** The library reads `window.glassControls` with `||` fallbacks; a `0` becomes the default. Use `0.001` for "off".
 - **It needs WebGL 1** (`getContext('webgl')`). Without it, or under `prefers-reduced-transparency`, `glass-theme.css` swaps in a solid surface with `backdrop-filter`.
 
@@ -48,14 +48,16 @@ window.html2canvas = html2canvas
 ```
 
 ```ts
-// A horizon toggle: one pill container, three pill buttons
-const horizon = new Container({ type: 'pill', tintOpacity: 0.35 })
-for (const label of ['24 h', '72 h', '7 d']) {
-  const b = horizon.addChild(new Button({ text: label, size: 14, type: 'pill', onClick: setHorizon }))
+// The chain's label filter: one pill container, three pill buttons
+const filter = new Container({ type: 'pill', tintOpacity: 0.35 })
+for (const label of ['All', 'Contested', 'Single-source']) {
+  const b = filter.addChild(new Button({ text: label, size: 14, type: 'pill', onClick: setFilter }))
   b.element.setAttribute('role', 'radio')
 }
-mapOverlay.appendChild(horizon.element)
+chainOverlay.appendChild(filter.element)
 ```
+
+The entry choices are the same shape: one pill container over the shard hero with two pill buttons, *Start from a condition* and *Start from a drug*.
 
 Add `design/glass/liquid-glass.d.ts` to the app's `tsconfig.json` `include` so `Container` and `Button` type-check.
 

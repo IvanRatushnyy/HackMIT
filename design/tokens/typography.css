@@ -1,4 +1,4 @@
-/* couloir — typography tokens
+/* elute — typography tokens
  *
  * Aujournuit at the Airy width (175%) with −2% tracking: big titles only.
  * Supreme with −4% tracking, Regular weight for almost everything else.
@@ -7,6 +7,7 @@
 :root {
   --font-display: "Aujournuit", "Aujournuit Fallback", Georgia, serif;
   --font-text:    "Supreme", "Supreme Fallback", system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* the agent's-work panel only */
 
   --display-width:    175%;     /* Aujournuit "Airy" named instance */
   --tracking-display: -0.02em;
@@ -18,12 +19,12 @@
 
   /* Fixed rem scale for product UI, ratio ≈ 1.25.
    * Each size pairs with a line height on the 8px grid. */
-  --text-xs:  0.75rem;   /* 12px  captions, timestamps      line 16px */
+  --text-xs:  0.75rem;   /* 12px  captions, dates, sources  line 16px */
   --text-sm:  0.875rem;  /* 14px  secondary UI, metadata    line 24px */
   --text-md:  1rem;      /* 16px  body                      line 24px */
   --text-lg:  1.25rem;   /* 20px  section headings          line 32px */
-  --text-xl:  1.75rem;   /* 28px  key figures               line 32px */
-  --text-2xl: 2.5rem;    /* 40px  the headline number       line 48px */
+  --text-xl:  1.75rem;   /* 28px  key figures, confidence   line 32px */
+  --text-2xl: 2.5rem;    /* 40px  the headline figure       line 48px */
 
   /* Fluid sizes for Aujournuit titles on landing and marketing surfaces */
   --display-md: clamp(2.25rem, 1.5rem + 3vw, 4rem);
@@ -52,7 +53,7 @@ body {
   background: var(--color-surface);
 }
 
-/* Display: the wordmark, page titles, a site name as a heading */
+/* Display: the wordmark, page titles, a drug or condition name as a heading */
 .display {
   font-family: var(--font-display);
   font-stretch: var(--display-width);
@@ -78,3 +79,7 @@ body {
 /* Supreme has proportional figures only (no tabular set), so columns of
  * numbers must be right-aligned rather than relying on equal digit widths. */
 .figure { text-align: right; font-variant-numeric: lining-nums; }
+
+/* Raw tool calls and sources behind the "Show the agent's work" toggle.
+ * No brand mono; the system's is honest enough. Tracking resets to 0. */
+.raw { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--line-3); letter-spacing: 0; }

@@ -1,4 +1,4 @@
-/* couloir — liquid-glass-js preset
+/* elute — liquid-glass-js preset
  *
  * The library reads window.glassControls when each instance initialises,
  * with `||` fallbacks, so a value of 0 silently becomes the library default.
@@ -6,7 +6,7 @@
  *
  * These values are a starting point for the "quiet instrument" feel:
  * soft blur, a light tint so ink stays readable, almost no ripple.
- * Tune them in the browser over the real map before shipping.
+ * Tune them in the browser over the real shard hero and chain before shipping.
  */
 window.glassControls = {
   blurRadius: 6,        // 1–15   background blur

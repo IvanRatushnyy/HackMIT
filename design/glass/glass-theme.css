@@ -1,4 +1,4 @@
-/* couloir — brand theme for liquid-glass-js
+/* elute — brand theme for liquid-glass-js
  *
  * Load after vendor/glass.css and after design/tokens/index.css.
  * The library sets some styles inline from JavaScript (canvas shadow, text
@@ -28,7 +28,7 @@
   text-shadow: none;
 }
 
-/* The active choice in a glass control (horizon toggle, layer toggle) */
+/* The active choice in a glass control (entry choice, chain label filter) */
 .glass-button[aria-pressed="true"] .glass-button-text {
   color: var(--color-accent-strong) !important;
 }

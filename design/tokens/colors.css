@@ -1,4 +1,4 @@
-/* couloir — color tokens
+/* elute — color tokens
  *
  * Primitives are the four brand colors plus a neutral ramp tinted toward the
  * ink hue (276). Components use the semantic tokens, never the primitives.
@@ -28,7 +28,7 @@
   /* ---- Accent variants ------------------------------------------------- */
   --slate-strong:   oklch(42.0% 0.055 241); /* hover, pressed */
   --slate-tint:     oklch(94.0% 0.015 241); /* selected row, active control */
-  --raspberry-tint: oklch(95.0% 0.020 359); /* critical banner surface */
+  --raspberry-tint: oklch(95.0% 0.020 359); /* a safety flag's expanded evidence */
 
   /* ---- Semantic: surfaces ---------------------------------------------- */
   --color-surface:          var(--white);
@@ -54,11 +54,12 @@
   --color-focus:         var(--slate);
 
   /* ---- Semantic: critical (raspberry is rare by design) ---------------- */
-  --color-critical: var(--raspberry);
+  --color-critical: var(--raspberry);      /* the safety flag, destructive actions */
 
-  /* ---- Severity -------------------------------------------------------- */
-  --severity-stable:  var(--dust);
-  --severity-watch:   var(--slate);
-  --severity-warning: var(--raspberry);
-  --severity-nodata:  var(--neutral-500);
+  /* ---- Evidence labels (never color alone: the word is always shown) --- */
+  --evidence-established:   var(--black);
+  --evidence-contested:     var(--slate);
+  --evidence-single-source: var(--raspberry);
+  --evidence-unknown:       var(--neutral-500);
+  --evidence-dimmed:        var(--dust);       /* a link outside the active filter */
 }
