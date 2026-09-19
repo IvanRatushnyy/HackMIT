@@ -1,0 +1,64 @@
+/* couloir — color tokens
+ *
+ * Primitives are the four brand colors plus a neutral ramp tinted toward the
+ * ink hue (276). Components use the semantic tokens, never the primitives.
+ *
+ * Contrast on --color-surface:
+ *   ink 19.6:1   slate 5.9:1   raspberry 9.1:1
+ *   ink-muted 5.4:1 (AA body text)   ink-faint 3.8:1 (large text and icons only)
+ *   dust 1.5:1 (lines and fills only, never text)
+ */
+
+:root {
+  /* ---- Brand primitives ------------------------------------------------ */
+  --black:     oklch(13.1% 0.016 276);   /* #06070e */
+  --raspberry: oklch(41.5% 0.137 359);   /* #82204a */
+  --slate:     oklch(49.6% 0.052 241);   /* #47667d */
+  --dust:      oklch(86.7% 0.004 276);   /* #d3d3d3, nudged toward the ink hue */
+  --white:     oklch(99.0% 0.003 276);   /* #fbfcfe, never pure white */
+
+  /* ---- Neutral ramp, hue 276 ------------------------------------------- */
+  --neutral-100: oklch(96.5% 0.004 276); /* #f3f3f6 */
+  --neutral-200: oklch(92.5% 0.005 276); /* #e5e6ea */
+  --neutral-300: var(--dust);
+  --neutral-500: oklch(60.0% 0.012 276); /* #7e8088 */
+  --neutral-600: oklch(52.0% 0.014 276); /* #666871 */
+  --neutral-700: oklch(42.0% 0.016 276); /* #4a4c56 */
+
+  /* ---- Accent variants ------------------------------------------------- */
+  --slate-strong:   oklch(42.0% 0.055 241); /* hover, pressed */
+  --slate-tint:     oklch(94.0% 0.015 241); /* selected row, active control */
+  --raspberry-tint: oklch(95.0% 0.020 359); /* critical banner surface */
+
+  /* ---- Semantic: surfaces ---------------------------------------------- */
+  --color-surface:          var(--white);
+  --color-surface-sunken:   var(--neutral-100);
+  --color-surface-selected: var(--slate-tint);
+  --color-surface-critical: var(--raspberry-tint);
+  --color-surface-inverse:  var(--black);
+
+  /* ---- Semantic: ink --------------------------------------------------- */
+  --color-ink:           var(--black);
+  --color-ink-muted:     var(--neutral-600);
+  --color-ink-faint:     var(--neutral-500);
+  --color-ink-on-accent: var(--white);
+  --color-ink-inverse:   var(--white);
+
+  /* ---- Semantic: lines ------------------------------------------------- */
+  --color-line:        var(--dust);
+  --color-line-strong: var(--neutral-500);
+
+  /* ---- Semantic: accent (slate is the only recurring color) ------------ */
+  --color-accent:        var(--slate);
+  --color-accent-strong: var(--slate-strong);
+  --color-focus:         var(--slate);
+
+  /* ---- Semantic: critical (raspberry is rare by design) ---------------- */
+  --color-critical: var(--raspberry);
+
+  /* ---- Severity -------------------------------------------------------- */
+  --severity-stable:  var(--dust);
+  --severity-watch:   var(--slate);
+  --severity-warning: var(--raspberry);
+  --severity-nodata:  var(--neutral-500);
+}

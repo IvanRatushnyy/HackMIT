@@ -1,0 +1,80 @@
+/* couloir — typography tokens
+ *
+ * Aujournuit at the Airy width (175%) with −2% tracking: big titles only.
+ * Supreme with −4% tracking, Regular weight for almost everything else.
+ */
+
+:root {
+  --font-display: "Aujournuit", "Aujournuit Fallback", Georgia, serif;
+  --font-text:    "Supreme", "Supreme Fallback", system-ui, sans-serif;
+
+  --display-width:    175%;     /* Aujournuit "Airy" named instance */
+  --tracking-display: -0.02em;
+  --tracking-text:    -0.04em;
+
+  --weight-regular: 400;
+  --weight-medium:  500;  /* emphasis, interactive labels */
+  --weight-bold:    700;  /* only the number that must be read first */
+
+  /* Fixed rem scale for product UI, ratio ≈ 1.25.
+   * Each size pairs with a line height on the 8px grid. */
+  --text-xs:  0.75rem;   /* 12px  captions, timestamps      line 16px */
+  --text-sm:  0.875rem;  /* 14px  secondary UI, metadata    line 24px */
+  --text-md:  1rem;      /* 16px  body                      line 24px */
+  --text-lg:  1.25rem;   /* 20px  section headings          line 32px */
+  --text-xl:  1.75rem;   /* 28px  key figures               line 32px */
+  --text-2xl: 2.5rem;    /* 40px  the headline number       line 48px */
+
+  /* Fluid sizes for Aujournuit titles on landing and marketing surfaces */
+  --display-md: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  --display-lg: clamp(3.5rem, 2rem + 6vw, 7rem);
+
+  /* Line heights in grid units (1rem = 16px = 2 units) */
+  --line-2: 1rem;      /* 16px */
+  --line-3: 1.5rem;    /* 24px */
+  --line-4: 2rem;      /* 32px */
+  --line-6: 3rem;      /* 48px */
+  --leading-display: 1;  /* display titles: size sets the rhythm, margins snap it to grid */
+  --measure: 65ch;
+}
+
+html {
+  font-family: var(--font-text);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-text);
+  font-kerning: normal;
+}
+
+body {
+  font-size: var(--text-md);
+  line-height: var(--line-3);
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
+
+/* Display: the wordmark, page titles, a site name as a heading */
+.display {
+  font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+}
+.display-lg { font-size: var(--display-lg); }
+.display-md { font-size: var(--display-md); }
+
+/* Text roles */
+.text-xs  { font-size: var(--text-xs);  line-height: var(--line-2); }
+.text-sm  { font-size: var(--text-sm);  line-height: var(--line-3); }
+.text-md  { font-size: var(--text-md);  line-height: var(--line-3); }
+.text-lg  { font-size: var(--text-lg);  line-height: var(--line-4); }
+.text-xl  { font-size: var(--text-xl);  line-height: var(--line-4); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--line-6); }
+
+.muted { color: var(--color-ink-muted); }
+.annotation { font-style: italic; color: var(--color-ink-muted); }
+.prose { max-width: var(--measure); }
+
+/* Supreme has proportional figures only (no tabular set), so columns of
+ * numbers must be right-aligned rather than relying on equal digit widths. */
+.figure { text-align: right; font-variant-numeric: lining-nums; }

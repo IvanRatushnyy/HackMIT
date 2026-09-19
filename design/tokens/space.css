@@ -1,0 +1,69 @@
+/* couloir — spacing and sizing tokens
+ *
+ * Everything sits on an 8px grid. Spacing, control heights, icon sizes,
+ * line heights and layout gutters are all multiples of 8. Do not invent
+ * values between steps; pick the nearest step and adjust the composition.
+ */
+
+:root {
+  --grid: 8px;
+
+  /* ---- Spacing scale ----------------------------------------------------- */
+  --space-xs:  8px;    /* 1 unit  inside a control, between an icon and its label */
+  --space-sm:  16px;   /* 2 units between related items, cell padding */
+  --space-md:  24px;   /* 3 units between groups */
+  --space-lg:  32px;   /* 4 units between sections */
+  --space-xl:  48px;   /* 6 units panel padding, heading offsets */
+  --space-2xl: 64px;   /* 8 units major separations */
+  --space-3xl: 96px;   /* 12 units hero and page rhythm */
+
+  /* ---- Control and icon sizes ------------------------------------------- */
+  --size-control-sm: 32px;
+  --size-control:    40px;
+  --size-control-lg: 48px;
+  --size-icon-sm:    16px;
+  --size-icon:       24px;
+  --size-tap:        48px;   /* minimum touch target, on grid and above 44px */
+
+  /* ---- Layout ------------------------------------------------------------ */
+  --gutter:        16px;     /* phone */
+  --gutter-wide:   32px;     /* tablet and up */
+  --panel-index:   320px;    /* site index column */
+  --panel-detail:  384px;    /* site detail column */
+  --header-height: 56px;
+
+  /* ---- Shape ------------------------------------------------------------- */
+  --radius:       0;         /* sharp by default, matching the shard geometry */
+  --radius-sm:    4px;       /* half unit: small controls only */
+  --radius-round: 999px;     /* map markers, pills */
+
+  /* ---- Lines ------------------------------------------------------------- */
+  --line-width: 1px;
+
+  /* ---- Stacking ---------------------------------------------------------- */
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-sheet:    300;
+  --z-toast:    400;
+  --z-tooltip:  500;
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --duration-fast: 120ms;
+  --duration-base: 240ms;
+  --duration-slow: 400ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (min-width: 768px) {
+  :root { --gutter: var(--gutter-wide); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0.01ms;
+    --duration-base: 0.01ms;
+    --duration-slow: 0.01ms;
+  }
+}
