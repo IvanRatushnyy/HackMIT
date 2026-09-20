@@ -16,6 +16,8 @@
 6. Google Co-Scientist is assessed as an upstream idea source our pipeline would check, not a competitor to imitate (§5).
 7. Risks (§9) are unchanged and will be revised at the backend stage; their severities are v1 and some are stale (a live surface has since shipped).
 
+**v2.2, later on Sept 20, after the second team review:** the landscape section moved to `pitch.md` and a pipeline direction took its place (§5); the entry line is reframed positively and spoken, not shown (§6); the results card becomes four questions in the scientist's order, disclosed as a stepper inside the row (§7); the registers are renamed in plain words; the ledger becomes an animated build-up; the prerequisites become a numbered walkthrough; the pathway is restyled for restraint; the export is a PowerPoint deck, not a PDF; the nilotinib case is built end to end before anything else (§8).
+
 **Numbered principles** cited below (Principle 1 to 7) are the seven experience principles in `user_journey.txt`; §7 names the three that are the product.
 
 ---
@@ -144,39 +146,24 @@ We asked: when a translational scientist triages a candidate, what do they look 
 
 ---
 
-## 5. Why not existing tools
+## 5. The pipeline: a simplified, skeptical co-scientist
 
-| Tool | What it does | What it doesn't |
-|---|---|---|
-| **TxGNN Explorer** (Harvard, [*Nat Med* 2024](https://www.nature.com/articles/s41591-024-03233-x)) | Ranks candidates; shows sparse multi-hop paths *for* each prediction; panels: control, edge-threshold, drug embedding, path explanation. 12-expert study: without explanations, most experts (75 %) would not rely on the predictions. | Shows only the case *for*. No counter-case. No per-link epistemic status. No safety-as-argument. No trial framing. |
-| **TxAgent** (Harvard, [arXiv 2025](https://arxiv.org/abs/2503.10970)) | Reasoning agent over ToolUniverse's 211 tools; emits step-by-step traces. | Traces are tokens, not a walkable chain (Henry's point). Doesn't argue against itself. |
-| **Every Cure / MATRIX** ([ARPA-H, $48.3M, 2024](https://arpa-h.gov/news-and-events/arpa-h-awards-ai-driven-project-repurpose-approved-medications)) | All-drugs × all-diseases efficacy heatmap; open-source platform planned. | A score. The "why" and "why not" live with the humans downstream. |
-| **Healx** ([healx.ai](https://healx.ai)) | Commercial AI repurposing for rare disease; HLX-1502 in phase 2 for NF1 (2025). | Proprietary; the reasoning is the product they sell, not the product they show. |
-| **BenevolentAI** ([baricitinib for COVID-19](https://www.benevolent.com/about-us/publications/expert-augmented-computational-drug-repurposing-identified-baricitinib-treatment-covid-19/)) | Knowledge-graph repurposing, "expert-augmented." | Same: expert judgment happens *around* the tool, not *in* it. |
-| **Broad Drug Repurposing Hub** ([7,423 compounds](https://www.broadinstitute.org/developing-diagnostics-and-treatments/drug-repurposing-hub)) · **ReDO_DB** ([268 non-cancer drugs with anticancer evidence](https://pmc.ncbi.nlm.nih.gov/articles/PMC4096030/)) | Curated libraries and literature databases. | Inputs, not decisions. |
-| **Google Co-Scientist** (DeepMind, [arXiv 2025](https://arxiv.org/abs/2502.18864); [Gemini Enterprise preview](https://docs.cloud.google.com/gemini/enterprise/docs/co-scientist-and-alphaevolve)) | Multi-agent hypothesis generator: Generation, Reflection, Ranking, Evolution, Proximity and Meta-review agents under a Supervisor; Elo tournament between hypotheses; outputs ranked proposals and a research roadmap. | Generates and ranks; does not audit. Henry's account: it became search, and it recommended a target whose trials had all failed a decade earlier. Access is by request through a Google account team; no public API. |
+The landscape review and the Google Co-Scientist assessment moved to `pitch.md`; they are positioning, not requirements. What stays here is the direction for the backend, decided in team review on Sept 20.
 
-**Positioning in one line:** *They optimize the ranking. We optimize the decision.*
+**We will not recreate Co-Scientist and we cannot use it** (no access, no API). We will build a simplified version of what it does, with skepticism added at every step:
 
-### 5b. Google Co-Scientist: what it is, and how we would use it
+- **Generate, then audit.** For a condition or a drug, the pipeline proposes candidates the way an idea engine would (targets with genetic evidence → approved drugs on those targets → mechanism paths), and then treats every proposal as a claim to be checked, not a result to be ranked.
+- **Reasoning is recorded per step.** For each of the ten ledger steps the agent records three things: what it is reasoning, why it is reasoning that way, and the evidence it has for it. All three reach the user; nothing is summarised away. This is the thought process the scientist sees (§3).
+- **Assumptions in cited studies are flagged, not inherited.** When a step relies on a study, the pipeline extracts the study's design and its stated assumptions (open-label, animal model, exposure not measured, surrogate biomarker) and carries them forward as caveats on every claim that depends on that study. A hypothesis that only holds if the assumptions hold is shown that way. This is the specific failure mode the team identified: an idea engine takes a study's assumptions as truth.
+- **Every label and every ordering is derivable from the record.** No step may produce a conclusion the user cannot trace to a ledger line.
 
-**What is known.** Co-Scientist is a multi-agent system on Gemini. A natural-language research goal goes in. A Generation agent searches literature and drafts hypotheses; a Reflection agent reviews them for correctness, quality and safety; a Ranking agent runs an Elo-based tournament between them; Evolution refines the survivors; Proximity clusters related ideas; Meta-review synthesises a roadmap. The published validation is three biomedical cases, including a drug-repurposing case for acute myeloid leukaemia where suggested compounds showed in-vitro activity. It is a Generative AI Preview in Gemini Enterprise; access is restricted and requested through a Google account team. No API, export format or rate limits are documented.
-
-**What it is not.** It is an idea engine. Its Reflection agent critiques hypotheses for internal quality, but nothing in the published design checks a hypothesis against the trial record, the exposure literature, or the label. Henry's account, second-hand from a colleague who tried it and hedged as such: it became more like search by the end of a conversation, and a plain search would have shown that the target it recommended had failed in trials a decade earlier.
-
-**How Elute would use it.** As an upstream source, never as a competitor to imitate. Its ranked proposals are candidates; our pipeline is the audit. For each proposal: resolve the drug and target; pull every trial on that target in that indication; pull exposure and label data; run the objection rules; label every link. What Co-Scientist calls a top-ranked hypothesis, Elute shows with its weakest link marked and its prior failures listed. The two are complementary by construction: one widens the funnel, the other narrows it honestly.
-
-**Integration shape, when access exists.** A `DataSource` adapter that accepts a Co-Scientist proposal document (hypothesis text, cited literature, tournament rank) and maps it to our candidate contract: drug, condition, claimed mechanism as a chain of claims with the cited sources as evidence. The tournament rank is displayed as provenance, never as our ordering. Until access exists, the adapter contract is written and tested against a fixture shaped like the published proposal format.
-
-**Recommendation.** Do not build against it this weekend. Write the adapter interface, name it on the Sources page as a parked input, and say on stage that the product is designed to sit downstream of any generator, including this one.
-
-The concrete thing none of them does: put the strongest argument *against* a candidate on screen before the argument for it, and label every link in the mechanism as **established / contested / single-source / unknown / refuted** so the weak link is visible without hunting.
+The concrete thing this pipeline does that generators do not: put the strongest argument *against* a candidate on screen before the argument for it, and label every link in the mechanism as **established / contested / single-source / unknown / refuted** so the weak link is visible without hunting. Details of stack, models and schema belong to the backend document.
 
 ---
 
 ## 6. The story we'll demo (≈2 minutes)
 
-1. **Entry.** One sentence: *"Approved drugs that might treat something else — and the strongest case against each one."* One field. It accepts a drug, a condition, or a drug–condition pair, and three example chips underneath teach the three modes by example rather than by label. We type **Parkinson's disease**. (A second entry, shown as a tab: paste a PMID, DOI, or abstract — the §2 moment — and the tool shows what it extracted, including the study *design*, before anything runs. A wrong read is caught in two seconds, not after the appraisal.)
+1. **Entry.** The screen carries no sentence; the presenter does. The line, framed on what the tool makes possible rather than on what it refuses: *"Every repurposing bet is the difference between a hundred-million-dollar mistake and patients treated years sooner. Elute puts the evidence for that bet on one page."* What the tool saves is not only money: the time and effort that would go into a trial on the wrong target go instead to the right one, and the patients who would have waited for that trial to fail are helped earlier. One field. It accepts a drug, a condition, or a drug–condition pair, and three example chips underneath teach the three modes by example rather than by label. We type **Parkinson's disease**. (A second entry, shown as a tab: paste a PMID, DOI, or abstract — the §2 moment — and the tool shows what it extracted, including the study *design*, before anything runs. A wrong read is caught in two seconds, not after the appraisal.)
 2. **Working.** Not a spinner and not a progress bar: an **evidence ledger** that builds in front of the user, one line per step, each naming its source and what came back. Ten steps — resolve the query (Open Targets, MONDO); disease → targets with genetic evidence (Open Targets Platform); targets → approved drugs (ChEMBL); mechanism paths ≤ 4 hops (PrimeKG, Reactome); registered trials with blinding and n extracted (ClinicalTrials.gov API v2); literature with study design classified (PubMed, Europe PMC, and OpenAlex for the works and citation graph, §8); CNS exposure (published CSF/plasma ratios, P-gp status); safety in the likely population (openFDA labels, FAERS); objections, each of which must cite a ledger line or is discarded; rank. Expected duration with live sources, unmeasured until the backend runs: on the order of a minute. Finished steps open immediately — the target list from step 2 is readable while step 6 runs. The ledger never disappears; it is the citation index for everything that follows.
 3. **Results.** Six candidates in two registers, defined and ordered by the rules in §7. **Tested under blinding**: a randomised, blinded, controlled study in this indication has reported; ordered by outcome, then phase, then size. **Not yet tested under blinding**: everything else, an enrolling trial included; ordered by unresolved prerequisites, ties broken by the plausibility drivers printed under the heading. On every row the drug class leads, set larger than the drug name, because the class is the context a scientist reads first: *BCR-ABL tyrosine kinase inhibitor* says intracellular target, small molecule, oral, and kinase-class liabilities before the word nilotinib is read. Under it, one line of fine print: what it does to the target, whether the target is reachable, the modality, the route. Then the best evidence as design, outcome and n; the weakest link in one line; who else has tried the target and what happened. **Ambroxol** leads the untested register: its phase 3 is enrolling, not reported (GCase chaperone; GBA1-stratified ASPro-PD — [protocol, *J Neurol* 2026](https://pubmed.ncbi.nlm.nih.gov/41708985/)). **Nilotinib** sits in the tested register with two negative RCTs beside it ([Simuni 2021](https://jamanetwork.com/journals/jamaneurology/fullarticle/2773698); [Pagan 2020](https://pubmed.ncbi.nlm.nih.gov/31841599/)). The format of this page is being prototyped in three distinct versions (§7); the board by trial stage remains the alternate view.
 4. **Detail — Critical appraisal.** We open nilotinib. The first section is **Critical appraisal**: the strongest objections, ordered by consequence, each citing a ledger line. Brain exposure at tolerated doses is very low (CSF/plasma 0.53 %, 2014). The efficacy signal is uncontrolled (open-label, n = 12, 2016). The biomarker has an alternative explanation (MAO-B withdrawal, Dec 2016). And, as of today, the controlled trials were negative (NILO-PD, [Simuni 2021](https://jamanetwork.com/journals/jamaneurology/fullarticle/2773698); Georgetown phase 2, [Pagan 2020](https://pubmed.ncbi.nlm.nih.gov/31841599/)).
@@ -196,17 +183,18 @@ The moment we're designing for: a judge looks at the drawing, says *"that's the 
 Inherited from `user_journey.txt`; redesigned after review. Each moment states what it is and why it is that way.
 
 - **Entry — "I understand what this does in five seconds."** One sentence. One field that accepts a drug, a condition, or a pair; three example chips teach the modes. *Why not two buttons:* a fork forces a taxonomy decision before the user has expressed intent; both paths produce the same object; and it has no room for the most common real job — being handed a specific candidate and asked whether it is credible. Below the field, recent appraisals, the way a spreadsheet app lists recent files; nothing on this screen explains the tool. Paste-a-paper covers the moment the §2 story is about.
-- **Working — "I can see what it consulted."** The evidence ledger: ten steps, each naming its real source (Open Targets, ChEMBL, PrimeKG/Reactome, ClinicalTrials.gov, PubMed/Europe PMC, published PK, openFDA/FAERS) and what came back. Finished steps open while later ones run. The stated duration will be the measured one once the backend runs; until then the ledger is scripted and says so. The ledger is the citation index for every downstream claim, which is why it is designed as a ledger and not a progress bar.
+- **Working — "I can see what it is thinking, and what it found."** The evidence ledger, redesigned in v2.2 as a build-up the scientist watches rather than a list that appears. Each of the ten steps arrives in three beats, 240 ms apart, ease-out: the question the agent is asking, in six words or fewer ("Which targets have genetic evidence?"); what it consults, as a source chip (Open Targets Platform); what came back, as one count and one concrete item ("18 targets · SNCA 0.92"). Evidence chips attach to the step as they are found, and every chip is a real record with an identifier, never a summary. Only the current step moves; finished steps settle into the ledger with a check and stay openable; queued steps sit faint below. A strip at the top names the ten steps and marks the current one, so position is always visible. No spinner, no progress bar, no percentage. Reduced-motion users get the same content with no animation. The pattern comes from the interfaces that make waiting feel like watching work: a build log that streams and settles, a search agent that shows the question before the answer, a checks panel that reports per step. The ledger is the citation index for every downstream claim, which is why it is a ledger and not a progress bar. The stated duration will be the measured one once the backend runs; until then the ledger is scripted and says so. Why each of the ten steps exists is written, in conversational language, in `pitch.md`.
 - **Results — "I can triage this in fifteen seconds, and I can see why the order is what it is."** Two registers, because the literature and Henry's thinking aloud point at two different questions (§4, §4b). The rules, stated once here and used everywhere:
-  - *Membership.* **Tested under blinding**: at least one randomised, blinded, controlled study in this indication has reported a primary outcome. **Not yet tested under blinding**: everything else, including open-label studies and enrolling trials.
+  - *Names on screen.* **Tested in placebo-controlled trials** and **Not yet tested against placebo**. Plain words a scientist reads without a definition; the definitions below are the rule, printed in one line under each heading.
+  - *Membership.* Tested: at least one randomised, blinded, placebo-controlled study in this indication has reported a primary outcome. Not yet tested: everything else, including open-label studies and enrolling trials.
   - *Order, tested register.* By the decisive study's outcome (positive, then mixed or null, then negative), then by phase (3 before 2), then by n, largest first. The outcome tag on the row is the sort key made visible.
   - *Order, untested register.* By unresolved trial prerequisites, fewest first (the count on the row). Ties broken in this order by the plausibility drivers printed under the register heading: genetic support tier, pathway precedent, number of independent mechanism paths, reach to the target compartment.
   - *Never a score.* The heading of each register prints its rule in one line.
   - *Drug-first queries.* When the query is a drug, rows are conditions; the class and fine print move to the page header, and each row leads with the condition and its best evidence.
-  - Drug class leads every drug row, larger than the name. The board by trial stage remains the alternate view; the scatter is cut.
-- **Detail — "I can defend or kill this myself."** Critical appraisal first. Then the pathway drawing, with the evidence panel opening from any action. Safety as a reason, explained for the likely trial population. Trial prerequisites with a status each. The scientist's own call, captured in their words.
+  - Drug class leads every drug row and is set larger than the name, but never overshadows it: the class is display type, the name sits directly beneath in the medium text weight at body size, and the class is never more than 1.3× the name's size. A scientist who is scanning for a name finds it in the same place on every row. The board by trial stage remains the alternate view; the scatter is cut.
+- **Detail — "I can defend or kill this myself."** Critical appraisal first. Then the pathway drawing, restyled for restraint (below), with the evidence panel opening from any action. Safety as a reason, explained for the likely trial population. Then **Before a trial** as a walkthrough, not a table: five numbered boxes in a row, each with a two-word condition and its status word; the count ("4 of 5 unresolved") is the hero number beside the heading; selecting a box opens its evidence beneath; arrow keys step 1 to 5. A stepper, not a carousel, because the five are sequential and the scientist must always see where they are and what remains. The scientist's own call, captured in their words.
 - **Provenance — "I can see exactly what it did, and why."** The agent's thought process as a product surface for the scientist (§3). Not a toggle and not a debug pane: every claim carries a ledger citation; a ledger row expands to what was consulted, the query, records, timestamp, extracted value, and verification status; the status rules answer why each label is what it is. Tool calls and the dependency manifest are on a secondary tab for reproducibility. Demo mode (*Evidence as of*) lives here.
-- **Exit — "I can put this in front of my colleagues."** A PDF discussion document. Its job is to make what the tool found as visible and as discussable as possible without moving anyone's opinion. Rules below.
+- **Exit — "I can put this in front of my colleagues."** A PowerPoint deck, generated in the browser. Its job is to make what the tool found as visible and as discussable as possible without moving anyone's opinion. Slide order and rules below.
 
 ```mermaid
 flowchart LR
@@ -218,31 +206,40 @@ flowchart LR
   style D stroke-width:3px
 ```
 
-### The results card — every element, in the order a scientist reads, and why
+### The results card — the scientist's train of thought, disclosed progressively
 
-Derived from §4b. Two layers: **on first load** (the row, under 25 words) and **expanded in place** (the row opens without leaving the list). Elements are listed in reading order; the order is the design: context, then efficacy, then the catch, then chemistry.
+Derived from §4b, restructured in v2.2 after the team found the element list too much to take in at once. The literature gives the order in which a scientist makes sense of a candidate, and the card follows it exactly: candidates die of efficacy first, then safety (Sun 2022); the mechanism is only worth reading once the human evidence is known; the practical questions come last. Four questions, in that order:
+
+1. **Does it work in people?** The best evidence tag; prior trials of this drug in this indication.
+2. **Could it work?** The weakest link first; the three pillars; the genetic support tier; who else tried this target and what happened.
+3. **What could go wrong?** Safety as a class check or a label flag, with the reason, for the likely trial population.
+4. **What would it take?** The unresolved prerequisites count; the next experiment; generic status and dose range.
+
+**Structure: a row that is also a stepper.** On first load each row shows the class and name on the left and four short cells, one per question, each holding only that question's answer word: the outcome tag; the weakest link in one line; the safety word; the unresolved count. Under 25 words. Selecting a row expands it in place and opens question 1; the four question numbers sit in boxes across the top of the expanded row and step in order with the arrow keys or a click; each step shows its evidence lines with sources, for and against distinguished. A stepper rather than a carousel, because the questions are sequential and the scientist must always see where they are. Nothing is hidden that the collapsed row promised; nothing is shown that the current question does not need.
 
 **Page header, once per disease, not per row:** the current standard of care and whether a disease-modifying therapy exists (Scannell 2012; Krishnamurthy 2022). What every candidate would have to beat.
 
-| Element | Layer | Why it is on the card, and where it comes from |
+**Kept, cut, and moved.** Kept on the collapsed row: class, name, one muted line of fine print (modality · compartment · route), the four answer cells. Moved into the steps: everything else in the table below. Cut: the pillars from the collapsed row (they live in question 2), the who-else-tried line from the collapsed row (question 2), the genetic tier from the collapsed row (question 2). The table below is the full inventory with each element's step.
+
+| Element | Where | Why it is on the card, and where it comes from |
 |---|---|---|
-| **Drug class and target family**, the largest text on the row | first load | The class is the context: it implies modality, compartment, precedent and liabilities before the name is read (Force 2011; Wager 2010; the team's notes from Interview 2). Live from Open Targets when online: ChEMBL drug type and mechanism action type; curated otherwise. |
-| Drug name, approved indication | first load | The approved indication is the de-risking premise of repurposing (Pushpakom 2019). Curated. |
-| **Best evidence**: design · outcome · n · year, as an uncoloured tag | first load | Efficacy evidence is what candidates die of first (Sun 2022); design and n are what a scientist checks first. Curated; live from ClinicalTrials.gov at the backend stage. |
-| Weakest link, one line | first load | Principle 4 at card level: the user never opens a card to discover the catch. Curated. |
-| **Fine print**: action on target · modality · target compartment · route · CNS reach for brain indications | first load | The line Henry called "where the money is." Compartment and reach are first-pass filters for CNS (Pardridge 2005). Live from Open Targets when online: subcellular location and tractability; route and barrier from the record's delivery block. |
-| **Three pillars**: exposure at site, target engagement, functional pharmacology, each shown / absent / not measured | first load, compact | Nearly half of phase II failures were uninterpretable because these were never established (Morgan 2012). Three small slots make "never actually tested" visible. Curated. |
-| Unresolved prerequisites count | first load | Validation is where candidates stall (Nijim 2025); the count is the sort key for the untested register. Derived. |
-| **Who else tried this target**: drugs on the same target in this indication, with outcomes | expanded | Failed trials invalidate; crowded targets corroborate (Henry). The gap teams report at triage (Krishnamurthy 2022). Live at the backend stage: Open Targets known drugs joined to ClinicalTrials.gov; curated until then. |
-| Prior trials of this drug in this indication: phase, outcome, status | expanded | Transparency about abandoned attempts (Krishnamurthy 2022). Curated; this is the History format's timeline. |
-| Genetic support tier: Mendelian / coding / fine-mapped / locus / none | expanded | 2.6× success with confident causal genes; effect size does not predict, so it is not shown (Minikel 2024). Curated. |
-| Safety, as a class check or a label flag, with the reason | expanded | Class liability is a prompt to check, not a verdict (Gintant 2011). Absent when the label was reviewed and is clean, which is stated. Curated from the label. |
-| Generic status and known dose range | expanded | Ownership is a top-three barrier; the de-risked compound is the value (Krishnamurthy 2022; Pushpakom 2019). Curated. |
-| The drivers of the row's rank, each with one source, for and against distinguished | expanded | Experts spend their time drilling to evidence and want for and against distinguished (Alnouri 2026; Huang 2024). Derived from the record. |
-| The next experiment, one line | expanded | Validation stalls without a concrete next step (Nijim 2025). Curated. |
+| **Drug class and target family**, display type, leading the row | collapsed row | The class is the context: it implies modality, compartment, precedent and liabilities before the name is read (Force 2011; Wager 2010; the team's notes from Interview 2). Live from Open Targets when online: ChEMBL drug type and mechanism action type; curated otherwise. |
+| Drug name, medium weight, directly beneath; approved indication | collapsed row | The approved indication is the de-risking premise of repurposing (Pushpakom 2019). The name is never smaller than body size. Curated. |
+| **Fine print**, one muted line: modality · target compartment · route · CNS reach for brain indications | collapsed row | The line Henry called "where the money is." Compartment and reach are first-pass filters for CNS (Pardridge 2005). Live from Open Targets when online; route and barrier from the record's delivery block. |
+| **Q1 cell: best evidence** as an uncoloured outcome tag with design and n | collapsed row · step 1 | Efficacy evidence is what candidates die of first (Sun 2022); design and n are what a scientist checks first. Curated; live from ClinicalTrials.gov at the backend stage. |
+| Prior trials of this drug in this indication: phase, outcome, status, dated | step 1 | Transparency about abandoned attempts (Krishnamurthy 2022). Curated; this is the History format's timeline. |
+| **Q2 cell: weakest link**, one line | collapsed row · step 2 | Principle 4 at card level: the user never opens a card to discover the catch. Curated. |
+| **Three pillars**: exposure at site, target engagement, functional pharmacology, each shown / absent / not measured | step 2 | Nearly half of phase II failures were uninterpretable because these were never established (Morgan 2012). Curated. |
+| Genetic support tier: Mendelian / coding / fine-mapped / locus / none | step 2 | 2.6× success with confident causal genes; effect size does not predict, so it is not shown (Minikel 2024). Curated. |
+| **Who else tried this target**: drugs on the same target in this indication, with outcomes | step 2 | Failed trials invalidate; crowded targets corroborate (Henry). The gap teams report at triage (Krishnamurthy 2022). Live at the backend stage; curated until then. |
+| **Q3 cell: safety word**, with the reason in the step | collapsed row · step 3 | Class liability is a prompt to check, not a verdict (Gintant 2011). "None flagged" is stated when the label was reviewed and is clean. Curated from the label. |
+| **Q4 cell: unresolved prerequisites count** | collapsed row · step 4 | Validation is where candidates stall (Nijim 2025); the count is the sort key for the untested register. Derived. |
+| The next experiment, one line | step 4 | Validation stalls without a concrete next step (Nijim 2025). Curated. |
+| Generic status and known dose range | step 4 | Ownership is a top-three barrier; the de-risked compound is the value (Krishnamurthy 2022; Pushpakom 2019). Curated. |
+| The drivers of the row's rank, each with one source, for and against distinguished | every step, under its question | Experts spend their time drilling to evidence and want for and against distinguished (Alnouri 2026; Huang 2024). Derived from the record. |
 | *Not on the card:* a confidence number; pip bars without a key; the case-for prose; the drawing | | The number and the unkeyed bar are the anti-patterns; the rest belongs in Detail. |
 
-The first-load layer is the same in all three format prototypes; the formats differ in which element dominates and how the row is shaped.
+The collapsed row is the same in all three format prototypes; the formats differ in which element dominates and how the row is shaped. The Register prototype is the closest to this structure and is the recommended default.
 
 **The format is under exploration.** Three distinct prototypes of this page will be built on the design canvas and tested against the fifteen-second triage target, all carrying the same elements, each organised around a different first question:
 1. **Register**: a dense two-register list. First question: *which is worth opening?*
@@ -268,41 +265,56 @@ The winner becomes the default; the board by trial stage stays as the alternate.
 
 **The fallback.** A record without a drawing shows its chain as a straight line of nodes with the same evidence-weighted strokes and the same evidence panel, with the target's curated pathways hanging beneath the target node in the quiet register. It is a placeholder, not a design.
 
+**Restyle, decided Sept 20.** The first implementation carries too much ink: every edge labelled, every compartment boxed, the plate competing with the drawing. The restyle keeps every encoding above and removes what is not needed at first glance:
+- Compartments become soft bands on the sunken surface with no border; their labels sit small and capitalised at the top left of each band.
+- Molecules grow: 40 px tall, generous padding, one size of the display face; at most eight on a drawing.
+- Edges carry only their status word at rest, and the weakest-link tag. The verb and the provenance tag appear on the selected edge only, in the panel and on the edge.
+- Background edges are one light grey, thin, unlabelled at rest; their verb appears on selection.
+- The refuted arc is a thin line in the refuted colour with its one word at the apex, not a heavy curve.
+- The drawing sits alone at full width; the Reactome plate moves below the fine print as a small thumbnail with its caption, expanding on click.
+- Everything on the 8 px grid; the drawing's height is fixed so the page does not jump.
+The goal is a figure a scientist would put in a slide unchanged. The test is §11's recognition exam, run on the restyled drawing.
+
 **What it is not.** Not an image generated by a model. Not a pretty graph with invented layout. Not a replacement for the evidence panel; it is the index into it. Not complete: each record's drawing is authored data, validated by a test that every action resolves and every claim is drawn.
 
 **What comes next, from Henry's description.** He described pulling on a vertex and having the system expand it "in a way that starts to support your rationale." Today, selecting an action opens its evidence. The next step is system-driven expansion: selecting a molecule pulls in its curated neighbours from Reactome and STRING, drawn in grey, so the scientist sees what else the target does and where the hypothesis could be rerouted around, which is his branch-point doubt made visible. Parked until the results page ships.
 
 **Status.** An early implementation is in the app for nilotinib: three compartments; eight molecules (nilotinib drawn twice, once per compartment; c-Abl; parkin; α-synuclein; clearance; the dopaminergic neuron; the outcome); nine actions; live Reactome plate; evidence panel on selection. The other five candidates use the fallback until their drawings are authored. This is a feature we will return to; the visual grammar above is the contract it returns to.
 
-### The discussion document — rules for an unbiased export
+### The discussion deck — rules for an unbiased export
 
-The export is the thing that leaves the tool and goes into a meeting. Its job is to make what the tool found as visible and discussable as possible, and to move nobody. Scope: one candidate per document. Produced from the Detail page by *Export appraisal*, which opens a dialog with the format, the include checkboxes, and a name field for the call page.
+The export is the thing that leaves the tool and goes into a meeting, and meetings run on slides, which is what Henry said his most popular shipped feature was and what the team chose on Sept 20. Its job is to make what the tool found as visible and discussable as possible, and to move nobody. Scope: one candidate per deck. Produced from the Detail page by *Export appraisal*, which opens a dialog with the include checkboxes and a name field for the call slide.
 
-**Page order, fixed.**
-1. Title page: drug for condition; the drug class and fine print; the date; the run identifier (the ledger's run timestamp, as shown on Provenance); the data note (the same sentence as the banner on every screen).
-2. The drawing at full width, with the glyph and stroke key printed once beneath it.
-3. The five questions, one section each, in this order, mapped to the prerequisites checklist so nothing on screen is missing from paper:
+**What a good decision deck does**, from Henry's description of how expert humans build them and from the research on expert users (§4b): it lists the questions that have to be answered, walks the evidence for each, good, bad or different, keeps supporting and opposing evidence distinguishable at a glance, and leaves the decision to the room. Fifteen slides or fewer; one question per slide; nothing on a slide that is not on screen in the tool.
+
+**Slide order, fixed.**
+1. Title: drug for condition; the drug class and fine print; the date; the run identifier (the ledger's run timestamp, as shown on Provenance); the data note (the same sentence as the banner on every screen).
+2. Agenda: the five questions with a one-word status beside each, so the room sees the shape of the case before any evidence.
+3. to 7. One slide per question, in this order, mapped to the prerequisites checklist so nothing on screen is missing from the deck. Left column *for*, right column *against*, at claim granularity; at the foot, the question that would resolve it.
    - Does the drug reach the target at a tolerated dose? (prerequisite: brain exposure, or tissue exposure for non-CNS)
    - Is the mechanism established in humans? (prerequisite: target engagement; the chain's mechanism claims)
    - What did controlled studies find? (prerequisite: benefit under blinding)
    - What are the safety constraints in the likely population? (prerequisite: safety acceptable)
    - What would have to be true before a trial? (the biomarker prerequisite and any remaining unresolved item)
-4. Status words and outcome tags defined, in the same words as Provenance.
-5. Sources, numbered, dated.
-6. The call page, if included: the scientist's name from the dialog, their choice, their reasoning verbatim.
+8. The drawing, full-bleed, with the glyph and stroke key beneath it.
+9. Before a trial: the five numbered boxes with their status words, as on screen.
+10. Sources, numbered, dated; each slide's citations repeated in its speaker notes.
+11. Definitions: status words and outcome tags, in the same words as Provenance.
+12. The call, if included: the scientist's name from the dialog, their choice, their reasoning verbatim.
 
 **Neutrality rules.**
-1. **Structure by question, not by verdict.** Within each question, every claim that bears on it appears once, with two columns beside it, *for* and *against*, at claim granularity. The columns have equal width and the same typography; a claim's entries are sources, each with design, n, year.
+1. **Structure by question, not by verdict.** On each question slide, every claim that bears on it appears once, with *for* and *against* columns of equal width and the same typography; a claim's entries are sources, each with design, n, year.
 2. **Symmetry is enforced, not hoped for.** Both columns exist for every claim even when one is empty, and the empty one says "none found," followed by the ledger line that was consulted. An absence is a finding.
-3. **No adjectives, no adverbs of degree** in text the tool writes. "Very," "only," "unlikely," "convincing" do not appear; a lint over the document's own strings enforces it. Quoted study titles are exempt.
-4. **Status words and outcome tags stay, the rules travel with them.** Established, contested, single-source, unknown, refuted; positive, mixed, null, negative, enrolling. Each defined on page 4.
-5. **No ordering that implies a verdict.** The question order is fixed. Within a claim, sources are dated, oldest first.
-6. **The scientist's call is separate and attributed.** On the last page, headed with the name they typed, omitted with one checkbox. The document body never contains the tool's opinion because the tool has none.
-7. **The next question is allowed; the answer is not.** Henry advised being somewhat opinionated about what the user should do next. The document honours that in one form only: at the end of each question's section, the experiment or data that would resolve it, phrased as a question ("Has c-Abl engagement been measured in patients? No study found."). Never a recommendation to pursue or drop.
-8. **The drawing carries the same encodings as on screen**, and because the refuted colour may print grey, refuted edges also carry the word.
-9. **Format.** PDF first, because it travels into meetings unchanged; Markdown and JSON already exist and follow the same page model. A slide export is parked (§8).
+3. **No adjectives, no adverbs of degree** in text the tool writes. "Very," "only," "unlikely," "convincing" do not appear; a lint over the export model's strings enforces it. Quoted study titles are exempt.
+4. **Status words and outcome tags stay, the rules travel with them.** Established, contested, single-source, unknown, refuted; positive, mixed, null, negative, enrolling. Each defined on slide 11.
+5. **No ordering that implies a verdict.** The question order is fixed. Within a claim, sources are dated, oldest first. The agenda's status words are the record's, not a ranking.
+6. **The scientist's call is separate and attributed.** On the last slide, headed with the name they typed, omitted with one checkbox. The deck body never contains the tool's opinion because the tool has none.
+7. **The next question is allowed; the answer is not.** Henry advised being somewhat opinionated about what the user should do next. The deck honours that in one form only: at the foot of each question slide, the experiment or data that would resolve it, phrased as a question ("Has c-Abl engagement been measured in patients? No study found."). Never a recommendation to pursue or drop.
+8. **The drawing carries the same encodings as on screen**, and because the refuted colour may project grey, refuted edges also carry the word.
+9. **Design.** 16:9; the app's two typefaces; the ground and ink of the app; colour only in the evidence-status tokens; no template chrome, no logos, no transitions. A deck a scientist would present as their own.
+10. **Format.** PowerPoint, generated in the browser from the same export model as the existing Markdown and JSON, with PptxGenJS (MIT, zero runtime dependencies, runs in the browser, standards-compliant OOXML that opens in PowerPoint, Keynote, LibreOffice and Google Slides). The drawing is rasterised from the on-screen graph at 2× for the slide. PDF is not a target.
 
-The neutrality test (§11): a reader given the document with the call page removed cannot say which way the author leaned.
+The neutrality test (§11): a reader given the deck with the call slide removed cannot say which way the author leaned.
 
 ### The epistemic labels — why five, not two
 
@@ -321,9 +333,10 @@ The neutrality test (§11): a reader given the document with the call page remov
 
 | | What | Why |
 |---|---|---|
-| **Must** | Entry → Results (two registers, class-first rows) → Detail for the Parkinson's hero case: critical appraisal, pathway drawing with the evidence panel, safety-as-reason, trial prerequisites, the scientist's call | This *is* the product. Everything else is context for it. |
+| **Must, first** | The nilotinib case complete end to end before anything else: Entry → Working → Results → Detail → Export, every field filled from dated sources, every screen in its final design | It is the demo case and the story we tell the judges; nothing else is built until it is whole. |
+| **Must** | Entry → Results (two registers, class-first rows, the four-question row) → Detail for the Parkinson's hero case: critical appraisal, pathway drawing with the evidence panel, safety-as-reason, the prerequisites walkthrough, the scientist's call | This *is* the product. Everything else is context for it. |
 | **Must** | The results row rebuilt to §7's first-load elements, under the §7 register and ordering rules, with the three format prototypes tested and one chosen | The page we consider most important for triage; the literature says which elements. |
-| **Must** | Export as a PDF discussion document under §7's neutrality rules | The ending we chose: the tool's output goes into a meeting. |
+| **Must** | Export as a PowerPoint discussion deck under §7's slide order and neutrality rules, generated in the browser | The ending we chose: the tool's output goes into a meeting, and meetings run on slides. |
 | **Must** | Curated-data statement on every screen, and the README stating what is live, curated, draft and scripted | Honesty is a trust signal for this user; hiding it is the anti-pattern. Henry: "is this real?" |
 | **Must** | The four hero candidates hand-curated with dated, linked sources (nilotinib, exenatide, ambroxol, metformin); isradipine and simvastatin source-checked before they appear | The backtest depends on them. Curated beats generated for a story that must be *right*. |
 | **Must** | At least one surface fetches live with no keys and fails gracefully (today: the pathway panel, from Open Targets and Reactome) | Henry: companies now value a usable tool over a demo, and asked "is this real?" |
@@ -336,7 +349,7 @@ The neutrality test (§11): a reader given the document with the call page remov
 | **Won't** | The mechanism × clinical signal scatter | Editorial by construction; the board by trial stage answers the same question. |
 | **Won't** | Google Co-Scientist integration this weekend | No access, no API. The adapter contract is written; the input is named as parked (§5b). |
 | **Won't** | Genetic validation, tissue-expression side effects, full biologics coverage, surveillance alerts | The first two are Henry's parking spaces; the last two are ours. Each gets a visible slot in the UI and a line in the README, not a fake implementation. |
-| **Won't** | Slide export | Parked behind the PDF; same document model. |
+| **Won't** | PDF export | Replaced by the deck on Sept 20; Markdown and JSON remain. |
 | **Won't** | Literature-integrity scoring beyond a clearly labeled heuristic | Needs a real signal (replication data, retraction status). A fake score is worse than an honest label. |
 | **Won't** | Multiple ML backends | One real path plus curated fixtures is honest and shippable. |
 | **Won't** | Real-world-data / off-label prescribing analysis | Henry's tightrope. Without governed data it reads as promotion. |
@@ -384,7 +397,8 @@ One observable moment per rubric criterion, plus the backtest.
 | **The backtest** | In demo mode with *Evidence as of* set to Nov 2017, the nilotinib Critical appraisal shows all three pre-trial objections (open-label n = 12; CSF ratio 0.53 %; MAO-B withdrawal), each linked to its source — and none of the post-trial ones. Set to Jul 2016, the MAO-B objection is absent. |
 | **Recognition** | A scientist shown the nilotinib drawing alone, cropped from the page, unprompted, names the pathway ("the c-Abl / parkin story") and points at the crossing into the brain as the weak step. Pass = 2 of 3, same subjects as the Design exam, shown the cropped drawing before the Detail page loads and the two-minute timer starts. |
 | **Triage** | Shown the results page for fifteen seconds, then asked which candidate they would open first and why, the subject names a candidate and gives a reason that is on the card. |
-| **Neutrality** | A reader given the exported PDF with the call page removed cannot say which way the author leaned. Three readers, majority must answer "can't tell." |
+| **Neutrality** | A reader given the exported deck with the call slide removed cannot say which way the author leaned. Three readers, majority must answer "can't tell." |
+| **Follow-along** | A scientist expands one results row and steps through its four questions without instruction, and can say afterwards what the row's four cells meant. Two of three. |
 | **Live** | With the network on, the pathway panel shows "live" with a timestamp and the Reactome plate loads. With the network off, the drawing still renders and the panel says so. Both states screenshot in the README. |
 
 ---
@@ -471,6 +485,18 @@ Whether any live backend runs end-to-end by Sunday. Whether the Design exam pass
 | The claim section | **Removed** | The team's call; the two-minute test remains as the Design exam. |
 | IT reviewer | **No longer an audience; the agent's thought process is a primary feature for the scientist** | Seeing what the agent checked and why is core function; packages and calls are reproducibility detail on a secondary tab. |
 | OpenAlex | **Literature source at the backend stage; cited work ids in the export** | Broader literature coverage through an open, keyless API; also serves the sponsor track that provides the dataset. Not dropped in before submission. |
+| *v2.2, Sept 20, second team review* | | |
+| Landscape section | **Moved to `pitch.md`; replaced by the pipeline direction (§5)** | Positioning is pitch; what the backend does is product. |
+| The pipeline | **A simplified, skeptical co-scientist: generate then audit; reasoning, why and evidence recorded per step; study assumptions flagged, not inherited** | We cannot use or recreate Co-Scientist; we can build its shape with the skepticism it lacks. |
+| Entry line | **Positive framing, spoken by the presenter, not on screen** | "Approved drugs that might treat something else" led with the refusal; the bet framing leads with what is made possible. |
+| Results card | **Four questions in the scientist's order, a row that is also a stepper** | The element list was too much at once; progressive disclosure along the train of thought. |
+| Register names | **"Tested in placebo-controlled trials" / "Not yet tested against placebo"** | Self-explanatory words; the rule stays printed beneath. |
+| Class versus name | **Class leads, at most 1.3× the name; the name always in the same place** | Context first without losing the thing being looked for. |
+| Working | **Animated build-up in three beats per step; evidence chips are real records** | Waiting should feel like watching work. |
+| Before a trial | **Five numbered boxes as a stepper with a hero count** | A table is read; a walkthrough is followed. |
+| Pathway | **Restyled for restraint; plate demoted to a thumbnail** | The first implementation was overwhelming. |
+| Export | **PowerPoint deck via PptxGenJS, not PDF** | Meetings run on slides; the neutrality rules carry over unchanged. |
+| Build order | **Nilotinib end to end first** | It is the demo. |
 | Risks | **Unchanged; revised at the backend stage** | Per the team's call. |
 
 ---
