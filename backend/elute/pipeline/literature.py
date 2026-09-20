@@ -135,7 +135,7 @@ def fetch_abstracts(selected: list[CanonRecord], tu: ToolUniverseConnector, dire
 def retrieve_literature(base: Task, as_of: str, tu: ToolUniverseConnector, direct: DirectConnector, *, facet_order: list[str] | None = None,
                         selector: tools.Selector | None = None, extra_queries: list[str] | None = None,
                         disabled: Callable[[str], bool] | None = None, progress: Progress | None = None) -> LiteratureResult:
-    facet_order = facet_order or DEFAULT_FACET_ORDER
+    facet_order = DEFAULT_FACET_ORDER if facet_order is None else list(facet_order)  # [] means only the extra queries
     note = progress or (lambda s: None)
     attempts: list[Attempt] = []
     episodes: list[tools.Episode] = []

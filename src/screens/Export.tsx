@@ -155,7 +155,8 @@ export function Export({ banner }: { banner: string }) {
                 </div>
               ))}
             <p className="preview__foot">
-              {doc.sourceCount} source lines. Fixture data, not a medical device.{doc.dataNote ? ` ${plain(doc.dataNote)}` : ''}
+              {doc.sourceCount} source lines. {source.mode === 'fixture' ? 'Fixture data' : c.curation === 'curated' ? 'Curated data' : 'Draft data from a live appraisal'}, not a medical device.
+              {doc.dataNote ? ` ${plain(doc.dataNote)}` : ''}
             </p>
           </div>
         </div>

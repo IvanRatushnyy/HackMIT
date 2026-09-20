@@ -1,4 +1,4 @@
-"""L9 synthesis, L4/L9 reasoning, L4 refinement, L10 wording (BACKEND_PLAN v4.4 §4, §6). The model is handed only
+"""L9 synthesis, L4/L9 reasoning, L10 wording (BACKEND_PLAN v4.4 §4, §6). The model is handed only
 the visible structured record; its output passes the gate or is re-asked once with the rejection reasons, then the
 deterministic fallback is used. Nothing here reads dates or raw payloads."""
 from __future__ import annotations
@@ -7,14 +7,13 @@ from pathlib import Path
 
 from elute.engine.validate import gate
 from elute.llm.client import LLMClient
-from elute.llm.schemas import ReasoningOut, RefinementOut, SynthesisOut, WordingOut
+from elute.llm.schemas import ReasoningOut, SynthesisOut, WordingOut
 from elute.models import AgentReasoning, CaseItem, Claim, Evidence, NextQuestion, Synthesis
 from elute.pipeline.appraisal import STANCE_PHRASE, Derived
 
 P = Path(__file__).parent / "prompts"
 SYNTHESIS_PROMPT = (P / "synthesis.md").read_text()
 REASONING_PROMPT = (P / "reasoning.md").read_text()
-REFINEMENT_PROMPT = (P / "refinement.md").read_text()
 WORDING_PROMPT = (P / "wording.md").read_text()
 
 
@@ -73,13 +72,6 @@ def step_reasoning(client: LLMClient, base: AgentReasoning, ev: list[Evidence], 
     return base.model_copy(update={"reasoning": out.reasoning, "evidence_needed": out.evidence_needed, "interpretation": out.interpretation,
                                    "what_this_changes": wtc, "next_action_reason": out.next_action_reason})
 
-
-def refine_query(client: LLMClient, facet: str, previous: str, reason: str, names: dict[str, list[str]]) -> tuple[str, str] | None:
-    user = f"Facet: {facet}\nPrevious query: {previous}\nWhy insufficient: {reason}\nNames: {names}"
-    out = client.complete_structured(RefinementOut, REFINEMENT_PROMPT, user)
-    if out is None or len(out.query) > 200 or not any(n.lower() in out.query.lower() for n in names.get("drug", [])):
-        return None
-    return out.query, out.reason
 
 
 def word_next_question(client: LLMClient, nq: NextQuestion, claim: Claim) -> str | None:

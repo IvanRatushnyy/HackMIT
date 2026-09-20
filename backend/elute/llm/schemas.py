@@ -56,14 +56,9 @@ class ReasoningOut(BaseModel):
     next_action_reason: str
 
 
-class RefinementOut(BaseModel):
-    query: str
-    reason: str
-
-
 class WordingOut(BaseModel):
     why_this_question_matters: str
     cites: list[str]
 
 
-Kind = Literal["extraction", "synthesis", "reasoning", "refinement", "wording"]
+Kind = Literal["extraction", "synthesis", "reasoning", "wording"]

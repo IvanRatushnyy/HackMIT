@@ -13,7 +13,6 @@ import { Pipeline } from '../components/Pipeline'
 import type { StepLive } from '../components/Step'
 import { rowDurations, source } from '../data/source'
 import type { LedgerRow, QueryRecord } from '../data/types'
-import { touchRecent } from '../lib/recent'
 import { clockWord, durationWord } from '../lib/runlog'
 
 type Phase = 'loading' | 'working' | 'done' | 'missing'
@@ -55,7 +54,6 @@ export function Query() {
         const pair = rec.pair
         setQ(rec)
         setRows(rec.ledger.rows)
-        touchRecent(rec.slug)
         if (source.hasRun(query)) {
           // reopened from the rail or reloaded: everything as it settled, no handover
           setDone(rec.ledger.rows.length)

@@ -236,8 +236,9 @@ class LiveRun:
         if not any(r.claim_id == "C_ENGAGEMENT" for e in article_ev for r in e.relevance):
             extras.append("engagement")
         if extras and llm_used:
-            self._note("L4", f"no finding yet on {' or '.join(extras)}: one follow-up query each")
-            more = retrieve_literature(replace(base, id="L4", kind="literature"), as_of, self.tu, self.direct, facet_order=[], extra_queries=extras, disabled=self._disabled, progress=l4_progress)
+            self._note("L4", f"no finding yet on {' or '.join(extras)}: one follow-up query each, worded with the entity's synonyms")
+            more = retrieve_literature(replace(base, id="L4", kind="literature"), as_of, self.tu, self.direct, facet_order=[], extra_queries=extras,
+                                       selector=tools.DefaultSelector(reformulate_first=True), disabled=self._disabled, progress=l4_progress)
             seen = {e.source_record_id for e in article_ev}
             for c in more.selected:
                 if c.key in seen:
@@ -249,7 +250,10 @@ class LiveRun:
                 e = evidence_from_article(c, a, ex, more.attempts)
                 if e:
                     article_ev.append(e)
-            lit.attempts += more.attempts
+            n0 = len(lit.attempts)
+            lit.attempts += [replace(a, n=n0 + i) for i, a in enumerate(more.attempts, 1)]  # numbered after the first pass
+            lit.counts = RetrievalCounts(**{k: getattr(lit.counts, k) + getattr(more.counts, k) for k in
+                                            ("results_retrieved", "results_after_dedup", "results_after_temporal_filter", "records_withheld", "results_selected_for_extraction")})
         evidence_all += visible(article_ev, as_of)
         vis4 = visible(article_ev, as_of)
         l4_attempts = _attempts(lit.attempts)
@@ -311,8 +315,11 @@ class LiveRun:
         if synth is None and llm_used:
             llm_mode = "fallback" if problems and problems != ["model unavailable"] else "unavailable"
         reasoning = R.synthesis_step("OpenAI synthesis" if llm_mode == "openai" else "deterministic fallback", d.stance)
-        self._settle(_entry("L9", task=None, transport="none", tool_name=None, query="", attempts=[], counts=RetrievalCounts(), status="ok" if llm_mode == "openai" else "retried",
-                            started=t0, key_finding=("gate rejected: " + "; ".join(problems[:3])) if problems and llm_mode != "openai" else reasoning.interpretation, record_ids=[], reasoning=reasoning,
+        # "retried" and "gate rejected" are said only when a model was asked and its prose was turned away; with no
+        # model configured nothing was asked, and the step is simply done on the deterministic path.
+        gate_rejected = llm_used and llm_mode != "openai" and bool(problems)
+        self._settle(_entry("L9", task=None, transport="none", tool_name=None, query="", attempts=[], counts=RetrievalCounts(), status="retried" if gate_rejected else "ok",
+                            started=t0, key_finding=("gate rejected: " + "; ".join(problems[:3])) if gate_rejected else reasoning.interpretation, record_ids=[], reasoning=reasoning,
                             source="openai" if llm_mode == "openai" else "template"))
 
         # ---- L10 next question + validate --------------------------------------------------------------------------

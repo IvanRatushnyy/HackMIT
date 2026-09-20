@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Minus, Plus } from '@phosphor-icons/react'
 import type { CandidateDetail, Cutoff, Source } from '../data/types'
-import { resolvePrerequisite, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
+import { resolvePrerequisite, resolveTimeline, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
 import { EASE_OUT } from '../lib/motion'
 import { formatDate, shortCite, SourceLine } from './evidence'
 import { Kicker } from './frame'
@@ -159,7 +159,7 @@ export function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref:
 // ---- Safety ------------------------------------------------------------------------------
 
 export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail; cutoff: Cutoff }) {
-  const s = resolvePrerequisiteSafety(candidate, cutoff)
+  const s = resolveTimeline(candidate.safety, cutoff.date)
   const srcById = new Map(candidate.sources.map((x) => [x.id, x]))
   return (
     <section className="section" aria-labelledby="safety">
@@ -228,14 +228,6 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
     </section>
   )
 }
-function resolvePrerequisiteSafety(candidate: CandidateDetail, cutoff: Cutoff) {
-  const t = candidate.safety
-  if (!t) return undefined
-  let hit: (typeof t)[number]['value'] | undefined
-  for (const e of t) if (e.from <= cutoff.date) hit = e.value
-  return hit
-}
-
 // ---- Before a trial: five numbered boxes, a walkthrough ------------------------------------
 
 export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: CandidateDetail; cutoff: Cutoff; isToday: boolean }) {

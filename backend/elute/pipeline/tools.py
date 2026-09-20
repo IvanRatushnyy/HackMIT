@@ -6,8 +6,9 @@
   path B     the next attempt is a reformulation (selector) on the same transport; if still not ok, direct with the last query
   stop       after 3 attempts, or the first ok
 
-The selector is the model's slot: it chooses among the listed tools and words queries; `DefaultSelector` is the
-deterministic stand-in used when there is no key, and in tests. Sufficiency is always checked by code as well.
+The selector chooses among the listed tools and words the queries. `DefaultSelector` is deterministic (the canonical
+names, then the aliases OR-ed on a reformulation) and is the only selector in Phase 1; the Protocol leaves room for a
+model-backed one. Sufficiency is always checked by code.
 """
 from __future__ import annotations
 
@@ -92,10 +93,15 @@ class Selector(Protocol):
 
 
 class DefaultSelector:
-    """Deterministic: canonical names, the facet template, and one reformulation (aliases joined by OR)."""
+    """Deterministic: canonical names, the facet template, and one reformulation (aliases joined by OR).
+    `reformulate_first` words even the first attempt with the aliases: the L4 follow-up uses it, so a facet that
+    already returned nothing under the canonical name is not simply asked again."""
+
+    def __init__(self, *, reformulate_first: bool = False):
+        self.reformulate_first = reformulate_first
 
     def select(self, task: Task, attempts: list[Attempt]) -> Selection:
-        reformulated = bool(attempts)
+        reformulated = bool(attempts) or self.reformulate_first
         disease = task.disease_aliases[0] if task.disease_aliases else task.disease
         if task.kind == "resolve":
             if task.target_symbol:
@@ -175,12 +181,13 @@ def run_task(task: Task, tu: ToolUniverseConnector, direct: DirectConnector, sel
         if ok:
             ep.records, ep.transport, ep.selected_tool, ep.status = records, next_transport, selection.tool, "ok"
             break
-        if next_transport == "tooluniverse" and n == 1:
-            selection = selector.select(task, ep.attempts)  # path B: reformulate, same transport
-            if selection.arguments == ep.attempts[-1].query:
-                next_transport = "direct"  # nothing to reformulate: go direct with the same query
+        reformulated = selector.select(task, ep.attempts)
+        if reformulated.arguments != selection.arguments:
+            selection = reformulated  # path B: reformulate, same transport
+        elif next_transport == "tooluniverse":
+            next_transport = "direct"  # nothing to reformulate: go direct with the same query
         else:
-            next_transport = "direct"  # last resort: direct with the last query
+            break  # the same query on the same transport would only repeat the last attempt
     if ep.status == "ok" and supplements:
         n = len(ep.attempts) + 1
         if task.kind == "biology" and any(r.pmid for r in ep.records):  # literature dates run once on the deduplicated set (literature.py)

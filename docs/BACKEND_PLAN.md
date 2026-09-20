@@ -48,7 +48,7 @@ Claims + mechanism chain       seven fixed claims (C_MECHANISM … C_SAFETY); ev
           ↓
 deterministic engine           claim status, weakest link, contradictions, unknowns, next question, recommendation stance — pure functions
           ↓
-OpenAI, bounded                extraction from visible abstracts; L4 query refinement and interpretation; L9 synthesis; optional L10 wording — cited, schema-validated
+OpenAI, bounded                extraction from visible abstracts; L4 interpretation; L9 synthesis; optional L10 wording — cited, schema-validated
           ↓
 validation gate                uncited sentence, unmatched number, ignored contradiction, stance mismatch → reject, re-ask once, deterministic fallback
           ↓
@@ -81,7 +81,7 @@ The appraisal answers, in order:
 | Elute's current opinion? | `recommendation`, always downstream of the above |
 | How did the agent get here? | `ledger[].reasoning` per step |
 
-**In Phase 1:** the three tasks via ToolUniverse with direct fallbacks; OpenAI extraction, L4 refinement/interpretation, L9 synthesis; deterministic engine; three-date backtest; fixture/live parity; graceful degradation; bounded in-step self-correction; the frontend adapter. **Safety** is read at L2 (added Sept 20): the FDA label through `FDA_get_boxed_warning_info_by_drug_name` (openFDA behind it as the direct fallback), dated by the label version's `effective_time` via the recorded `openfda.label` supplement, with Open Targets' black-box classes and FAERS signals as undated enrichments; a boxed warning or a withdrawal `contradicts` `C_SAFETY`, warnings without a box `qualify` it, a clean label `supports` it. The adapter derives the Safety block and the fifth prerequisite (boxed → `conditional`, *with monitoring*) from that one record. At a cutoff before the label version's date the label is withheld and the page says the label read is dated later, never that nothing was read.
+**In Phase 1:** the three tasks via ToolUniverse with direct fallbacks; OpenAI extraction, L4 interpretation, L9 synthesis (L4 query refinement stays the deterministic synonym table); deterministic engine; three-date backtest; fixture/live parity; graceful degradation; bounded in-step self-correction; the frontend adapter. **Safety** is read at L2 (added Sept 20): the FDA label through `FDA_get_boxed_warning_info_by_drug_name` (openFDA behind it as the direct fallback), dated by the label version's `effective_time` via the recorded `openfda.label` supplement, with Open Targets' black-box classes and FAERS signals as undated enrichments; a boxed warning or a withdrawal `contradicts` `C_SAFETY`, warnings without a box `qualify` it, a clean label `supports` it. The adapter derives the Safety block and the fifth prerequisite (boxed → `conditional`, *with monitoring*) from that one record. At a cutoff before the label version's date the label is withheld and the page says the label read is dated later, never that nothing was read.
 
 **Not in Phase 1:** §17 and §18.
 
@@ -141,7 +141,7 @@ Responses API with structured outputs (`client.responses.parse`, Pydantic `text_
 | Where | Task | Input the model receives | Output schema | Validation |
 |---|---|---|---|---|
 | L4 | **Extraction**, one call per selected abstract | title + abstract (fetched only for selected visible records) + the seven claim ids with one-line definitions | `study_type`, `controlled`, `blinded`, `placebo`, `population`, `sample_size?`, `outcome?`, `pk_facts[]` `{value, unit, verbatim_sentence}`, `caveats[]` (closed vocabulary), `relevance[]` `{claim_id, direction, statement, verbatim_sentence?}`, `display_statement` | every number, caveat and relevance must carry a verbatim sentence found in the abstract (normalized whitespace); a relevance item without one is dropped; unknown fields stay null |
-| L4 | **Query refinement**, when a facet's result is insufficient (§11) | the facet, the previous query, the insufficiency reason, the resolved entity names/ids | `query`, `reason` | ≤ 200 chars; entity name must appear |
+| L4 | Query refinement — **not built in Phase 1**: an insufficient facet is reformulated by the deterministic synonym table (§11) | — | — | — |
 | L4 | **Interpretation** for the step's reasoning | the step's question, the retrieval counts, the visible Evidence summaries (id, statement, date, design, n) and the engine's derived status changes | `AgentReasoning` (§7) | cites resolve; `what_this_changes` may only name statuses the engine derived |
 | L9 | **Synthesis** | Claims with statuses, visible Evidence (id, statement, date, design, n, caveats), weakest link, contradictions, unknowns, the deterministic `stance` | `strongest_case_for[]`, `strongest_case_against[]` (`{text, cites[]}`), `opinion`, `what_would_change_my_mind` | §6 gate |
 | L10 | **Wording** (optional) | the deterministic next-question block | `why_this_question_matters` | cites resolve; falls back to the template |
@@ -379,7 +379,7 @@ attempt 1: preferred tool, initial query (templated from resolved names/ids)
                    records but none mention the resolved drug name/id AND disease name/id → "insufficient"; else "ok"
 attempt 2 (if not ok): same transport, refined query
   refinement: biology/clinical_trials → deterministic synonym table (canonical name → EFO/MeSH label → ChEMBL preferred name)
-              literature → OpenAI query refinement (§4) when configured, else the synonym table
+              literature → the synonym table (a model-worded refinement is not built)
 attempt 3 (if not ok): direct fallback with attempt 2's query
 stop. Max 3 attempts. Every attempt appended to LedgerEntry.attempts[].
 ```
