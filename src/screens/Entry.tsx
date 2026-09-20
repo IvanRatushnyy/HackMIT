@@ -26,12 +26,12 @@ export function Entry() {
       <div className={`land land--${arrival}`}>
         <div className="land__lead arrive" style={{ '--i': 0 } as React.CSSProperties}>
           <h1 className="land__title">
-            what would
+            find the trials
             <br />
-            make it wrong?
+            worth running
           </h1>
           <p className="land__body">
-            Name a drug for a condition. It builds the strongest case against it first, labels every claim known or believed, dated and sourced, and leaves the call to you.
+            Name a drug and a disease. Elute reads the targets, trials and papers, shows where the case is weakest, and tells you what to test first. Every claim is dated and sourced.
           </p>
         </div>
 
