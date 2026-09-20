@@ -29,7 +29,7 @@ export function Entry() {
 
   return (
     <main className="page">
-      <Header entry />
+      <Header />
       <div className={`col col--narrow entry entry--${arrival}`} style={BAND}>
         <div className="entry__block">
           <Ask pasteOpen={paste} pasteId={pasteId} onPaste={() => setPaste((p) => !p)} />

@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import shardSvg from '../../design/shard/shard.svg?raw'
 import { GROUND_PLANES, parseShard } from '../lib/shard'
-import { SearchField } from './SearchField'
 
 export const SHARD = parseShard(shardSvg)
 
@@ -64,14 +63,14 @@ export function Wordmark() {
   )
 }
 
-/** The same header on every page: wordmark, the field (not on Entry, where the field is the page), shard band. */
-export function Header({ entry = false }: { entry?: boolean }) {
+/** The same header on every page: the wordmark (the way home; there is no search up here) centred in its
+ * white block, then the shard band from the block's edge. */
+export function Header() {
   const phase = useBandPhase()
   return (
-    <header className={`header${entry ? ' header--entry' : ''}`}>
+    <header className="header">
       <div className="header__block">
         <Wordmark />
-        {!entry && <SearchField compact />}
       </div>
       <Shard className="header__shard" offsetY={280} phase={phase} />
     </header>

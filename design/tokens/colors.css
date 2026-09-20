@@ -37,6 +37,13 @@
   --color-surface-critical: var(--raspberry-tint);
   --color-surface-inverse:  var(--black);
 
+  /* ---- Semantic: glass (every reading surface, and the ask box) ------- */
+  --color-glass:          oklch(99.0% 0.003 276 / 0.58); /* the translucent surface */
+  --color-glass-hover:    oklch(13.1% 0.016 276 / 0.04); /* a row under the pointer, a running step */
+  --color-glass-selected: oklch(49.6% 0.052 241 / 0.12); /* slate, the selected row */
+  --color-glass-line:     oklch(13.1% 0.016 276 / 0.10); /* dividers on glass */
+  --color-glass-shade:    oklch(13.1% 0.016 276 / 0.24); /* the shadow behind the ask box, before its blur; panels use 0.14 */
+
   /* ---- Semantic: ink --------------------------------------------------- */
   --color-ink:           var(--black);
   --color-ink-muted:     var(--neutral-600);

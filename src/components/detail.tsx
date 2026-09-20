@@ -154,23 +154,25 @@ export function Mechanism({ candidate, cutoff, sourcesHref }: { candidate: Candi
         ))}
       </div>
       {current && (
-        <div className="panel claim-panel fade" key={current.claim.id + cutoff.id}>
-          <div className="claim-panel__col">
-            <Kicker>claim</Kicker>
-            <p className="claim-panel__text">{current.claim.text}</p>
-            <p>
-              <EvidenceLabel label={current.r.label} qualifier={current.r.qualifier} />
-            </p>
-            <p className="cell__sub">{current.r.why}</p>
-            {weak?.claim === current.claim.id && (
-              <p className="cell__sub critical">
-                <span className="medium">weakest link</span> — {weak.why}
+        <div className="arrive" key={current.claim.id + cutoff.id}>
+          <div className="panel claim-panel">
+            <div className="claim-panel__col">
+              <Kicker>claim</Kicker>
+              <p className="claim-panel__text">{current.claim.text}</p>
+              <p>
+                <EvidenceLabel label={current.r.label} qualifier={current.r.qualifier} />
               </p>
-            )}
-          </div>
-          <div className="claim-panel__col">
-            <Kicker>evidence</Kicker>
-            <ClaimEvidence r={current.r} sourcesHref={sourcesHref} />
+              <p className="cell__sub">{current.r.why}</p>
+              {weak?.claim === current.claim.id && (
+                <p className="cell__sub critical">
+                  <span className="medium">weakest link</span> — {weak.why}
+                </p>
+              )}
+            </div>
+            <div className="claim-panel__col">
+              <Kicker>evidence</Kicker>
+              <ClaimEvidence r={current.r} sourcesHref={sourcesHref} />
+            </div>
           </div>
         </div>
       )}

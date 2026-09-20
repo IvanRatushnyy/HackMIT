@@ -17,64 +17,66 @@ export function PastePaper({ id, onClose }: { id?: string; onClose: () => void }
   const read = () => setPaper(readPaper(text) ?? null)
 
   return (
-    <div id={id} className="panel panel--pad paste fade" role="region" aria-label="Paste a paper">
-      <div className="paste__head">
-        <Kicker>paste a paper</Kicker>
-        <button type="button" className="cite" onClick={onClose}>
-          close
-        </button>
-      </div>
-      <textarea
-        className="textarea"
-        aria-label="PMID, DOI, registry id, or abstract"
-        placeholder="PMID, DOI, NCT id, or an abstract"
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value)
-          setPaper(undefined)
-        }}
-      />
-      <div className="paste__actions">
-        <button type="button" className="btn btn--primary" onClick={read} disabled={!text.trim()}>
-          Read
-        </button>
-        <span className="cell__sub">Shows what was extracted — design, blinding, n — before anything runs.</span>
-      </div>
-
-      {paper === null && (
-        <p className="cell__sub">
-          Couldn’t match this to the curated set. In production the identifier would be resolved through Europe PMC and the study design classified before any
-          appraisal starts.
-        </p>
-      )}
-
-      {paper && (
-        <div className="paste__read fade" key={paper.id}>
-          <Kicker>what was read</Kicker>
-          <p className="medium">{paper.extraction.title}</p>
-          <p className="cell__sub">{paper.extraction.citation}</p>
-          <dl className="paste__facts">
-            <dt>design</dt>
-            <dd>{paper.extraction.design}</dd>
-            <dt>blinded</dt>
-            <dd>{paper.extraction.blinded}</dd>
-            <dt>placebo arm</dt>
-            <dd>{paper.extraction.placebo}</dd>
-            <dt>n</dt>
-            <dd>{paper.extraction.n ?? '—'}</dd>
-            <dt>outcome</dt>
-            <dd>{paper.extraction.outcome}</dd>
-            <dt>would classify at</dt>
-            <dd>{paper.extraction.source}</dd>
-          </dl>
-          <div className="paste__actions">
-            <button type="button" className="btn btn--primary" onClick={() => navigate(`/q/${paper.appraise.slug}`)}>
-              Appraise {paper.appraise.word}
-            </button>
-            <span className="cell__sub">If the read is wrong, stop here.</span>
-          </div>
+    <div className="arrive">
+      <div id={id} className="panel panel--pad paste" role="region" aria-label="Paste a paper">
+        <div className="paste__head">
+          <Kicker>paste a paper</Kicker>
+          <button type="button" className="cite" onClick={onClose}>
+            close
+          </button>
         </div>
-      )}
+        <textarea
+          className="textarea"
+          aria-label="PMID, DOI, registry id, or abstract"
+          placeholder="PMID, DOI, NCT id, or an abstract"
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value)
+            setPaper(undefined)
+          }}
+        />
+        <div className="paste__actions">
+          <button type="button" className="btn btn--primary" onClick={read} disabled={!text.trim()}>
+            Read
+          </button>
+          <span className="cell__sub">Shows what was extracted — design, blinding, n — before anything runs.</span>
+        </div>
+
+        {paper === null && (
+          <p className="cell__sub">
+            Couldn’t match this to the curated set. In production the identifier would be resolved through Europe PMC and the study design classified before any
+            appraisal starts.
+          </p>
+        )}
+
+        {paper && (
+          <div className="paste__read fade" key={paper.id}>
+            <Kicker>what was read</Kicker>
+            <p className="medium">{paper.extraction.title}</p>
+            <p className="cell__sub">{paper.extraction.citation}</p>
+            <dl className="paste__facts">
+              <dt>design</dt>
+              <dd>{paper.extraction.design}</dd>
+              <dt>blinded</dt>
+              <dd>{paper.extraction.blinded}</dd>
+              <dt>placebo arm</dt>
+              <dd>{paper.extraction.placebo}</dd>
+              <dt>n</dt>
+              <dd>{paper.extraction.n ?? '—'}</dd>
+              <dt>outcome</dt>
+              <dd>{paper.extraction.outcome}</dd>
+              <dt>would classify at</dt>
+              <dd>{paper.extraction.source}</dd>
+            </dl>
+            <div className="paste__actions">
+              <button type="button" className="btn btn--primary" onClick={() => navigate(`/q/${paper.appraise.slug}`)}>
+                Appraise {paper.appraise.word}
+              </button>
+              <span className="cell__sub">If the read is wrong, stop here.</span>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

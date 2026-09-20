@@ -52,40 +52,43 @@
 .entry {
   /* The header band's cascade (--shard-n and --shard-ground are set inline by Entry) */
   --band-cascade: calc((var(--shard-n, 1) - 1) * var(--shard-stagger) + (var(--shard-ground, 1) - 1) * var(--shard-ground-gap) + var(--shard-fade));
-  --ask-arrive: calc(var(--duration-slow) + var(--duration-base)); /* the box's arrival: 400 in, 240 to settle */
-  flex: 1 1 auto; /* the space under the header; the box sits in the middle of it */
+  flex: 1 1 auto; /* the space under the header; the box sits in the middle of it, both ways */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding-top: var(--space-xl);
   padding-bottom: var(--space-xl);
 }
-/* The block fills the column, so its left edge is the header band's left edge */
 .entry__block {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   width: 100%;
+  max-width: 1024px;
 }
 
 /* Arrival. Under the startup screen the box waits. Once the screen has lifted and the header band has
  * composed, the box comes in the way a Spotlight window does: already there at slightly larger bounds,
  * fading in and settling to size with one small undershoot, soft while it is moving fast and sharp by the
- * time it stops. A later visit is the ordinary page reveal. */
+ * time it stops. A later visit plays the same arrival at once. */
 .entry--wait .ask,
 .entry--wait .ask__shadow {
   opacity: 0;
 }
 .entry--go .ask {
-  animation: ask-arrive var(--ask-arrive) var(--band-cascade) both;
+  animation: ask-arrive var(--duration-arrive) var(--band-cascade) both;
 }
 /* The shadow arrives with the box but keeps its own blur: a filled `filter` keyframe would pin it sharp */
 .entry--go .ask__shadow {
-  animation: ask-arrive-shadow var(--ask-arrive) var(--band-cascade) both;
+  animation: ask-arrive-shadow var(--duration-arrive) var(--band-cascade) both;
 }
-.entry--settled .ask,
+/* Coming back to Entry: the same arrival, no cascade to wait for */
+.entry--settled .ask {
+  animation: ask-arrive var(--duration-arrive) both;
+}
 .entry--settled .ask__shadow {
-  animation: appear var(--duration-base) var(--ease-out) both;
+  animation: ask-arrive-shadow var(--duration-arrive) both;
 }
 @keyframes ask-arrive {
   0% {
@@ -147,7 +150,7 @@
   transition: background-color var(--duration-base) var(--ease-out);
 }
 .ledger__row--running {
-  background: var(--color-surface-sunken);
+  background: var(--color-glass-hover);
 }
 .ledger__row--pending {
   color: var(--color-ink-faint);
@@ -157,7 +160,7 @@
 }
 .ledger__row--done:hover,
 .ledger__row--selected {
-  background: var(--color-surface-selected);
+  background: var(--color-glass-selected);
 }
 .ledger__num {
   display: inline-flex;
@@ -225,7 +228,7 @@
   gap: var(--space-sm);
   min-height: 40px;
   align-items: center;
-  border-top: var(--line-width) solid var(--color-line);
+  border-top: var(--line-width) solid var(--color-glass-line);
   font-size: var(--text-sm);
 }
 .step-panel__item:first-child {
@@ -258,7 +261,7 @@
   transition: background-color var(--duration-base) var(--ease-out);
 }
 .results__row:hover {
-  background: var(--color-surface-sunken);
+  background: var(--color-glass-hover);
 }
 .results__rank {
   color: var(--color-ink-faint);
@@ -328,10 +331,10 @@
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-md);
   cursor: pointer;
-  transition: border-color var(--duration-base) var(--ease-out);
+  transition: background-color var(--duration-base) var(--ease-out);
 }
 .card:hover {
-  border-color: var(--color-line-strong);
+  background: oklch(99% 0.003 276 / 0.8); /* the glass clears a little */
 }
 .card__weak {
   font-size: var(--text-sm);
@@ -398,7 +401,7 @@
   transition: background-color var(--duration-base) var(--ease-out);
 }
 .objection:hover {
-  background: var(--color-surface-sunken);
+  background: var(--color-glass-hover);
 }
 .objection__n {
   color: var(--color-ink-faint);
@@ -537,7 +540,7 @@
   font-size: var(--text-sm);
   line-height: var(--line-3);
   padding: var(--space-xs) 0;
-  border-top: var(--line-width) solid var(--color-line);
+  border-top: var(--line-width) solid var(--color-glass-line);
 }
 .evidence__row:first-of-type {
   border-top: 0;
@@ -695,7 +698,7 @@
 .deps td {
   text-align: left;
   padding: var(--space-xs) var(--space-md);
-  border-top: var(--line-width) solid var(--color-line);
+  border-top: var(--line-width) solid var(--color-glass-line);
   font-weight: var(--weight-regular);
 }
 .deps th {
@@ -741,7 +744,8 @@
   font-size: var(--text-sm);
 }
 .preview__call {
-  background: var(--color-surface-sunken);
+  background: var(--color-glass-hover);
+  border-radius: var(--radius-sm);
   padding: var(--space-sm) var(--space-md);
   display: flex;
   flex-direction: column;
@@ -791,7 +795,7 @@
   flex-direction: column;
   gap: var(--space-xs);
   padding-top: var(--space-sm);
-  border-top: var(--line-width) solid var(--color-line);
+  border-top: var(--line-width) solid var(--color-glass-line);
 }
 .paste__facts {
   display: grid;

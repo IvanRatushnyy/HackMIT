@@ -110,7 +110,7 @@ export function Query() {
       <Header />
       {q && (
         <div className="col">
-          <div className="title fade">
+          <div className="title arrive">
             <div className="title__main">
               <Kicker>{phase === 'working' ? KIND_WORD[q.kind] : q.kind === 'drug' ? 'drug' : 'condition'}</Kicker>
               <h1 className="display-sm">{q.heading}</h1>
@@ -143,8 +143,9 @@ export function Query() {
           </div>
 
           {phase === 'working' && (
-            <div className="working">
-              <ul className="panel" aria-label="Evidence ledger">
+            <div className="working arrive" style={{ '--i': 1 } as React.CSSProperties}>
+              {/* The ledger's shadow is raspberry until the last step completes */}
+              <ul className={`panel${done < q.ledger.rows.length ? ' panel--working' : ''}`} aria-label="Evidence ledger">
                 {q.ledger.rows.map((row, i) => {
                   const state: RowState = i < done ? 'done' : i === done ? 'running' : 'pending'
                   return (
@@ -163,26 +164,28 @@ export function Query() {
                 })}
               </ul>
               {selected && (
-                <aside className="panel panel--pad step-panel fade" key={selected.id} aria-label={`Step ${selected.id}`}>
-                  <Kicker>
-                    step {selectedStep! + 1} · {selected.step}
-                  </Kicker>
-                  <div className="step-panel__list">
-                    {selected.records
-                      .filter((r) => r.published <= today)
-                      .slice(0, 8)
-                      .map((r, i) => (
-                        <div className="step-panel__item" key={i}>
-                          <span>{r.value}</span>
-                          <span className="faint">{r.published.slice(0, 4)}</span>
-                        </div>
-                      ))}
-                    {selected.records.length === 0 && <div className="step-panel__item muted">nothing returned</div>}
-                  </div>
-                  <p className="step-panel__foot">
-                    {ledgerResult(selected, today)} · {selected.source}
-                  </p>
-                </aside>
+                <div className="arrive" key={selected.id}>
+                  <aside className="panel panel--pad step-panel" aria-label={`Step ${selected.id}`}>
+                    <Kicker>
+                      step {selectedStep! + 1} · {selected.step}
+                    </Kicker>
+                    <div className="step-panel__list">
+                      {selected.records
+                        .filter((r) => r.published <= today)
+                        .slice(0, 8)
+                        .map((r, i) => (
+                          <div className="step-panel__item" key={i}>
+                            <span>{r.value}</span>
+                            <span className="faint">{r.published.slice(0, 4)}</span>
+                          </div>
+                        ))}
+                      {selected.records.length === 0 && <div className="step-panel__item muted">nothing returned</div>}
+                    </div>
+                    <p className="step-panel__foot">
+                      {ledgerResult(selected, today)} · {selected.source}
+                    </p>
+                  </aside>
+                </div>
               )}
             </div>
           )}
@@ -222,7 +225,7 @@ function ResultsList({ page }: { page: ResultsPage }) {
   ]
   let rank = 0
   return (
-    <div className="fade" style={{ '--i': 1 } as React.CSSProperties}>
+    <div className="arrive" style={{ '--i': 1 } as React.CSSProperties}>
       <div className="thead results__head">
         <span className="kicker">#</span>
         <span className="kicker">{drugFirst ? 'indication' : 'candidate'}</span>
@@ -321,7 +324,7 @@ function Board({ page }: { page: ResultsPage }) {
   const navigate = useNavigate()
   const drugFirst = page.query.kind === 'drug'
   return (
-    <div className="board fade" style={{ '--i': 1 } as React.CSSProperties}>
+    <div className="board arrive" style={{ '--i': 1 } as React.CSSProperties}>
       {STAGES.map((stage, si) => {
         const cards = page.candidates.filter((c) => bestEvidenceAt(c, todayDate(c))?.stage === stage.id)
         return (
@@ -334,21 +337,21 @@ function Board({ page }: { page: ResultsPage }) {
               const be = bestEvidenceAt(c, todayDate(c))!
               const weak = resolveTimeline(c.weakest_link, todayDate(c))
               return (
-                <div
-                  key={c.slug}
-                  className="panel card fade"
-                  style={{ '--i': si + i } as React.CSSProperties}
-                  onClick={() => navigate(candidatePath(page, c))}
-                  onKeyDown={(e) => e.key === 'Enter' && navigate(candidatePath(page, c))}
-                  role="link"
-                  tabIndex={0}
-                >
-                  <span className="display-xs">{drugFirst ? c.condition : c.name}</span>
-                  <span className="cell__line">
-                    <OutcomeChip be={be} />
-                    <span className="cell__sub">{be.n !== undefined ? `n = ${be.n}` : bestEvidenceText(be)}</span>
-                  </span>
-                  <span className="card__weak">{weak?.why}</span>
+                <div key={c.slug} className="fade" style={{ '--i': si + i } as React.CSSProperties}>
+                  <div
+                    className="panel card"
+                    onClick={() => navigate(candidatePath(page, c))}
+                    onKeyDown={(e) => e.key === 'Enter' && navigate(candidatePath(page, c))}
+                    role="link"
+                    tabIndex={0}
+                  >
+                    <span className="display-xs">{drugFirst ? c.condition : c.name}</span>
+                    <span className="cell__line">
+                      <OutcomeChip be={be} />
+                      <span className="cell__sub">{be.n !== undefined ? `n = ${be.n}` : bestEvidenceText(be)}</span>
+                    </span>
+                    <span className="card__weak">{weak?.why}</span>
+                  </div>
                 </div>
               )
             })}

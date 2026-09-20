@@ -54,7 +54,7 @@ export function Detail() {
     <main className="page">
       <Header />
       <div className="col">
-        <div className="title fade">
+        <div className="title arrive">
           <div className="title__main">
             <p className="detail__meta">
               <Link to={backTo.to}>{backTo.word}</Link> · {c.drug_class} · approved for {c.approved_indication} · {c.mechanism.split('→').slice(1).join('→').trim()}
@@ -81,19 +81,19 @@ export function Detail() {
           </div>
         </div>
 
-        {/* Keyed on the cutoff: a date change re-mounts the body as one staggered reveal. */}
+        {/* Keyed on the cutoff: a date change re-mounts the body as one staggered arrival. */}
         <div className="detail__body" key={cutoff.id}>
-          <div className="fade" style={{ '--i': 1 } as React.CSSProperties}>
+          <div className="arrive" style={{ '--i': 1 } as React.CSSProperties}>
             <Objections candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
           </div>
-          <div className="fade" style={{ '--i': 2 } as React.CSSProperties}>
+          <div className="arrive" style={{ '--i': 2 } as React.CSSProperties}>
             <Mechanism candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
           </div>
-          <div className="two fade" style={{ '--i': 3 } as React.CSSProperties}>
+          <div className="two arrive" style={{ '--i': 3 } as React.CSSProperties}>
             <SafetyPanel candidate={c} cutoff={cutoff} />
             <BeforeTrial candidate={c} cutoff={cutoff} isToday={isToday} />
           </div>
-          <div className="fade" style={{ '--i': 4 } as React.CSSProperties}>
+          <div className="arrive" style={{ '--i': 4 } as React.CSSProperties}>
             <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
           </div>
         </div>

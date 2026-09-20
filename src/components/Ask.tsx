@@ -1,13 +1,13 @@
 /* elute — the ask box on Entry: a chat composer with the paste button and the send button inside it.
- * The typeahead is the header field's. The box is glass in the stylesheet's own terms: a translucent
- * surface with a backdrop blur over a soft shadow that sits behind it as a sibling, so the shadow shows
- * through the lower part of the box and spills out below it, and turns raspberry while the field has focus. */
+ * The box is glass in the stylesheet's own terms: a translucent surface with a backdrop blur over a soft
+ * shadow that sits behind it as a sibling, so the shadow shows through the lower part of the box and spills
+ * out below it, glowing raspberry at the rim while the field has focus. */
 
 import { useLayoutEffect, useRef } from 'react'
-import { useTypeahead } from './SearchField'
+import { useAsk } from './useAsk'
 
 export function Ask({ pasteOpen, pasteId, onPaste }: { pasteOpen: boolean; pasteId: string; onPaste: () => void }) {
-  const t = useTypeahead({ menu: false }) // no suggestions while typing; Enter resolves the best match
+  const t = useAsk()
   const input = useRef<HTMLTextAreaElement>(null)
 
   // The field grows with its text, up to the stylesheet's max-height
@@ -19,7 +19,7 @@ export function Ask({ pasteOpen, pasteId, onPaste }: { pasteOpen: boolean; paste
   }, [t.text])
 
   return (
-    <div className="typeahead" ref={t.wrap}>
+    <div className="ask-wrap">
       <div className="ask__shadow" aria-hidden="true" />
       <div className="ask">
         <textarea
@@ -52,7 +52,7 @@ export function Ask({ pasteOpen, pasteId, onPaste }: { pasteOpen: boolean; paste
           </button>
         </div>
       </div>
-      {t.note && <p className="typeahead__note annotation">{t.note}</p>}
+      {t.note && <p className="ask__note annotation">{t.note}</p>}
     </div>
   )
 }

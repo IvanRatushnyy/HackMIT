@@ -173,25 +173,20 @@ em {
   flex: none;
 }
 
-/* ---- Header (every page): wordmark, the field, the shard band --------------------- */
+/* ---- Header (every page): the wordmark, the shard band ------------------------------- */
 
 .header {
   height: var(--header-height);
   display: grid;
-  grid-template-columns: 720px 1fr;
+  /* The white block hugs the wordmark, 40px to its left (optically the same as the air above and below
+   * its ink) and 45px to its right, and the band starts at its edge: the same place on every page. */
+  grid-template-columns: max-content 1fr;
   background: var(--color-surface); /* no line beneath: the white block meets the sunken page directly */
-}
-.header--entry {
-  /* The band's left edge sits on the narrow column's text edge: the centring
-   * offset plus the column padding. Never narrower than the wordmark needs. */
-  grid-template-columns: minmax(max-content, calc(max(0px, (100% - var(--col-narrow)) / 2) + var(--col-pad))) 1fr;
 }
 .header__block {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  /* 40px left: optically the same as the ~40px above and below the wordmark's ink in the 120px header */
-  padding: 0 var(--space-lg) 0 40px;
+  padding: 0 45px 0 40px;
 }
 /* ---- The shard: thirteen planes, composed topmost first, decomposed bottommost first ------- */
 
@@ -245,12 +240,20 @@ html[data-splash] .header .wordmark {
   opacity: 0;
 }
 
-/* ---- Panel: a white reading surface with one line ---------------------------------- */
+/* ---- Panel: a glass reading surface -------------------------------------------------- */
 
+/* Every surface in the flow is the same glass as the ask box: translucent white, a hairline of light along
+ * the inside edge, and a soft shadow behind it (a pseudo-element, inset from the top and let out below, so
+ * it shows through the lower part and spills beneath). The shadow sits at z-index -1, which puts it behind
+ * the panel's own background only while the panel is not a stacking context: a panel never carries a
+ * transform, filter, opacity, or backdrop-filter of its own. The block that arrives is a wrapper. */
 .panel {
-  background: var(--color-surface);
-  border: var(--line-width) solid var(--color-line);
-  border-radius: var(--radius);
+  position: relative;
+  background: var(--color-glass);
+  border-radius: var(--radius-glass);
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0 0 / 0.7),
+    inset 0 0 0 1px oklch(100% 0 0 / 0.35);
 }
 .panel--pad {
   padding: var(--space-md);
@@ -260,10 +263,58 @@ html[data-splash] .header .wordmark {
   align-items: center;
   min-height: 56px;
   padding: 0 var(--space-md);
-  border-top: var(--line-width) solid var(--color-line);
+  border-top: var(--line-width) solid var(--color-glass-line);
 }
 .panel__row:first-child {
   border-top: 0;
+}
+/* A row's fill follows the panel's corners */
+.panel > .panel__row:first-child,
+.panel > :first-child > .panel__row:first-child {
+  border-top-left-radius: var(--radius-glass);
+  border-top-right-radius: var(--radius-glass);
+}
+.panel > .panel__row:last-child,
+.panel > :last-child > .panel__row:last-child {
+  border-bottom-left-radius: var(--radius-glass);
+  border-bottom-right-radius: var(--radius-glass);
+}
+
+/* The shadow behind a glass surface: the panel's pseudo-element, or the ask box's sibling. It turns
+ * raspberry, with a glow gathering at the rim, while something is happening on the surface: the field
+ * has focus, the ledger is running. */
+.panel::before,
+.ask__shadow {
+  position: absolute;
+  inset: var(--space-md) var(--space-md) calc(-1 * var(--space-xs));
+  border-radius: var(--radius-glass);
+  background: var(--glass-shade, var(--color-glass-shade));
+  box-shadow: 0 0 40px 8px var(--glass-rim, transparent);
+  filter: blur(24px);
+  pointer-events: none;
+  transition:
+    background-color var(--duration-arrive) var(--ease-out),
+    box-shadow var(--duration-arrive) var(--ease-out);
+}
+/* A panel can be tall, so its shade starts lower and is lighter than the box's, or the whole interior dims */
+.panel::before {
+  content: '';
+  z-index: -1;
+  inset: 40% var(--space-md) calc(-1 * var(--space-xs));
+  background: var(--glass-shade, oklch(13.1% 0.016 276 / 0.14));
+}
+.panel--working,
+.ask-wrap:focus-within {
+  --glass-shade: oklch(from var(--color-glow) l c h / 0.14);
+  --glass-rim: oklch(from var(--color-glow) l c h / 0.3);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .panel,
+  .ask {
+    background: var(--color-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /* Table headers inside panels and lists */
@@ -278,31 +329,14 @@ html[data-splash] .header .wordmark {
 
 /* ---- Controls ------------------------------------------------------------------------ */
 
-.field {
-  height: var(--size-control);
-  width: 384px;
-  padding: 0 var(--space-sm);
-  border: var(--line-width) solid var(--color-line);
-  background: var(--color-surface);
-  border-radius: var(--radius);
-  transition: border-color var(--duration-base) var(--ease-out);
+/* The ask box on Entry: a chat composer on the same glass as every panel, with a backdrop blur it can
+ * afford because its shadow is a sibling (.ask__shadow) rather than its own pseudo-element: the box
+ * animates its arrival, and an animated element would trap its own shadow in front of its background. */
+.ask-wrap {
+  position: relative;
+  width: 100%;
 }
-.field::placeholder {
-  color: var(--color-ink-faint);
-}
-.field:focus {
-  outline: none;
-  border-color: var(--color-accent);
-}
-
-/* The ask box on Entry: a chat composer, and the one glass surface. Glass here is the stylesheet's own:
- * a translucent white surface with a backdrop blur, a hairline of light along its inside edge, and a soft
- * shadow that sits behind it as a sibling, inset from the top and let out below, so it shows through the
- * lower part of the box and spills out beneath. While the field has focus a raspberry glow spreads from the
- * shadow's edge, so it gathers along the box's rim, inside and out, with only a faint tint across the middle.
- * No line; round, like every floating control. */
 .ask {
-  --ask-radius: 24px;
   position: relative;
   display: grid;
   grid-template-rows: 1fr auto;
@@ -311,37 +345,18 @@ html[data-splash] .header .wordmark {
   width: 100%;
   min-height: 288px;
   padding: var(--space-lg);
-  border-radius: var(--ask-radius);
-  background: oklch(99% 0.003 276 / 0.58);
+  border-radius: var(--radius-glass);
+  background: var(--color-glass);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
   backdrop-filter: blur(24px) saturate(1.2);
   box-shadow:
     inset 0 1px 0 oklch(100% 0 0 / 0.7),
     inset 0 0 0 1px oklch(100% 0 0 / 0.35);
 }
-.ask__shadow {
-  --glow-fade: calc(var(--duration-slow) + var(--duration-base)); /* 640ms, unhurried */
-  position: absolute;
-  inset: var(--space-md) var(--space-md) calc(-1 * var(--space-xs));
-  border-radius: var(--ask-radius);
-  background: oklch(13.1% 0.016 276 / 0.24);
-  box-shadow: 0 0 40px 8px oklch(from var(--color-glow) l c h / 0);
-  filter: blur(24px);
-  pointer-events: none;
-  transition:
-    background-color var(--glow-fade) var(--ease-out),
-    box-shadow var(--glow-fade) var(--ease-out);
-}
-.typeahead:focus-within .ask__shadow {
-  background: oklch(from var(--color-glow) l c h / 0.14);
-  box-shadow: 0 0 40px 8px oklch(from var(--color-glow) l c h / 0.3);
-}
-@media (prefers-reduced-transparency: reduce) {
-  .ask {
-    background: var(--color-surface);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
+.ask__note {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
 }
 .ask__input {
   display: block;
@@ -416,39 +431,6 @@ html[data-splash] .header .wordmark {
   opacity: 0.4;
   cursor: default;
   transform: none;
-}
-
-.typeahead {
-  position: relative;
-  width: 100%;
-}
-.typeahead__menu {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: 100%;
-  z-index: var(--z-dropdown);
-  background: var(--color-surface);
-  border: var(--line-width) solid var(--color-line);
-}
-.typeahead__item {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: var(--size-control);
-  padding: 0 var(--space-sm);
-  align-items: center;
-  text-align: left;
-  transition: background-color var(--duration-fast) var(--ease-out);
-}
-.typeahead__item[aria-selected='true'],
-.typeahead__item:hover {
-  background: var(--color-surface-selected);
-}
-.typeahead__note {
-  margin-top: var(--space-xs);
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
 }
 
 .btn {
@@ -604,7 +586,7 @@ html[data-splash] .header .wordmark {
   gap: var(--space-sm);
   min-height: 56px;
   padding: 0 var(--space-md);
-  border-top: var(--line-width) solid var(--color-line);
+  border-top: var(--line-width) solid var(--color-glass-line);
   text-align: left;
   width: 100%;
 }
@@ -720,10 +702,37 @@ html[data-splash] .header .wordmark {
   }
 }
 
-/* A block that has just arrived fades in. --i staggers siblings by 40ms so a page reads as one reveal. */
+/* A row that has just arrived fades in. --i staggers siblings by 40ms. */
 .fade {
   animation: appear var(--duration-base) var(--ease-out) both;
   animation-delay: calc(var(--i, 0) * 40ms);
+}
+
+/* A block arriving on a page, the way the ask box does: already there at slightly larger bounds and soft,
+ * fading in and settling to size with one small undershoot, sharp by the time it stops. --i staggers
+ * siblings by 40ms so a page reads as one reveal. On the block around a surface, never on a panel itself. */
+.arrive {
+  animation: arrive var(--duration-arrive) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+@keyframes arrive {
+  0% {
+    opacity: 0;
+    transform: scale(1.03);
+    filter: blur(8px);
+    animation-timing-function: var(--ease-out);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(0.996);
+    filter: blur(0);
+    animation-timing-function: var(--ease-in-out);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
 }
 
 /* Disclosure bodies open as a height change on the grid, never a slide */
@@ -756,6 +765,10 @@ html[data-splash] .header .wordmark {
     max-width: none;
   }
   .panel {
-    border: 0;
+    background: #fff;
+    box-shadow: none;
+  }
+  .panel::before {
+    display: none;
   }
 }

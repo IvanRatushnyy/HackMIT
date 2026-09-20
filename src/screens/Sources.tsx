@@ -62,7 +62,7 @@ export function Sources() {
     <main className="page">
       <Header />
       <div className="col">
-        <div className="title fade">
+        <div className="title arrive">
           <div className="title__main">
             <Kicker>run · {runAt ? runAt.replace('T', ' ').slice(0, 16) : ''}</Kicker>
             <h1 className="display-sm">sources</h1>
@@ -98,7 +98,7 @@ export function Sources() {
         </div>
 
         {q && tab === 'ledger' && (
-          <div className="fade" style={{ '--i': 1 } as React.CSSProperties} key="ledger">
+          <div className="arrive" style={{ '--i': 1 } as React.CSSProperties} key="ledger">
             <div className="thead sources__head">
               <span className="kicker">line</span>
               <span className="kicker">step</span>
@@ -144,7 +144,7 @@ export function Sources() {
         )}
 
         {q && tab === 'tools' && (
-          <div className="toolcalls fade" key="tools">
+          <div className="toolcalls arrive" key="tools">
             {q.ledger.rows.map((row) => (
               <div key={row.id} className="section">
                 <Kicker>
@@ -157,41 +157,43 @@ export function Sources() {
         )}
 
         {tab === 'packages' && (
-          <div className="panel fade" key="packages">
-            <table className="deps">
-              <thead>
-                <tr>
-                  <th>package</th>
-                  <th>version</th>
-                  <th>license</th>
-                  <th>role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(pkg.dependencies).map(([name, v]) => (
-                  <tr key={name}>
-                    <td>{name}</td>
-                    <td className="raw">{v}</td>
-                    <td>MIT</td>
-                    <td className="muted">{ROLE[name] ?? ''}</td>
+          <div className="arrive" key="packages">
+            <div className="panel">
+              <table className="deps">
+                <thead>
+                  <tr>
+                    <th>package</th>
+                    <th>version</th>
+                    <th>license</th>
+                    <th>role</th>
                   </tr>
-                ))}
-                <tr>
-                  <td>liquid-glass-js (vendored)</td>
-                  <td className="raw">design/glass/vendor/VERSION</td>
-                  <td>MIT</td>
-                  <td className="muted">not loaded in v1</td>
-                </tr>
-              </tbody>
-            </table>
-            <p className="panel__row muted text-sm" style={{ minHeight: 48 }}>
-              Fixture mode makes no network requests and needs no keys. In production the ledger steps would call the sources listed under Status rules.
-            </p>
+                </thead>
+                <tbody>
+                  {Object.entries(pkg.dependencies).map(([name, v]) => (
+                    <tr key={name}>
+                      <td>{name}</td>
+                      <td className="raw">{v}</td>
+                      <td>MIT</td>
+                      <td className="muted">{ROLE[name] ?? ''}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td>liquid-glass-js (vendored)</td>
+                    <td className="raw">design/glass/vendor/VERSION</td>
+                    <td>MIT</td>
+                    <td className="muted">not loaded in v1</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="panel__row muted text-sm" style={{ minHeight: 48 }}>
+                Fixture mode makes no network requests and needs no keys. In production the ledger steps would call the sources listed under Status rules.
+              </p>
+            </div>
           </div>
         )}
 
         {prov && tab === 'rules' && (
-          <div className="rules fade" key="rules">
+          <div className="rules arrive" key="rules">
             <div className="section">
               <Kicker>label rules, in order</Kicker>
               <ol>
