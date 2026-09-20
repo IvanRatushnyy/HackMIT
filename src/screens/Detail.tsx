@@ -35,7 +35,8 @@ export function Detail({ banner }: { banner: string }) {
   const isToday = isTodayCutoff(c, cutoff)
   const be = bestEvidenceAt(c, cutoff.date)
   const refuted = !!be && be.controlled && be.outcome === 'negative'
-  const sourcesHref = `/q/${query}/sources`
+  // Citations carry the cutoff so the Sources page filters to the same date (never later evidence from a historical view).
+  const sourcesHref = `/q/${query}/sources${isToday ? '' : `?asof=${cutoff.id}&c=${candidateParam}`}`
   const exportHref = `/q/${query}/${candidateParam}/export${isToday ? '' : `?asof=${cutoff.id}`}`
 
   const changeCutoff = (next: Cutoff) => {

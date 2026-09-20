@@ -346,6 +346,7 @@ export const nilotinib: CandidateDetail = {
     {
       from: '2007-10-29',
       value: {
+        severity: 'boxed',
         flag: 'QT prolongation',
         kind: 'boxed warning',
         reason: 'sudden deaths reported in leukemia patients',

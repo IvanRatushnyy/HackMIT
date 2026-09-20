@@ -10,11 +10,13 @@ import { source } from '../data/source'
 const COVERED = 'Not in the curated set. Fixture mode covers Parkinson’s disease, metformin, and nilotinib for Parkinson’s.'
 
 function matches(entities: Entity[], text: string): Entity[] {
-  const q = text.trim().toLowerCase()
+  const q = text.trim().toLowerCase().replace(/[’']/g, "'")
   if (!q) return []
-  return entities
-    .filter((e) => e.name.toLowerCase().includes(q) || e.aliases.some((a) => a.includes(q) || q.includes(a)))
-    .slice(0, 6)
+  const norm = (x: string) => x.toLowerCase().replace(/[’']/g, "'")
+  const exact = entities.filter((e) => norm(e.name) === q || e.aliases.some((a) => norm(a) === q))
+  const partial = entities.filter((e) => !exact.includes(e) && (norm(e.name).includes(q) || e.aliases.some((a) => norm(a).includes(q) || q.includes(norm(a)))))
+  // Exact name or alias matches rank first, so "nilotinib for parkinson's disease" submits the pair, not the condition.
+  return [...exact, ...partial].slice(0, 6)
 }
 
 export function SearchField({ compact = false, big = false, autoFocus = false }: { compact?: boolean; big?: boolean; autoFocus?: boolean }) {

@@ -284,11 +284,15 @@ function Row({ c, rank, page }: { c: CandidateDetail; rank: number; page: Result
       </div>
       <div className="cell">
         {safety ? (
-          <span>
-            <span className="critical medium">{safety.flag}</span> <span className="cell__sub">— {safety.kind}</span>
-          </span>
+          safety.severity === 'none' ? (
+            <span className="muted">none flagged · label reviewed</span>
+          ) : (
+            <span>
+              <span className="critical medium">{safety.flag}</span> <span className="cell__sub">— {safety.kind}</span>
+            </span>
+          )
         ) : (
-          <span className="muted">none flagged</span>
+          <span className="muted">not assessed</span>
         )}
       </div>
       {refuted ? <span className="cell__dash">–</span> : <span className="cell__count">{unresolvedCount(c, today)}</span>}

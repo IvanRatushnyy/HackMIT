@@ -22,6 +22,11 @@ function draft(
 }
 
 const pm = (term: string) => `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(term)}`
+const dailymed = (drug: string) => `https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=${encodeURIComponent(drug)}`
+
+/** US prescribing information, reached through the openFDA/DailyMed step (L8). */
+const label = (id: string, drug: string, year: number, published: string): Source =>
+  src({ id, first_author: 'FDA', journal: `${drug} prescribing information`, year, published, design: 'label', controlled: false, outcome: 'na', group: 'FDA', url: dailymed(drug), ledger: 'L8' })
 
 // ---- Ambroxol -----------------------------------------------------------------
 
@@ -227,6 +232,19 @@ export const ambroxol = draft({
       ],
     },
   ],
+  safety: [
+    {
+      from: '2020-01-13',
+      value: {
+        severity: 'none',
+        flag: 'no boxed warning',
+        kind: 'label reviewed',
+        reason: 'decades of over-the-counter use in Europe; no US label',
+        population: 'AiM-PD dosed to 1.26 g/day for six months in 17 patients with no serious adverse events attributed to the drug. An older Parkinson’s population adds nothing specific to watch beyond the usual gastrointestinal effects.',
+        sources: ['mullin-2020'],
+      },
+    },
+  ],
   drivers: { mechanism: 3, clinical: 1, exposure: 2, safety: 3 },
   best_evidence: [{ from: '2020-01-13', value: { design: 'open-label', controlled: false, outcome: 'positive', n: 17, source: 'mullin-2020', stage: 'phase-3-enrolling', label: 'AiM-PD 2020 · ASPro-PD enrolling' } }],
   weakest_link: [
@@ -313,6 +331,7 @@ const exenatideSources: Source[] = [
     url: 'https://pubmed.ncbi.nlm.nih.gov/39919773/',
     ledger: 'L5',
   }),
+  label('fda-bydureon', 'Bydureon (exenatide extended-release)', 2012, '2012-01-27'),
 ]
 
 export const exenatide = draft({
@@ -399,7 +418,20 @@ export const exenatide = draft({
     { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2017-08-03', value: { resolution: 'unmet', word: 'not tested', note: 'No validated progression biomarker was used.', sources: ['athauda-2017'] } }] },
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2017-08-03', value: { resolution: 'met', word: 'acceptable', note: 'Weight loss and GI effects; no safety signal in 194 patients over 96 weeks.', sources: ['vijiaratnam-2025'] } }] },
   ],
-  drivers: { mechanism: 2, clinical: 0, exposure: 1, safety: 3 },
+  safety: [
+    {
+      from: '2012-01-27',
+      value: {
+        severity: 'boxed',
+        flag: 'thyroid C-cell tumours',
+        kind: 'boxed warning',
+        reason: 'rodent finding; the once-weekly formulation carries the warning',
+        population: 'The Parkinson’s trials used the once-weekly formulation. Personal or family history of medullary thyroid carcinoma excludes; weight loss and nausea are common and matter in an older population that is already losing weight.',
+        sources: ['fda-bydureon'],
+      },
+    },
+  ],
+  drivers: { mechanism: 2, clinical: 0, exposure: 1, safety: 2 },
   best_evidence: [{ from: '2025-02-04', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 194, source: 'vijiaratnam-2025', stage: 'phase-3', label: 'Exenatide-PD3 2025' } }],
   weakest_link: [{ from: '2025-02-04', value: { claim: 'c3', why: 'The definitive trial tested the clinical claim directly and found nothing.', sources: ['vijiaratnam-2025'] } }],
 })
@@ -449,6 +481,7 @@ const isradipineSources: Source[] = [
     url: pm('STEADY-PD III isradipine placebo early Parkinson randomized'),
     ledger: 'L5',
   }),
+  label('fda-isradipine', 'isradipine', 1990, '1990-12-21'),
 ]
 
 export const isradipine = draft({
@@ -509,7 +542,20 @@ export const isradipine = draft({
     { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2020-03-31', value: { resolution: 'unmet', word: 'not tested', note: 'No target-engagement biomarker.', sources: ['steady-pd-iii-2020'] } }] },
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2020-03-31', value: { resolution: 'met', word: 'acceptable', note: 'Oedema and dizziness; well tolerated at 10 mg/day.', sources: ['steady-pd-iii-2020'] } }] },
   ],
-  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 3 },
+  safety: [
+    {
+      from: '1990-12-21',
+      value: {
+        severity: 'warning',
+        flag: 'hypotension',
+        kind: 'label warning',
+        reason: 'an antihypertensive given to normotensive patients',
+        population: 'Parkinson’s already brings orthostatic hypotension and falls. STEADY-PD III saw oedema and dizziness at 10 mg/day; any successor trial would need blood-pressure and fall monitoring.',
+        sources: ['fda-isradipine'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 2 },
   best_evidence: [{ from: '2020-03-31', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 336, source: 'steady-pd-iii-2020', stage: 'phase-3', label: 'STEADY-PD III 2020' } }],
   weakest_link: [{ from: '2020-03-31', value: { claim: 'c3', why: 'A tolerated antihypertensive dose was never shown to block the channel in the brain, so the negative trial may not have tested the mechanism.', sources: ['steady-pd-iii-2020'] } }],
 })
@@ -546,6 +592,7 @@ const simvastatinSources: Source[] = [
     url: pm('PD STAT simvastatin neuroprotective Parkinson futility trial'),
     ledger: 'L5',
   }),
+  label('fda-simvastatin', 'simvastatin', 1991, '1991-12-23'),
 ]
 
 export const simvastatin = draft({
@@ -596,7 +643,20 @@ export const simvastatin = draft({
     { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2024-01-01', value: { resolution: 'unmet', word: 'not tested', note: 'No biomarker.', sources: ['pd-stat-2024'] } }] },
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2024-01-01', value: { resolution: 'met', word: 'acceptable', note: 'Decades of use in older adults.', sources: ['pd-stat-2024'] } }] },
   ],
-  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 3 },
+  safety: [
+    {
+      from: '1991-12-23',
+      value: {
+        severity: 'warning',
+        flag: 'myopathy',
+        kind: 'label warning',
+        reason: 'dose-related; the 80 mg dose is restricted',
+        population: 'PD STAT used 80 mg/day, the dose the label restricts to established users. Muscle symptoms overlap with Parkinson’s rigidity and would confound both safety and efficacy readouts.',
+        sources: ['fda-simvastatin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 2 },
   best_evidence: [{ from: '2024-01-01', value: { design: 'RCT (futility)', controlled: true, outcome: 'negative', n: 235, source: 'pd-stat-2024', stage: 'phase-2', label: 'PD STAT 2024' } }],
   weakest_link: [{ from: '2007-07-19', value: { claim: 'c2', why: 'No brain mechanism was ever specified, so nothing links the epidemiology to a testable biology.', sources: ['wolozin-2007'] } }],
 })
@@ -646,6 +706,7 @@ const metforminPdSources: Source[] = [
     url: 'https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2025.1497261/full',
     ledger: 'L5',
   }),
+  label('fda-metformin', 'metformin', 1994, '1994-12-29'),
 ]
 
 export const metforminPd = draft({
@@ -706,7 +767,20 @@ export const metforminPd = draft({
     { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2025-02-20', value: { resolution: 'unmet', word: 'not tested', note: 'No biomarker.', sources: ['metformin-pd-pilot-2025'] } }] },
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2012-07-01', value: { resolution: 'met', word: 'acceptable', note: 'Decades of use; renal function must be monitored in older patients.', sources: ['wahlqvist-2012'] } }] },
   ],
-  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 3 },
+  safety: [
+    {
+      from: '1994-12-29',
+      value: {
+        severity: 'boxed',
+        flag: 'lactic acidosis',
+        kind: 'boxed warning',
+        reason: 'rare, but fatal in half of cases; renal impairment is the main risk',
+        population: 'An older trial population has lower renal function and more contrast imaging and dehydration. eGFR thresholds, dose caps, and sick-day rules would be part of any protocol.',
+        sources: ['fda-metformin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 2 },
   best_evidence: [{ from: '2025-02-20', value: { design: 'randomised pilot', controlled: true, outcome: 'negative', n: 60, source: 'metformin-pd-pilot-2025', stage: 'phase-2', label: 'randomised pilot 2025' } }],
   weakest_link: [{ from: '2014-09-05', value: { claim: 'c3', why: 'No one has shown metformin does in a human brain what it does in a mouse brain.', sources: ['patil-2014'] } }],
 })
@@ -755,6 +829,7 @@ export const metforminAd = draft({
       url: pm('Luchsinger 2016 metformin amnestic mild cognitive impairment pilot'),
       ledger: 'L5',
     }),
+    label('fda-metformin', 'metformin', 1994, '1994-12-29'),
   ],
   trials: 2,
   objections: [
@@ -776,7 +851,20 @@ export const metforminAd = draft({
     { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2017-04-01', value: { resolution: 'unmet', word: 'not tested', note: 'No pathology biomarker.', sources: ['koenig-2017'] } }] },
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2016-01-01', value: { resolution: 'met', word: 'acceptable', note: 'Renal monitoring in older adults.', sources: ['luchsinger-2016'] } }] },
   ],
-  drivers: { mechanism: 1, clinical: 1, exposure: 0, safety: 3 },
+  safety: [
+    {
+      from: '1994-12-29',
+      value: {
+        severity: 'boxed',
+        flag: 'lactic acidosis',
+        kind: 'boxed warning',
+        reason: 'rare, but fatal in half of cases; renal impairment is the main risk',
+        population: 'An older trial population has lower renal function and more contrast imaging and dehydration. eGFR thresholds, dose caps, and sick-day rules would be part of any protocol.',
+        sources: ['fda-metformin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 1, exposure: 0, safety: 2 },
   best_evidence: [{ from: '2017-04-01', value: { design: 'RCT pilot', controlled: true, outcome: 'mixed', n: 80, source: 'luchsinger-2016', stage: 'phase-2', label: 'Luchsinger 2016 · Koenig 2017' } }],
   weakest_link: [{ from: '2016-01-01', value: { claim: 'c1', why: 'The mechanism is asserted, not shown; nothing links insulin signalling to slowed pathology in people.', sources: ['luchsinger-2016'] } }],
 })
@@ -807,6 +895,7 @@ export const metforminCrc = draft({
       url: pm('Higurashi 2016 metformin chemoprevention colorectal adenoma Lancet Oncology'),
       ledger: 'L5',
     }),
+    label('fda-metformin', 'metformin', 1994, '1994-12-29'),
   ],
   trials: 1,
   objections: [
@@ -827,6 +916,19 @@ export const metforminCrc = draft({
     { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2016-04-01', value: { resolution: 'unmet', word: 'none', note: 'One trial, one group.', sources: ['higurashi-2016'] } }] },
     { id: 'p4', condition: 'Surrogate validated against the outcome that matters', status: [{ from: '2016-04-01', value: { resolution: 'unmet', word: 'no', note: 'Adenoma recurrence, not cancer incidence.', sources: ['higurashi-2016'] } }] },
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2016-04-01', value: { resolution: 'met', word: 'acceptable', note: 'Low dose, non-diabetic adults.', sources: ['higurashi-2016'] } }] },
+  ],
+  safety: [
+    {
+      from: '1994-12-29',
+      value: {
+        severity: 'boxed',
+        flag: 'lactic acidosis',
+        kind: 'boxed warning',
+        reason: 'rare, but fatal in half of cases; renal impairment is the main risk',
+        population: 'A post-polypectomy population is younger and non-diabetic; at 250 mg/day the risk is remote, but renal function still gates eligibility. eGFR thresholds, dose caps, and sick-day rules would be part of any protocol.',
+        sources: ['fda-metformin'],
+      },
+    },
   ],
   drivers: { mechanism: 1, clinical: 2, exposure: 1, safety: 3 },
   best_evidence: [{ from: '2016-04-01', value: { design: 'RCT', controlled: true, outcome: 'positive', n: 151, source: 'higurashi-2016', stage: 'phase-3', label: 'Higurashi 2016' } }],

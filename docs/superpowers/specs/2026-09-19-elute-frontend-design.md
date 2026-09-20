@@ -1,6 +1,6 @@
 # Elute — frontend design (v1, fixture mode)
 
-**Date:** September 19, 2026 · **Status:** draft v3, reconciled with two Codex adversarial review passes (§15) · **Scope:** the frontend for the Regeneron-track demo, running on curated fixtures, built so a backend can replace the fixture source without changing screens.
+**Date:** September 19, 2026 · **Status:** v4 — v3 plus the flow revision in §16, which supersedes §§3–5 where they differ · **Scope:** the frontend for the Regeneron-track demo, running on curated fixtures, built so a backend can replace the fixture source without changing screens.
 
 **Sources of truth, in order:** `PRD Elute.md` (flow, copy, cut) → the Figma mockup (`oXHypg8b6ZzUavBffDq7MO`, frames *Desktop - 1* and *Desktop - 2*: composition) → `DESIGN.md` and `design/` (type, color, grid, glass, motion). Where they conflict, the earlier one in this list wins, and §11 lists the DESIGN.md edits that follow.
 
@@ -482,3 +482,44 @@ Codex re-reviewed v2 and confirmed R5, R8, R9, R10 closed and the §5.3 width ta
 | — | Single-segment as-of control: consistent; implement as non-interactive status | — | Already specified so (§5.7). |
 
 Where this spec and the review still differ: none outstanding. Two points go to the product owner because they change stated design: the vertical chain, and the chain-of-claims model (which the PRD's "each link one claim" supports but DESIGN.md's node-and-link drawing does not).
+
+
+## 16. Flow revision (v4) — the user-flow mockups
+
+After v3 was approved and built, the product owner supplied seven user-flow mockups (Appraise, Working, Results list, Results board, Detail, Sources, Export) and asked for the flow to follow them, the data banner to go, Aujournuit titles to be lowercase, one tighter header, and subtle, consistent motion. The mockups define **structure and flow**; the design system defines **material** (type, palette, grid, sharp corners, label squares instead of the mockups' green/amber dots). This section records what changed against §§2–5. Where §16 and an earlier section differ, §16 wins.
+
+### 16.1 Decisions changed
+
+| # | Was (v3) | Now (v4) | Why |
+|---|---|---|---|
+| 2 | Rail on Detail | **No rail.** Detail is one column; a selected chain link opens a claim/evidence panel below the chain; citations go to the Sources page | The mockup's Detail is a single reading column; the width problem that forced the vertical chain disappears |
+| 3 | One rounded 32px sheet per page | **White panels with one 1px line on the sunken page; nothing rounded** | The mockups are panels on an off-white page; DESIGN.md's sharp-corner rule holds without an exception |
+| 4 | Sentence + field in a white band, glass chips over the shard hero, worked appraisal below | **Appraise page:** kicker, 64px field with the *Appraise* button inside, three outlined mode chips, *paste a paper*, a *recent* list. No shard hero; the shard is the header band on every page | Mockup 1 |
+| 5 | Driver bar on the results row | **Driver bar on the Detail title block (Today only)**; rows carry chip, weakest link, safety, unresolved count | Mockup 3's row has no bar; the bar shows what set the rank where there is room |
+| 8 | Vertical chain of claims | **Horizontal chain of claims**: nodes as boxes, each claim drawn as the link between two nodes with its label square, word, caption, and a *weakest link* badge; no filter pill | Mockup 5; with no rail the six-node chain fits the column at 1280 |
+| 9 | Ledger collapses to a disclosure line above the results | **Working page** with the ledger in a panel (✓ / ! / ● glyphs, running row with a 2px bar, pending rows faint), a side panel showing a finished step's records, and a status line; after completion the results replace it and the ledger lives on the **Sources** page | Mockup 2 |
+| 10 | `/methods` | **`/q/:query/sources`** with tabs *Ledger · Tool calls · Packages · Status rules*; records numbered 1.1, 2.2 …; `/methods` redirects | Mockup 6 |
+| 11 | Copy as document + Print from Detail | **`/q/:query/:candidate/export`**: format (Markdown, JSON, print), include checkboxes, live preview; download, copy, copy link. Detail's *Export appraisal* button leads there | Mockup 7 |
+| 12 | Scatter view; paste-a-paper cut | **Board view** (columns by trial stage) replaces the scatter; **paste-a-paper is in** as an inline panel with a static extraction preview for three fixture papers and an honest no-match state | Mockup 4 shows a board; mockup 1 shows the paste link, and a visible link must work |
+| 15 | CSS glass now, WebGL later | **No glass loaded.** No control floats over something being read in this flow; the layer stays vendored | Nothing to justify it |
+| 16 | 32px banner under the header | **12px italic data note at the foot of every page**; the Working status line and the Sources sub line also say *scripted sequence, not a live run* | Product owner's call; the PRD's every-screen rule is kept |
+| — | 184px header; wordmark 96/64 | **120px header on every page**: wordmark 48px, the compact field (not on Appraise), the shard band | Product owner's call |
+| — | — | **Aujournuit is always lowercase** (`text-transform` in the tokens); Supreme keeps casing | Product owner's call |
+
+### 16.2 Results grouping
+
+Rows are grouped *not yet refuted* / *refuted in controlled studies* (best evidence controlled and negative), ordered within each group by the §7.3 rule. This makes the PRD's narrative order fall out of the data — the refuted candidates sit below the open ones — without changing the tie-break. The unresolved count is shown only for candidates not yet refuted; refuted rows show a dash.
+
+### 16.3 Data model additions
+
+`Claim.node` (the node a claim arrives at) and `Claim.short` (the link caption); `BestEvidence.stage` (`preclinical · open-label · phase-2 · phase-3-enrolling · phase-3`, the board column) and `BestEvidence.label` (the trial name line); `src/fixtures/papers.ts` for paste-a-paper. Cutoff filtering, label rules, publishability and the expected-label table are unchanged and still pass.
+
+### 16.4 Motion
+
+One reveal per page: blocks rise 8px and fade in with a 40ms stagger (`.rise`, `--i`). Ledger rows rise as they complete; the running row's bar fills over the step's playback duration. Objection rows and disclosures open on `grid-template-rows`. A cutoff change re-mounts the Detail body as one reveal; the rail crossfade is gone with the rail. Hover lifts 1px, press scales 0.98, colour settles over 240ms. Reduced motion collapses every duration through the tokens.
+
+### 16.5 Still open
+
+- The §3 two-minute test has not been run; the README says so.
+- Draft candidates are marked *draft* on the row, the Detail meta line, and the Sources rules tab; their sources need verification.
+- The ledger is scripted; a recorded run would light up the elapsed column and the *accelerated replay* wording automatically (`Ledger.kind`).

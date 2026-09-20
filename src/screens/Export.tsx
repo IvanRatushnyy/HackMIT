@@ -137,22 +137,22 @@ export function Export({ banner }: { banner: string }) {
               <h2 className="display-xs">{doc.title}</h2>
               <p className="preview__meta">{doc.meta}</p>
             </div>
-            {include.call && (
+            {doc.call && (
               <div className="preview__call">
                 <Kicker>your call</Kicker>
                 <p className="medium">{doc.call.choice}</p>
                 <p className="cell__sub">{doc.call.line || 'Reasoning is added on the Detail page'}</p>
               </div>
             )}
+            {/* Every included line is rendered: the preview is the print document. */}
             {doc.sections
               .filter((s) => s.key !== 'call')
               .map((s, i) => (
                 <div className="preview__section" key={s.heading + i}>
                   <Kicker>{s.heading}</Kicker>
-                  {s.lines.slice(0, s.key === 'sources' ? 6 : 8).map((l, j) => (
+                  {s.lines.map((l, j) => (
                     <p key={j}>{l}</p>
                   ))}
-                  {s.lines.length > (s.key === 'sources' ? 6 : 8) && <p className="muted">… {s.lines.length - (s.key === 'sources' ? 6 : 8)} more</p>}
                 </div>
               ))}
             <p className="preview__foot">

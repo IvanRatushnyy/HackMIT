@@ -492,6 +492,10 @@
   font-weight: var(--weight-medium);
   color: var(--color-critical);
 }
+.safety__flag--none {
+  color: var(--color-ink-muted);
+  font-weight: var(--weight-regular);
+}
 .safety__src {
   color: var(--color-ink-muted);
   font-size: var(--text-sm);
@@ -685,4 +689,46 @@
   flex-direction: column;
   gap: var(--space-sm);
   max-width: var(--measure);
+}
+
+/* ---- Paste a paper ------------------------------------------------------------------- */
+
+.paste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.paste__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.paste__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.paste__read {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+  border-top: var(--line-width) solid var(--color-line);
+}
+.paste__facts {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 4px var(--space-sm);
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+.paste__facts dt {
+  color: var(--color-ink-faint);
+}
+.paste__facts dd {
+  margin: 0;
+}
+.entry__modes .cite {
+  margin-left: var(--space-xs);
 }

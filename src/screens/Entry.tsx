@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DataNote, Header, Kicker } from '../components/frame'
 import { SearchField } from '../components/SearchField'
+import { PastePaper } from '../components/PastePaper'
 import { source } from '../data/source'
 import type { QueryRecord } from '../data/types'
 import { loadRecent, whenWord } from '../lib/recent'
@@ -19,6 +20,7 @@ type RecentRow = { q: QueryRecord; at: string; meta: string }
 export function Entry({ banner }: { banner: string }) {
   const navigate = useNavigate()
   const [rows, setRows] = useState<RecentRow[]>([])
+  const [paste, setPaste] = useState(false)
 
   useEffect(() => {
     const seed = ['parkinsons-disease', 'nilotinib--parkinsons-disease', 'metformin']
@@ -51,7 +53,12 @@ export function Entry({ banner }: { banner: string }) {
                 {m.word}
               </button>
             ))}
+            <span className="faint">|</span>
+            <button type="button" className="cite" aria-expanded={paste} onClick={() => setPaste((p) => !p)}>
+              paste a paper (PMID, DOI, abstract)
+            </button>
           </div>
+          {paste && <PastePaper onClose={() => setPaste(false)} />}
         </div>
 
         {rows.length > 0 && (

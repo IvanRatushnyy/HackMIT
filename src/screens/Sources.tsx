@@ -2,12 +2,12 @@
  * This is the provenance surface for the scientist and the IT reviewer. */
 
 import { useEffect, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { DataNote, Header, Kicker } from '../components/frame'
 import { ProvenanceBlock } from '../components/Ledger'
 import { source } from '../data/source'
-import type { Provenance, QueryRecord } from '../data/types'
-import { ledgerResult } from '../lib/evidence'
+import type { CandidateDetail, Cutoff, Provenance, QueryRecord } from '../data/types'
+import { findCutoff, ledgerResult } from '../lib/evidence'
 import pkg from '../../package.json'
 
 const RULES = [
@@ -24,14 +24,26 @@ type Tab = 'ledger' | 'tools' | 'packages' | 'rules'
 export function Sources({ banner }: { banner: string }) {
   const { query = 'parkinsons-disease' } = useParams()
   const location = useLocation()
+  const [params] = useSearchParams()
   const [q, setQ] = useState<QueryRecord | undefined>()
   const [prov, setProv] = useState<Provenance | undefined>()
   const [tab, setTab] = useState<Tab>('ledger')
+  // A citation from a historical Detail carries ?asof=<cutoff>&c=<candidate>; the page then filters to that date.
+  const [frozen, setFrozen] = useState<{ candidate: CandidateDetail; cutoff: Cutoff } | undefined>()
 
   useEffect(() => {
     source.query(query).then(setQ)
     source.provenance().then(setProv)
-  }, [query])
+    const asof = params.get('asof')
+    const cand = params.get('c')
+    if (asof && cand) {
+      source.candidate(query, cand).then((c) => {
+        if (!c) return
+        const cutoff = findCutoff(c, asof)
+        setFrozen(cutoff.id === asof ? { candidate: c, cutoff } : undefined)
+      })
+    } else setFrozen(undefined)
+  }, [query, params])
 
   // A citation link like #L7 lands on its row
   useEffect(() => {
@@ -40,9 +52,10 @@ export function Sources({ banner }: { banner: string }) {
     el?.scrollIntoView({ block: 'center' })
   }, [q, location.hash])
 
-  const today = prov?.today ?? '2026-09-19'
+  const today = frozen ? frozen.cutoff.date : (prov?.today ?? '2026-09-19')
+  const isToday = !frozen
   const runAt = q?.ledger.rows[0]?.execution.run_at
-  const records = q?.ledger.rows.reduce((n, r) => n + r.records.length, 0) ?? 0
+  const records = q?.ledger.rows.reduce((n, r) => n + r.records.filter((x) => x.published <= today).length, 0) ?? 0
   const recorded = q?.ledger.kind === 'recorded'
 
   return (
@@ -57,6 +70,12 @@ export function Sources({ banner }: { banner: string }) {
               <p className="title__sub">
                 <Link to={`/q/${q.slug}`}>{q.heading}</Link> → {q.kind === 'drug' ? 'indications' : q.kind === 'pair' ? 'appraisal' : 'candidates'} · {q.ledger.rows.length} steps ·{' '}
                 {records} records · {recorded ? 'recorded run' : 'scripted sequence, not a live run'}
+              </p>
+            )}
+            {frozen && (
+              <p className="detail__frozen">
+                {frozen.cutoff.note} Records after this date are not shown.{' '}
+                <Link to={`/q/${query}/${params.get('c')}?asof=${frozen.cutoff.id}`}>← back to the appraisal</Link>
               </p>
             )}
           </div>
@@ -131,7 +150,7 @@ export function Sources({ banner }: { banner: string }) {
                 <Kicker>
                   {row.id} · {row.step}
                 </Kicker>
-                <ProvenanceBlock row={row} cutoff={today} isToday />
+                <ProvenanceBlock row={row} cutoff={today} isToday={isToday} />
               </div>
             ))}
           </div>

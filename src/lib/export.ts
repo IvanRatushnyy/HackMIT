@@ -21,7 +21,7 @@ export type ExportDocument = {
   title: string
   meta: string
   dateLine: string
-  call: { choice: string; line: string }
+  call?: { choice: string; line: string } // absent when not included
   sections: ExportSection[]
   dataNote: string
   sourceCount: number
@@ -65,7 +65,11 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
     sections.push({
       key: 'safety',
       heading: 'Safety',
-      lines: safety ? [`${safety.flag} — ${safety.kind}: ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`] : ['None flagged on or before this date.'],
+      lines: safety
+        ? [`${safety.flag} — ${safety.kind}: ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`]
+        : c.safety
+          ? ['The label review in this record is dated after the selected evidence date.']
+          : ['Not assessed: this record carries no safety review. Absence of a flag is missing data, not reassurance.'],
     })
     const prereqs = c.prerequisites.map((p) => {
       const s = resolvePrerequisite(p, d)
@@ -98,7 +102,7 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
     title: `${c.name} for ${c.condition}`,
     meta: `Appraisal · ${cutoff.note.replace(/^Evidence (frozen at|as of) /, 'evidence as of ')} · elute`,
     dateLine: cutoff.note,
-    call: { choice: assessment.choice ?? 'not yet chosen', line: assessment.line ?? '' },
+    call: include.call ? { choice: assessment.choice ?? 'not yet chosen', line: assessment.line ?? '' } : undefined,
     sections,
     dataNote: include.note ? dataNote : '',
     sourceCount: visibleSources.length,

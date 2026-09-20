@@ -210,7 +210,7 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
         {s ? (
           <>
             <div className="safety__head">
-              <p className="safety__flag">
+              <p className={`safety__flag${s.severity === 'none' ? ' safety__flag--none' : ''}`}>
                 {s.flag} — {s.kind}
               </p>
             </div>
@@ -227,12 +227,15 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
               })}
             </p>
           </>
+        ) : candidate.safety ? (
+          <>
+            <p className="safety__flag safety__flag--none">not yet on the label</p>
+            <p className="cell__sub">The label review in this record is dated after the selected evidence date.</p>
+          </>
         ) : (
           <>
-            <p className="safety__flag" style={{ color: 'var(--color-ink-muted)' }}>
-              none flagged
-            </p>
-            <p className="cell__sub">No boxed warning and no population-specific safety argument on or before this date.</p>
+            <p className="safety__flag safety__flag--none">not assessed</p>
+            <p className="cell__sub">This record carries no safety review. Absence of a flag here is missing data, not reassurance.</p>
           </>
         )}
       </div>

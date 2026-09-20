@@ -117,8 +117,9 @@ export type Claim = {
 export type Chain = { drug: string; condition: string; claims: Claim[] }
 
 export type Safety = {
-  flag: string // "QT prolongation"
-  kind: string // "boxed warning"
+  severity: 'boxed' | 'warning' | 'none' // none: the label was reviewed and nothing is flagged
+  flag: string // "QT prolongation", or "no boxed warning" when severity is none
+  kind: string // "boxed warning", "label warning", "label reviewed"
   reason: string // one line beside the word
   population: string // two sentences on the likely trial population
   sources: SourceId[]
