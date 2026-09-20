@@ -50,6 +50,8 @@ def canonicalize(r: RawRecord, facet: str | None = None) -> CanonRecord:
         key = publication_record_id(pmid, pmcid, doi, title, year)
     elif r.kind in ("trial-registration", "trial-results"):
         key = f"{r.nct_id}|{'results' if r.kind == 'trial-results' else 'registration'}"
+    elif r.kind == "label":
+        key = f"label:{p.get('set_id') or (p.get('brand_name') or '').lower() or r.id}"
     else:
         key = r.id
     authors = [a.get("name") if isinstance(a, dict) else str(a) for a in (p.get("authors") or [])]

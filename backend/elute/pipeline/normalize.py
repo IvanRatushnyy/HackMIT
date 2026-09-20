@@ -7,7 +7,8 @@ from elute.connectors.base import Attempt
 from elute.engine.independence import independence_group, normalize_author
 from elute.engine.labels import passes_refutes_gate
 from elute.ids import evidence_id
-from elute.models import Direction, Evidence, Extraction, Population, Relevance, Resolved, StudyType, Supplement
+from elute.models import Direction, Evidence, Extraction, LabelSafety, LabelSection, Population, Relevance, Resolved, SafetySignal, StudyType, Supplement
+from elute.pipeline import label as L
 from elute.pipeline.canonicalize import AbstractRecord, CanonRecord
 
 PROVIDER_BY_TOOL = {"PubMed_search_articles": "pubmed", "PubMed_get_article": "pubmed", "ClinicalTrials_search_studies": "clinicaltrials_gov"}
@@ -22,7 +23,7 @@ def _confidence(date_basis: str) -> str:
 
 
 def _supplements(attempts: list[Attempt], names: tuple[str, ...]) -> list[Supplement]:
-    return [Supplement(tool=a.tool, outcome=a.outcome) for a in attempts if a.tool in names and a.transport == "direct"]
+    return [Supplement(tool=a.tool, transport=a.transport, outcome=a.outcome) for a in attempts if a.tool in names and a.transport in ("direct", "tooluniverse")]
 
 
 def _tool_name(c: CanonRecord) -> str | None:
@@ -139,6 +140,72 @@ def evidence_from_association(c: CanonRecord, resolved: Resolved, attempts: list
                     transport=c.transport, tool_name=_tool_name(c), supplements=_supplements(attempts, ("europepmc.dates",)), statement=statement, source_name=c.source_name,
                     source_url=c.url, publication_date=c.published, date_confidence=_confidence(c.date_basis), date_basis=c.date_basis, study_type="unknown", population="unknown",
                     relevance=rel, independence_group="unknown", ledger_step=step, first_author="Open Targets", journal=f"Open Targets · {ds}", year=int(c.published[:4]), group="unknown")
+
+
+SAFETY_SUPPLEMENTS = ("openfda.label", "OpenTargets_get_drug_warnings_by_chemblId", "OpenTargets_get_drug_adverse_events_by_chemblId")
+
+
+def evidence_from_label(c: CanonRecord, drug: str, disease: str, attempts: list[Attempt], step: str = "L2") -> Evidence | None:
+    """One FDA label → one Evidence on C_SAFETY, dated by the label version's `effective_time`. A boxed warning or a
+    withdrawal argues against "safety acceptable in the likely population"; a label with warnings but no box
+    qualifies it; a label that lists no warnings supports it. The structured facts travel on `safety`."""
+    if not c.published:
+        return None
+    p = c.payload
+    brand = p.get("brand_name") or drug
+    generic = (p.get("generic_name") or drug).lower()
+    boxed = p.get("boxed_warning")
+    title, reason = L.parse_boxed(boxed)
+    section_text = p.get("warnings_and_cautions") or p.get("warnings") or p.get("precautions")
+    sections = [LabelSection(heading=h, detail=d, system=L.system_for(h)) for h, d in L.parse_sections(section_text)]
+    no_warnings = bool(section_text) and not sections and L._NONE.match(section_text) is not None
+    withdrawn = bool(p.get("withdrawn"))
+    where = p.get("withdrawn_where")
+    indication = L.parse_indication(p.get("indications_and_usage"))
+    facts = LabelSafety(boxed_title=title, boxed_reason=reason, boxed_text=L.clean(boxed, 700) or None, sections=sections,
+                        contraindications=L.dedupe_sentences(_strip_header(p.get("contraindications")), 300) or None, indication=indication,
+                        toxicity_classes=list(p.get("toxicity_classes") or []), withdrawn=withdrawn, withdrawn_where=where,
+                        signals=[SafetySignal(name=s["name"], reports=int(s["reports"])) for s in (p.get("signals") or []) if s.get("name") and not _names_indication(s["name"], indication)],
+                        signals_total=p.get("signals_total"), no_warnings=no_warnings, brand=brand, set_id=p.get("set_id"),
+                        version=str(p["version"]) if p.get("version") is not None else None)
+    rel: list[Relevance] = []
+    if withdrawn:
+        rel.append(Relevance(claim_id="C_SAFETY", direction="contradicts", statement=f"{brand} has been withdrawn{' in ' + where if where else ''}.",
+                             verbatim_sentence=f"Withdrawn{' (' + where + ')' if where else ''} — Open Targets drug warnings"))
+    elif title:
+        rel.append(Relevance(claim_id="C_SAFETY", direction="contradicts", statement=f"The label carries a boxed warning for {L.lower_first(title)}.",
+                             verbatim_sentence=L.clean(boxed, 300)))
+    elif sections:
+        heads = ", ".join(s.heading.lower() for s in sections[:4])
+        rel.append(Relevance(claim_id="C_SAFETY", direction="qualifies", statement=f"The label carries no boxed warning; it warns of {heads}.",
+                             verbatim_sentence=L.clean(section_text, 300)))
+    elif no_warnings:
+        rel.append(Relevance(claim_id="C_SAFETY", direction="supports", statement="The label lists no warnings.", verbatim_sentence=L.clean(section_text, 120)))
+    what = (f"boxed warning for {L.lower_first(title)}" if title else "withdrawn" if withdrawn else
+            "no boxed warning" if sections or no_warnings else "no boxed warning on record; warnings not readable")
+    statement = f"FDA label ({brand}), effective {c.published}: {what}" + (f"; {len(sections)} warning section{'s' if len(sections) != 1 else ''}" if sections else "") + "."
+    set_id = p.get("set_id")
+    url = f"https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={set_id}" if set_id else f"https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22{generic}%22"
+    return Evidence(id=evidence_id("openfda", c.key, "label", c.published), source_provider="openfda", source_record_id=c.key, evidence_kind="label",
+                    transport=c.transport, tool_name=_tool_name(c), supplements=_supplements(attempts, SAFETY_SUPPLEMENTS), statement=statement,
+                    source_name=f"FDA label ({brand}), {c.published[:4]}", source_url=url, publication_date=c.published, date_confidence=_confidence(c.date_basis),
+                    date_basis=c.date_basis, study_type="label", controlled=False, population="human", outcome="na", relevance=rel, safety=facts,
+                    independence_group="fda|", ledger_step=step, first_author="FDA", journal=f"{brand} prescribing information", year=int(c.published[:4]), group="FDA")
+
+
+def _names_indication(signal: str, indication: str | None) -> bool:
+    """A FAERS term that is the approved indication itself (e.g. "chronic myeloid leukaemia") is confounding by indication, not a side effect."""
+    if not indication:
+        return False
+    norm = lambda s: s.lower().replace("leukaemia", "leukemia").replace("anaemia", "anemia").replace("tumour", "tumor")  # noqa: E731
+    return norm(signal) in norm(indication)
+
+
+def _strip_header(text: str | None) -> str | None:
+    if not text:
+        return None
+    import re
+    return re.sub(r"^\s*(?:\d+\s+)?CONTRAINDICATIONS\s*[:.-]?\s*", "", text, count=1, flags=re.I)
 
 
 def outcome_for_trial(nct_id: str, publications: list[Evidence]) -> str | None:

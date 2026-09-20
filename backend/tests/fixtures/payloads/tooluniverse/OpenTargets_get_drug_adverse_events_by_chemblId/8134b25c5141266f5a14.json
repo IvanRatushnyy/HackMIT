@@ -1,0 +1,167 @@
+{
+ "transport": "tooluniverse",
+ "tool": "OpenTargets_get_drug_adverse_events_by_chemblId",
+ "arguments": {
+  "chemblId": "CHEMBL255863",
+  "page": {
+   "index": 0,
+   "size": 25
+  }
+ },
+ "fetched_at": "2026-09-20T13:54:11+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "drug": {
+    "id": "CHEMBL255863",
+    "name": "NILOTINIB",
+    "adverseEvents": {
+     "count": 23,
+     "criticalValue": 150.27973638958065,
+     "rows": [
+      {
+       "name": "electrocardiogram qt prolonged",
+       "meddraCode": "",
+       "count": 544,
+       "logLR": 925.9531794978247
+      },
+      {
+       "name": "cytogenetic analysis abnormal",
+       "meddraCode": "",
+       "count": 186,
+       "logLR": 830.2236043399462
+      },
+      {
+       "name": "peripheral arterial occlusive disease",
+       "meddraCode": "",
+       "count": 237,
+       "logLR": 773.2889634398598
+      },
+      {
+       "name": "chronic myeloid leukaemia",
+       "meddraCode": "",
+       "count": 185,
+       "logLR": 562.7034653011069
+      },
+      {
+       "name": "second primary malignancy",
+       "meddraCode": "",
+       "count": 214,
+       "logLR": 515.8404078387975
+      },
+      {
+       "name": "pleural effusion",
+       "meddraCode": "",
+       "count": 405,
+       "logLR": 480.8616115206969
+      },
+      {
+       "name": "lipase increased",
+       "meddraCode": "",
+       "count": 187,
+       "logLR": 383.7912345224904
+      },
+      {
+       "name": "rash",
+       "meddraCode": "",
+       "count": 873,
+       "logLR": 352.9038826791366
+      },
+      {
+       "name": "angina pectoris",
+       "meddraCode": "",
+       "count": 252,
+       "logLR": 352.3965035047004
+      },
+      {
+       "name": "blood bilirubin increased",
+       "meddraCode": "",
+       "count": 254,
+       "logLR": 336.70753485646856
+      },
+      {
+       "name": "drug resistance",
+       "meddraCode": "",
+       "count": 236,
+       "logLR": 321.47392153553665
+      },
+      {
+       "name": "myocardial infarction",
+       "meddraCode": "",
+       "count": 414,
+       "logLR": 320.3083474714658
+      },
+      {
+       "name": "intermittent claudication",
+       "meddraCode": "",
+       "count": 101,
+       "logLR": 308.1770279069897
+      },
+      {
+       "name": "blast crisis in myelogenous leukaemia",
+       "meddraCode": "",
+       "count": 67,
+       "logLR": 262.4283192369476
+      },
+      {
+       "name": "coronary artery stenosis",
+       "meddraCode": "",
+       "count": 113,
+       "logLR": 228.03795821932727
+      },
+      {
+       "name": "acute myocardial infarction",
+       "meddraCode": "",
+       "count": 198,
+       "logLR": 224.3196694413491
+      },
+      {
+       "name": "pancreatitis",
+       "meddraCode": "",
+       "count": 255,
+       "logLR": 222.53642568341456
+      },
+      {
+       "name": "philadelphia chromosome positive",
+       "meddraCode": "",
+       "count": 57,
+       "logLR": 211.66958451895334
+      },
+      {
+       "name": "chronic myeloid leukaemia recurrent",
+       "meddraCode": "",
+       "count": 45,
+       "logLR": 173.9066029383539
+      },
+      {
+       "name": "peripheral artery stenosis",
+       "meddraCode": "",
+       "count": 48,
+       "logLR": 167.6837879021041
+      },
+      {
+       "name": "chronic myeloid leukaemia transformation",
+       "meddraCode": "",
+       "count": 38,
+       "logLR": 163.3910218845558
+      },
+      {
+       "name": "myocardial ischaemia",
+       "meddraCode": "",
+       "count": 111,
+       "logLR": 151.13343116595934
+      },
+      {
+       "name": "drug intolerance",
+       "meddraCode": "",
+       "count": 288,
+       "logLR": 150.62751786370063
+      }
+     ],
+     "returned": 23,
+     "truncated": false
+    }
+   }
+  }
+ }
+}

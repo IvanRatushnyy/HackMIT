@@ -1,0 +1,56 @@
+{
+ "transport": "direct",
+ "tool": "OpenTargets_get_drug_warnings_by_chemblId",
+ "arguments": {
+  "chemblId": "CHEMBL255863"
+ },
+ "fetched_at": "2026-09-20T13:54:11+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "drug": {
+    "id": "CHEMBL255863",
+    "name": "NILOTINIB",
+    "drugWarnings": [
+     {
+      "warningType": "Black Box Warning",
+      "description": null,
+      "country": "United States",
+      "year": null,
+      "toxicityClass": "musculoskeletal toxicity",
+      "chemblIds": [
+       "CHEMBL1201740",
+       "CHEMBL255863"
+      ],
+      "efoIdForWarningClass": "EFO:0011055",
+      "references": []
+     },
+     {
+      "warningType": "Black Box Warning",
+      "description": null,
+      "country": "United States",
+      "year": null,
+      "toxicityClass": "cardiotoxicity",
+      "chemblIds": [
+       "CHEMBL1201740",
+       "CHEMBL255863"
+      ],
+      "efoIdForWarningClass": "EFO:1001482",
+      "references": [
+       {
+        "id": "6093952a-5248-45cb-ad17-33716a411146",
+        "source": "DailyMed",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6093952a-5248-45cb-ad17-33716a411146"
+       },
+       {
+        "id": "d288d165-3505-49bb-9b2e-124490d65f49",
+        "source": "FDA",
+        "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d288d165-3505-49bb-9b2e-124490d65f49"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

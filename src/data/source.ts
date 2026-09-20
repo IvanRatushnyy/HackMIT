@@ -25,15 +25,22 @@ export interface DataSource {
   results(slug: QuerySlug): Promise<ResultsPage | undefined>
   candidate(query: QuerySlug, candidate: CandidateSlug): Promise<CandidateDetail | undefined>
   provenance(): Promise<Provenance>
+  /** A fresh ask from Entry: drop whatever this source holds for the slug so the run starts again from the first
+   * step. `replay` asks the session layer to play the recorded run instead of starting a live one; `scripted` asks
+   * for the fixture's scripted sequence whatever source the session sits on (the hard-coded example). */
+  forget(slug: QuerySlug, opts?: { replay?: boolean; scripted?: boolean }): void
 }
 
 const REPLAY_TOTAL_MS = 26_000
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
 
-/** Playback duration per row. Scripted: even spacing. Recorded: elapsed_ms scaled by one constant. */
+/** Expected length of each row, in order. The ledger's own estimate when it carries one (a live run's, from the
+ * backend; a replay's, from its schedule); otherwise scripted rows are spaced evenly and recorded rows keep their
+ * elapsed_ms scaled to one constant. */
 export function rowDurations(ledger: Ledger): number[] {
   const rows = ledger.rows
+  if (ledger.estimate) return rows.map((r) => Math.max(200, ledger.estimate!.steps[r.id] ?? 200))
   const recorded = ledger.kind === 'recorded' && rows.every((r) => r.elapsed_ms !== undefined)
   const total = recorded ? rows.reduce((s, r) => s + (r.elapsed_ms ?? 0), 0) : rows.length
   return rows.map((r) => Math.max(200, (recorded ? (r.elapsed_ms ?? 0) / total : 1 / total) * REPLAY_TOTAL_MS))
@@ -65,14 +72,19 @@ export class FixtureSource implements DataSource {
     return this.completed.has(slug)
   }
 
+  forget(slug: QuerySlug): void {
+    this.completed.delete(slug)
+  }
+
   async *run(slug: QuerySlug): AsyncIterable<LedgerEvent> {
     const q = queries.find((x) => x.slug === slug)
     if (!q) return
     const rows = q.ledger.rows
     const durations = rowDurations(q.ledger)
     for (let i = 0; i < rows.length; i++) {
+      yield { phase: 'question', step: rows[i].id, done: false }
       await sleep(durations[i])
-      yield { row: rows[i], done: i === rows.length - 1 }
+      yield { phase: 'settled', step: rows[i].id, row: rows[i], done: i === rows.length - 1 }
     }
     this.completed.add(slug)
   }
@@ -106,5 +118,8 @@ export class FixtureSource implements DataSource {
 
 const apiBase = (import.meta.env.VITE_ELUTE_API as string | undefined)?.replace(/\/$/, '')
 
-/** VITE_ELUTE_API=http://localhost:8000/api switches the seam to the backend; unset, the bundle stays fixture-only. */
-export const source: DataSource = apiBase ? new (await import('./api')).ApiSource(apiBase) : new FixtureSource()
+/** VITE_ELUTE_API=http://localhost:8000/api switches the seam to the backend; unset, the bundle stays fixture-only.
+ * Either way the session layer sits on top: it replays a recorded run at demo pace, remembers finished runs, and
+ * serves the hard-coded example from the fixture's scripted sequence even when the backend is the inner source. */
+const inner: DataSource = apiBase ? new (await import('./api')).ApiSource(apiBase) : new FixtureSource()
+export const source: DataSource = new (await import('./session')).SessionSource(inner, inner.mode === 'live' ? new FixtureSource() : inner)

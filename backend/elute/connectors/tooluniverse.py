@@ -28,6 +28,10 @@ TOOL_NAMES: tuple[str, ...] = (
     # L4 literature
     "PubMed_search_articles",
     "PubMed_get_article",
+    # L2 safety: the FDA label (openFDA) and Open Targets' black-box classes and FAERS signals
+    "FDA_get_boxed_warning_info_by_drug_name",
+    "OpenTargets_get_drug_warnings_by_chemblId",
+    "OpenTargets_get_drug_adverse_events_by_chemblId",
 )
 
 TRANSPORT = "tooluniverse"

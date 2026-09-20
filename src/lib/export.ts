@@ -66,9 +66,16 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
       key: 'safety',
       heading: 'Safety',
       lines: safety
-        ? [`${safety.flag} (${safety.kind}): ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`]
+        ? [
+            `${safety.flag} (${safety.kind}): ${safety.reason}.`,
+            safety.population,
+            ...(safety.systems ?? []).map((x) => `${x.system ? `${x.system} · ` : ''}${x.heading}: ${x.detail}.`),
+            ...(safety.contraindications ? [`Contraindicated: ${safety.contraindications}`] : []),
+            ...(safety.signals && safety.signals.length ? [`${safety.signals_note ?? 'FAERS signals, report counts.'} ${safety.signals.map((g) => `${g.name} (${g.reports})`).join(' · ')}`] : []),
+            `(${cite(safety.sources)})`,
+          ]
         : c.safety
-          ? ['The label review in this record is dated after the selected evidence date.']
+          ? ['The label version this record read is dated after the selected evidence date; earlier versions were not read, so a warning may already have applied.']
           : ['Not assessed: this record carries no safety review. Absence of a flag is missing data, not reassurance.'],
     })
     const prereqs = c.prerequisites.map((p) => {

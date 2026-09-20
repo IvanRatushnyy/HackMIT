@@ -1,11 +1,14 @@
 /* elute — ApiSource: the DataSource seam over the backend (docs/BACKEND_PLAN.md v4.4 §15).
- * A pair query is one appraisal: query() creates it and returns a ten-row scaffold; run() fills the rows in place from
- * the /events stream; results() and candidate() read /detail. Switched on by VITE_ELUTE_API. */
+ * A pair query is one appraisal: query() creates it and returns a ten-row scaffold carrying the backend's time
+ * estimate; run() yields every event of the /events stream (question, progress, settled) and fills the rows in
+ * place; results() and candidate() read /detail. When the backend cannot be reached and this browser remembers a
+ * finished run of the slug, that run is served instead (src/lib/runlog.ts). Switched on by VITE_ELUTE_API. */
 
-import type { CandidateDetail, CandidateSlug, EntityIndex, LedgerEvent, LedgerRow, Provenance, QueryRecord, QuerySlug, ResultsPage } from './types'
+import type { CandidateDetail, CandidateSlug, EntityIndex, LedgerEvent, LedgerNote, LedgerRow, Provenance, QueryRecord, QuerySlug, ResultsPage, RunEstimate } from './types'
 import type { DataSource } from './source'
 import { entities, provenance } from '../fixtures'
 import { recallPair } from '../lib/pair'
+import { loadRunLog } from '../lib/runlog'
 
 const STEPS: [string, string][] = [
   ['L1', 'Resolve the query'],
@@ -20,7 +23,8 @@ const STEPS: [string, string][] = [
   ['L10', 'Next question'],
 ]
 
-type Run = { id: string; status: string; record: QueryRecord; done: boolean; asOf?: string }
+type Detail = { candidate: CandidateDetail; query: QueryRecord }
+type Run = { id: string; status: string; record: QueryRecord; done: boolean; remembered?: Detail; notes: Record<string, LedgerNote[]> }
 
 const RUN_KEY = (slug: string) => `elute:run:${slug}`
 const rememberRun = (slug: string, id: string) => {
@@ -49,7 +53,7 @@ function deslug(s: string): string {
   return s.replace(/-/g, ' ')
 }
 
-function scaffold(slug: QuerySlug, drug: string, condition: string, id: string): QueryRecord {
+function scaffold(slug: QuerySlug, drug: string, condition: string, id: string, estimate?: RunEstimate): QueryRecord {
   return {
     slug,
     kind: 'pair',
@@ -57,6 +61,7 @@ function scaffold(slug: QuerySlug, drug: string, condition: string, id: string):
     resolved: 'resolving via Open Targets…',
     ledger: {
       kind: 'recorded',
+      estimate,
       rows: STEPS.map(([rid, step]) => ({
         id: rid,
         step,
@@ -72,6 +77,8 @@ function scaffold(slug: QuerySlug, drug: string, condition: string, id: string):
     appraisal_id: id,
   }
 }
+
+type Created = { id: string; status: string; estimate?: RunEstimate }
 
 export class ApiSource implements DataSource {
   mode = 'live' as const
@@ -102,7 +109,8 @@ export class ApiSource implements DataSource {
   }
 
   /** One appraisal per ask: a remount, the Detail page or a reload adopts the run this session already started for
-   *  the slug (its id is kept in sessionStorage); only a slug with no live run posts a new one. */
+   *  the slug (its id is kept in sessionStorage); a run this browser remembers is served when the backend has
+   *  forgotten it or cannot be reached; only a slug with neither posts a new one. */
   private async create(slug: QuerySlug): Promise<QueryRecord | undefined> {
     const [drugSlug, ...rest] = slug.split('--')
     if (!rest.length) return undefined // Phase 1: pair queries only
@@ -110,21 +118,27 @@ export class ApiSource implements DataSource {
     const { drug, disease } = recallPair(slug) ?? { drug: deslug(drugSlug), disease: deslug(rest.join('--')) }
     let created = await this.adopt(slug)
     if (!created) {
-      created = await this.json<{ id: string; status: string }>('/appraisals', { method: 'POST', body: JSON.stringify({ drug, disease }) })
+      const log = loadRunLog(slug)
+      if (log?.candidate) {
+        const run: Run = { id: log.id ?? '', status: 'remembered', record: log.record, done: true, remembered: { candidate: log.candidate, query: log.record }, notes: {} }
+        this.runs.set(slug, run)
+        return run.record
+      }
+      created = await this.json<Created>('/appraisals', { method: 'POST', body: JSON.stringify({ drug, disease }) })
       if (!created) return undefined
       rememberRun(slug, created.id)
     }
-    const run: Run = { id: created.id, status: created.status, record: scaffold(slug, drug, disease, created.id), done: created.status !== 'running' }
+    const run: Run = { id: created.id, status: created.status, record: scaffold(slug, drug, disease, created.id, created.estimate), done: created.status !== 'running', notes: {} }
     this.runs.set(slug, run)
     if (run.done) await this.hydrate(run)
     return run.record
   }
 
   /** The run this session already started for the slug, if the server still has it and it did not fail. */
-  private async adopt(slug: QuerySlug): Promise<{ id: string; status: string } | undefined> {
+  private async adopt(slug: QuerySlug): Promise<Created | undefined> {
     const id = recallRun(slug)
     if (!id) return undefined
-    const r = await this.json<{ id: string; status: string }>(`/appraisals/${id}`).catch(() => undefined)
+    const r = await this.json<Created>(`/appraisals/${id}`).catch(() => undefined)
     if (!r || r.status === 'failed') {
       forgetRun(slug)
       return undefined
@@ -132,13 +146,26 @@ export class ApiSource implements DataSource {
     return r
   }
 
-  /** After completion, replace the scaffold's rows with the server's full ledger (records, timings, reasoning). */
+  private async detail(run: Run): Promise<Detail | undefined> {
+    if (run.remembered) return run.remembered
+    try {
+      const d = await this.json<Detail>(`/appraisals/${run.id}/detail`)
+      if (d) return d
+    } catch (e) {
+      console.warn('[elute] detail unavailable, using what this browser remembers', e)
+    }
+    const log = loadRunLog(run.record.slug)
+    return log?.candidate ? { candidate: log.candidate, query: log.record } : undefined
+  }
+
+  /** After completion, replace the scaffold's rows with the server's full ledger (records, timings, reasoning),
+   *  keeping what each step said while it ran. */
   private async hydrate(run: Run): Promise<void> {
-    const d = await this.json<{ candidate: CandidateDetail; query: QueryRecord }>(`/appraisals/${run.id}/detail`)
+    const d = await this.detail(run)
     if (!d) return
     run.record.ledger.kind = d.query.ledger.kind
     run.record.ledger.recorded_total_ms = d.query.ledger.recorded_total_ms
-    d.query.ledger.rows.forEach((row, i) => (run.record.ledger.rows[i] = row))
+    d.query.ledger.rows.forEach((row, i) => (run.record.ledger.rows[i] = { ...row, notes: run.notes[row.id] ?? run.record.ledger.rows[i]?.notes ?? [] }))
     run.record.resolved = d.query.resolved
     run.record.heading = d.query.heading
   }
@@ -147,11 +174,16 @@ export class ApiSource implements DataSource {
     return this.runs.get(slug)?.done ?? false
   }
 
+  forget(slug: QuerySlug): void {
+    this.runs.delete(slug)
+    forgetRun(slug)
+  }
+
   async *run(slug: QuerySlug): AsyncIterable<LedgerEvent> {
     const run = this.runs.get(slug)
     if (!run) return
     if (run.done) {
-      for (const [i, row] of run.record.ledger.rows.entries()) yield { row, done: i === 9 }
+      for (const [i, row] of run.record.ledger.rows.entries()) yield { phase: 'settled', step: row.id, row, done: i === 9 }
       return
     }
     const queue: LedgerEvent[] = []
@@ -159,12 +191,27 @@ export class ApiSource implements DataSource {
     let finished = false
     const es = new EventSource(`${this.base}/appraisals/${run.id}/events`)
     es.addEventListener('ledger', (ev) => {
-      const data = JSON.parse((ev as MessageEvent).data) as { step: string; phase: string; row?: LedgerRow; done: boolean }
-      if (data.phase !== 'settled' || !data.row) return
-      const i = STEPS.findIndex(([id]) => id === data.step)
-      if (i >= 0) run.record.ledger.rows[i] = data.row
-      queue.push({ row: data.row, done: data.done })
-      if (data.done) finished = true
+      const data = JSON.parse((ev as MessageEvent).data) as {
+        step: string
+        phase: 'question' | 'progress' | 'settled'
+        row?: LedgerRow
+        note?: string
+        at_ms?: number
+        done: boolean
+        entry?: { question?: string; reasoning?: LedgerRow['reasoning'] }
+      }
+      if (data.phase === 'progress') {
+        if (data.note) (run.notes[data.step] ??= []).push({ at_ms: data.at_ms ?? 0, note: data.note })
+        queue.push({ phase: 'progress', step: data.step, note: data.note, at_ms: data.at_ms, done: false })
+      } else if (data.phase === 'question') {
+        queue.push({ phase: 'question', step: data.step, reasoning: data.entry?.reasoning, at_ms: data.at_ms, done: false })
+      } else if (data.phase === 'settled' && data.row) {
+        const i = STEPS.findIndex(([id]) => id === data.step)
+        const row: LedgerRow = { ...data.row, notes: run.notes[data.step] ?? [] }
+        if (i >= 0) run.record.ledger.rows[i] = row
+        queue.push({ phase: 'settled', step: data.step, row, at_ms: data.at_ms, done: data.done })
+        if (data.done) finished = true
+      } else return
       notify?.()
     })
     es.addEventListener('error', () => {
@@ -186,7 +233,7 @@ export class ApiSource implements DataSource {
   async results(slug: QuerySlug): Promise<ResultsPage | undefined> {
     const run = this.runs.get(slug)
     if (!run) return undefined
-    const d = await this.json<{ candidate: CandidateDetail; query: QueryRecord }>(`/appraisals/${run.id}/detail`)
+    const d = await this.detail(run)
     if (!d) return undefined
     const today = d.candidate.cutoffs[d.candidate.cutoffs.length - 1].date
     return { query: run.record, today, candidates: [d.candidate] }
@@ -195,7 +242,7 @@ export class ApiSource implements DataSource {
   async candidate(query: QuerySlug, candidate: CandidateSlug): Promise<CandidateDetail | undefined> {
     const run = this.runs.get(query) ?? (await this.query(query), this.runs.get(query))
     if (!run) return undefined
-    const d = await this.json<{ candidate: CandidateDetail; query: QueryRecord }>(`/appraisals/${run.id}/detail`)
+    const d = await this.detail(run)
     if (!d) return undefined
     return d.candidate.drug_slug === candidate || d.candidate.slug === candidate ? d.candidate : undefined
   }

@@ -54,3 +54,25 @@ for task in tasks:
     # the supplements (direct) through the real loop, ToolUniverse first
     ep = run_task(task, tu, direct)
     print(f"   → episode {ep.status} via {ep.transport} · {len(ep.records)} records · attempts {[a.outcome for a in ep.attempts]}")
+
+# ---- L2 safety: the FDA label through the loop (ToolUniverse first, openFDA behind it), its dated supplement, and the
+# Open Targets warning / FAERS supplements on both transports
+safety = Task("L2", "safety", "What does the label warn of?", **base)
+for transport, conn in (("tooluniverse", tu), ("direct", direct)):
+    sel = DefaultSelector().select(safety, [])
+    try:
+        payload, ms, cached = conn.call(sel.tool, sel.arguments)
+        print(f"L2 {'safety':20s} {transport:12s} {sel.tool:55s} {ms:5d} ms {'cached' if cached else 'live'}")
+    except Exception as e:  # noqa: BLE001
+        print(f"L2 {'safety':20s} {transport:12s} {sel.tool:55s} FAILED {e}")
+for tool, args, conns in (("openfda.label", {"drug_name": base["drug"]}, (("direct", direct),)),
+                          ("OpenTargets_get_drug_warnings_by_chemblId", {"chemblId": base["drug_chembl_id"]}, (("tooluniverse", tu), ("direct", direct))),
+                          ("OpenTargets_get_drug_adverse_events_by_chemblId", {"chemblId": base["drug_chembl_id"], "page": {"index": 0, "size": 25}}, (("tooluniverse", tu), ("direct", direct)))):
+    for transport, conn in conns:
+        try:
+            payload, ms, cached = conn.call(tool, args)
+            print(f"L2 {'safety supplement':20s} {transport:12s} {tool:55s} {ms:5d} ms {'cached' if cached else 'live'}")
+        except Exception as e:  # noqa: BLE001
+            print(f"L2 {'safety supplement':20s} {transport:12s} {tool:55s} FAILED {e}")
+ep = run_task(safety, tu, direct)
+print(f"   → episode {ep.status} via {ep.transport} · {len(ep.records)} records · attempts {[a.outcome for a in ep.attempts]}")

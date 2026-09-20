@@ -67,6 +67,7 @@ def apply_gate(synth: Synthesis | None, d: Derived, ev: list[Evidence], as_of: s
 def assemble(*, run_id: str, drug: str, disease: str, as_of: str, resolved, evidence_all: list[Evidence], d: Derived,
              synth: Synthesis, llm: str, data_mode: str, ledger: list[LedgerEntry]) -> CandidateAppraisal:
     ev = visible(evidence_all, as_of)
+    label_read = max((e.publication_date for e in evidence_all if e.safety is not None), default=None)
     problems = validate_structure(ev, d.claims, d.edges)
     if problems:
         raise ValidationError(problems)
@@ -79,7 +80,7 @@ def assemble(*, run_id: str, drug: str, disease: str, as_of: str, resolved, evid
                               evidence=ev, claims=d.claims, mechanism_edges=d.edges, supporting_evidence_ids=d.supporting_evidence_ids,
                               counter_evidence_ids=d.counter_evidence_ids, strongest_case_for=synth.strongest_case_for,
                               strongest_case_against=synth.strongest_case_against, weakest_link=d.weakest_link, next_question=d.next_question,
-                              recommendation=rec, ledger=ledger)
+                              recommendation=rec, ledger=ledger, label_read=label_read)
 
 
 # ---- fixture mode ----------------------------------------------------------------------------------

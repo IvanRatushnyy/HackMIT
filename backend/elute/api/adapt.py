@@ -10,6 +10,7 @@ from elute.engine.labels import passes_refutes_gate
 from elute.engine.weakest_link import WEAKNESS, weakest
 from elute.ids import CAUSAL_ORDER
 from elute.models import CandidateAppraisal, Evidence, LedgerEntry
+from elute.pipeline import label as L
 from elute.pipeline.appraisal import derive
 from elute.pipeline.temporal import visible
 
@@ -47,6 +48,100 @@ def _scope(caveats: list[str]) -> str | None:
     if "cell-line" in caveats:
         return "in cell models"
     return None
+
+
+# ---- safety: the label as the Detail page's Safety block and the fifth prerequisite ---------------------------
+
+def label_at(visible_ev: list[Evidence]) -> Evidence | None:
+    """The one label the block speaks from at this date: the most severe visible one, the latest among equals."""
+    labels = [e for e in visible_ev if e.safety is not None]
+    if not labels:
+        return None
+    sev = lambda e: (2 if (e.safety.withdrawn or e.safety.boxed_title) else 1 if e.safety.sections else 0, e.publication_date)  # noqa: E731
+    return max(labels, key=sev)
+
+
+_lower_first = L.lower_first
+
+
+def _heads(sections, n: int = 4) -> str:
+    heads = [L.phrase(x.heading) for x in sections[:n]]
+    more = len(sections) - len(heads)
+    return ", ".join(heads) + (f" and {more} more" if more > 0 else "")
+
+
+def safety_population(e: Evidence, disease: str) -> str:
+    """Two sentences, derived: what the label was written for, and what a trial in this disease would carry over."""
+    s = e.safety
+    written_for = f"the treatment of {s.indication}" if s.indication and not s.indication.startswith(("the ", "as ", "in ", "to ", "for ")) else (s.indication or "its approved indication")
+    first = f"This label was written for {written_for}, not for {disease}; nothing in it was measured in the likely {disease} trial population."
+    if s.withdrawn:
+        second = f"The drug has been withdrawn{' in ' + s.withdrawn_where if s.withdrawn_where else ''}; a trial would have to answer for that before anything else."
+    elif s.boxed_title:
+        mon = L.monitoring_from_boxed(s.boxed_text)
+        second = (f"A trial would have to carry the label's own monitoring into that population: {mon}." if mon else "A trial would have to carry the label's own monitoring into that population.")
+        if s.sections:
+            second += f" The label also warns of {_heads(s.sections)}."
+    elif s.sections:
+        second = f"The label warns of {_heads(s.sections)}; a trial would have to watch for each of these in that population."
+    else:
+        second = "The label lists no warnings; tolerability in that population is still something a trial would have to record."
+    return f"{first} {second}"
+
+
+def safety_block(e: Evidence, disease: str, as_of: str, with_signals: bool) -> dict[str, Any]:
+    s = e.safety
+    if s.withdrawn:
+        severity, flag, kind = "boxed", f"withdrawn{' in ' + s.withdrawn_where if s.withdrawn_where else ''}", "withdrawn"
+        reason = ", ".join(s.toxicity_classes) if s.toxicity_classes else "withdrawn from the market"
+    elif s.boxed_title:
+        severity, flag, kind = "boxed", s.boxed_title, "boxed warning"
+        reason = _lower_first(s.boxed_reason) if s.boxed_reason else "the label carries a boxed warning"
+    elif s.sections:
+        severity, flag, kind = "warning", L.phrase(s.sections[0].heading), "label warning"
+        reason = _lower_first(s.sections[0].detail) if s.sections[0].detail else "the label warns of this"
+    else:
+        severity, flag, kind = "none", "no boxed warning", "label reviewed"
+        reason = "the label lists no warnings" if s.no_warnings else "no boxed warning on this label; its warnings section could not be read"
+    out: dict[str, Any] = {"severity": severity, "flag": flag, "kind": kind, "reason": reason.rstrip("."), "population": safety_population(e, disease), "sources": [e.id],
+                           "label": {k: v for k, v in {"brand": s.brand, "effective": e.publication_date, "version": s.version}.items() if v}}
+    if s.toxicity_classes:
+        out["classes"] = list(s.toxicity_classes)
+    if s.sections:
+        out["systems"] = [{**({"system": x.system} if x.system else {}), "heading": x.heading, "detail": x.detail} for x in s.sections]
+    if s.contraindications:
+        out["contraindications"] = s.contraindications
+    if with_signals and s.signals:
+        out["signals"] = [{"name": g.name, "reports": g.reports} for g in s.signals]
+        out["signals_note"] = (f"FAERS disproportionality signals via Open Targets, cumulative to {as_of}"
+                               + (f" ({s.signals_total} in all)" if s.signals_total else "") + ": spontaneous report counts, not incidence, and not specific to this disease.")
+    return out
+
+
+def safety_prerequisite(lab: Evidence | None, claim, result, disease: str) -> dict[str, Any]:
+    """The fifth prerequisite from the label: boxed → conditional, with monitoring (CLAUDE.md); withdrawn → unmet;
+    warnings without a box → conditional, with precautions; a clean label → met; no label → unmet, unknown."""
+    others = [e for e in result.supports if e.safety is None]
+    tail = (f" {len(others)} source{'s' if len(others) > 1 else ''} in {disease} report{'' if len(others) > 1 else 's'} tolerability: " + "; ".join(f"{e.first_author}, {e.year}" for e in others[:3]) + ".") if others else ""
+    if lab is None:
+        sources = [e.id for e in result.against] or [e.id for e in result.supports]
+        if claim.status == "unknown":
+            return {"resolution": "unmet", "word": "unknown", "note": claim.status_why + " Absence of a flag here is missing data, not reassurance.", "sources": sources}
+        if claim.status in ("contested", "refuted"):
+            return {"resolution": "unmet", "word": "contested" if claim.status == "contested" else "no", "note": claim.status_why + " No label was visible on this date, so the warnings a trial would inherit are unread.", "sources": sources}
+        return {"resolution": "conditional", "word": "one study" if claim.status == "single-source" else "reported tolerable",
+                "note": claim.status_why + " No label was visible on this date, so the warnings a trial would inherit are unread.", "sources": sources}
+    s = lab.safety
+    year = lab.publication_date[:4]
+    if s.withdrawn:
+        return {"resolution": "unmet", "word": "withdrawn", "note": f"Withdrawn{' in ' + s.withdrawn_where if s.withdrawn_where else ''}{' for ' + ', '.join(s.toxicity_classes) if s.toxicity_classes else ''} ({s.brand} label, {year})." + tail, "sources": [lab.id]}
+    if s.boxed_title:
+        note = f"Boxed warning for {_lower_first(s.boxed_title)} ({s.brand} label, {year}): acceptable only with the label's monitoring carried into the likely {disease} population." + tail
+        return {"resolution": "conditional", "word": "with monitoring", "note": note, "sources": [lab.id] + [e.id for e in others[:3]]}
+    if s.sections:
+        return {"resolution": "conditional", "word": "with precautions", "note": f"No boxed warning; the label warns of {_heads(s.sections, 3)} ({s.brand} label, {year}). Tolerability in the likely {disease} population is not on the label." + tail,
+                "sources": [lab.id] + [e.id for e in others[:3]]}
+    return {"resolution": "met", "word": "no warnings", "note": f"The label lists no warnings ({s.brand} label, {year}); tolerability in the likely {disease} population is still unrecorded." + tail, "sources": [lab.id]}
 
 
 def _cutoffs(as_of: str) -> list[dict[str, str]]:
@@ -114,16 +209,23 @@ def adapt(ap: CandidateAppraisal, *, ledger_kind: str = "recorded") -> dict[str,
     prereq_tl: dict[str, list[dict[str, Any]]] = {pid: [] for pid, _, _ in PREREQ}
     best_tl: list[dict[str, Any]] = []
     weak_tl: list[dict[str, Any]] = []
+    safety_tl: list[dict[str, Any]] = []
     for date in dates:
         if date > ap.as_of:
             continue
+        vis_now = visible(ap.evidence, date)
         d = _derived_at(ap, date)
         by = {c.id: c for c in d.claims}
+        lab = label_at(vis_now)
         for pid, cid, _ in PREREQ:
             c = by[cid]
-            res = {"established": "met", "single-source": "conditional"}.get(c.status, "unmet")
-            word = {"established": "shown", "single-source": "one study", "contested": "contested", "refuted": "no", "unknown": "unknown"}[c.status]
-            entry = {"resolution": res, "word": word, "note": c.status_why, "sources": [e.id for e in d.results[cid].against] or [e.id for e in d.results[cid].supports]}
+            if pid == "safety":
+                entry = safety_prerequisite(lab, c, d.results[cid], ap.disease)
+                res, word = entry["resolution"], entry["word"]
+            else:
+                res = {"established": "met", "single-source": "conditional"}.get(c.status, "unmet")
+                word = {"established": "shown", "single-source": "one study", "contested": "contested", "refuted": "no", "unknown": "unknown"}[c.status]
+                entry = {"resolution": res, "word": word, "note": c.status_why, "sources": [e.id for e in d.results[cid].against] or [e.id for e in d.results[cid].supports]}
             tl = prereq_tl[pid]
             if not tl or (tl[-1]["value"]["resolution"], tl[-1]["value"]["word"], tl[-1]["value"]["note"]) != (res, word, entry["note"]):
                 tl.append({"from": date, "value": entry})
@@ -143,6 +245,11 @@ def adapt(ap: CandidateAppraisal, *, ledger_kind: str = "recorded") -> dict[str,
         wl = {"claim": w.claim_id, "why": w.why, "sources": [i for i in w.evidence_ids if i in ev_by]}
         if not weak_tl or (weak_tl[-1]["value"]["claim"], weak_tl[-1]["value"]["why"]) != (wl["claim"], wl["why"]):
             weak_tl.append({"from": date, "value": wl})
+        # the Safety block: the label visible on this date; FAERS signals are undated and cumulative, so only at as_of
+        if lab is not None:
+            sb = safety_block(lab, ap.disease, ap.as_of, with_signals=(date == ap.as_of))
+            if not safety_tl or safety_tl[-1]["value"] != sb:
+                safety_tl.append({"from": date, "value": sb})
 
     today = _derived_at(ap, ap.as_of)
     st = {c.id: c.status for c in today.claims}
@@ -158,6 +265,8 @@ def adapt(ap: CandidateAppraisal, *, ledger_kind: str = "recorded") -> dict[str,
         "curation": "curated" if ap.data_mode == "fixture" else "draft", "cutoffs": cutoffs, "sources": [_source(e) for e in ap.evidence], "objections": objections,
         "chain": {"drug": ap.drug, "condition": ap.disease, "claims": claims},
         "prerequisites": [{"id": pid, "condition": cond, "status": prereq_tl[pid]} for pid, _, cond in PREREQ],
+        # `safety` absent = never read (the page says "not assessed"); present but empty at a cutoff = the label read is dated later
+        **({"safety": safety_tl} if (ap.label_read or any(e.safety is not None for e in ap.evidence)) else {}),
         "drivers": {"mechanism": PIPS[st["C_MECHANISM"]], "clinical": PIPS[st["C_CLINICAL"]], "exposure": PIPS[st["C_EXPOSURE"]], "safety": PIPS[st["C_SAFETY"]]},
         "best_evidence": best_tl, "weakest_link": weak_tl,
         "counts": {"sources": len(ap.evidence), "trials": sum(1 for e in ap.evidence if e.evidence_kind == "registration")},

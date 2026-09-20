@@ -20,6 +20,8 @@ TRANSPORT = "direct"
 OPEN_TARGETS_GRAPHQL = "https://api.platform.opentargets.org/api/v4/graphql"
 CLINICAL_TRIALS_V2 = "https://clinicaltrials.gov/api/v2/studies"
 EUROPE_PMC_SEARCH = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
+OPENFDA_LABEL = "https://api.fda.gov/drug/label.json"
+LABEL_SECTION_CAP = 6000  # characters kept per label section; the highlights that name every warning come first
 
 # The direct endpoint behind each ToolUniverse tool, as printed on the trace.
 DIRECT_NAMES = {
@@ -33,6 +35,10 @@ DIRECT_NAMES = {
     "PubMed_get_article": "europepmc.rest:search(EXT_ID)",
     "ctgov.study_design": "clinicaltrials.gov/api/v2/studies/{nct}",
     "europepmc.dates": "europepmc.rest:search(EXT_ID)",
+    "FDA_get_boxed_warning_info_by_drug_name": "api.fda.gov/drug/label.json",
+    "openfda.label": "api.fda.gov/drug/label.json",
+    "OpenTargets_get_drug_warnings_by_chemblId": "opentargets.graphql:drug.drugWarnings",
+    "OpenTargets_get_drug_adverse_events_by_chemblId": "opentargets.graphql:drug.adverseEvents",
 }
 
 
@@ -180,6 +186,55 @@ class DirectConnector:
         hits = [self._epmc_to_pubmed_shape(x) for x in self._epmc("(" + " OR ".join(f"EXT_ID:{p}" for p in ids) + ") AND SRC:MED", len(ids) + 10)]
         return {"status": "success", "data": hits}
 
+    # -- openFDA (the label) -------------------------------------------------
+    def _openfda_labels(self, drug_name: str) -> list[dict[str, Any]]:
+        """Every product label for the name, trimmed to the sections the appraisal reads. A 404 is "no label", not an error."""
+        q = f'openfda.generic_name:"{drug_name}" OR openfda.brand_name:"{drug_name}"'
+        r = self.client.get(OPENFDA_LABEL, params={"search": q, "limit": 25})
+        if r.status_code == 404:
+            return []
+        r.raise_for_status()
+        out = []
+        for row in r.json().get("results", []):
+            o = row.get("openfda") or {}
+            first = lambda k: ((row.get(k) or [None])[0] or None)  # noqa: E731
+            cut = lambda s: (s[:LABEL_SECTION_CAP] if isinstance(s, str) else None)  # noqa: E731
+            out.append({"set_id": row.get("set_id"), "id": row.get("id"), "version": row.get("version"), "effective_time": row.get("effective_time"),
+                        "brand_name": (o.get("brand_name") or [None])[0], "generic_name": (o.get("generic_name") or [None])[0],
+                        "application_number": (o.get("application_number") or [None])[0], "manufacturer": (o.get("manufacturer_name") or [None])[0],
+                        "boxed_warning": cut(first("boxed_warning")), "warnings_and_cautions": cut(first("warnings_and_cautions")),
+                        "warnings": cut(first("warnings")), "precautions": cut(first("precautions")),
+                        "contraindications": cut(first("contraindications")), "indications_and_usage": cut(first("indications_and_usage"))})
+        return out
+
+    def _FDA_get_boxed_warning_info_by_drug_name(self, drug_name: str, limit: int = 25, **_: Any) -> dict[str, Any]:
+        """The ToolUniverse row shape: openfda names plus the boxed warning; the related warnings section when there is none."""
+        rows = []
+        for lab in self._openfda_labels(drug_name)[:limit]:
+            row: dict[str, Any] = {"openfda.brand_name": [lab["brand_name"]] if lab["brand_name"] else None,
+                                   "openfda.generic_name": [lab["generic_name"]] if lab["generic_name"] else None,
+                                   "boxed_warning": [lab["boxed_warning"]] if lab["boxed_warning"] else None}
+            if not lab["boxed_warning"]:
+                related = [k for k in ("warnings_and_cautions", "warnings", "precautions") if lab.get(k)]
+                for k in related:
+                    row[k] = [lab[k]]
+                if related:
+                    row["related_sections_present"] = related
+            rows.append(row)
+        return {"meta": {"skip": 0, "limit": limit, "total": len(rows)}, "results": rows, "result_count": len(rows)}
+
+    def _openfda_label(self, drug_name: str) -> dict[str, Any]:
+        """The recorded supplement: every label with its set id, version, effective_time, application number and sections."""
+        return {"labels": self._openfda_labels(drug_name)}
+
+    def _OpenTargets_get_drug_warnings_by_chemblId(self, chemblId: str) -> dict[str, Any]:
+        return self._gql("""query W($id:String!){drug(chemblId:$id){id name drugWarnings{warningType description country year
+            toxicityClass chemblIds efoIdForWarningClass references{id source url}}}}""", {"id": chemblId})
+
+    def _OpenTargets_get_drug_adverse_events_by_chemblId(self, chemblId: str, page: dict[str, Any] | None = None) -> dict[str, Any]:
+        return self._gql("""query A($id:String!,$page:Pagination){drug(chemblId:$id){id name adverseEvents(page:$page){count criticalValue
+            rows{name meddraCode count logLR}}}}""", {"id": chemblId, "page": page})
+
     def _europepmc_dates(self, pmids: list[str]) -> dict[str, Any]:
         """{pmid: {"first_publication_date", "cited_by_count"}} — the day-level date (§9.2) and the §11.4 ranking key."""
         out: dict[str, dict[str, Any]] = {}
@@ -193,6 +248,7 @@ class DirectConnector:
 
 
 # tool name → method; the supplements use their trace names.
-_DISPATCH = {name: "_" + name for name in DIRECT_NAMES if not name.startswith(("ctgov.", "europepmc."))}
+_DISPATCH = {name: "_" + name for name in DIRECT_NAMES if not name.startswith(("ctgov.", "europepmc.", "openfda."))}
 _DISPATCH["ctgov.study_design"] = "_ctgov_study_design"
 _DISPATCH["europepmc.dates"] = "_europepmc_dates"
+_DISPATCH["openfda.label"] = "_openfda_label"

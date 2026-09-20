@@ -395,6 +395,49 @@
   line-height: var(--line-3);
   margin-top: var(--space-xs);
 }
+.safety__systems {
+  display: grid;
+  gap: 2px;
+  margin: var(--space-xs) 0 0;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-line);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  max-width: 64ch;
+}
+.safety__system {
+  display: grid;
+  grid-template-columns: minmax(12ch, 22ch) 1fr;
+  gap: var(--space-sm);
+  align-items: baseline;
+}
+.safety__system dt {
+  font-weight: var(--weight-medium);
+}
+.safety__organ {
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-muted);
+}
+.safety__system dd {
+  margin: 0;
+  color: var(--color-ink-muted);
+}
+.safety__contra,
+.safety__signals {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+  max-width: 64ch;
+}
+.safety__signals-note {
+  color: var(--color-ink);
+}
+@media (max-width: 640px) {
+  .safety__system {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
 
 /* ---- Before a trial: five boxes ------------------------------------------------------- */
 

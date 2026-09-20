@@ -8,8 +8,8 @@ from pydantic import BaseModel, Field, field_validator
 
 from elute.ids import CLAIM_IDS
 
-SourceProvider = Literal["open_targets", "clinicaltrials_gov", "pubmed", "europe_pmc", "fixture"]
-EvidenceKind = Literal["registration", "results", "publication", "mechanism", "association"]
+SourceProvider = Literal["open_targets", "clinicaltrials_gov", "pubmed", "europe_pmc", "openfda", "fixture"]
+EvidenceKind = Literal["registration", "results", "publication", "mechanism", "association", "label"]
 Transport = Literal["tooluniverse", "direct", "fixture"]
 Direction = Literal["supports", "contradicts", "refutes", "qualifies"]
 StudyType = Literal["rct", "open-label", "pk", "commentary", "observational", "preclinical", "protocol", "label", "meta-analysis", "unknown"]
@@ -44,8 +44,45 @@ class PkFact(BaseModel):
 
 class Supplement(BaseModel):
     tool: str
-    transport: Literal["direct"] = "direct"
+    transport: Literal["direct", "tooluniverse"] = "direct"
     outcome: AttemptOutcome = "ok"
+
+
+class LabelSection(BaseModel):
+    """One warning the label names, as the Detail page lists it: the heading, one line of what it says, and the body
+    system the heading maps to by keyword (a display aid, never a status)."""
+
+    heading: str
+    detail: str
+    system: str | None = None
+
+
+class SafetySignal(BaseModel):
+    """One FAERS disproportionality signal via Open Targets: a report count, never an incidence."""
+
+    name: str
+    reports: int
+
+
+class LabelSafety(BaseModel):
+    """What one FDA label says about safety, structured for the Safety block and the safety prerequisite. Every field
+    is read from the label text or the Open Targets warning rows; nothing here is inferred."""
+
+    boxed_title: str | None = None  # "QT prolongation and sudden deaths"
+    boxed_reason: str | None = None  # the boxed warning's first sentence
+    boxed_text: str | None = None  # the boxed warning, cut
+    sections: list[LabelSection] = Field(default_factory=list)  # warnings and precautions, in label order
+    contraindications: str | None = None
+    indication: str | None = None  # what the label was written for
+    toxicity_classes: list[str] = Field(default_factory=list)  # Open Targets black-box classes
+    withdrawn: bool = False
+    withdrawn_where: str | None = None
+    signals: list[SafetySignal] = Field(default_factory=list)  # FAERS via Open Targets, strongest first
+    signals_total: int | None = None
+    no_warnings: bool = False  # the label's warnings section reads "None"
+    brand: str | None = None
+    set_id: str | None = None
+    version: str | None = None
 
 
 class Evidence(BaseModel):
@@ -74,6 +111,7 @@ class Evidence(BaseModel):
     caveats: list[Caveat] = Field(default_factory=list)
     pk_facts: list[PkFact] = Field(default_factory=list)
     relevance: list[Relevance] = Field(default_factory=list)
+    safety: LabelSafety | None = None  # only on a label record (evidence_kind == "label")
     independence_group: str = "unknown"
     authors: list[str] = Field(default_factory=list)
     affiliation: str | None = None
@@ -225,6 +263,7 @@ class CandidateAppraisal(BaseModel):
     next_question: NextQuestion
     recommendation: Recommendation
     ledger: list[LedgerEntry]
+    label_read: str | None = None  # effective date of the label version the run read, visible or not: "not yet on the label" vs "not assessed"
 
     def evidence_by_id(self) -> dict[str, Evidence]:
         return {e.id: e for e in self.evidence}

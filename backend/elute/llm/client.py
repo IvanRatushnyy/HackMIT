@@ -39,12 +39,14 @@ class ReplayClient:
         self.root = Path(root)
         self.inner = record_with
         self.prompts: list[dict[str, str]] = []  # every prompt seen, for the sentinel test
+        self.misses: list[str] = []  # prompts no cassette answered (schema/key): the run degrades exactly as with no model
 
     def complete_structured(self, schema: type[T], system: str, user: str) -> T | None:
         self.prompts.append({"schema": schema.__name__, "system": system, "user": user})
         p = self.root / schema.__name__ / f"{prompt_key(schema.__name__, system, user)}.json"
         if p.exists():
             return schema.model_validate(json.loads(p.read_text())["output"])
+        self.misses.append(f"{schema.__name__}/{p.stem}")
         if self.inner is None:
             return None
         out = self.inner.complete_structured(schema, system, user)

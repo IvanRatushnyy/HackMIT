@@ -15,7 +15,7 @@
       "source_provider": "open_targets",
       "source_record_id": "CHEMBL255863|ENSG00000097007|fda-label",
       "evidence_kind": "mechanism",
-      "statement": "FDA prescribing information for Tasigna (nilotinib), 2007: a BCR-ABL tyrosine kinase inhibitor approved for chronic myeloid leukemia; boxed warning for QT prolongation and sudden deaths.",
+      "statement": "FDA prescribing information for Tasigna (nilotinib), October 2007: a BCR-ABL tyrosine kinase inhibitor approved for chronic myeloid leukemia; boxed warning for QT prolongation and sudden deaths; ten warnings and precautions from myelosuppression to pregnancy.",
       "source_name": "FDA label (Tasigna), 2007",
       "source_url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2007/022068lbl.pdf",
       "publication_date": "2007-10-29",
@@ -46,7 +46,67 @@
       "first_author": "FDA",
       "journal": "Tasigna (nilotinib) prescribing information",
       "year": 2007,
-      "group": "FDA"
+      "group": "FDA",
+      "safety": {
+        "boxed_title": "QT prolongation and sudden deaths",
+        "boxed_reason": "Tasigna prolongs the QT interval; sudden deaths have been reported in patients receiving nilotinib",
+        "boxed_text": "WARNING: QT PROLONGATION AND SUDDEN DEATHS. Tasigna prolongs the QT interval. Sudden deaths have been reported in patients receiving nilotinib. Tasigna should not be used in patients with hypokalemia, hypomagnesemia, or long QT syndrome. Hypokalemia or hypomagnesemia must be corrected prior to Tasigna administration and should be periodically monitored. Drugs known to prolong the QT interval and strong CYP3A4 inhibitors should be avoided. Patients should avoid food 2 hours before and 1 hour after taking dose. Use with caution in patients with hepatic impairment. ECGs should be obtained to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, as well as following any dose adjustments.",
+        "sections": [
+          {
+            "heading": "Myelosuppression",
+            "detail": "Associated with neutropenia, thrombocytopenia and anemia; CBC every 2 weeks for the first 2 months, then monthly; reversible by withholding dose",
+            "system": "blood"
+          },
+          {
+            "heading": "QT prolongation",
+            "detail": "Tasigna prolongs the QT interval; correct hypokalemia or hypomagnesemia before administration and monitor periodically; ECGs at baseline, seven days after initiation, periodically thereafter and after dose adjustments",
+            "system": "heart and vessels"
+          },
+          {
+            "heading": "Sudden deaths",
+            "detail": "Sudden deaths reported in the safety population and the expanded access program; ventricular repolarization abnormalities may have contributed",
+            "system": "heart and vessels"
+          },
+          {
+            "heading": "Elevated serum lipase",
+            "detail": "Caution in patients with a history of pancreatitis; check serum lipase periodically",
+            "system": "pancreas"
+          },
+          {
+            "heading": "Liver function abnormality",
+            "detail": "Elevations in bilirubin, AST/ALT and alkaline phosphatase; check hepatic function tests periodically",
+            "system": "liver"
+          },
+          {
+            "heading": "Electrolyte abnormalities",
+            "detail": "Hypophosphatemia, hypokalemia, hyperkalemia, hypocalcemia and hyponatremia; correct before initiating and monitor periodically",
+            "system": "electrolytes and metabolism"
+          },
+          {
+            "heading": "Hepatic impairment",
+            "detail": "Not investigated; caution recommended and the QT interval monitored closely",
+            "system": "liver"
+          },
+          {
+            "heading": "Drug interactions",
+            "detail": "Avoid strong CYP3A4 inhibitors or inducers; if a strong inhibitor must be co-administered, consider dose reduction and monitor the QT interval closely",
+            "system": "drug interactions"
+          },
+          {
+            "heading": "Food effects",
+            "detail": "Food increases blood levels of Tasigna; avoid food 2 hours before and 1 hour after a dose",
+            "system": "gut"
+          },
+          {
+            "heading": "Pregnancy",
+            "detail": "Fetal harm can occur when administered to a pregnant woman",
+            "system": "pregnancy and fertility"
+          }
+        ],
+        "contraindications": "Do not use in patients with hypokalemia, hypomagnesemia, or long QT syndrome.",
+        "indication": "chronic phase and accelerated phase Philadelphia chromosome positive chronic myelogenous leukemia in adults resistant to or intolerant to prior therapy that included imatinib",
+        "brand": "Tasigna"
+      }
     },
     {
       "key": "kantarjian-2006",

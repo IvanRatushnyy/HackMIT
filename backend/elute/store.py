@@ -105,6 +105,19 @@ class RunStore:
         keys = ("id", "drug", "disease", "as_of", "mode", "status", "created_at", "updated_at", "error")
         return dict(zip(keys, row))
 
+    def completed_runs(self, mode: str, drug: str | None = None, disease: str | None = None, limit: int = 10) -> list[dict[str, Any]]:
+        """Recent runs of this mode that completed (with or without gaps), newest first: the basis of the time estimate.
+        With a drug and disease, the same pair's runs come first, then any other completed run of the mode."""
+        keys = ("id", "drug", "disease", "as_of", "mode", "status", "created_at", "updated_at", "error")
+        base = "SELECT id, drug, disease, as_of, mode, status, created_at, updated_at, error FROM runs WHERE mode=? AND status LIKE 'complete%'"
+        with self._lock:
+            rows = []
+            if drug and disease:
+                rows = self._conn.execute(base + " AND lower(drug)=lower(?) AND lower(disease)=lower(?) ORDER BY updated_at DESC LIMIT ?", (mode, drug, disease, limit)).fetchall()
+            seen = {r[0] for r in rows}
+            rows += [r for r in self._conn.execute(base + " ORDER BY updated_at DESC LIMIT ?", (mode, limit)).fetchall() if r[0] not in seen]
+        return [dict(zip(keys, r)) for r in rows]
+
     # -- events -----------------------------------------------------------
     def append_event(self, run_id: str, step: str, phase: str, entry: dict[str, Any]) -> int:
         with self._lock:

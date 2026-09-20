@@ -1,17 +1,18 @@
 /* elute — Working, stage 2 of 4: the ten checks as ten boxes that light up one at a time.
  *
- * Each box asks one question, names the source it asks, and when it finishes shows what came back as one
- * count. The current box is in ink with a bar filling beneath it; finished boxes carry a check and their
- * count; boxes not yet reached are faint. Under the grid, the current step's records arrive one by one,
- * so the person sees the work as it happens without reading a log. Click a finished box to see its records. */
+ * Each box asks one question, names the source it asks, and when it finishes shows what came back as one count and
+ * how long it took. The current box is in ink with a bar filling beneath it over the step's expected length and the
+ * last line the step said under its question; finished boxes carry a check; boxes not yet reached are faint. Under
+ * the grid, the step panel shows the current (or the selected finished) step's thought process as it happens. */
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { BookOpenText, Brain, CalendarBlank, ChartBar, Check, ClipboardText, Crosshair, Dna, Flask, Graph, MagnifyingGlass, Pill, Question, Scales, ShieldCheck, Target, WarningCircle, type Icon } from '@phosphor-icons/react'
 import type { EntityKind, ISODate, LedgerRow } from '../data/types'
 import { ledgerResult } from '../lib/evidence'
-import { EASE_OUT } from '../lib/motion'
+import { durationWord } from '../lib/runlog'
 import { plain } from './evidence'
 import { question } from './Ledger'
+import { StepPanel, type StepLive } from './Step'
 
 /** One glyph per step, from the same set as the stages. */
 const ICON: Record<string, Icon> = {
@@ -45,8 +46,6 @@ function StepIcon({ step }: { step: string }) {
 /** A source string like "Open Targets Platform · MONDO" becomes its first name. */
 const sourceName = (s: string) => plain(s).split(',')[0]
 
-const SHOWN = 5
-
 export function Pipeline({
   rows,
   done,
@@ -55,6 +54,9 @@ export function Pipeline({
   selected,
   onSelect,
   durations,
+  live,
+  currentElapsedMs,
+  overrun,
 }: {
   rows: LedgerRow[]
   done: number
@@ -63,6 +65,9 @@ export function Pipeline({
   selected: number | null
   onSelect: (i: number | null) => void
   durations: number[]
+  live: Record<string, StepLive>
+  currentElapsedMs: number
+  overrun: boolean
 }) {
   const reduce = useReducedMotion()
   const current = done < rows.length ? rows[done] : undefined
@@ -74,8 +79,11 @@ export function Pipeline({
         {rows.map((row, i) => {
           const state = i < done ? 'done' : i === done ? 'now' : 'next'
           const isShown = shownIndex === i
+          const l = live[row.id]
+          const lastNote = l?.notes.length ? l.notes[l.notes.length - 1].note : undefined
+          const src = state === 'now' && l?.reasoning?.selected_tool ? l.reasoning.selected_tool : row.source
           return (
-            <li key={row.id} className={`pipe__box pipe__box--${state}${isShown && state === 'done' ? ' pipe__box--open' : ''}`}>
+            <li key={row.id} className={`pipe__box pipe__box--${state}${isShown && state === 'done' ? ' pipe__box--open' : ''}${state === 'now' && overrun ? ' pipe__box--over' : ''}`}>
               <button type="button" className="pipe__hit" disabled={state !== 'done'} onClick={() => onSelect(selected === i ? null : i)} aria-pressed={isShown && state === 'done'}>
                 <span className="pipe__head">
                   <span className="pipe__icon">
@@ -84,9 +92,23 @@ export function Pipeline({
                   <span className="pipe__n">{String(i + 1).padStart(2, '0')}</span>
                 </span>
                 <span className="pipe__q">{question(row, kind)}</span>
-                <span className="pipe__src">{sourceName(row.source)}</span>
+                <span className="pipe__src">{src === 'queued' ? '' : sourceName(src)}</span>
+                {state === 'now' && lastNote && (
+                  <span className="pipe__note" aria-hidden="true">
+                    {lastNote}
+                  </span>
+                )}
                 <span className="pipe__result" aria-live={state === 'now' ? 'polite' : undefined}>
-                  {state === 'done' ? ledgerResult(row, cutoff) : state === 'now' ? 'checking' : ''}
+                  {state === 'done' ? (
+                    <>
+                      {ledgerResult(row, cutoff)}
+                      {row.elapsed_ms !== undefined && row.elapsed_ms > 0 && <span className="pipe__time"> · {durationWord(row.elapsed_ms)}</span>}
+                    </>
+                  ) : state === 'now' ? (
+                    overrun ? 'still checking' : 'checking'
+                  ) : (
+                    ''
+                  )}
                 </span>
                 {state === 'now' && <span className="pipe__bar" style={{ '--dur': `${durations[i]}ms` } as React.CSSProperties} aria-hidden="true" />}
               </button>
@@ -99,56 +121,18 @@ export function Pipeline({
         <AnimatePresence mode="wait" initial={false}>
           {shown && (
             <motion.div
-              key={shown.id + (selected ?? '')}
+              key={shown.id + (selected ?? '') + (shown === current ? 'now' : 'done')}
               className="pipe__feed-body"
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={reduce ? undefined : { opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <Feed row={shown} index={shownIndex} kind={kind} cutoff={cutoff} live={shown === current} durationMs={durations[shownIndex] ?? 2000} reduce={!!reduce} />
+              <StepPanel row={shown} index={shownIndex} kind={kind} cutoff={cutoff} state={shown === current ? 'now' : 'done'} live={live[shown.id]} elapsedMs={shown === current ? currentElapsedMs : undefined} durationMs={durations[shownIndex]} reduce={!!reduce} />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </div>
-  )
-}
-
-/** The records of one step. Live: they arrive one by one over the step's duration. Finished: all at once. */
-function Feed({ row, index, kind, cutoff, live, durationMs, reduce }: { row: LedgerRow; index: number; kind: EntityKind; cutoff: ISODate; live: boolean; durationMs: number; reduce: boolean }) {
-  const all = row.records.filter((r) => r.published <= cutoff)
-  const visible = all.slice(0, SHOWN)
-  const more = all.length - visible.length
-  const dur = durationMs / 1000
-  const gap = live ? Math.max(0.18, Math.min(0.4, (dur - 0.8) / Math.max(1, visible.length))) : 0
-  const t = (s: number) => ({ duration: 0.3, delay: reduce || !live ? 0 : s, ease: EASE_OUT })
-  const enter = reduce || !live ? {} : { opacity: 0, y: 4 }
-  return (
-    <>
-      <p className="pipe__feed-head">
-        <span className="pipe__feed-n">{String(index + 1).padStart(2, '0')}</span>
-        <span className="pipe__feed-q">{question(row, kind)}</span>
-        <span className="pipe__feed-src">asking {plain(row.source)}</span>
-      </p>
-      <ul className="pipe__records">
-        {visible.map((r, k) => (
-          <motion.li className="pipe__record" key={k} initial={enter} animate={{ opacity: 1, y: 0 }} transition={t(0.5 + k * gap)}>
-            <span>{plain(r.value)}</span>
-            <span className="pipe__year">{r.published.slice(0, 4)}</span>
-          </motion.li>
-        ))}
-        {visible.length === 0 && (
-          <motion.li className="pipe__record pipe__record--none" initial={enter} animate={{ opacity: 1, y: 0 }} transition={t(0.5)}>
-            nothing returned
-          </motion.li>
-        )}
-        {more > 0 && (
-          <motion.li className="pipe__record pipe__record--more" initial={enter} animate={{ opacity: 1, y: 0 }} transition={t(0.5 + visible.length * gap)}>
-            and {more} more
-          </motion.li>
-        )}
-      </ul>
-    </>
   )
 }

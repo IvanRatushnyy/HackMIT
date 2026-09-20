@@ -43,6 +43,7 @@ def fixture_app(tmp_path):
 
 
 def live_app(tmp_path, **env):
+    env.setdefault("ELUTE_DEMO_DIR", tmp_path / "demo")  # never the repo's public/demo
     settings = Settings(ELUTE_MODE="live", ELUTE_CACHE_DIR=tmp_path, ELUTE_DB_PATH=tmp_path / "e.sqlite", ELUTE_TODAY="2026-09-20", OPENAI_API_KEY=None, OPENAI_MODEL=None, _env_file=None, **env)
     app = create_app(settings)
     cache = PayloadCache(FIXTURES, offline=True)
@@ -122,5 +123,54 @@ def test_running_status_shape_while_a_live_run_is_in_flight(tmp_path, monkeypatc
     with TestClient(live_app(tmp_path)) as c:
         rid = c.post("/api/appraisals", json={"drug": "nilotinib", "disease": "Parkinson disease"}).json()["id"]
         g = c.get(f"/api/appraisals/{rid}")
-        assert g.status_code == 200 and g.json() == {"id": rid, "status": "running", "appraisal": None}
+        assert g.status_code == 200
+        body = g.json()
+        assert body["id"] == rid and body["status"] == "running" and body["appraisal"] is None
+        assert body["estimate"]["total_ms"] > 0 and set(body["estimate"]["steps"]) == {f"L{i}" for i in range(1, 11)} and body["estimate"]["basis"]
         assert c.get(f"/api/appraisals/{rid}/detail").status_code == 409
+
+
+def test_live_run_streams_progress_writes_the_demo_file_and_informs_the_next_estimate(tmp_path, monkeypatch):
+    """The Working page's feedback: an estimate up front, progress lines inside the slow steps, and a replayable record after."""
+    import elute.pipeline.estimate as est
+
+    monkeypatch.setattr(est, "CACHE_SERVED_MS", 0)  # cassette runs take no time; a real cache-served run would be skipped
+    demo = tmp_path / "demo"
+    with TestClient(live_app(tmp_path, ELUTE_DEMO_DIR=demo)) as c:
+        r = c.post("/api/appraisals", json={"drug": "nilotinib", "disease": "Parkinson disease", "as_of": "2017-11-20"})
+        assert r.status_code == 202
+        first = r.json()["estimate"]
+        assert first["basis"].startswith("defaults") and first["total_ms"] == sum(first["steps"].values())
+        rid = r.json()["id"]
+        with c.stream("GET", f"/api/appraisals/{rid}/events") as s:
+            payloads = [json.loads(ln[5:]) for ln in s.iter_lines() if ln.startswith("data:")]
+        phases = [(p["step"], p["phase"]) for p in payloads]
+        assert ("L4", "question") in phases and ("L4", "settled") in phases
+        notes = [p for p in payloads if p["phase"] == "progress"]
+        assert notes and all(p["note"] and p["at_ms"] >= 0 and p["done"] is False for p in notes)
+        assert any("facet" in p["note"] for p in notes if p["step"] == "L4") and any(p["step"] == "L3" for p in notes)
+        assert all(p["at_ms"] >= 0 for p in payloads) and payloads[-1]["done"] is True
+        # the question event carries the step's pre-run reasoning so the page can show what it is about to do
+        q4 = next(p for p in payloads if p["step"] == "L4" and p["phase"] == "question")
+        assert q4["entry"]["reasoning"]["selected_tool"]
+        import time
+        for _ in range(50):
+            if c.get(f"/api/appraisals/{rid}").json()["status"] != "running":
+                break
+            time.sleep(0.1)
+        # the demo file: events with timings, the adapted detail, the appraisal, and an honest account of the model
+        latest = demo / "nilotinib--parkinson-disease.json"
+        assert latest.exists() and list((demo / "runs").glob("nilotinib--parkinson-disease--*.json"))
+        doc = json.loads(latest.read_text())
+        assert doc["run"]["id"] == rid and doc["run"]["llm"] == "unavailable" and doc["run"]["llm_client"] == "null" and doc["run"]["elapsed_ms"] >= 0
+        assert [e["step"] for e in doc["events"] if e["phase"] == "settled"] == [f"L{i}" for i in range(1, 11)]
+        assert any(e["phase"] == "progress" for e in doc["events"]) and doc["events"][-1]["done"] is True
+        assert len(doc["detail"]["query"]["ledger"]["rows"]) == 10 and doc["detail"]["candidate"]["slug"] == "nilotinib--parkinson-disease"
+        assert all(row["elapsed_ms"] >= 0 for row in doc["detail"]["query"]["ledger"]["rows"])
+        index = json.loads((demo / "index.json").read_text())
+        assert [r["slug"] for r in index["recordings"]] == ["nilotinib--parkinson-disease"] and index["recordings"][0]["text"] == "nilotinib for Parkinson disease"
+        # the next run of the same pair is estimated from this one, and says so
+        r2 = c.post("/api/appraisals", json={"drug": "nilotinib", "disease": "Parkinson disease", "as_of": "2017-11-20"})
+        est = r2.json()["estimate"]
+        assert est["basis"].startswith("the last recorded run of nilotinib for Parkinson disease") and est["total_ms"] == sum(est["steps"].values())
+        assert all(v >= 200 for v in est["steps"].values())

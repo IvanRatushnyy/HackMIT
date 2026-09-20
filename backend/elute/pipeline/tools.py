@@ -28,6 +28,7 @@ TASK_TOOLS: dict[str, tuple[str, ...]] = {
                 "OpenTargets_get_target_id_description_by_name"),
     "trials": ("ClinicalTrials_search_studies",),
     "literature": ("PubMed_search_articles", "PubMed_get_article"),
+    "safety": ("FDA_get_boxed_warning_info_by_drug_name",),
 }
 
 # The eight literature facets (§9 L4), as query templates both PubMed and Europe PMC accept.
@@ -109,6 +110,9 @@ class DefaultSelector:
                                  "target ↔ disease evidence, stated per datasource with its literature")
             return Selection("OpenTargets_get_drug_mechanisms_of_action_by_chemblId", {"chemblId": task.drug_chembl_id or ""},
                              "curated mechanism of action names the target and the action type")
+        if task.kind == "safety":
+            return Selection("FDA_get_boxed_warning_info_by_drug_name", {"drug_name": task.drug, "limit": 25},
+                             "the FDA label's boxed warning for every product of this drug; sections, set ids and effective dates from the recorded openFDA supplement")
         if task.kind == "trials":
             return Selection("ClinicalTrials_search_studies",
                              {"query_cond": disease_expr(task, reformulated), "query_intr": f"({task.drug})", "page_size": 100},
@@ -129,6 +133,8 @@ def sufficient(task: Task, records: list[RawRecord]) -> tuple[bool, str | None]:
         hits = [r for r in records if any(n in r.text.lower() for n in names)]
         if not hits:
             return False, f"{len(records)} records, none mentions {task.disease_aliases[0] if task.disease_aliases else task.disease}"
+    if task.kind == "safety" and not any(task.drug.lower() in r.text.lower() for r in records):
+        return False, f"{len(records)} label(s), none names {task.drug}"
     return True, None
 
 
@@ -184,4 +190,8 @@ def run_task(task: Task, tu: ToolUniverseConnector, direct: DirectConnector, sel
         elif task.kind == "trials":
             ep.records, extra = enrich.trial_design(task, ep.records, direct, n)
             ep.attempts.extend(extra)
+        elif task.kind == "safety":
+            ep.records, a = enrich.label_meta(task, ep.records, direct, n)
+            if a:
+                ep.attempts.append(a)
     return ep
