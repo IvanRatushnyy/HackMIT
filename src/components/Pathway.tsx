@@ -64,14 +64,29 @@ const BOTTOM = H - 56
 
 type Node = { id: string; x: number; y: number; w: number; h: number; lines: string[]; kind: PathwayDrawing['molecules'][number]['kind'] }
 
-function splitLabel(label: string): string[] {
-  if (label.length <= 16) return [label]
-  const mid = label.length / 2
-  let best = -1
-  for (let i = 0; i < label.length; i++) if (label[i] === ' ' && (best < 0 || Math.abs(i - mid) < Math.abs(best - mid))) best = i
-  return best < 0 ? [label] : [label.slice(0, best), label.slice(best + 1)]
+/** A label on as few lines as its room allows, each line as even as the words permit. `max` is the characters a line
+ * may hold before the box would crowd its neighbour; a chain of seven nodes has less room than one of six. */
+function splitLabel(label: string, max = 16): string[] {
+  const limit = Math.min(16, max)
+  if (label.length <= limit) return [label]
+  const words = label.split(' ')
+  if (words.length < 2) return [label]
+  const k = Math.min(words.length, Math.max(2, Math.ceil(label.length / max)))
+  const share = Math.ceil((label.length + 1) / k)
+  const lines: string[] = []
+  let cur = ''
+  for (const w of words) {
+    const next = cur ? `${cur} ${w}` : w
+    if (cur && lines.length < k - 1 && Math.abs(cur.length - share) < Math.abs(next.length - share)) {
+      lines.push(cur)
+      cur = w
+    } else cur = next
+  }
+  if (cur) lines.push(cur)
+  return lines
 }
 const textWidth = (lines: string[], size: number) => Math.round(Math.max(...lines.map((l) => l.length)) * size * 0.55 + 32)
+const boxHeight = (lines: number) => (lines === 1 ? 44 : 56 + (lines - 2) * 17)
 
 /** Where a line from a node's centre toward (tx, ty) leaves the node's rectangle, plus a 6px gap. */
 function border(n: Node, tx: number, ty: number): [number, number] {
@@ -107,14 +122,31 @@ type Edge = {
   arc: boolean
   len: number
   ang: number
+  /** the higher top edge of the two boxes, so a word above a horizontal edge clears the taller one */
+  top: number
+}
+
+/** The closest two molecules on one row come, centre to centre: the room a label has before it crowds a neighbour. */
+function rowGap(drawing: PathwayDrawing): number {
+  let gap = Infinity
+  const ms = drawing.molecules
+  for (const a of ms)
+    for (const b of ms) {
+      if (a === b || Math.abs(a.at[1] - b.at[1]) > 0.01) continue
+      const d = Math.abs(a.at[0] - b.at[0]) * (W - PADX * 2)
+      if (d > 0.5 && d < gap) gap = d
+    }
+  return gap
 }
 
 function layout(drawing: PathwayDrawing) {
   const nodes = new Map<string, Node>()
+  const gap = rowGap(drawing)
   for (const m of drawing.molecules) {
     const size = m.kind === 'process' || m.kind === 'cell' ? 14 : 16
-    const lines = splitLabel(m.label)
-    nodes.set(m.id, { id: m.id, x: PADX + m.at[0] * (W - PADX * 2), y: TOP + m.at[1] * (BOTTOM - TOP), w: textWidth(lines, size), h: lines.length > 1 ? 56 : 44, lines, kind: m.kind })
+    const room = Number.isFinite(gap) ? Math.max(8, Math.floor((gap - 48) / (size * 0.55))) : 16
+    const lines = splitLabel(m.label, room)
+    nodes.set(m.id, { id: m.id, x: PADX + m.at[0] * (W - PADX * 2), y: TOP + m.at[1] * (BOTTOM - TOP), w: textWidth(lines, size), h: boxHeight(lines.length), lines, kind: m.kind })
   }
   // Bands from the molecules they hold, tiled across the width with 8px gaps
   const bands = drawing.compartments.map((c) => {
@@ -138,7 +170,7 @@ function layout(drawing: PathwayDrawing) {
       const bx = to.x, by = to.y - to.h / 2 - 4
       const cx = (ax + bx) / 2, cy = (ay + by) / 2 + a.arc
       return {
-        id: a.id, claim: a.claim, kind: a.kind, word: a.word,
+        id: a.id, claim: a.claim, kind: a.kind, word: a.word, top: Math.min(ay, by),
         d: `M${ax} ${ay} Q${cx} ${cy} ${bx} ${by}`, p0: [ax, ay], p1: [bx, by],
         mx: 0.25 * ax + 0.5 * cx + 0.25 * bx, my: 0.25 * ay + 0.5 * cy + 0.25 * by,
         vertical: false, arc: true, len: Math.hypot(bx - ax, by - ay) + Math.abs(a.arc), ang: Math.atan2(by - cy, bx - cx),
@@ -147,7 +179,7 @@ function layout(drawing: PathwayDrawing) {
     const p0 = border(from, to.x, to.y)
     const p1 = border(to, from.x, from.y)
     return {
-      id: a.id, claim: a.claim, kind: a.kind, word: a.word,
+      id: a.id, claim: a.claim, kind: a.kind, word: a.word, top: Math.min(from.y - from.h / 2, to.y - to.h / 2),
       d: `M${p0[0]} ${p0[1]} L${p1[0]} ${p1[1]}`, p0, p1,
       mx: (p0[0] + p1[0]) / 2, my: (p0[1] + p1[1]) / 2,
       vertical: Math.abs(p1[1] - p0[1]) > Math.abs(p1[0] - p0[0]), arc: false,
@@ -209,7 +241,8 @@ function Drawing({
     const nx = diagonal ? (dy > 0 ? dy : -dy) / Math.hypot(dx, dy) : 0
     const ny = diagonal ? (dy > 0 ? -dx : dx) / Math.hypot(dx, dy) : 0
     const wx = e.vertical ? e.mx + 12 : diagonal ? e.mx + nx * 18 : e.mx
-    const wy = e.vertical ? e.my + 4 : e.arc ? e.my - 10 : diagonal ? e.my + ny * 18 + 4 : e.my - 34
+    const lift = weak === e.claim && !e.vertical && !e.arc && !diagonal ? 14 : 0
+    const wy = (e.vertical ? e.my + 4 : e.arc ? e.my - 10 : diagonal ? e.my + ny * 18 + 4 : e.top - 12) - lift
     const anchor: 'start' | 'middle' | 'end' = e.vertical ? 'start' : diagonal ? (nx > 0 ? 'start' : 'end') : 'middle'
     return { e, r, label, spec, color, on, off, wx, wy, anchor }
   })
@@ -286,7 +319,7 @@ function Drawing({
         return (
           <motion.g key={n.id} className={`pw__mol pw__mol--${n.kind}`} initial={reduce ? false : { opacity: 0, x: n.x, y: n.y + 6 }} animate={{ opacity: 1, x: n.x, y: n.y }} transition={{ duration: 0.42, delay: reduce ? 0 : 0.3 + i * 0.1, ease: EASE_OUT }}>
             <rect x={-n.w / 2} y={-n.h / 2} width={n.w} height={n.h} rx={rx} />
-            <text x={0} y={n.lines.length > 1 ? -3 : 5} textAnchor="middle">
+            <text x={0} y={n.lines.length === 1 ? 5 : -3 - (n.lines.length - 2) * 8.5} textAnchor="middle">
               {n.lines.map((ln, k) => (
                 <tspan key={k} x={0} dy={k === 0 ? 0 : 17}>
                   {ln}
