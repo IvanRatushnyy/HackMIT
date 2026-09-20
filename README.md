@@ -2,9 +2,40 @@
 
 Drug-repurposing decision support that always shows the case against.
 
-Given a condition, an approved drug, or a drug–condition pair, elute organizes the evidence the way a skeptical scientist would: the strongest objections first, every link in the mechanism labeled **established / contested / single-source / unknown / refuted** with its sources one click away, safety as a reason rather than a banner, the five prerequisites a trial would have to assume, the scientist's own call in their own words, and the agent's thought process as a ledger — what each step reasoned, why, and on what evidence. It never recommends. Built for one user, the accountable translational scientist, for the Regeneron challenge at HackMIT 2026. The product is specified in `PRD Elute.md` (v2.2).
+Given a condition, an approved drug, or a drug–condition pair, elute organizes the evidence the way a skeptical scientist would: the strongest objections first, every link in the mechanism labeled **established / contested / single-source / unknown / refuted** with its sources one click away, safety as a reason rather than a banner, the five prerequisites a trial would have to assume, the scientist's own call in their own words, and the agent's thought process as a ledger, naming what each step reasoned, why, and on what evidence. It never recommends. Built for one user, the accountable translational scientist, for the Regeneron challenge at HackMIT 2026. The product is specified in `PRD Elute.md` (v2.2).
 
 To elute is to wash a mixture through a column so its compounds come out one at a time, separated. The tool does the same to a hypothesis: what is known comes apart from what is merely believed.
+
+## What makes this hard
+
+Most "AI for evidence" tools collapse two different problems into one model call: finding sources, and deciding what they mean. elute keeps those separate on purpose.
+
+- **Retrieval is agentic and self-correcting, not a single prompt.** A drug–disease pair is decomposed into a fixed sequence of scientific subtasks (target biology, clinical history, literature, safety), each routed to a specific tool. A weak or empty result changes what the next step asks; a failed call falls back to a direct API rather than degrading silently. See [Architecture](#architecture).
+- **Judgment is deterministic, not the model's opinion.** Once evidence is retrieved, an OpenAI model is used only to extract structured facts from text and to word the final explanation. Whether a claim is `established`, `contested`, `single-source`, `refuted`, or `unknown`, what the weakest link is, and what stance the tool takes are all computed by fixed rules over the retrieved evidence (`backend/elute/engine/`), reproducible from the record without re-asking the model.
+- **The claims are dated, so the past is queryable.** Every piece of evidence carries a publication date. Because of that, the whole pipeline can be re-run "as of" any historical cutoff. The hero case (nilotinib for Parkinson's) is a real backtest: every objection that later sank the 2019 NILO-PD trial (unmeasured brain exposure, an MAO-B withdrawal confound in the biomarker, n = 12, open label) was already visible in the literature before that trial enrolled its first patient on 20 Nov 2017. The tool reconstructs that judgment call from dated sources, not hindsight.
+- **Nothing is asserted without a traceable path back to a record.** Every label, every ordering, every "weakest link" is derivable from a ledger line naming the tool call, the query, the record, and the date it was published. Provenance is a citation system a scientist can audit, not a debug pane for engineers.
+
+## Architecture
+
+The backend runs one appraisal as ten fixed steps (`backend/elute/pipeline/orchestrator.py`, live variant in `orchestrator_live.py`), each emitted to the frontend as a ledger entry with its own question, reasoning, and evidence:
+
+| Step | Question | What happens |
+|---|---|---|
+| L1 | What exactly was asked? | Resolve the drug and disease to canonical identifiers and aliases |
+| L2 | What is the target, and is it tied to the disease? | `OpenTargets_get_drug_mechanisms_of_action_by_chemblId` via ToolUniverse; direct Open Targets GraphQL and openFDA (boxed warning) as fallbacks |
+| L3 | Has this been tested in people? | `ClinicalTrials_search_studies` via ToolUniverse; direct ClinicalTrials.gov v2 as fallback, enriched with masking and posted dates |
+| L4 | What does the literature say? | `PubMed_search_articles` via ToolUniverse; Europe PMC as the direct fallback; results ranked, capped, and only the visible abstracts are fetched and sent to the model |
+| L5 | Is every record a dated statement? | Canonicalize and deduplicate: one source record becomes exactly one `Evidence` object, never split across claims (`pipeline/canonicalize.py`, `pipeline/dedup.py`) |
+| L6 | What was visible on the requested date? | Filter every record by `published ≤ cutoff`, the operation that makes "evidence as of" a computation, not a re-write (`pipeline/temporal.py`) |
+| L7 | What must be true for this to work? | Evaluate seven fixed claims: mechanism, disease relevance, exposure, target engagement, downstream biology, clinical benefit, safety (`pipeline/claims.py`) |
+| L8 | What holds, what is contested, what is unknown? | Six ordered label rules, a severity-ranked weakest link, and a stance, all deterministic (`engine/labels.py`, `engine/weakest_link.py`) |
+| L9 | What is the strongest case each way, and what does elute think? | Bounded, cited synthesis: OpenAI turns the graded structure into prose; it does not decide the grades (`llm/synthesis.py`) |
+| L10 | What should be answered next? | The earliest unresolved gate in causal order becomes the next question and the suggested experiment (`pipeline/next_question.py`) |
+
+Two things this buys, concretely:
+
+1. **A degraded network never produces a false answer.** If `OPENAI_API_KEY` is unset, live runs still complete: abstracts are read but nothing is extracted, so literature-dependent claims stay `unknown` rather than being guessed. If a ToolUniverse call fails, the direct fallback runs and the ledger records that it did.
+2. **The same evidence, re-graded at a different date, produces a different, checkable answer.** This is what lets the nilotinib case be tested as a real backtest rather than asserted as a demo.
 
 ## Run it
 
@@ -30,9 +61,9 @@ Then from the repo root: `VITE_ELUTE_API=http://localhost:8000/api npm run dev` 
 
 While a live run works, the Working page says up front how long it expects to take and on what basis (the last recorded run that touched the network, else defaults), keeps a clock and a remaining-time estimate, shows the last line each step said inside its box, and under the grid the step's thought process as the backend emits it: why this step, the evidence it needs, the tool and why, the lines it said while running, what came back, what that changed, and what comes next, with who worded the reasoning (template or model) always stated. Everything the page showed is kept in this browser (`localStorage`, `src/lib/runlog.ts`), so *2 research* on the rail reopens the stage as it settled, and a reload or a backend that has gone away still shows it. A fresh ask from Entry runs the stage again.
 
-Every completed live run is also written by the backend to `public/demo/<slug>.json` (plus `runs/` and an `index.json`), a folder that is gitignored. Entry always offers the hard-coded example under *try:* (`nilotinib for Parkinson’s`, typed or clicked): the fixture's scripted sequence and the curated nilotinib record, in either mode, with no backend needed. When a recording exists it is offered beside the example worded exactly as it was asked, and choosing it replays the real run's events, compressed to about 24 s with each step keeping its share of the time (`src/data/session.ts`); a recording asked in the example's own words takes the example's place. In fixture mode a recording replaces the scripted sequence for its pair; in live mode typing any other pair starts a real run. The backend's payload cache (`backend/.cache/payloads`) answers rehearsed queries instantly; move it aside before recording a run whose timings should be real.
+Every completed live run is also written by the backend to `public/demo/<slug>.json` (plus `runs/` and an `index.json`), a folder that is gitignored. Entry always offers the hard-coded example under *try:* (`nilotinib for Parkinson's`, typed or clicked): the fixture's scripted sequence and the curated nilotinib record, in either mode, with no backend needed. When a recording exists it is offered beside the example worded exactly as it was asked, and choosing it replays the real run's events, compressed to about 24 s with each step keeping its share of the time (`src/data/session.ts`); a recording asked in the example's own words takes the example's place. In fixture mode a recording replaces the scripted sequence for its pair; in live mode typing any other pair starts a real run. The backend's payload cache (`backend/.cache/payloads`) answers rehearsed queries instantly; move it aside before recording a run whose timings should be real.
 
-One ask is hard-coded: typing the example as written, `nilotinib for Parkinson’s` (either apostrophe), runs the fixture's scripted sequence for the curated pair in either mode and opens the curated appraisal, with no backend needed; the page says it is a scripted sequence. In live mode, `nilotinib for Parkinson’s disease` is a real run.
+One ask is hard-coded: typing the example as written, `nilotinib for Parkinson's` (either apostrophe), runs the fixture's scripted sequence for the curated pair in either mode and opens the curated appraisal, with no backend needed; the page says it is a scripted sequence. In live mode, `nilotinib for Parkinson's disease` is a real run.
 
 ## The flow
 
@@ -48,13 +79,13 @@ One ask is hard-coded: typing the example as written, `nilotinib for Parkinson�
 
 ## How labels are assigned
 
-Every claim in a chain carries dated evidence. At a chosen date, only evidence published on or before it counts, and the label is derived by six ordered rules (override with a stated reason → unknown → refuted → contested → established → single-source). The rules are printed under *Status rules* on the Sources page and implemented in `src/lib/evidence.ts`; the nilotinib chain's fifteen expected labels across three dates are pinned in `src/lib/evidence.test.ts`.
+Every claim in a chain carries dated evidence. At a chosen date, only evidence published on or before it counts, and the label is derived by six ordered rules (override with a stated reason → unknown → refuted → contested → established → single-source). The rules are printed under *Status rules* on the Sources page and implemented in `src/lib/evidence.ts` on the frontend and `backend/elute/engine/labels.py` on the backend; the nilotinib chain's fifteen expected labels across three dates are pinned in `src/lib/evidence.test.ts`.
 
 ## What is curated and what is not
 
 - **Nilotinib for Parkinson's disease** is hand-curated from dated primary sources (Pagan 2016, Reinwald 2014, Schwarzschild 2016, Simuni 2021, and the mechanism literature), with three evidence dates.
 - **The other candidates** (ambroxol, exenatide, isradipine, simvastatin; metformin for Parkinson's, Alzheimer's and colorectal adenoma) are **drafts**: structurally complete, entered from memory of the literature, not yet verified against the papers. They are marked *draft* in the interface and listed on the Sources page. Where a citation is uncertain the link is a PubMed search rather than an identifier.
-- **The ledger** in fixture mode is a scripted sequence with real source names, not a recorded live run; the interface says so. Against the backend it is a recorded run: Phase 1 of `docs/BACKEND_PLAN.md` (v4.4) is implemented for the nilotinib vertical slice — three verified ToolUniverse tools with direct API fallbacks, a deterministic evidence engine, OpenAI at bounded and cited steps, an `as_of` backtest at three pinned dates, and an evidence-grounded opinion. The adapter's output passes the frontend's own `validateCandidate` (`scripts/validate-detail.ts`). Phase 2 (OpenAlex citation independence) has not started.
+- **The ledger** in fixture mode is a scripted sequence with real source names, not a recorded live run; the interface says so. Against the backend it is a recorded run: Phase 1 of `docs/BACKEND_PLAN.md` (v4.4) is implemented for the nilotinib vertical slice: three verified ToolUniverse tools with direct API fallbacks, a deterministic evidence engine, OpenAI at bounded and cited steps, an `as_of` backtest at three pinned dates, and an evidence-grounded opinion. The adapter's output passes the frontend's own `validateCandidate` (`scripts/validate-detail.ts`). Phase 2 (OpenAlex citation independence) has not started.
 - **The pathway panel is live.** Targets, Reactome pathway memberships, tractability and subcellular location come from the Open Targets GraphQL API at view time; the diagram is Reactome's exporter; STRING is the fallback picture. Only the drug → target link is ever marked as curated (ChEMBL mechanism of action); every later link is labelled "not curated" and stands on its cited papers. Route and barrier are from the record.
 - **Safety** is read from the FDA label in both modes: the boxed warning (or its absence), every warning with the body system it names, the contraindications, and at the run date the FAERS signals Open Targets ranks; the fifth prerequisite (boxed → *with monitoring*) and the Safety block on Detail are derived from that one dated record. When the label version read is dated after the selected evidence date the page says so rather than showing a flag; *not assessed* now means no label was found at all.
 - **The five prerequisites** on `main` are the v1 five; PRD v2.2 renames them (brain exposure at tolerated doses · target engagement measured in patients · benefit under blinding · biomarker validated against an alternative · safety acceptable in the likely population). The backend adapter already emits the v2.2 five (`backend/elute/api/adapt.py`); the fixtures and frontend copy are renamed in one joint PR.
@@ -89,7 +120,11 @@ src/lib/evidence.ts          label rules, cutoff filtering, ordering, publishabi
 src/lib/pair.ts              drug–condition pair parsing for the entry field
 src/fixtures/                nilotinib (curated), drafts, ledgers, papers, provenance
 src/screens/                 Entry, Query (Working), Detail, Sources, Export
-backend/                     FastAPI + ToolUniverse pipeline (uv); fixture and live modes; cassette-backed tests
+backend/elute/pipeline/      the ten-step orchestrator (fixture and live variants) and its reasoning trace
+backend/elute/engine/        deterministic label rules, weakest link, independence, publishability gate
+backend/elute/connectors/    ToolUniverse transports, direct API fallbacks, date and supplement mappers
+backend/elute/llm/           OpenAI client, schemas, prompts, structured extraction, synthesis
+backend/elute/api/           FastAPI routers and the adapter to the frontend's contract
 scripts/validate-detail.ts   checks the backend adapter's output against the frontend validator
 ```
 
