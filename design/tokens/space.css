@@ -30,14 +30,14 @@
   --gutter-wide:   32px;     /* tablet and up */
   --panel-index:   320px;    /* results list column */
   --panel-detail:  384px;    /* detail rail: ledger, citations, claim evidence */
-  --header-height: 120px;    /* every page: the wordmark's white block, the shard band beside */
+  --header-height: 88px;     /* every page: the glass bar with the wordmark */
   --band-entry:    280px;    /* startup: the white band above the shard hero */
   --page-max:      1920px;
 
   /* ---- Shape ------------------------------------------------------------- */
   --radius:       0;         /* sharp by default, matching the shard geometry: the controls */
-  --radius-glass: 24px;      /* every glass surface and the floating controls on Entry */
-  --radius-sm:    4px;       /* half unit: small controls only */
+  --radius-glass: 16px;      /* every paper surface */
+  --radius-sm:    8px;       /* every control */
   --radius-round: 999px;     /* pills, glass circle buttons */
   --radius-sheet: 32px;      /* the one rounded sheet per page; nothing inside it is rounded */
 

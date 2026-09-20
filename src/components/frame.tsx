@@ -66,13 +66,12 @@ export function Wordmark() {
 /** The same header on every page: the wordmark (the way home; there is no search up here) centred in its
  * white block, then the shard band from the block's edge. */
 export function Header() {
-  const phase = useBandPhase()
+  useBandPhase()
   return (
     <header className="header">
       <div className="header__block">
         <Wordmark />
       </div>
-      <Shard className="header__shard" offsetY={280} phase={phase} />
     </header>
   )
 }

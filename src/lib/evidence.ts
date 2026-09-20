@@ -91,7 +91,7 @@ export function singleSourceQualifier(s: Source): string {
   else if (s.design === 'open-label') parts.push('open-label')
   else parts.push(designWord(s))
   parts.push('not replicated')
-  return parts.join(' · ')
+  return parts.join(', ')
 }
 
 /** Spec §7.3, rules 1–6, evaluated in order. */

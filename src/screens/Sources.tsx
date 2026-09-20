@@ -2,19 +2,22 @@
  * This is the provenance surface for the scientist and the IT reviewer. */
 
 import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { Header, Kicker } from '../components/frame'
 import { ProvenanceBlock } from '../components/Ledger'
+import { plain } from '../components/evidence'
 import { source } from '../data/source'
 import type { CandidateDetail, Cutoff, Provenance, QueryRecord } from '../data/types'
 import { findCutoff, ledgerResult } from '../lib/evidence'
+import { BASE, EASE_OUT } from '../lib/motion'
 import pkg from '../../package.json'
 
 const RULES = [
   ['Override', 'A hand-curated label with its stated reason applies first; every override is listed below.'],
   ['Unknown', 'No evidence published on or before the date tests or supports the claim.'],
   ['Refuted', 'A source directly tested the claim in a blinded, controlled study and found it false.'],
-  ['Contested', 'Evidence on both sides — or evidence only against, when nothing supports the claim.'],
+  ['Contested', 'Evidence on both sides, or evidence only against when nothing supports the claim.'],
   ['Established', 'Supporting evidence from two or more independent groups with nothing against it, or acceptance by a regulator.'],
   ['Single-source', 'Supporting evidence from one group only; the qualifier gives n, design and blinding.'],
 ]
@@ -30,6 +33,15 @@ export function Sources() {
   const [tab, setTab] = useState<Tab>('ledger')
   // A citation from a historical Detail carries ?asof=<cutoff>&c=<candidate>; the page then filters to that date.
   const [frozen, setFrozen] = useState<{ candidate: CandidateDetail; cutoff: Cutoff } | undefined>()
+  const [opened, setOpened] = useState<Set<string>>(() => new Set())
+  const reduce = useReducedMotion()
+  const toggle = (id: string) =>
+    setOpened((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
 
   useEffect(() => {
     source.query(query).then(setQ)
@@ -48,8 +60,10 @@ export function Sources() {
   // A citation link like #L7 lands on its row
   useEffect(() => {
     if (!q || !location.hash) return
-    const el = document.getElementById(location.hash.slice(1))
+    const id = location.hash.slice(1)
+    const el = document.getElementById(id)
     el?.scrollIntoView({ block: 'center' })
+    setOpened((prev) => (prev.has(id) ? prev : new Set(prev).add(id)))
   }, [q, location.hash])
 
   const today = frozen ? frozen.cutoff.date : (prov?.today ?? '2026-09-19')
@@ -64,12 +78,12 @@ export function Sources() {
       <div className="col">
         <div className="title arrive">
           <div className="title__main">
-            <Kicker>run · {runAt ? runAt.replace('T', ' ').slice(0, 16) : ''}</Kicker>
+            <Kicker>run {runAt ? runAt.replace('T', ' ').slice(0, 16) : ''}</Kicker>
             <h1 className="display-sm">sources</h1>
             {q && (
               <p className="title__sub">
-                <Link to={`/q/${q.slug}`}>{q.heading}</Link> → {q.kind === 'drug' ? 'indications' : q.kind === 'pair' ? 'appraisal' : 'candidates'} · {q.ledger.rows.length} steps ·{' '}
-                {records} records · {recorded ? 'recorded run' : 'scripted sequence, not a live run'}
+                <Link to={`/q/${q.slug}`}>{q.heading}</Link> → {q.kind === 'drug' ? 'indications' : q.kind === 'pair' ? 'appraisal' : 'candidates'}, {q.ledger.rows.length} steps,{' '}
+                {records} records, {recorded ? 'recorded run' : 'scripted sequence, not a live run'}
               </p>
             )}
             {frozen && (
@@ -111,28 +125,44 @@ export function Sources() {
             </div>
             <div className="panel">
               {q.ledger.rows.map((row, i) => (
-                <div key={row.id} id={row.id}>
-                  <div className="panel__row sources__row">
+                <div key={row.id} id={row.id} className="sources__group">
+                  <button type="button" className="panel__row sources__row sources__row--step" aria-expanded={opened.has(row.id)} onClick={() => toggle(row.id)}>
                     <span className="sources__line">{i + 1}.1</span>
                     <span className="sources__step">{row.step}</span>
-                    <span>{row.source}</span>
+                    <span>{plain(row.source)}</span>
                     <span>
                       {ledgerResult(row, today)}
-                      {row.execution.retry ? ` · ${row.execution.retry.reason}, retried` : ''}
+                      {row.execution.retry ? `, ${row.execution.retry.reason}, retried` : ''}
                     </span>
                     <span className="sources__time">{recorded && row.elapsed_ms !== undefined ? `${(row.elapsed_ms / 1000).toFixed(1)} s` : '–'}</span>
-                    <span />
-                  </div>
+                    <span className="sources__mark" aria-hidden="true">
+                      {opened.has(row.id) ? '–' : '+'}
+                    </span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {opened.has(row.id) && (
+                      <motion.div
+                        key="prov"
+                        className="sources__prov"
+                        initial={reduce ? false : { opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={reduce ? undefined : { opacity: 0, height: 0 }}
+                        transition={{ duration: BASE, ease: EASE_OUT }}
+                      >
+                        <ProvenanceBlock row={row} cutoff={today} isToday={isToday} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                   {row.records
                     .filter((r) => r.published <= today)
                     .map((r, j) => (
-                      <div className="panel__row sources__row sources__row--record" key={j} style={{ minHeight: 40 }}>
+                      <div className="panel__row sources__row sources__row--record" key={j}>
                         <span className="sources__line">
                           {i + 1}.{j + 2}
                         </span>
                         <span className="sources__step">{r.value.split(' · ')[0]}</span>
                         <span>{row.source.split(' · ')[0]}</span>
-                        <span>{r.value.split(' · ').slice(1).join(' · ') || r.value}</span>
+                        <span>{plain(r.value.split(' · ').slice(1).join(' · ') || r.value)}</span>
                         <span className="sources__time">{r.published.slice(0, 4)}</span>
                         <span className="sources__open">{r.source && <SourceOpen q={q} id={r.source} />}</span>
                       </div>
@@ -146,9 +176,9 @@ export function Sources() {
         {q && tab === 'tools' && (
           <div className="toolcalls arrive" key="tools">
             {q.ledger.rows.map((row) => (
-              <div key={row.id} className="section">
+              <div key={row.id} className="panel panel--pad toolcall">
                 <Kicker>
-                  {row.id} · {row.step}
+                  {row.id} {row.step}
                 </Kicker>
                 <ProvenanceBlock row={row} cutoff={today} isToday={isToday} />
               </div>
@@ -193,7 +223,7 @@ export function Sources() {
         )}
 
         {prov && tab === 'rules' && (
-          <div className="rules arrive" key="rules">
+          <div className="rules arrive panel panel--pad" key="rules">
             <div className="section">
               <Kicker>label rules, in order</Kicker>
               <ol>
@@ -210,7 +240,7 @@ export function Sources() {
                 <ul>
                   {prov.label_overrides.map((o) => (
                     <li key={o.candidate + o.claim}>
-                      <span className="medium">{o.candidate}</span> — {o.claim}: {o.why}
+                      <span className="medium">{o.candidate}</span>, {o.claim}: {o.why}
                     </li>
                   ))}
                 </ul>
@@ -266,6 +296,7 @@ const ROLE: Record<string, string> = {
   'react-dom': 'UI',
   'react-router-dom': 'routes',
   'html2canvas-pro': 'glass snapshot (unused in v1)',
+  motion: 'motion',
 }
 
 function SourceOpen({ q, id }: { q: QueryRecord; id: string }) {

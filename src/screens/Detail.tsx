@@ -1,21 +1,25 @@
 /* elute — Detail: the screen the two-minute test is run on.
- * Everything evidence-bearing on this page is resolved at the selected cutoff. */
+ * Everything evidence-bearing on this page is resolved at the selected cutoff; a date change animates what
+ * enters and leaves rather than re-mounting the page, so the pathway's live context stays. */
 
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { Header } from '../components/frame'
-import { AsOfControl, BeforeTrial, Mechanism, Objections, SafetyPanel, YourCall } from '../components/detail'
+import { AsOfControl, BeforeTrial, Objections, SafetyPanel, YourCall } from '../components/detail'
 import { Pathway } from '../components/Pathway'
-import { bestEvidenceText, DriverBar, OutcomeChip } from '../components/evidence'
+import { bestEvidenceText, DriverBar, OutcomeChip, plain } from '../components/evidence'
 import { source } from '../data/source'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
 import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
+import { arrive } from '../lib/motion'
 
 export function Detail() {
   const { query = '', candidate: candidateParam = '' } = useParams()
   const [params, setParams] = useSearchParams()
   const [q, setQ] = useState<QueryRecord | undefined>()
   const [c, setC] = useState<CandidateDetail | undefined | null>(undefined)
+  const reduce = useReducedMotion()
 
   useEffect(() => {
     let cancelled = false
@@ -36,70 +40,70 @@ export function Detail() {
   const isToday = isTodayCutoff(c, cutoff)
   const be = bestEvidenceAt(c, cutoff.date)
   const refuted = !!be && be.controlled && be.outcome === 'negative'
-  // Citations carry the cutoff so the Sources page filters to the same date (never later evidence from a historical view).
   const sourcesHref = `/q/${query}/sources${isToday ? '' : `?asof=${cutoff.id}&c=${candidateParam}`}`
   const exportHref = `/q/${query}/${candidateParam}/export${isToday ? '' : `?asof=${cutoff.id}`}`
 
   const changeCutoff = (next: Cutoff) => {
     if (next.id === cutoff.id) return
-    // Replace, not push: the date is view state, so Back returns to the list (spec §3).
     const p = new URLSearchParams(params)
     if (isTodayCutoff(c, next)) p.delete('asof')
     else p.set('asof', next.id)
     setParams(p, { replace: true })
   }
 
-  const backTo = q.kind === 'pair' ? { to: `/q/${c.condition_slug}`, word: `← all candidates for ${c.condition}` } : { to: `/q/${query}`, word: '← results · as of today' }
+  const backTo = q.kind === 'pair' ? { to: `/q/${c.condition_slug}`, word: `all candidates for ${c.condition}` } : { to: `/q/${query}`, word: 'results' }
+  const mechanism = c.mechanism.split('→').slice(1).join('→').trim()
 
   return (
     <main className="page">
       <Header />
-      <div className="col">
-        <div className="title arrive">
-          <div className="title__main">
-            <p className="detail__meta">
-              <Link to={backTo.to}>{backTo.word}</Link> · {c.drug_class} · approved for {c.approved_indication} · {c.mechanism.split('→').slice(1).join('→').trim()}
-              {c.curation === 'draft' ? ' · draft record, sources not yet verified' : ''}
+      <div className="col detail">
+        <motion.div className="detail__title" {...arrive(reduce)}>
+          <div className="detail__title-main">
+            <p className="detail__back">
+              <Link to={backTo.to}>← {backTo.word}</Link>
             </p>
-            <h1 className="display-sm detail__title">
-              {c.name} <span className="muted">for {c.condition}</span>
-            </h1>
+            <h1 className="display-hero detail__name">{c.name}</h1>
+            <p className="detail__class">
+              for {c.condition}
+              <span className="muted">. {c.drug_class}, approved for {c.approved_indication}</span>
+            </p>
+            <p className="detail__mechanism">
+              {mechanism}
+              {c.curation === 'draft' && <span className="detail__draft">draft record, sources not yet verified</span>}
+            </p>
             <div className="detail__evidence">
               {be && (
                 <>
                   <OutcomeChip be={be} />
-                  <span>
+                  <span className="detail__evidence-text">
                     {bestEvidenceText(be)}
-                    {be.label ? ` · ${be.label}` : ''}
+                    {be.label && <span className="muted">, {plain(be.label)}</span>}
                   </span>
                 </>
               )}
               {isToday && <DriverBar drivers={c.drivers} refutedClinical={refuted} />}
             </div>
           </div>
-          <div className="title__aside">
+          <div className="detail__title-aside">
             <AsOfControl cutoffs={c.cutoffs} current={cutoff} onChange={changeCutoff} />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Keyed on the cutoff: a date change re-mounts the body as one staggered arrival. */}
-        <div className="detail__body" key={cutoff.id}>
-          <div className="arrive" style={{ '--i': 1 } as React.CSSProperties}>
+        <div className="detail__body">
+          <motion.div {...arrive(reduce, 0.08)}>
             <Objections candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
-          </div>
-          <div className="arrive" style={{ '--i': 2 } as React.CSSProperties}>
+          </motion.div>
+          <motion.div {...arrive(reduce, 0.16)}>
             <Pathway candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
-          </div>
-          <div className="arrive" style={{ '--i': 3 } as React.CSSProperties}>
-            <Mechanism candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
-          </div>
-          <div className="two arrive" style={{ '--i': 4 } as React.CSSProperties}>
+          </motion.div>
+          <motion.div className="detail__two" {...arrive(reduce, 0.24)}>
             <SafetyPanel candidate={c} cutoff={cutoff} />
             <BeforeTrial candidate={c} cutoff={cutoff} isToday={isToday} />
-          </div>
-          <div className="arrive" style={{ '--i': 5 } as React.CSSProperties}>
+          </motion.div>
+          <motion.div {...arrive(reduce, 0.32)}>
             <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>

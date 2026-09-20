@@ -2,11 +2,16 @@
 
 import type { BestEvidence, CandidateDetail, Label, Source } from '../data/types'
 
+/** Record strings use a middle dot as a structured separator; on screen it is a comma. */
+export function plain(s: string): string {
+  return s.replace(/\s*·\s*/g, ', ')
+}
+
 export function EvidenceLabel({ label, qualifier }: { label: Label; qualifier?: string }) {
   return (
     <span className={`label label--${label}`}>
       {label}
-      {qualifier && <span className="label__qualifier">· {qualifier}</span>}
+      {qualifier && <span className="label__qualifier">({qualifier})</span>}
     </span>
   )
 }
@@ -20,7 +25,7 @@ export function OutcomeChip({ be }: { be: BestEvidence }) {
 
 export function bestEvidenceText(be: BestEvidence): string {
   if (be.outcome === 'none') return 'no human test'
-  return `${be.design}${be.n !== undefined ? ` · n = ${be.n}` : ''}`
+  return `${be.design}${be.n !== undefined ? `, n = ${be.n}` : ''}`
 }
 
 const SEGMENTS = ['mechanism', 'clinical', 'exposure', 'safety'] as const
@@ -81,7 +86,7 @@ export function designWord(s: Source): string {
       break
   }
   if (s.n !== undefined) parts.push(`n = ${s.n}`)
-  return parts.join(' · ')
+  return parts.join(', ')
 }
 
 export function shortCite(s: Source): string {

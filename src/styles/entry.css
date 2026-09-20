@@ -1,0 +1,243 @@
+/* elute — Entry: the ask box on paper, centred in the space under the header; the shard rippling behind;
+ * one ripple outward on submit; paste a paper beneath. */
+
+.entry {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xl) var(--col-pad) var(--space-3xl);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The shard: the one composition on the page, to the right of the box, its planes moving slowly against
+ * each other. The box is paper, so no text sits on it. */
+.entry__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 48%;
+  z-index: 0;
+  pointer-events: none;
+}
+.entry__shard {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: entry-shard-in 1200ms var(--ease-out) both;
+}
+@keyframes entry-shard-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.entry__loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .entry__shard { animation: none; }
+  .entry__loop { display: none; }
+}
+
+.entry__block {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 896px;
+}
+
+/* Arrival. Under the startup screen the box waits; when the screen lifts and the header band has composed,
+ * the box comes in already there at slightly larger bounds and soft, settling to size. */
+.entry--wait .ask-wrap {
+  opacity: 0;
+}
+.entry--go .ask-wrap {
+  animation: arrive var(--duration-arrive) 720ms both;
+}
+.entry--settled .ask-wrap {
+  animation: arrive var(--duration-arrive) both;
+}
+
+/* One ripple from the box outward: a circle the width of the page, scaled up and fading */
+.entry__ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1600px;
+  height: 1600px;
+  margin: -800px 0 0 -800px;
+  border-radius: 50%;
+  border: 1px solid var(--color-accent);
+  background: var(--slate-tint);
+  opacity: 0;
+  transform: scale(0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- The ask box ------------------------------------------------------------------- */
+
+.ask-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+.ask {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: start;
+  gap: var(--space-md);
+  min-height: 224px;
+  padding: var(--space-lg);
+  transition: box-shadow var(--duration-arrive) var(--ease-out), transform var(--duration-slow) var(--ease-out);
+}
+.ask:focus-within {
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0 0 / 0.75),
+    inset 0 0 0 1px oklch(41.5% 0.137 359 / 0.35),
+    0 1px 2px oklch(var(--shadow-ink) / 0.04),
+    0 32px 64px -28px oklch(41.5% 0.137 359 / 0.45);
+}
+.ask--launching {
+  transform: scale(0.99);
+}
+.ask__input {
+  display: block;
+  width: 100%;
+  min-height: calc(var(--line-4) * 2);
+  max-height: calc(var(--line-4) * 5);
+  padding: 0;
+  border: 0;
+  background: none;
+  resize: none;
+  overflow-y: auto;
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+}
+.ask__input:focus {
+  outline: none;
+}
+.ask__input::placeholder {
+  color: var(--color-ink-faint);
+}
+.ask__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* The paste circle: outlined; the send circle: ink. The two circles on the page. */
+.ask__plus,
+.ask__send {
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+.ask__plus {
+  color: var(--color-ink-muted);
+  box-shadow: inset 0 0 0 var(--line-width) var(--color-line-strong);
+}
+.ask__plus:hover,
+.ask__plus[aria-expanded='true'] {
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 var(--line-width) var(--color-ink);
+}
+.ask__send {
+  background: var(--color-surface-inverse);
+  color: var(--color-ink-inverse);
+}
+.ask__send:hover {
+  background: var(--neutral-700);
+}
+.ask__plus:active,
+.ask__send:active {
+  transform: scale(0.98);
+}
+.ask__send:disabled {
+  opacity: 0.32;
+  cursor: default;
+  transform: none;
+}
+
+.ask__under {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: 0 var(--space-xs);
+}
+.ask__examples {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+.ask__examples .chip {
+  background: transparent;
+}
+.ask__note {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+
+/* ---- Paste a paper (opens under the box) ---------------------------------------- */
+
+.paste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.paste__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.paste__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.paste__none,
+.paste__stop,
+.paste__cite {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+.paste__read {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+  border-top: var(--line-width) solid var(--color-line-soft);
+}
+.paste__facts {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 0 var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+.paste__facts dt {
+  color: var(--color-ink-faint);
+}

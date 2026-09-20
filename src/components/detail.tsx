@@ -1,11 +1,13 @@
-/* elute — Detail sections, in the mockup's order: objections, mechanism (chain + claim panel),
- * safety and before-a-trial side by side, your call. Each is a pure function of the candidate and a cutoff. */
+/* elute — Detail sections: the evidence date, critical appraisal, safety, before a trial, your call.
+ * Each is a pure function of the candidate and a cutoff; a date change animates what enters and leaves. */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import type { CandidateDetail, Cutoff, Source } from '../data/types'
-import { deriveLabel, resolvePrerequisite, resolveTimeline, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
-import { EvidenceLabel, formatDate, shortCite, SourceLine } from './evidence'
+import { resolvePrerequisite, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
+import { EASE_OUT } from '../lib/motion'
+import { formatDate, shortCite, SourceLine } from './evidence'
 import { Kicker } from './frame'
 import { assessmentKey, loadAssessment, saveAssessment, type Assessment } from '../lib/export'
 
@@ -13,20 +15,21 @@ import { assessmentKey, loadAssessment, saveAssessment, type Assessment } from '
 
 export function AsOfControl({ cutoffs, current, onChange }: { cutoffs: Cutoff[]; current: Cutoff; onChange: (c: Cutoff) => void }) {
   const single = cutoffs.length === 1
+  const i = cutoffs.findIndex((x) => x.id === current.id)
   return (
     <div className="asof">
-      <div className="seg" role="radiogroup" aria-label="Evidence as of">
-        {cutoffs.map((c) => (
+      <Kicker>evidence as of</Kicker>
+      <div className="asof__dates" role="radiogroup" aria-label="Evidence as of">
+        {cutoffs.map((c, k) => (
           <button
             key={c.id}
             type="button"
             role="radio"
-            className="seg__item"
+            className={`asof__date${k < i ? ' asof__date--past' : ''}`}
             aria-checked={c.id === current.id}
             disabled={single}
             onClick={() => onChange(c)}
             onKeyDown={(e) => {
-              const i = cutoffs.findIndex((x) => x.id === current.id)
               if (e.key === 'ArrowRight') onChange(cutoffs[Math.min(i + 1, cutoffs.length - 1)])
               if (e.key === 'ArrowLeft') onChange(cutoffs[Math.max(i - 1, 0)])
             }}
@@ -34,13 +37,20 @@ export function AsOfControl({ cutoffs, current, onChange }: { cutoffs: Cutoff[];
             {c.label}
           </button>
         ))}
+        <span className="asof__track" aria-hidden="true">
+          <motion.span className="asof__fill" animate={{ scaleX: cutoffs.length > 1 ? i / (cutoffs.length - 1) : 1 }} transition={{ duration: 0.4, ease: EASE_OUT }} />
+        </span>
       </div>
-      <p className="detail__frozen">{current.note}</p>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.p key={current.id} className="asof__note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.24 }}>
+          {current.note}
+        </motion.p>
+      </AnimatePresence>
     </div>
   )
 }
 
-// ---- Objections ----------------------------------------------------------------------
+// ---- Critical appraisal ----------------------------------------------------------------
 
 function boldFigure(text: string, figure?: string) {
   if (!figure || !text.includes(figure)) return text
@@ -54,142 +64,85 @@ function boldFigure(text: string, figure?: string) {
   )
 }
 
-export function Objections({ candidate, cutoff, sourcesHref, limit }: { candidate: CandidateDetail; cutoff: Cutoff; sourcesHref?: string; limit?: number }) {
+export function Objections({ candidate, cutoff, sourcesHref }: { candidate: CandidateDetail; cutoff: Cutoff; sourcesHref: string }) {
+  const reduce = useReducedMotion()
   const [open, setOpen] = useState<string | null>(null)
   const srcById = new Map(candidate.sources.map((s) => [s.id, s]))
-  let objections = visibleObjections(candidate, cutoff.date)
-  if (limit) objections = objections.slice(0, limit)
+  const objections = visibleObjections(candidate, cutoff.date)
   return (
     <section className="section" aria-labelledby="objections">
-      <h2 className="display-xs" id="objections">
-        critical appraisal
-      </h2>
-      <div className="panel">
-        {objections.length === 0 ? (
-          <p className="panel__row annotation">Nothing published on or before this date.</p>
-        ) : (
-          objections.map((o, i) => {
+      <div className="section__head">
+        <h2 className="display-xs" id="objections">
+          critical appraisal
+        </h2>
+        <span className="section__count">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span key={objections.length} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.24 }}>
+              {objections.length}
+            </motion.span>
+          </AnimatePresence>{' '}
+          {objections.length === 1 ? 'objection' : 'objections'}
+        </span>
+      </div>
+      <motion.div className="panel objections" layout={!reduce}>
+        <AnimatePresence initial={false}>
+          {objections.length === 0 && (
+            <motion.p key="none" className="objections__none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              Nothing published on or before this date.
+            </motion.p>
+          )}
+          {objections.map((o, i) => {
             const srcs = o.sources.map((id) => srcById.get(id)).filter((s): s is Source => !!s)
             const isOpen = open === o.id
             return (
-              <div key={o.id}>
-                <button type="button" className="panel__row objection" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : o.id)}>
-                  <span className="objection__n">{i + 1}</span>
+              <motion.div key={o.id} layout={!reduce} initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.4, ease: EASE_OUT, delay: reduce ? 0 : i * 0.05 }} className="objection">
+                <button type="button" className="objection__row" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : o.id)}>
+                  <span className="objection__n display-xs">{i + 1}</span>
                   <span className="objection__claim">{o.claim}</span>
-                  <span className="objection__src">{srcs.map(shortCite).join(' · ')}</span>
-                  <span className="objection__mark" aria-hidden="true">
-                    +
-                  </span>
+                  <span className="objection__src">{srcs.map(shortCite).join(', ')}</span>
+                  <span className={`objection__mark${isOpen ? ' objection__mark--open' : ''}`} aria-hidden="true" />
                 </button>
                 <div className={`grow${isOpen ? ' grow--open' : ''}`} aria-hidden={!isOpen}>
                   <div>
                     <div className="objection__body">
-                      <p>{boldFigure(o.evidence, o.figure)}</p>
-                      <p className="cell__sub">
+                      <p className="objection__evidence">{boldFigure(o.evidence, o.figure)}</p>
+                      <p className="objection__sources">
                         {srcs.map((s, j) => (
                           <span key={s.id}>
-                            {j > 0 && ' · '}
+                            {j > 0 && ', '}
                             <a href={s.url} target="_blank" rel="noreferrer">
                               {s.first_author}, <em>{s.journal}</em> {s.year}
                             </a>
                           </span>
                         ))}
-                        {' · '}published {formatDate(o.published)}
-                        {sourcesHref &&
-                          o.cites.map((c) => (
-                            <span key={c}>
-                              {' '}
-                              <Link className="cite" to={`${sourcesHref}#${c}`}>
-                                [{c}]
-                              </Link>
-                            </span>
-                          ))}
+                        <span className="muted"> published {formatDate(o.published)}</span>
+                        {o.cites.map((c) => (
+                          <Link key={c} className="cite" to={`${sourcesHref}#${c}`}>
+                            [{c}]
+                          </Link>
+                        ))}
                       </p>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
-          })
-        )}
-      </div>
+          })}
+        </AnimatePresence>
+      </motion.div>
     </section>
   )
 }
 
-// ---- Mechanism chain: horizontal; nodes are boxes, claims are the links between them ----------
-
-export function Mechanism({ candidate, cutoff, sourcesHref }: { candidate: CandidateDetail; cutoff: Cutoff; sourcesHref: string }) {
-  const [selected, setSelected] = useState<string | null>(null)
-  const weak = resolveTimeline(candidate.weakest_link, cutoff.date)
-  const labels = candidate.chain.claims.map((k) => ({ claim: k, r: deriveLabel(k, candidate.sources, cutoff.date) }))
-  const current = labels.find((l) => l.claim.id === selected) ?? null
-
-  return (
-    <section className="section" aria-labelledby="mechanism">
-      <h2 className="display-xs" id="mechanism">
-        mechanism
-      </h2>
-      <p className="section__lede">For the hypothesis to hold, each link must be true. Select a link to see who says so and what argues against it.</p>
-      <div className="chain" role="list">
-        <span className="node node--drug" role="listitem">
-          {candidate.chain.drug}
-        </span>
-        {labels.map(({ claim, r }) => (
-          <span key={claim.id} style={{ display: 'contents' }} role="listitem">
-            <button
-              type="button"
-              className="link"
-              aria-pressed={selected === claim.id}
-              onClick={() => setSelected(selected === claim.id ? null : claim.id)}
-              aria-label={`${claim.short}: ${r.label}`}
-            >
-              <span className={`link__line link__line--${r.label} label--${r.label}`} aria-hidden="true" />
-              <EvidenceLabel label={r.label} />
-              <span className="link__caption">{claim.short}</span>
-              {weak?.claim === claim.id && <span className="link__weak">weakest link</span>}
-            </button>
-            <span className="node">{claim.node}</span>
-          </span>
-        ))}
-      </div>
-      {current && (
-        <div className="arrive" key={current.claim.id + cutoff.id}>
-          <div className="panel claim-panel">
-            <div className="claim-panel__col">
-              <Kicker>claim</Kicker>
-              <p className="claim-panel__text">{current.claim.text}</p>
-              <p>
-                <EvidenceLabel label={current.r.label} qualifier={current.r.qualifier} />
-              </p>
-              <p className="cell__sub">{current.r.why}</p>
-              {weak?.claim === current.claim.id && (
-                <p className="cell__sub critical">
-                  <span className="medium">weakest link</span> — {weak.why}
-                </p>
-              )}
-            </div>
-            <div className="claim-panel__col">
-              <Kicker>evidence</Kicker>
-              <ClaimEvidence r={current.r} sourcesHref={sourcesHref} />
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
-  )
-}
+// ---- Claim evidence: for and against, each with its source line ----------------------------
 
 export function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref: string }) {
-  const rows: { dir: string; s: Source }[] = [
-    ...r.supports.map((s) => ({ dir: 'for', s })),
-    ...r.against.map((s) => ({ dir: 'against', s })),
-  ]
-  if (rows.length === 0) return <p className="cell__sub">nothing published on or before this date</p>
+  const rows: { dir: string; s: Source }[] = [...r.supports.map((s) => ({ dir: 'for', s })), ...r.against.map((s) => ({ dir: 'against', s }))]
+  if (rows.length === 0) return <p className="muted">nothing published on or before this date</p>
   return (
-    <div>
+    <div className="evidence">
       {rows.map(({ dir, s }) => (
-        <div className="evidence__row" key={dir + s.id}>
+        <div className={`evidence__row evidence__row--${dir}`} key={dir + s.id}>
           <span className="evidence__dir">{dir}</span>
           <SourceLine s={s} cite={`${sourcesHref}#${s.ledger}`} />
         </div>
@@ -201,23 +154,24 @@ export function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref:
 // ---- Safety ------------------------------------------------------------------------------
 
 export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail; cutoff: Cutoff }) {
-  const s = resolveTimeline(candidate.safety, cutoff.date)
+  const s = resolvePrerequisiteSafety(candidate, cutoff)
   const srcById = new Map(candidate.sources.map((x) => [x.id, x]))
   return (
     <section className="section" aria-labelledby="safety">
-      <h2 className="display-xs" id="safety">
-        safety
-      </h2>
+      <div className="section__head">
+        <h2 className="display-xs" id="safety">
+          safety
+        </h2>
+      </div>
       <div className="panel panel--pad safety">
         {s ? (
           <>
-            <div className="safety__head">
-              <p className={`safety__flag${s.severity === 'none' ? ' safety__flag--none' : ''}`}>
-                {s.flag} — {s.kind}
-              </p>
-            </div>
-            <p>{s.reason.charAt(0).toUpperCase() + s.reason.slice(1)}.</p>
-            <p className="cell__sub">{s.population}</p>
+            <p className={`safety__flag${s.severity === 'none' ? ' safety__flag--none' : ''}`}>
+              {s.flag}
+              <span className="safety__kind">{s.kind}</span>
+            </p>
+            <p className="safety__reason">{s.reason.charAt(0).toUpperCase() + s.reason.slice(1)}.</p>
+            <p className="safety__population">{s.population}</p>
             <p className="safety__src">
               {s.sources.map((id) => {
                 const src = srcById.get(id)
@@ -232,42 +186,120 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
         ) : candidate.safety ? (
           <>
             <p className="safety__flag safety__flag--none">not yet on the label</p>
-            <p className="cell__sub">The label review in this record is dated after the selected evidence date.</p>
+            <p className="safety__population">The label review in this record is dated after the selected evidence date.</p>
           </>
         ) : (
           <>
             <p className="safety__flag safety__flag--none">not assessed</p>
-            <p className="cell__sub">This record carries no safety review. Absence of a flag here is missing data, not reassurance.</p>
+            <p className="safety__population">This record carries no safety review. Absence of a flag here is missing data, not reassurance.</p>
           </>
         )}
       </div>
     </section>
   )
 }
+function resolvePrerequisiteSafety(candidate: CandidateDetail, cutoff: Cutoff) {
+  const t = candidate.safety
+  if (!t) return undefined
+  let hit: (typeof t)[number]['value'] | undefined
+  for (const e of t) if (e.from <= cutoff.date) hit = e.value
+  return hit
+}
 
-// ---- Before a trial ----------------------------------------------------------------------------
+// ---- Before a trial: five numbered boxes, a walkthrough ------------------------------------
 
 export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: CandidateDetail; cutoff: Cutoff; isToday: boolean }) {
+  const reduce = useReducedMotion()
   const n = unresolvedCount(candidate, cutoff.date)
+  const total = candidate.prerequisites.length
+  const [current, setCurrent] = useState<number | null>(null)
+  const boxes = useRef<(HTMLButtonElement | null)[]>([])
   const srcById = new Map(candidate.sources.map((x) => [x.id, x]))
+
+  const move = (to: number) => {
+    const k = Math.max(0, Math.min(total - 1, to))
+    setCurrent(k)
+    boxes.current[k]?.focus()
+  }
+
+  const cur = current !== null ? candidate.prerequisites[current] : undefined
+  const curStatus = cur ? resolvePrerequisite(cur, cutoff.date) : undefined
+
   return (
     <section className="section" aria-labelledby="prereqs">
-      <h2 className="display-xs" id="prereqs">
-        before a trial <span className="muted">· {n} of {candidate.prerequisites.length} unresolved{isToday ? '' : ' at this date'}</span>
-      </h2>
-      <div className="panel">
-        {candidate.prerequisites.map((p) => {
+      <div className="section__head section__head--count">
+        <h2 className="display-xs" id="prereqs">
+          before a trial
+        </h2>
+        <span className="section__hero">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.span key={n} className="section__hero-n" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.28 }}>
+              {n}
+            </motion.span>
+          </AnimatePresence>
+          <span className="section__hero-of">
+            of {total} unresolved{isToday ? '' : ' at this date'}
+          </span>
+        </span>
+      </div>
+      <div className="steps" role="tablist" aria-label="Trial prerequisites">
+        {candidate.prerequisites.map((p, i) => {
           const s = resolvePrerequisite(p, cutoff.date)
-          const ref = s?.sources.map((id) => srcById.get(id)?.ledger).filter(Boolean)[0]
+          const unmet = !s || s.resolution === 'unmet'
+          const on = current === i
           return (
-            <div className="panel__row prereq" key={p.id} title={s?.note}>
-              <span>{p.condition}</span>
-              <span className={`prereq__word${s?.resolution === 'unmet' ? '' : ' prereq__word--met'}`}>{s?.word ?? 'unknown'}</span>
-              <span className="prereq__ref">{ref ?? ''}</span>
-            </div>
+            <button
+              key={p.id}
+              ref={(el) => {
+                boxes.current[i] = el
+              }}
+              type="button"
+              role="tab"
+              aria-selected={on}
+              tabIndex={on || (current === null && i === 0) ? 0 : -1}
+              className={`panel step${on ? ' step--on' : ''}${unmet ? ' step--unmet' : ''}`}
+              onClick={() => setCurrent(on ? null : i)}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowRight') move(i + 1)
+                if (e.key === 'ArrowLeft') move(i - 1)
+                if (e.key === 'Home') move(0)
+                if (e.key === 'End') move(total - 1)
+              }}
+            >
+              <span className="step__n display-xs">{i + 1}</span>
+              <span className="step__condition">{p.condition}</span>
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span key={s?.word ?? 'unknown'} className="step__word" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.24 }}>
+                  {s?.word ?? 'unknown'}
+                </motion.span>
+              </AnimatePresence>
+            </button>
           )
         })}
       </div>
+      <AnimatePresence initial={false}>
+        {cur && (
+          <motion.div key={cur.id + cutoff.id} className="step__detail" initial={reduce ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.28, ease: EASE_OUT }}>
+            <p className="step__note">{curStatus?.note ?? 'No evidence on or before this date.'}</p>
+            {curStatus && curStatus.sources.length > 0 && (
+              <p className="step__sources">
+                {curStatus.sources.map((id, j) => {
+                  const s = srcById.get(id)
+                  return s ? (
+                    <span key={id}>
+                      {j > 0 && ', '}
+                      <a href={s.url} target="_blank" rel="noreferrer">
+                        {s.first_author} {s.year}
+                      </a>{' '}
+                      <span className="cite">[{s.ledger}]</span>
+                    </span>
+                  ) : null
+                })}
+              </p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
@@ -291,10 +323,12 @@ export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: 
 
   return (
     <section className="section" aria-labelledby="call">
-      <h2 className="display-xs" id="call">
-        your call
-      </h2>
-      <div className="call">
+      <div className="section__head">
+        <h2 className="display-xs" id="call">
+          your call
+        </h2>
+      </div>
+      <div className="panel panel--pad call">
         <div className="call__choices" role="radiogroup" aria-label="Your call">
           {CHOICES.map((c) => (
             <button key={c} type="button" role="radio" className="choice" aria-checked={a.choice === c} onClick={() => update({ ...a, choice: a.choice === c ? undefined : c })}>
@@ -303,10 +337,9 @@ export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: 
           ))}
         </div>
         <div className="call__reason">
-          <Kicker>your reasoning</Kicker>
           <textarea className="textarea" aria-label="Your reasoning" placeholder="In your words." value={a.line ?? ''} onChange={(e) => update({ ...a, line: e.target.value })} />
           <div className="call__actions">
-            <Link className="btn btn--primary" to={exportHref}>
+            <Link className="btn btn--primary btn--lg" to={exportHref}>
               Export appraisal
             </Link>
           </div>

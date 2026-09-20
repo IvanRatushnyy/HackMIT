@@ -1,6 +1,7 @@
 /* elute — the one field's behaviour. A drug, a condition, or a pair, resolved through the entity index so
- * an open field never dead-ends. Nothing is suggested while typing; Enter or the send button submits the
- * best match, exact name or alias first, and an unmatched string gets a note rather than a navigation. */
+ * an open field never dead-ends. Nothing is suggested while typing; Enter, the send button, or an example
+ * chip submits the best match, exact name or alias first, and an unmatched string gets a note rather than
+ * a navigation. `onLaunch` runs before the navigation and returns how long to wait for it (the ripple). */
 
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -13,18 +14,18 @@ function bestMatch(entities: Entity[], text: string): Entity | undefined {
   const q = text.trim().toLowerCase().replace(/[’']/g, "'")
   if (!q) return undefined
   const norm = (x: string) => x.toLowerCase().replace(/[’']/g, "'")
-  // An exact name or alias first, so "nilotinib for parkinson's disease" submits the pair, not the condition.
   return (
     entities.find((e) => norm(e.name) === q || e.aliases.some((a) => norm(a) === q)) ??
     entities.find((e) => norm(e.name).includes(q) || e.aliases.some((a) => norm(a).includes(q) || q.includes(norm(a))))
   )
 }
 
-export function useAsk() {
+export function useAsk(onLaunch?: () => number) {
   const navigate = useNavigate()
   const [entities, setEntities] = useState<Entity[]>([])
   const [text, setText] = useState('')
   const [note, setNote] = useState<string | null>(null)
+  const [launching, setLaunching] = useState(false)
 
   useEffect(() => {
     source.entities().then((i) => setEntities(i.entities))
@@ -32,13 +33,19 @@ export function useAsk() {
 
   const hit = useMemo(() => bestMatch(entities, text), [entities, text])
 
-  const submit = () => {
-    if (hit) {
-      setNote(null)
-      setText('')
-      navigate(`/q/${hit.slug}`)
-    } else if (text.trim()) setNote(COVERED)
+  const go = (value: string) => {
+    const match = bestMatch(entities, value)
+    if (!match) {
+      if (value.trim()) setNote(COVERED)
+      return
+    }
+    setNote(null)
+    setLaunching(true)
+    const wait = onLaunch?.() ?? 0
+    setTimeout(() => navigate(`/q/${match.slug}`), wait)
   }
+
+  const submit = () => go(text)
 
   const onChange = (value: string) => {
     setText(value)
@@ -53,5 +60,5 @@ export function useAsk() {
     }
   }
 
-  return { text, note, onChange, onKey, submit }
+  return { text, note, hit, launching, onChange, onKey, submit, go }
 }

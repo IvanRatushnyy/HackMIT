@@ -1,0 +1,166 @@
+/* elute — Working: the person is walked through the run one step at a time. */
+
+.working {
+  max-width: 896px;
+}
+.status {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger {
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+}
+.ledger__strip {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-bottom: var(--space-md);
+}
+.ledger__strip i {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-line);
+  transition: background-color var(--duration-slow) var(--ease-out);
+}
+.ledger__strip i.is-done { background: var(--color-ink); }
+.ledger__strip i.is-now { background: var(--color-accent); }
+
+.ledger__rows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A finished step: one line, opening to its records on a click */
+.ledger__done + .ledger__done {
+  border-top: var(--line-width) solid var(--color-line-soft);
+}
+.ledger__line {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: var(--space-sm);
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  text-align: left;
+  color: var(--color-ink-muted);
+  transition: color var(--duration-base) var(--ease-out);
+}
+.ledger__line:hover,
+.is-open .ledger__line {
+  color: var(--color-ink);
+}
+.ledger__mark {
+  display: inline-flex;
+  color: var(--color-ink);
+}
+.ledger__line-n {
+  display: inline-block;
+  width: 24px;
+  color: var(--color-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.ledger__line-count {
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+.ledger__records {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 var(--space-sm) calc(24px + var(--space-sm) + 24px);
+}
+
+/* The current step, in focus */
+.ledger__now {
+  position: relative;
+  margin-top: var(--space-sm);
+  padding: var(--space-md) var(--space-md) var(--space-md);
+  border-radius: var(--radius-sm);
+  background: oklch(49.6% 0.052 241 / 0.06);
+}
+.ledger__now-head {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: var(--space-sm);
+  align-items: baseline;
+}
+.ledger__now-n {
+  color: var(--color-ink-faint);
+}
+.ledger__now-q {
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+  font-weight: var(--weight-medium);
+}
+.ledger__src {
+  display: inline-flex;
+  align-items: center;
+  height: var(--line-3);
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius-sm);
+  background: oklch(99% 0.003 276 / 0.7);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+.ledger__now-records {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xs) 0 0 calc(40px + var(--space-sm));
+}
+.ledger__record {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 32px;
+  align-items: center;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+.ledger__year {
+  color: var(--color-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.ledger__from {
+  padding-top: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+.ledger__from b {
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+}
+
+/* The bar under the current step fills over its duration */
+.ledger__bar {
+  position: absolute;
+  left: var(--space-md);
+  right: var(--space-md);
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--color-accent);
+  transform-origin: left;
+  animation: ledger-fill linear both;
+  animation-duration: var(--dur, 2400ms);
+}
+@keyframes ledger-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ledger__bar { animation: none; transform: scaleX(1); }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: var(--measure);
+}

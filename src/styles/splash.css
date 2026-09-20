@@ -1,0 +1,96 @@
+/* elute — the startup screen: on the page's own paper, the elution column and the wordmark settling on its width axis.
+ * Timings come from src/lib/splash.ts through the --splash-* and --dur variables set inline. */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash);
+  display: grid;
+  place-items: center;
+  background: oklch(99% 0.003 276 / 0.55);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  color: var(--color-ink);
+}
+.splash--lift {
+  opacity: 0;
+  transition: opacity var(--splash-lift) var(--ease-in-out);
+}
+.splash__center {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-lg);
+  transform: translateY(-16px);
+}
+
+/* The wordmark: Aujournuit at 96px, wide, settling to the header's Airy width as the first band lands */
+.splash__word {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  text-transform: lowercase;
+  color: var(--color-ink);
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: splash-word-in var(--duration-slow) var(--ease-out) var(--splash-delay) both;
+  transition: letter-spacing var(--splash-word) var(--ease-out);
+}
+.splash--settled .splash__word,
+.splash--lift .splash__word {
+  letter-spacing: -0.01em;
+}
+@keyframes splash-word-in {
+  from { opacity: 0; filter: blur(6px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* The column: a faint glass wall on the stage, the detector a dashed line */
+.splash__column {
+  display: block;
+  width: 480px;
+  height: 400px;
+}
+.splash__glass {
+  fill: oklch(100% 0 0 / 0.5);
+  stroke: var(--color-line);
+}
+.splash__detector {
+  stroke: var(--color-line-strong);
+  stroke-dasharray: 2 5;
+}
+
+/* The bands: each starts above the mouth and travels to its own resting place over its own duration */
+.splash__band {
+  animation: splash-band var(--dur) cubic-bezier(0.5, 0, 0.3, 1) var(--splash-delay) both;
+}
+@keyframes splash-band {
+  from { transform: translateY(0); }
+  to { transform: translateY(var(--rest)); }
+}
+.splash__band--established { fill: var(--evidence-established); }
+.splash__band--contested { fill: var(--evidence-contested); }
+.splash__band--unknown { fill: var(--evidence-unknown); }
+.splash__band--single-source { fill: var(--evidence-single-source); }
+
+/* The words appear as their band reaches the detector */
+.splash__label {
+  font-family: var(--font-text);
+  font-size: 14px;
+  letter-spacing: var(--tracking-text);
+  fill: var(--color-ink);
+  opacity: 0;
+  animation: splash-label var(--dur) linear var(--splash-delay) both;
+}
+@keyframes splash-label {
+  0%, 82% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.splash__label--contested { fill: var(--evidence-contested); }
+.splash__label--unknown { fill: var(--evidence-unknown); }
+.splash__label--single-source { fill: var(--evidence-single-source); }
+
+@media (prefers-reduced-motion: reduce) {
+  .splash__band, .splash__label, .splash__word { animation: none; opacity: 1; }
+}

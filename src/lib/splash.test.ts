@@ -1,16 +1,20 @@
 import { describe, expect, it } from 'vitest'
-import { splashSchedule } from './splash'
+import { BANDS, SPLASH_TIMING, splashSchedule } from './splash'
 
 describe('splashSchedule', () => {
-  const t = splashSchedule({ fade: 240, stagger: 40, planes: 12, ground: 2, groundGap: 80, word: 400, hold: 1000, move: 400 })
-  it('composes the planes before the wordmark, holds a second, then decomposes and moves', () => {
-    expect(t.wordIn).toBe(11 * 40 + 80 + 240) // the last ground piece, a gap later, has finished fading
-    expect(t.decompose).toBe(t.wordIn + 400 + 1000)
-    expect(t.move).toBe(t.decompose + 11 * 40 + 80 + 240)
-    expect(t.done).toBe(t.move + 400)
+  it('settles the wordmark as the first band lands, lifts a hold after the last, about three seconds in all', () => {
+    const t = splashSchedule(SPLASH_TIMING)
+    expect(t.wordSettle).toBe(200 + 1400)
+    expect(t.lift).toBe(200 + 2600 + 400)
+    expect(t.done).toBe(t.lift + 400)
+    expect(t.done).toBeLessThanOrEqual(3600)
+  })
+  it('bands leave in label order, the established one first', () => {
+    expect(BANDS.map((b) => b.label)).toEqual(['established', 'contested', 'unknown', 'single-source'])
+    for (let i = 1; i < BANDS.length; i++) expect(BANDS[i].dur).toBeGreaterThan(BANDS[i - 1].dur)
   })
   it('collapses to nothing when every duration is zero (reduced motion)', () => {
-    const z = splashSchedule({ fade: 0, stagger: 0, planes: 12, ground: 2, groundGap: 0, word: 0, hold: 0, move: 0 })
-    expect(z).toEqual({ wordIn: 0, decompose: 0, move: 0, done: 0 })
+    const z = splashSchedule({ delay: 0, bands: [0, 0, 0, 0], word: 0, hold: 0, lift: 0 })
+    expect(z).toEqual({ wordSettle: 0, lift: 0, done: 0 })
   })
 })

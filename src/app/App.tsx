@@ -7,6 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { source } from '../data/source'
 import { StartupDone } from '../components/frame'
 import { Splash } from '../components/Splash'
+import { Ground } from '../components/Ground'
 import { prefersReducedMotion } from '../lib/splash'
 import { Entry } from '../screens/Entry'
 import { Query } from '../screens/Query'
@@ -14,7 +15,7 @@ import { Detail } from '../screens/Detail'
 import { Sources } from '../screens/Sources'
 import { Export } from '../screens/Export'
 
-const FALLBACK = 'Fixture mode · not a clinical decision tool · curated from dated public sources.'
+const FALLBACK = 'Fixture mode. Not a clinical decision tool. Curated from dated public sources.'
 
 export function App() {
   const [banner, setBanner] = useState(FALLBACK)
@@ -28,6 +29,7 @@ export function App() {
   }, [])
   return (
     <StartupDone.Provider value={started}>
+      <Ground />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Entry />} />

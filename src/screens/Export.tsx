@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Header, Kicker } from '../components/frame'
+import { plain } from '../components/evidence'
 import { source } from '../data/source'
 import type { CandidateDetail } from '../data/types'
 import { findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
@@ -133,8 +134,8 @@ export function Export({ banner }: { banner: string }) {
         <div className="arrive" style={{ '--i': 1 } as React.CSSProperties}>
           <Kicker>preview</Kicker>
           <div className="panel preview" style={{ marginTop: 8 }}>
-            <div>
-              <h2 className="display-xs">{doc.title}</h2>
+            <div className="preview__title">
+              <h2 className="display-sm">{doc.title}</h2>
               <p className="preview__meta">{doc.meta}</p>
             </div>
             {doc.call && (
@@ -156,7 +157,7 @@ export function Export({ banner }: { banner: string }) {
                 </div>
               ))}
             <p className="preview__foot">
-              {doc.sourceCount} source lines · fixture data · not a medical device{doc.dataNote ? ` · ${doc.dataNote}` : ''}
+              {doc.sourceCount} source lines. Fixture data, not a medical device.{doc.dataNote ? ` ${plain(doc.dataNote)}` : ''}
             </p>
           </div>
         </div>

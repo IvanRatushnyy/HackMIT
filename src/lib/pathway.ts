@@ -162,7 +162,7 @@ export function edgeCuration(claim: Claim, index: number, targets: OTTarget[] | 
   const hits = (claim.genes ?? []).filter((g) => symbols.has(g))
   if (index === 0 && hits.length > 0) return { kind: 'mechanism', text: 'ChEMBL mechanism of action' }
   const n = claim.evidence.length
-  return { kind: 'uncurated', text: `not a curated pathway · ${n} ${n === 1 ? 'source' : 'sources'}` }
+  return { kind: 'uncurated', text: `not a curated pathway, ${n} ${n === 1 ? 'source' : 'sources'}` }
 }
 
 const MODALITY_WORD: Record<string, string> = { SM: 'small molecule', AB: 'antibody', PR: 'PROTAC', OC: 'other' }
