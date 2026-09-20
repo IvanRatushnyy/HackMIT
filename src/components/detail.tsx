@@ -1,49 +1,46 @@
-/* elute — Detail sections: as-of control, critical appraisal, chain of claims,
- * safety, prerequisites, assessment. Each is a pure function of the candidate and a cutoff. */
+/* elute — Detail sections, in the mockup's order: objections, mechanism (chain + claim panel),
+ * safety and before-a-trial side by side, your call. Each is a pure function of the candidate and a cutoff. */
 
 import { useEffect, useState } from 'react'
-import type { CandidateDetail, Cutoff, Label, LedgerRow, Source } from '../data/types'
-import {
-  deriveLabel,
-  resolvePrerequisite,
-  resolveTimeline,
-  unresolvedCount,
-  visibleObjections,
-  type LabelResult,
-} from '../lib/evidence'
-import { EvidenceLabel, formatDate, SourceLine } from './evidence'
-import { LedgerList, ProvenanceBlock } from './Ledger'
-import { assessmentKey, buildExport, loadAssessment, saveAssessment, toMarkdown, type Assessment } from '../lib/export'
+import { Link } from 'react-router-dom'
+import type { CandidateDetail, Cutoff, Source } from '../data/types'
+import { deriveLabel, resolvePrerequisite, resolveTimeline, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
+import { EvidenceLabel, formatDate, shortCite, SourceLine } from './evidence'
+import { Kicker } from './frame'
+import { assessmentKey, loadAssessment, saveAssessment, type Assessment } from '../lib/export'
 
 // ---- Evidence as of -----------------------------------------------------------------
 
 export function AsOfControl({ cutoffs, current, onChange }: { cutoffs: Cutoff[]; current: Cutoff; onChange: (c: Cutoff) => void }) {
   const single = cutoffs.length === 1
   return (
-    <div className="seg" role="radiogroup" aria-label="Evidence as of">
-      {cutoffs.map((c) => (
-        <button
-          key={c.id}
-          type="button"
-          role="radio"
-          className="seg__item"
-          aria-checked={c.id === current.id}
-          disabled={single}
-          onClick={() => onChange(c)}
-          onKeyDown={(e) => {
-            const i = cutoffs.findIndex((x) => x.id === current.id)
-            if (e.key === 'ArrowRight') onChange(cutoffs[Math.min(i + 1, cutoffs.length - 1)])
-            if (e.key === 'ArrowLeft') onChange(cutoffs[Math.max(i - 1, 0)])
-          }}
-        >
-          {c.label}
-        </button>
-      ))}
+    <div className="asof">
+      <div className="seg" role="radiogroup" aria-label="Evidence as of">
+        {cutoffs.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            role="radio"
+            className="seg__item"
+            aria-checked={c.id === current.id}
+            disabled={single}
+            onClick={() => onChange(c)}
+            onKeyDown={(e) => {
+              const i = cutoffs.findIndex((x) => x.id === current.id)
+              if (e.key === 'ArrowRight') onChange(cutoffs[Math.min(i + 1, cutoffs.length - 1)])
+              if (e.key === 'ArrowLeft') onChange(cutoffs[Math.max(i - 1, 0)])
+            }}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+      <p className="detail__frozen">{current.note}</p>
     </div>
   )
 }
 
-// ---- Critical appraisal ---------------------------------------------------------------
+// ---- Objections ----------------------------------------------------------------------
 
 function boldFigure(text: string, figure?: string) {
   if (!figure || !text.includes(figure)) return text
@@ -57,214 +54,226 @@ function boldFigure(text: string, figure?: string) {
   )
 }
 
-export function Appraisal({
-  candidate,
-  cutoff,
-  onCite,
-  limit,
-}: {
-  candidate: CandidateDetail
-  cutoff: Cutoff
-  onCite?: (id: string) => void
-  limit?: number
-}) {
+export function Objections({ candidate, cutoff, sourcesHref, limit }: { candidate: CandidateDetail; cutoff: Cutoff; sourcesHref?: string; limit?: number }) {
+  const [open, setOpen] = useState<string | null>(null)
   const srcById = new Map(candidate.sources.map((s) => [s.id, s]))
   let objections = visibleObjections(candidate, cutoff.date)
   if (limit) objections = objections.slice(0, limit)
   return (
-    <section className="section" aria-labelledby="appraisal">
-      <h2 className="section__title" id="appraisal">
-        Critical appraisal
+    <section className="section" aria-labelledby="objections">
+      <h2 className="display-xs" id="objections">
+        critical appraisal
       </h2>
-      {objections.length === 0 ? (
-        <p className="annotation">Nothing published on or before this date.</p>
-      ) : (
-        <ol className="objections">
-          {objections.map((o) => {
-            const first = srcById.get(o.sources[0])
+      <div className="panel">
+        {objections.length === 0 ? (
+          <p className="panel__row annotation">Nothing published on or before this date.</p>
+        ) : (
+          objections.map((o, i) => {
+            const srcs = o.sources.map((id) => srcById.get(id)).filter((s): s is Source => !!s)
+            const isOpen = open === o.id
             return (
-              <li className="objection" key={o.id}>
-                <p className="objection__claim">{o.claim}</p>
-                <p>{boldFigure(o.evidence, o.figure)}</p>
-                <p className="objection__source">
-                  {first && (
-                    <>
-                      {first.first_author}, <em>{first.journal}</em> {first.year} · {describe(first)} · {formatDate(o.published)}
-                    </>
-                  )}{' '}
-                  {o.cites.map((c) => (
-                    <button type="button" className="cite" key={c} onClick={() => onCite?.(c)} disabled={!onCite}>
-                      [{c}]
-                    </button>
-                  ))}
-                </p>
-              </li>
+              <div key={o.id}>
+                <button type="button" className="panel__row objection" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : o.id)}>
+                  <span className="objection__n">{i + 1}</span>
+                  <span className="objection__claim">{o.claim}</span>
+                  <span className="objection__src">{srcs.map(shortCite).join(' · ')}</span>
+                  <span className="objection__mark" aria-hidden="true">
+                    +
+                  </span>
+                </button>
+                <div className={`grow${isOpen ? ' grow--open' : ''}`} aria-hidden={!isOpen}>
+                  <div>
+                    <div className="objection__body">
+                      <p>{boldFigure(o.evidence, o.figure)}</p>
+                      <p className="cell__sub">
+                        {srcs.map((s, j) => (
+                          <span key={s.id}>
+                            {j > 0 && ' · '}
+                            <a href={s.url} target="_blank" rel="noreferrer">
+                              {s.first_author}, <em>{s.journal}</em> {s.year}
+                            </a>
+                          </span>
+                        ))}
+                        {' · '}published {formatDate(o.published)}
+                        {sourcesHref &&
+                          o.cites.map((c) => (
+                            <span key={c}>
+                              {' '}
+                              <Link className="cite" to={`${sourcesHref}#${c}`}>
+                                [{c}]
+                              </Link>
+                            </span>
+                          ))}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )
-          })}
-        </ol>
+          })
+        )}
+      </div>
+    </section>
+  )
+}
+
+// ---- Mechanism chain: horizontal; nodes are boxes, claims are the links between them ----------
+
+export function Mechanism({ candidate, cutoff, sourcesHref }: { candidate: CandidateDetail; cutoff: Cutoff; sourcesHref: string }) {
+  const [selected, setSelected] = useState<string | null>(null)
+  const weak = resolveTimeline(candidate.weakest_link, cutoff.date)
+  const labels = candidate.chain.claims.map((k) => ({ claim: k, r: deriveLabel(k, candidate.sources, cutoff.date) }))
+  const current = labels.find((l) => l.claim.id === selected) ?? null
+
+  return (
+    <section className="section" aria-labelledby="mechanism">
+      <h2 className="display-xs" id="mechanism">
+        mechanism
+      </h2>
+      <p className="section__lede">For the hypothesis to hold, each link must be true. Select a link to see who says so and what argues against it.</p>
+      <div className="chain" role="list">
+        <span className="node node--drug" role="listitem">
+          {candidate.chain.drug}
+        </span>
+        {labels.map(({ claim, r }) => (
+          <span key={claim.id} style={{ display: 'contents' }} role="listitem">
+            <button
+              type="button"
+              className="link"
+              aria-pressed={selected === claim.id}
+              onClick={() => setSelected(selected === claim.id ? null : claim.id)}
+              aria-label={`${claim.short}: ${r.label}`}
+            >
+              <span className={`link__line link__line--${r.label} label--${r.label}`} aria-hidden="true" />
+              <EvidenceLabel label={r.label} />
+              <span className="link__caption">{claim.short}</span>
+              {weak?.claim === claim.id && <span className="link__weak">weakest link</span>}
+            </button>
+            <span className="node">{claim.node}</span>
+          </span>
+        ))}
+      </div>
+      {current && (
+        <div className="panel claim-panel rise" key={current.claim.id + cutoff.id}>
+          <div className="claim-panel__col">
+            <Kicker>claim</Kicker>
+            <p className="claim-panel__text">{current.claim.text}</p>
+            <p>
+              <EvidenceLabel label={current.r.label} qualifier={current.r.qualifier} />
+            </p>
+            <p className="cell__sub">{current.r.why}</p>
+            {weak?.claim === current.claim.id && (
+              <p className="cell__sub critical">
+                <span className="medium">weakest link</span> — {weak.why}
+              </p>
+            )}
+          </div>
+          <div className="claim-panel__col">
+            <Kicker>evidence</Kicker>
+            <ClaimEvidence r={current.r} sourcesHref={sourcesHref} />
+          </div>
+        </div>
       )}
     </section>
   )
 }
 
-function describe(s: Source): string {
-  const parts: string[] = []
-  if (s.design === 'rct') parts.push(s.blinded ? 'double-blind RCT' : 'randomised')
-  else if (s.design === 'open-label') parts.push('open-label')
-  else if (s.design === 'pk') parts.push('PK measurement')
-  else parts.push(s.design)
-  if (s.n !== undefined) parts.push(`n = ${s.n}`)
-  return parts.join(' · ')
-}
-
-// ---- Mechanism chain (ordered claims, vertical) -----------------------------------------
-
-type Filter = 'all' | Label
-
-export function Chain({
-  candidate,
-  cutoff,
-  selected,
-  onSelect,
-}: {
-  candidate: CandidateDetail
-  cutoff: Cutoff
-  selected: string | null
-  onSelect: (id: string | null) => void
-}) {
-  const [filter, setFilter] = useState<Filter>('all')
-  const weak = resolveTimeline(candidate.weakest_link, cutoff.date)
-  const labels = candidate.chain.claims.map((k) => ({ claim: k, r: deriveLabel(k, candidate.sources, cutoff.date) }))
-  const filters: { id: Filter; word: string }[] = [
-    { id: 'all', word: 'All' },
-    { id: 'contested', word: 'Contested' },
-    { id: 'single-source', word: 'Single-source' },
-    { id: 'refuted', word: 'Refuted' },
+function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref: string }) {
+  const rows: { dir: string; s: Source }[] = [
+    ...r.supports.map((s) => ({ dir: 'for', s })),
+    ...r.against.map((s) => ({ dir: 'against', s })),
   ]
+  if (rows.length === 0) return <p className="cell__sub">nothing published on or before this date</p>
   return (
-    <section className="section" aria-labelledby="chain">
-      <h2 className="section__title" id="chain">
-        Mechanism chain
-      </h2>
-      <p className="section__lede">For the hypothesis to hold, each of these must be true. Each claim carries the status of its own evidence.</p>
-      <div className="chain">
-        <div className="chain__filter pill-group" role="radiogroup" aria-label="Filter claims by label">
-          {filters.map((f) => (
-            <button key={f.id} type="button" role="radio" className="pill" aria-checked={filter === f.id} onClick={() => setFilter(f.id)}>
-              {f.word}
-            </button>
-          ))}
+    <div>
+      {rows.map(({ dir, s }) => (
+        <div className="evidence__row" key={dir + s.id}>
+          <span className="evidence__dir">{dir}</span>
+          <SourceLine s={s} cite={`${sourcesHref}#${s.ledger}`} />
         </div>
-        <span className="chain__end">{candidate.chain.drug}</span>
-        {labels.map(({ claim, r }) => {
-          const dimmed = filter !== 'all' && r.label !== filter
-          const isWeak = weak?.claim === claim.id
-          return (
-            <div key={claim.id}>
-              <span className="chain__arrow" aria-hidden="true" />
-              <button
-                type="button"
-                className={`claim${dimmed ? ' claim--dimmed' : ''}`}
-                aria-pressed={selected === claim.id}
-                onClick={() => onSelect(selected === claim.id ? null : claim.id)}
-              >
-                <span className={`claim__marker claim__marker--${r.label}`} aria-hidden="true" />
-                <span className="claim__body">
-                  <span className="claim__line">
-                    <span className="claim__text">{claim.text}</span>
-                    <EvidenceLabel label={r.label} qualifier={r.qualifier} />
-                  </span>
-                  {isWeak && (
-                    <span className="claim__weak">
-                      weakest link — {weak!.why}
-                    </span>
-                  )}
-                </span>
-              </button>
-            </div>
-          )
-        })}
-        <span className="chain__arrow" aria-hidden="true" />
-        <span className="chain__end">{candidate.chain.condition}</span>
-      </div>
-    </section>
+      ))}
+    </div>
   )
 }
 
-// ---- Safety as a reason ------------------------------------------------------------------
+// ---- Safety ------------------------------------------------------------------------------
 
-export function SafetySection({ candidate, cutoff }: { candidate: CandidateDetail; cutoff: Cutoff }) {
+export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail; cutoff: Cutoff }) {
   const s = resolveTimeline(candidate.safety, cutoff.date)
-  if (!s) return null
   const srcById = new Map(candidate.sources.map((x) => [x.id, x]))
   return (
     <section className="section" aria-labelledby="safety">
-      <h2 className="section__title" id="safety">
-        Safety in the likely trial population
+      <h2 className="display-xs" id="safety">
+        safety
       </h2>
-      <div className="safety">
-        <p>
-          <span className="safety__flag">{s.flag}</span> — {s.kind}: {s.reason}.
-        </p>
-        <p>{s.population}</p>
-        <p className="objection__source">
-          {s.sources.map((id) => {
-            const src = srcById.get(id)
-            return src ? (
-              <span key={id}>
-                {src.first_author}, <em>{src.journal}</em> {src.year}
-              </span>
-            ) : null
-          })}
-        </p>
+      <div className="panel panel--pad safety">
+        {s ? (
+          <>
+            <div className="safety__head">
+              <p className="safety__flag">
+                {s.flag} — {s.kind}
+              </p>
+            </div>
+            <p>{s.reason.charAt(0).toUpperCase() + s.reason.slice(1)}.</p>
+            <p className="cell__sub">{s.population}</p>
+            <p className="safety__src">
+              {s.sources.map((id) => {
+                const src = srcById.get(id)
+                return src ? (
+                  <a key={id} href={src.url} target="_blank" rel="noreferrer">
+                    {src.first_author}, {src.journal} {src.year}
+                  </a>
+                ) : null
+              })}
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="safety__flag" style={{ color: 'var(--color-ink-muted)' }}>
+              none flagged
+            </p>
+            <p className="cell__sub">No boxed warning and no population-specific safety argument on or before this date.</p>
+          </>
+        )}
       </div>
     </section>
   )
 }
 
-// ---- Trial prerequisites --------------------------------------------------------------------
+// ---- Before a trial ----------------------------------------------------------------------------
 
-export function Prerequisites({ candidate, cutoff, isToday }: { candidate: CandidateDetail; cutoff: Cutoff; isToday: boolean }) {
+export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: CandidateDetail; cutoff: Cutoff; isToday: boolean }) {
   const n = unresolvedCount(candidate, cutoff.date)
+  const srcById = new Map(candidate.sources.map((x) => [x.id, x]))
   return (
     <section className="section" aria-labelledby="prereqs">
-      <h2 className="section__title" id="prereqs">
-        Trial prerequisites — {n} of {candidate.prerequisites.length} unresolved{isToday ? '' : ' at this date'}
+      <h2 className="display-xs" id="prereqs">
+        before a trial <span className="muted">· {n} of {candidate.prerequisites.length} unresolved{isToday ? '' : ' at this date'}</span>
       </h2>
-      <ul className="prereqs">
+      <div className="panel">
         {candidate.prerequisites.map((p) => {
           const s = resolvePrerequisite(p, cutoff.date)
+          const ref = s?.sources.map((id) => srcById.get(id)?.ledger).filter(Boolean)[0]
           return (
-            <li className="prereq" key={p.id}>
-              <span className="prereq__condition">{p.condition}</span>
-              <span className={s?.resolution === 'unmet' ? '' : 'muted'}>{s?.word ?? 'unknown'}</span>
-              <span className="prereq__note">{s?.note}</span>
-            </li>
+            <div className="panel__row prereq" key={p.id} title={s?.note}>
+              <span>{p.condition}</span>
+              <span className={`prereq__word${s?.resolution === 'unmet' ? '' : ' prereq__word--met'}`}>{s?.word ?? 'unknown'}</span>
+              <span className="prereq__ref">{ref ?? ''}</span>
+            </div>
           )
         })}
-      </ul>
+      </div>
     </section>
   )
 }
 
-// ---- Your assessment ---------------------------------------------------------------------------
+// ---- Your call ---------------------------------------------------------------------------------
 
 const CHOICES = ['pursue', 'needs specific data', 'deprioritise'] as const
 
-export function AssessmentSection({
-  candidate,
-  cutoff,
-  query,
-  dataNote,
-}: {
-  candidate: CandidateDetail
-  cutoff: Cutoff
-  query: string
-  dataNote: string
-}) {
+export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: CandidateDetail; cutoff: Cutoff; query: string; exportHref: string }) {
   const key = assessmentKey(query, candidate.slug, cutoff.id)
   const [a, setA] = useState<Assessment>(() => loadAssessment(key))
-  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     setA(loadAssessment(key))
@@ -275,186 +284,29 @@ export function AssessmentSection({
     saveAssessment(key, next)
   }
 
-  const copy = async () => {
-    const md = toMarkdown(buildExport(candidate, cutoff, a, dataNote))
-    try {
-      await navigator.clipboard.writeText(md)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1600)
-    } catch {
-      /* clipboard blocked: nothing to do */
-    }
-  }
-
   return (
-    <section className="section" aria-labelledby="assessment">
-      <h2 className="section__title" id="assessment">
-        Your assessment
+    <section className="section" aria-labelledby="call">
+      <h2 className="display-xs" id="call">
+        your call
       </h2>
-      <div className="assessment">
-        <div className="assessment__choices" role="radiogroup" aria-label="Your assessment">
+      <div className="call">
+        <div className="call__choices" role="radiogroup" aria-label="Your call">
           {CHOICES.map((c) => (
-            <button
-              key={c}
-              type="button"
-              role="radio"
-              className="assessment__choice"
-              aria-checked={a.choice === c}
-              onClick={() => update({ ...a, choice: a.choice === c ? undefined : c })}
-            >
+            <button key={c} type="button" role="radio" className="choice" aria-checked={a.choice === c} onClick={() => update({ ...a, choice: a.choice === c ? undefined : c })}>
               {c}
             </button>
           ))}
         </div>
-        <div className="assessment__row">
-          <input
-            className="field"
-            type="text"
-            placeholder="In your words."
-            aria-label="Your assessment, in your words"
-            value={a.line ?? ''}
-            onChange={(e) => update({ ...a, line: e.target.value })}
-          />
-          <div className="assessment__actions">
-            <button type="button" className="btn btn--primary" onClick={copy}>
-              {copied ? 'Copied' : 'Copy as document'}
-            </button>
-            <button type="button" className="btn btn--secondary" onClick={() => window.print()}>
-              Print
-            </button>
+        <div className="call__reason">
+          <Kicker>your reasoning</Kicker>
+          <textarea className="textarea" aria-label="Your reasoning" placeholder="In your words." value={a.line ?? ''} onChange={(e) => update({ ...a, line: e.target.value })} />
+          <div className="call__actions">
+            <Link className="btn btn--primary" to={exportHref}>
+              Export appraisal
+            </Link>
           </div>
         </div>
       </div>
-      <PrintDocument candidate={candidate} cutoff={cutoff} assessment={a} dataNote={dataNote} />
     </section>
   )
 }
-
-function PrintDocument({ candidate, cutoff, assessment, dataNote }: { candidate: CandidateDetail; cutoff: Cutoff; assessment: Assessment; dataNote: string }) {
-  const doc = buildExport(candidate, cutoff, assessment, dataNote)
-  return (
-    <div className="print-only">
-      <p className="annotation">{doc.dataNote}</p>
-      {doc.sections.map((s) => (
-        <section key={s.heading} className="section">
-          <h2 className="section__title">{s.heading}</h2>
-          <ul>
-            {s.lines.map((l, i) => (
-              <li key={i}>{l}</li>
-            ))}
-          </ul>
-        </section>
-      ))}
-      <p className="annotation">Data note: {doc.dataNote}</p>
-    </div>
-  )
-}
-
-// ---- Rail -------------------------------------------------------------------------------------------
-
-export type RailState = { kind: 'ledger' } | { kind: 'citation'; id: string } | { kind: 'claim'; id: string }
-
-export function Rail({
-  candidate,
-  cutoff,
-  isToday,
-  ledger,
-  state,
-  onState,
-}: {
-  candidate: CandidateDetail
-  cutoff: Cutoff
-  isToday: boolean
-  ledger: LedgerRow[]
-  state: RailState
-  onState: (s: RailState) => void
-}) {
-  const back = (
-    <button type="button" className="rail__back" onClick={() => onState({ kind: 'ledger' })}>
-      ← Ledger
-    </button>
-  )
-
-  if (state.kind === 'citation') {
-    const row = ledger.find((r) => r.id === state.id)
-    if (!row) return <aside className="rail">{back}</aside>
-    return (
-      <aside className="rail" aria-label="Citation">
-        {back}
-        <p className="rail__title">
-          {row.id} · {row.step}
-        </p>
-        <p className="muted text-sm">{row.source}</p>
-        <ProvenanceBlock row={row} cutoff={cutoff.date} isToday={isToday} />
-      </aside>
-    )
-  }
-
-  if (state.kind === 'claim') {
-    const claim = candidate.chain.claims.find((k) => k.id === state.id)
-    if (!claim) return <aside className="rail">{back}</aside>
-    const r = deriveLabel(claim, candidate.sources, cutoff.date)
-    const weak = resolveTimeline(candidate.weakest_link, cutoff.date)
-    return (
-      <aside className="rail" aria-label="Claim evidence">
-        {back}
-        <ClaimEvidence claim={claim} r={r} weakWhy={weak?.claim === claim.id ? weak.why : undefined} onCite={(id) => onState({ kind: 'citation', id })} />
-      </aside>
-    )
-  }
-
-  return (
-    <aside className="rail" aria-label="Evidence ledger">
-      <p className="rail__title">Evidence ledger · {ledger.length} steps</p>
-      <LedgerList rows={ledger} cutoff={cutoff.date} isToday={isToday} compact />
-    </aside>
-  )
-}
-
-function ClaimEvidence({
-  claim,
-  r,
-  weakWhy,
-  onCite,
-}: {
-  claim: CandidateDetail['chain']['claims'][number]
-  r: LabelResult
-  weakWhy?: string
-  onCite: (id: string) => void
-}) {
-  return (
-    <div className="evidence">
-      <p className="rail__title">{claim.text}</p>
-      <p>
-        <EvidenceLabel label={r.label} qualifier={r.qualifier} />
-      </p>
-      <div>
-        <p className="evidence__head">Why this label</p>
-        <p className="text-sm">{r.why}</p>
-      </div>
-      <div>
-        <p className="evidence__head">Who says so</p>
-        {r.supports.length ? (
-          r.supports.map((s) => <SourceLine key={s.id} s={s} onCite={onCite} />)
-        ) : (
-          <p className="text-sm muted">nothing published on or before this date</p>
-        )}
-      </div>
-      <div>
-        <p className="evidence__head">What argues against</p>
-        {r.against.length ? (
-          r.against.map((s) => <SourceLine key={s.id} s={s} onCite={onCite} />)
-        ) : (
-          <p className="text-sm muted">nothing published on or before this date</p>
-        )}
-      </div>
-      {weakWhy && (
-        <div>
-          <p className="evidence__head">Weakest link</p>
-          <p className="text-sm critical">{weakWhy}</p>
-        </div>
-      )}
-    </div>
-  )
-}
-

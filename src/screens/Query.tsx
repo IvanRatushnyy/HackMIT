@@ -1,33 +1,39 @@
-/* elute — Working → Results on one route. The ledger fills the sheet while it runs,
- * then collapses into one disclosure line and the ordered rows rise in beneath it. */
+/* elute — Working → Results on one route.
+ * Working: the ledger builds row by row beside a panel showing the latest finished step.
+ * Results: a grouped list (not yet refuted / refuted in controlled studies) or a board by trial stage. */
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Banner, Header, Sheet } from '../components/frame'
-import { LedgerDisclosure, LedgerList } from '../components/Ledger'
-import { BestEvidenceBadge, DriverBar } from '../components/evidence'
-import { source } from '../data/source'
-import type { CandidateDetail, LedgerRow, QueryRecord, ResultsPage } from '../data/types'
-import { bestEvidenceAt, CLINICAL_LEVELS, clinicalLevel, resolveTimeline, todayDate, unresolvedCount } from '../lib/evidence'
-import { formatDate } from '../components/evidence'
+import { DataNote, Header, Kicker } from '../components/frame'
+import { WorkingRow, type RowState } from '../components/Ledger'
+import { bestEvidenceText, formatClock, formatDate, OutcomeChip } from '../components/evidence'
+import { rowDurations, source } from '../data/source'
+import type { BestEvidence, CandidateDetail, QueryRecord, ResultsPage, TrialStage } from '../data/types'
+import { bestEvidenceAt, ledgerResult, resolveTimeline, todayDate, unresolvedCount } from '../lib/evidence'
+import { touchRecent } from '../lib/recent'
 
 type Phase = 'loading' | 'working' | 'results' | 'missing'
 
-export function Query({ banner, replayBanner }: { banner: string; replayBanner: string }) {
+const KIND_WORD = { condition: 'condition → candidates', drug: 'drug → indications', pair: 'pair → appraisal' } as const
+
+export function Query({ banner }: { banner: string }) {
   const { query = '' } = useParams()
   const navigate = useNavigate()
   const [q, setQ] = useState<QueryRecord | undefined>()
   const [phase, setPhase] = useState<Phase>('loading')
-  const [rows, setRows] = useState<LedgerRow[]>([])
-  const [running, setRunning] = useState<string | undefined>()
+  const [done, setDone] = useState(0) // rows completed
   const [page, setPage] = useState<ResultsPage | undefined>()
-  const [view, setView] = useState<'list' | 'scatter'>('list')
+  const [view, setView] = useState<'list' | 'board'>('list')
+  const [selectedStep, setSelectedStep] = useState<number | null>(null)
+  const [elapsed, setElapsed] = useState(0)
+  const started = useRef(0)
 
   useEffect(() => {
     let cancelled = false
     setPhase('loading')
-    setRows([])
+    setDone(0)
     setPage(undefined)
+    setSelectedStep(null)
     source.query(query).then(async (rec) => {
       if (cancelled) return
       if (!rec) {
@@ -35,6 +41,7 @@ export function Query({ banner, replayBanner }: { banner: string; replayBanner: 
         return
       }
       setQ(rec)
+      touchRecent(rec.slug)
       const finish = async () => {
         const p = await source.results(query)
         if (cancelled) return
@@ -46,19 +53,18 @@ export function Query({ banner, replayBanner }: { banner: string; replayBanner: 
         setPhase('results')
       }
       if (source.hasRun(query)) {
-        setRows(rec.ledger.rows)
+        setDone(rec.ledger.rows.length)
         await finish()
         return
       }
       setPhase('working')
-      const next = rec.ledger.rows
+      started.current = performance.now()
       let i = 0
-      setRunning(next[0]?.id)
-      for await (const ev of source.run(query)) {
+      for await (const _ev of source.run(query)) {
         if (cancelled) return
         i++
-        setRows(next.slice(0, i))
-        setRunning(ev.done ? undefined : next[i]?.id)
+        setDone(i)
+        setSelectedStep((s) => (s === null || s === i - 2 ? i - 1 : s))
       }
       await finish()
     })
@@ -67,209 +73,271 @@ export function Query({ banner, replayBanner }: { banner: string; replayBanner: 
     }
   }, [query, navigate])
 
+  // The status line's clock
+  useEffect(() => {
+    if (phase !== 'working') return
+    const t = setInterval(() => setElapsed(performance.now() - started.current), 250)
+    return () => clearInterval(t)
+  }, [phase])
+
   const today = page?.today ?? '2026-09-19'
-  const isWorking = phase === 'working'
+
+  if (phase === 'missing' || (q && !q)) {
+    return (
+      <main className="page">
+        <Header />
+        <div className="col">
+          <Missing />
+        </div>
+        <DataNote text={banner} />
+      </main>
+    )
+  }
+
+  const durations = q ? rowDurations(q.ledger) : []
+  const totalMs = durations.reduce((a, b) => a + b, 0)
+  const recorded = q?.ledger.kind === 'recorded'
+  const selected = q && selectedStep !== null ? q.ledger.rows[selectedStep] : undefined
 
   return (
     <main className="page">
       <Header />
-      <Banner text={isWorking || phase === 'results' ? replayBanner : banner} />
-      <div className="page__body page__body--full">
-        <Sheet>
-          {phase === 'missing' && (
-            <div className="empty">
-              <h1 className="display-md">No curated appraisal at this address</h1>
-              <p>
-                Fixture mode covers <Link to="/q/parkinsons-disease">Parkinson’s disease</Link>, <Link to="/q/metformin">metformin</Link>, and{' '}
-                <Link to="/q/nilotinib--parkinsons-disease">nilotinib for Parkinson’s</Link>.
+      {q && (
+        <div className="col">
+          <div className="title rise">
+            <div className="title__main">
+              <Kicker>{phase === 'working' ? KIND_WORD[q.kind] : q.kind === 'drug' ? 'drug' : 'condition'}</Kicker>
+              <h1 className="display-sm">{q.heading}</h1>
+              {phase === 'results' && page && (
+                <p className="title__sub">
+                  {page.candidates.length} candidates with human data · ordered by fewest unresolved prerequisites as of {formatDate(today)} ·{' '}
+                  <Link to={`/q/${q.slug}/sources`}>sources</Link>
+                </p>
+              )}
+              {phase === 'working' && <p className="title__sub">{q.resolved}</p>}
+            </div>
+            {phase === 'working' && (
+              <p className="status" aria-live="polite">
+                step {Math.min(done + 1, q.ledger.rows.length)} of {q.ledger.rows.length} · {formatClock(elapsed)} ·{' '}
+                {recorded ? `accelerated replay, about ${Math.round(totalMs / 1000)} s` : `scripted, about ${Math.round(totalMs / 1000)} s`} · results open when done
               </p>
+            )}
+            {phase === 'results' && (
+              <div className="title__aside">
+                <div className="seg" role="tablist" aria-label="View">
+                  <button type="button" role="tab" className="seg__item" aria-selected={view === 'list'} onClick={() => setView('list')}>
+                    List
+                  </button>
+                  <button type="button" role="tab" className="seg__item" aria-selected={view === 'board'} onClick={() => setView('board')}>
+                    Board
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {phase === 'working' && (
+            <div className="working">
+              <ul className="panel" aria-label="Evidence ledger">
+                {q.ledger.rows.map((row, i) => {
+                  const state: RowState = i < done ? 'done' : i === done ? 'running' : 'pending'
+                  return (
+                    <WorkingRow
+                      key={row.id}
+                      row={row}
+                      index={i}
+                      state={state}
+                      cutoff={today}
+                      selected={selectedStep === i}
+                      onSelect={() => setSelectedStep(i)}
+                      durationMs={durations[i]}
+                      recorded={!!recorded}
+                    />
+                  )
+                })}
+              </ul>
+              {selected && (
+                <aside className="panel panel--pad step-panel rise" key={selected.id} aria-label={`Step ${selected.id}`}>
+                  <Kicker>
+                    step {selectedStep! + 1} · {selected.step}
+                  </Kicker>
+                  <div className="step-panel__list">
+                    {selected.records
+                      .filter((r) => r.published <= today)
+                      .slice(0, 8)
+                      .map((r, i) => (
+                        <div className="step-panel__item" key={i}>
+                          <span>{r.value}</span>
+                          <span className="faint">{r.published.slice(0, 4)}</span>
+                        </div>
+                      ))}
+                    {selected.records.length === 0 && <div className="step-panel__item muted">nothing returned</div>}
+                  </div>
+                  <p className="step-panel__foot">
+                    {ledgerResult(selected, today)} · {selected.source}
+                  </p>
+                </aside>
+              )}
             </div>
           )}
-          {q && phase !== 'missing' && (
-            <>
-              <div className="query__head">
-                <h1 className="display-md">{q.heading}</h1>
-                <p className="query__sub">
-                  {q.resolved}
-                  {q.subheading ? ` · ${q.subheading}` : ''}
-                </p>
-              </div>
 
-              {isWorking && (
-                <>
-                  {running && rows.length < q.ledger.rows.length && (
-                    <p className="section__lede" aria-live="polite">
-                      Working — step {rows.length + 1} of {q.ledger.rows.length}
-                    </p>
-                  )}
-                  <LedgerList
-                    rows={running ? [...rows, q.ledger.rows[rows.length]].filter(Boolean) : rows}
-                    cutoff={today}
-                    isToday
-                    runningId={running}
-                    animate
-                  />
-                </>
-              )}
-
-              {phase === 'results' && page && (
-                <>
-                  <LedgerDisclosure rows={q.ledger.rows} cutoff={today} isToday />
-                  <div className="results__bar">
-                    <p className="section__lede">
-                      Ordered by fewest unresolved trial prerequisites as of {formatDate(today)} (fixture date) — not by a score.
-                    </p>
-                    <div className="seg" role="tablist" aria-label="View">
-                      <button type="button" role="tab" className="seg__item" aria-selected={view === 'list'} onClick={() => setView('list')}>
-                        List
-                      </button>
-                      <button type="button" role="tab" className="seg__item" aria-selected={view === 'scatter'} onClick={() => setView('scatter')}>
-                        Scatter
-                      </button>
-                    </div>
-                  </div>
-                  {view === 'list' ? <Results page={page} /> : <Scatter page={page} />}
-                </>
-              )}
-            </>
-          )}
-        </Sheet>
-      </div>
+          {phase === 'results' && page && (view === 'list' ? <ResultsList page={page} /> : <Board page={page} />)}
+        </div>
+      )}
+      <DataNote text={q && phase !== 'results' ? banner : banner} />
     </main>
   )
 }
 
-function candidatePath(page: ResultsPage, c: CandidateDetail) {
-  return `/q/${page.query.slug}/${page.query.kind === 'drug' ? c.condition_slug : c.drug_slug}`
-}
-
-function Results({ page }: { page: ResultsPage }) {
-  const navigate = useNavigate()
-  const drugFirst = page.query.kind === 'drug'
+function Missing() {
   return (
-    <ol className="results" aria-label="Candidates">
-      {page.candidates.map((c, i) => {
-        const today = todayDate(c)
-        const be = bestEvidenceAt(c, today)
-        const weak = resolveTimeline(c.weakest_link, today)
-        const weakClaim = c.chain.claims.find((k) => k.id === weak?.claim)
-        const safety = resolveTimeline(c.safety, today)
-        const open = unresolvedCount(c, today)
-        const refuted = !!be && be.controlled && be.outcome === 'negative'
-        const path = candidatePath(page, c)
-        return (
-          <li className="row" key={c.slug} onClick={() => navigate(path)}>
-            <span className="row__rank">{String(i + 1).padStart(2, '0')}</span>
-            <div className="row__line">
-              <span className="row__main">
-                <Link className="row__name" to={path} onClick={(e) => e.stopPropagation()}>
-                  {drugFirst ? c.condition : c.name}
-                </Link>
-                {!drugFirst && (
-                  <span className="row__meta">
-                    {' '}
-                    · {c.drug_class} · approved for {c.approved_indication}
-                  </span>
-                )}
-                {c.curation === 'draft' && <span className="row__meta"> · draft</span>}
-              </span>
-              <span className="row__figure">
-                {open} of {c.prerequisites.length} prerequisites open
-              </span>
-            </div>
-            <div className="row__line">
-              <span className="row__main">
-                <span className="row__weak">Weakest link:</span> {weakClaim?.short ?? '—'}
-                {weak ? ` — ${weak.why}` : ''}
-              </span>
-              <span className="row__figure row__meta">
-                {c.counts.sources} sources · {c.counts.trials} {c.counts.trials === 1 ? 'trial' : 'trials'}
-              </span>
-            </div>
-            <div className="row__line">
-              {be && <BestEvidenceBadge be={be} />}
-              <DriverBar drivers={c.drivers} refutedClinical={refuted} />
-              <span className="row__mech">{c.mechanism}</span>
-              {safety && (
-                <span className="row__safety">
-                  <span className="critical medium">{safety.flag}</span> — {safety.kind}
-                </span>
-              )}
-            </div>
-          </li>
-        )
-      })}
-    </ol>
+    <div className="empty">
+      <h1 className="display-sm">no curated appraisal at this address</h1>
+      <p>
+        Fixture mode covers <Link to="/q/parkinsons-disease">Parkinson’s disease</Link>, <Link to="/q/metformin">metformin</Link>, and{' '}
+        <Link to="/q/nilotinib--parkinsons-disease">nilotinib for Parkinson’s</Link>.
+      </p>
+    </div>
   )
 }
 
-function Scatter({ page }: { page: ResultsPage }) {
-  const navigate = useNavigate()
-  const W = 800
-  const H = 480
-  const padL = 64
-  const padB = 48
-  const padT = 24
-  const padR = 24
-  const xs = (v: number) => padL + (v / 3) * (W - padL - padR)
-  const ys = (lvl: number) => H - padB - (lvl / 4) * (H - padB - padT)
+export function candidatePath(page: ResultsPage, c: CandidateDetail) {
+  return `/q/${page.query.slug}/${page.query.kind === 'drug' ? c.condition_slug : c.drug_slug}`
+}
 
-  const points = useMemo(() => {
-    const pts = page.candidates.map((c) => {
-      const be = bestEvidenceAt(c, todayDate(c))
-      const lvl = be ? clinicalLevel(be) : 2
-      return { c, x: c.drivers.mechanism, lvl }
-    })
-    // identical coordinates offset 16px apart in name order; never jitter
-    const seen = new Map<string, number>()
-    return pts
-      .sort((a, b) => a.c.name.localeCompare(b.c.name))
-      .map((p) => {
-        const k = `${p.x}:${p.lvl}`
-        const n = seen.get(k) ?? 0
-        seen.set(k, n + 1)
-        return { ...p, dx: n * 16 }
-      })
-  }, [page])
+const isRefuted = (be?: BestEvidence) => !!be && be.controlled && be.outcome === 'negative'
 
+// ---- List ----------------------------------------------------------------------------------
+
+function ResultsList({ page }: { page: ResultsPage }) {
+  const drugFirst = page.query.kind === 'drug'
+  const groups: { word: string; rows: CandidateDetail[] }[] = [
+    { word: 'not yet refuted', rows: page.candidates.filter((c) => !isRefuted(bestEvidenceAt(c, todayDate(c)))) },
+    { word: 'refuted in controlled studies', rows: page.candidates.filter((c) => isRefuted(bestEvidenceAt(c, todayDate(c)))) },
+  ]
+  let rank = 0
   return (
-    <div className="scatter">
-      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Mechanism support against clinical test status">
-        <line x1={padL} y1={padT} x2={padL} y2={H - padB} stroke="var(--color-line)" />
-        <line x1={padL} y1={H - padB} x2={W - padR} y2={H - padB} stroke="var(--color-line)" />
-        {CLINICAL_LEVELS.map((word, i) => (
-          <text key={word} x={padL - 8} y={ys(i) + 4} textAnchor="end" fontSize="12" fill="var(--color-ink-muted)">
-            {i}
-          </text>
+    <div className="rise" style={{ '--i': 1 } as React.CSSProperties}>
+      <div className="thead results__head">
+        <span className="kicker">#</span>
+        <span className="kicker">{drugFirst ? 'indication' : 'candidate'}</span>
+        <span className="kicker">best evidence</span>
+        <span className="kicker">weakest link</span>
+        <span className="kicker">safety</span>
+        <span className="kicker" style={{ textAlign: 'right' }}>
+          unresolved
+        </span>
+      </div>
+      {groups
+        .filter((g) => g.rows.length)
+        .map((g) => (
+          <div key={g.word}>
+            <p className="results__group">{g.word}</p>
+            <div className="panel" role="list">
+              {g.rows.map((c) => {
+                rank++
+                return <Row key={c.slug} c={c} rank={rank} page={page} />
+              })}
+            </div>
+          </div>
         ))}
-        {[0, 1, 2, 3].map((v) => (
-          <text key={v} x={xs(v)} y={H - padB + 20} textAnchor="middle" fontSize="12" fill="var(--color-ink-muted)">
-            {v}
-          </text>
-        ))}
-        <text x={W - padR} y={H - 8} textAnchor="end" fontSize="12" fill="var(--color-ink-muted)">
-          mechanism support (pips)
-        </text>
-        <text x={padL - 48} y={padT - 8} fontSize="12" fill="var(--color-ink-muted)">
-          clinical test status
-        </text>
-        {points.map((p) => {
-          const cx = xs(p.x) + p.dx
-          const cy = ys(p.lvl)
-          const raspberry = p.lvl === 0
-          return (
-            <g key={p.c.slug} style={{ cursor: 'pointer' }} onClick={() => navigate(candidatePath(page, p.c))} role="link" tabIndex={0} aria-label={`${p.c.name}: mechanism ${p.x}, ${CLINICAL_LEVELS[p.lvl]}`}>
-              <rect x={cx - 4} y={cy - 4} width={8} height={8} fill={raspberry ? 'var(--evidence-refuted)' : 'var(--color-ink)'} />
-              <text x={cx + 10} y={cy + 4 + (p.dx ? 12 : 0)} fontSize="14" fill="var(--color-ink)">
-                {page.query.kind === 'drug' ? p.c.condition : p.c.name}
-              </text>
-            </g>
-          )
-        })}
-      </svg>
-      <p className="scatter__legend">
-        Clinical test status: {CLINICAL_LEVELS.map((w, i) => `${i} ${w}`).join(' · ')}. A raspberry point is a controlled negative.
-      </p>
+    </div>
+  )
+}
+
+function Row({ c, rank, page }: { c: CandidateDetail; rank: number; page: ResultsPage }) {
+  const navigate = useNavigate()
+  const today = todayDate(c)
+  const be = bestEvidenceAt(c, today)
+  const weak = resolveTimeline(c.weakest_link, today)
+  const weakClaim = c.chain.claims.find((k) => k.id === weak?.claim)
+  const safety = resolveTimeline(c.safety, today)
+  const refuted = isRefuted(be)
+  const path = candidatePath(page, c)
+  const drugFirst = page.query.kind === 'drug'
+  return (
+    <div className="panel__row results__row rise" style={{ '--i': rank } as React.CSSProperties} role="listitem" onClick={() => navigate(path)}>
+      <span className="results__rank">{String(rank).padStart(2, '0')}</span>
+      <div className="cell">
+        <Link className="display-xs cell__name" to={path} onClick={(e) => e.stopPropagation()}>
+          {drugFirst ? c.condition : c.name}
+        </Link>
+        <span className="cell__sub">
+          {c.mechanism.split('→').slice(1).join('→').trim() || c.drug_class}
+          {c.curation === 'draft' ? ' · draft' : ''}
+        </span>
+      </div>
+      <div className="cell">
+        {be && (
+          <>
+            <span className="cell__line">
+              <OutcomeChip be={be} />
+              <span>{bestEvidenceText(be)}</span>
+            </span>
+            <span className="cell__sub">{be.label}</span>
+          </>
+        )}
+      </div>
+      <div className="cell">
+        <span>{weakClaim ? `${cap(weakClaim.short)}` : '—'}</span>
+        {weak && <span className="cell__sub">{weak.why}</span>}
+      </div>
+      <div className="cell">
+        {safety ? (
+          <span>
+            <span className="critical medium">{safety.flag}</span> <span className="cell__sub">— {safety.kind}</span>
+          </span>
+        ) : (
+          <span className="muted">none flagged</span>
+        )}
+      </div>
+      {refuted ? <span className="cell__dash">–</span> : <span className="cell__count">{unresolvedCount(c, today)}</span>}
+    </div>
+  )
+}
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+// ---- Board ---------------------------------------------------------------------------------
+
+const STAGES: { id: TrialStage; word: string }[] = [
+  { id: 'preclinical', word: 'preclinical' },
+  { id: 'open-label', word: 'open-label' },
+  { id: 'phase-2', word: 'phase 2 concluded' },
+  { id: 'phase-3-enrolling', word: 'phase 3 enrolling' },
+  { id: 'phase-3', word: 'phase 3 concluded' },
+]
+
+function Board({ page }: { page: ResultsPage }) {
+  const navigate = useNavigate()
+  const drugFirst = page.query.kind === 'drug'
+  return (
+    <div className="board rise" style={{ '--i': 1 } as React.CSSProperties}>
+      {STAGES.map((stage, si) => {
+        const cards = page.candidates.filter((c) => bestEvidenceAt(c, todayDate(c))?.stage === stage.id)
+        return (
+          <div className="board__col" key={stage.id}>
+            <div className="board__head">
+              <span className="medium">{stage.word}</span>
+              <span className="board__count">{cards.length}</span>
+            </div>
+            {cards.map((c, i) => {
+              const be = bestEvidenceAt(c, todayDate(c))!
+              const weak = resolveTimeline(c.weakest_link, todayDate(c))
+              return (
+                <div key={c.slug} className="panel card rise" style={{ '--i': si + i } as React.CSSProperties} onClick={() => navigate(candidatePath(page, c))} role="link" tabIndex={0}>
+                  <span className="display-xs">{drugFirst ? c.condition : c.name}</span>
+                  <span className="cell__line">
+                    <OutcomeChip be={be} />
+                    <span className="cell__sub">{be.n !== undefined ? `n = ${be.n}` : bestEvidenceText(be)}</span>
+                  </span>
+                  <span className="card__weak">{weak?.why}</span>
+                </div>
+              )
+            })}
+          </div>
+        )
+      })}
     </div>
   )
 }

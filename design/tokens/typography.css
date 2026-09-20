@@ -53,13 +53,15 @@ body {
   background: var(--color-surface);
 }
 
-/* Display: the wordmark, page titles, a drug or condition name as a heading */
+/* Display: the wordmark, page titles, a drug or condition name as a heading.
+ * Aujournuit titles are always lowercase; Supreme text keeps its casing. */
 .display {
   font-family: var(--font-display);
   font-stretch: var(--display-width);
   font-weight: 400;
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
+  text-transform: lowercase;
 }
 .display-lg { font-size: var(--display-lg); }
 .display-md { font-size: var(--display-md); }

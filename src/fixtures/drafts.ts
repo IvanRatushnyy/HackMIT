@@ -145,7 +145,8 @@ export const ambroxol = draft({
     claims: [
       {
         id: 'c1',
-        short: 'GBA1 → PD risk',
+        node: 'GBA1 / GCase',
+        short: 'GBA1 variants raise PD risk',
         text: 'GBA1 variants reduce glucocerebrosidase activity and raise Parkinson’s risk.',
         evidence: [{ source: 'sidransky-2009', direction: 'supports' }],
         override: [
@@ -160,7 +161,8 @@ export const ambroxol = draft({
       },
       {
         id: 'c2',
-        short: 'GCase raised',
+        node: 'GCase activity',
+        short: 'raises GCase in cells',
         text: 'Ambroxol raises glucocerebrosidase activity.',
         scope: 'in cell models',
         evidence: [
@@ -170,13 +172,15 @@ export const ambroxol = draft({
       },
       {
         id: 'c3',
-        short: 'CNS engagement',
+        node: 'brain engagement',
+        short: 'reaches CSF, raises CSF GCase',
         text: 'Ambroxol reaches the brain and engages GCase in people.',
         evidence: [{ source: 'mullin-2020', direction: 'supports' }],
       },
       {
         id: 'c4',
-        short: 'clinical benefit',
+        node: 'slowed progression',
+        short: 'slows clinical progression',
         text: 'Raising GCase slows clinical progression.',
         evidence: [],
       },
@@ -224,7 +228,7 @@ export const ambroxol = draft({
     },
   ],
   drivers: { mechanism: 3, clinical: 1, exposure: 2, safety: 3 },
-  best_evidence: [{ from: '2020-01-13', value: { design: 'open-label', controlled: false, outcome: 'positive', n: 17, source: 'mullin-2020' } }],
+  best_evidence: [{ from: '2020-01-13', value: { design: 'open-label', controlled: false, outcome: 'positive', n: 17, source: 'mullin-2020', stage: 'phase-3-enrolling', label: 'AiM-PD 2020 · ASPro-PD enrolling' } }],
   weakest_link: [
     {
       from: '2020-01-13',
@@ -359,7 +363,8 @@ export const exenatide = draft({
     claims: [
       {
         id: 'c1',
-        short: 'GLP-1R neuroprotection',
+        node: 'GLP-1R signalling',
+        short: 'protects dopamine neurons in rodents',
         text: 'GLP-1 receptor agonism protects dopamine neurons.',
         scope: 'in rodent models',
         evidence: [
@@ -369,13 +374,15 @@ export const exenatide = draft({
       },
       {
         id: 'c2',
-        short: 'CNS exposure',
+        node: 'brain exposure',
+        short: 'crosses the blood–brain barrier',
         text: 'Exenatide crosses the blood–brain barrier at an active concentration in people.',
         evidence: [],
       },
       {
         id: 'c3',
-        short: 'clinical benefit',
+        node: 'benefit in patients',
+        short: 'slows progression in patients',
         text: 'Exenatide slows Parkinson’s progression.',
         evidence: [
           { source: 'aviles-olmos-2013', direction: 'supports' },
@@ -393,7 +400,7 @@ export const exenatide = draft({
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2017-08-03', value: { resolution: 'met', word: 'acceptable', note: 'Weight loss and GI effects; no safety signal in 194 patients over 96 weeks.', sources: ['vijiaratnam-2025'] } }] },
   ],
   drivers: { mechanism: 2, clinical: 0, exposure: 1, safety: 3 },
-  best_evidence: [{ from: '2025-02-04', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 194, source: 'vijiaratnam-2025' } }],
+  best_evidence: [{ from: '2025-02-04', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 194, source: 'vijiaratnam-2025', stage: 'phase-3', label: 'Exenatide-PD3 2025' } }],
   weakest_link: [{ from: '2025-02-04', value: { claim: 'c3', why: 'The definitive trial tested the clinical claim directly and found nothing.', sources: ['vijiaratnam-2025'] } }],
 })
 
@@ -489,10 +496,10 @@ export const isradipine = draft({
     drug: 'isradipine',
     condition: 'Parkinson’s disease',
     claims: [
-      { id: 'c1', short: 'Cav1.3 stress', text: 'Cav1.3 calcium entry stresses substantia nigra dopamine neurons.', scope: 'in mouse models', evidence: [{ source: 'chan-2007', direction: 'supports' }] },
-      { id: 'c2', short: 'epidemiological signal', text: 'Dihydropyridine use is associated with lower Parkinson’s risk.', evidence: [{ source: 'becker-2008', direction: 'supports' }] },
-      { id: 'c3', short: 'CNS engagement', text: 'Isradipine blocks nigral Cav1.3 channels at a tolerated dose in people.', evidence: [] },
-      { id: 'c4', short: 'clinical benefit', text: 'Isradipine slows Parkinson’s progression.', evidence: [{ source: 'steady-pd-iii-2020', direction: 'refutes' }] },
+      { id: 'c1', node: 'Cav1.3 stress', short: 'Cav1.3 entry stresses SNc neurons', text: 'Cav1.3 calcium entry stresses substantia nigra dopamine neurons.', scope: 'in mouse models', evidence: [{ source: 'chan-2007', direction: 'supports' }] },
+      { id: 'c2', node: 'lower PD risk', short: 'dihydropyridine use, lower risk', text: 'Dihydropyridine use is associated with lower Parkinson’s risk.', evidence: [{ source: 'becker-2008', direction: 'supports' }] },
+      { id: 'c3', node: 'nigral channel block', short: 'blocks nigral Cav1.3 at a tolerated dose', text: 'Isradipine blocks nigral Cav1.3 channels at a tolerated dose in people.', evidence: [] },
+      { id: 'c4', node: 'benefit in patients', short: 'slows progression in patients', text: 'Isradipine slows Parkinson’s progression.', evidence: [{ source: 'steady-pd-iii-2020', direction: 'refutes' }] },
     ],
   },
   prerequisites: [
@@ -503,7 +510,7 @@ export const isradipine = draft({
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2020-03-31', value: { resolution: 'met', word: 'acceptable', note: 'Oedema and dizziness; well tolerated at 10 mg/day.', sources: ['steady-pd-iii-2020'] } }] },
   ],
   drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 3 },
-  best_evidence: [{ from: '2020-03-31', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 336, source: 'steady-pd-iii-2020' } }],
+  best_evidence: [{ from: '2020-03-31', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 336, source: 'steady-pd-iii-2020', stage: 'phase-3', label: 'STEADY-PD III 2020' } }],
   weakest_link: [{ from: '2020-03-31', value: { claim: 'c3', why: 'A tolerated antihypertensive dose was never shown to block the channel in the brain, so the negative trial may not have tested the mechanism.', sources: ['steady-pd-iii-2020'] } }],
 })
 
@@ -577,9 +584,9 @@ export const simvastatin = draft({
     drug: 'simvastatin',
     condition: 'Parkinson’s disease',
     claims: [
-      { id: 'c1', short: 'epidemiological signal', text: 'Simvastatin use is associated with lower Parkinson’s incidence.', evidence: [{ source: 'wolozin-2007', direction: 'supports' }] },
-      { id: 'c2', short: 'CNS mechanism', text: 'Simvastatin acts on a Parkinson’s-relevant pathway in the brain.', evidence: [] },
-      { id: 'c3', short: 'clinical benefit', text: 'Simvastatin slows Parkinson’s progression.', evidence: [{ source: 'pd-stat-2024', direction: 'refutes' }] },
+      { id: 'c1', node: 'lower PD incidence', short: 'statin use, lower incidence', text: 'Simvastatin use is associated with lower Parkinson’s incidence.', evidence: [{ source: 'wolozin-2007', direction: 'supports' }] },
+      { id: 'c2', node: 'CNS mechanism', short: 'acts on a PD pathway in the brain', text: 'Simvastatin acts on a Parkinson’s-relevant pathway in the brain.', evidence: [] },
+      { id: 'c3', node: 'benefit in patients', short: 'slows progression in patients', text: 'Simvastatin slows Parkinson’s progression.', evidence: [{ source: 'pd-stat-2024', direction: 'refutes' }] },
     ],
   },
   prerequisites: [
@@ -590,7 +597,7 @@ export const simvastatin = draft({
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2024-01-01', value: { resolution: 'met', word: 'acceptable', note: 'Decades of use in older adults.', sources: ['pd-stat-2024'] } }] },
   ],
   drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 3 },
-  best_evidence: [{ from: '2024-01-01', value: { design: 'RCT (futility)', controlled: true, outcome: 'negative', n: 235, source: 'pd-stat-2024' } }],
+  best_evidence: [{ from: '2024-01-01', value: { design: 'RCT (futility)', controlled: true, outcome: 'negative', n: 235, source: 'pd-stat-2024', stage: 'phase-2', label: 'PD STAT 2024' } }],
   weakest_link: [{ from: '2007-07-19', value: { claim: 'c2', why: 'No brain mechanism was ever specified, so nothing links the epidemiology to a testable biology.', sources: ['wolozin-2007'] } }],
 })
 
@@ -686,10 +693,10 @@ export const metforminPd = draft({
     drug: 'metformin',
     condition: 'Parkinson’s disease',
     claims: [
-      { id: 'c1', short: 'AMPK neuroprotection', text: 'Metformin protects dopamine neurons via AMPK.', scope: 'in mouse models', evidence: [{ source: 'patil-2014', direction: 'supports' }] },
-      { id: 'c2', short: 'epidemiological signal', text: 'Metformin use is associated with lower Parkinson’s risk.', evidence: [{ source: 'wahlqvist-2012', direction: 'supports' }] },
-      { id: 'c3', short: 'CNS engagement', text: 'Metformin activates AMPK in the human brain at clinical doses.', evidence: [] },
-      { id: 'c4', short: 'clinical benefit', text: 'Metformin slows Parkinson’s progression.', evidence: [{ source: 'metformin-pd-pilot-2025', direction: 'contradicts' }] },
+      { id: 'c1', node: 'AMPK neuroprotection', short: 'protects dopamine neurons in mice', text: 'Metformin protects dopamine neurons via AMPK.', scope: 'in mouse models', evidence: [{ source: 'patil-2014', direction: 'supports' }] },
+      { id: 'c2', node: 'lower PD risk', short: 'metformin use, lower risk', text: 'Metformin use is associated with lower Parkinson’s risk.', evidence: [{ source: 'wahlqvist-2012', direction: 'supports' }] },
+      { id: 'c3', node: 'brain AMPK activation', short: 'activates AMPK in the human brain', text: 'Metformin activates AMPK in the human brain at clinical doses.', evidence: [] },
+      { id: 'c4', node: 'benefit in patients', short: 'slows progression in patients', text: 'Metformin slows Parkinson’s progression.', evidence: [{ source: 'metformin-pd-pilot-2025', direction: 'contradicts' }] },
     ],
   },
   prerequisites: [
@@ -700,7 +707,7 @@ export const metforminPd = draft({
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2012-07-01', value: { resolution: 'met', word: 'acceptable', note: 'Decades of use; renal function must be monitored in older patients.', sources: ['wahlqvist-2012'] } }] },
   ],
   drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 3 },
-  best_evidence: [{ from: '2025-02-20', value: { design: 'randomised pilot', controlled: true, outcome: 'negative', n: 60, source: 'metformin-pd-pilot-2025' } }],
+  best_evidence: [{ from: '2025-02-20', value: { design: 'randomised pilot', controlled: true, outcome: 'negative', n: 60, source: 'metformin-pd-pilot-2025', stage: 'phase-2', label: 'randomised pilot 2025' } }],
   weakest_link: [{ from: '2014-09-05', value: { claim: 'c3', why: 'No one has shown metformin does in a human brain what it does in a mouse brain.', sources: ['patil-2014'] } }],
 })
 
@@ -758,8 +765,8 @@ export const metforminAd = draft({
     drug: 'metformin',
     condition: 'Alzheimer’s disease',
     claims: [
-      { id: 'c1', short: 'insulin signalling', text: 'Improving central insulin signalling slows Alzheimer’s pathology.', evidence: [] },
-      { id: 'c2', short: 'clinical benefit', text: 'Metformin improves cognition in Alzheimer’s disease or MCI.', evidence: [{ source: 'koenig-2017', direction: 'supports' }, { source: 'luchsinger-2016', direction: 'supports' }] },
+      { id: 'c1', node: 'insulin signalling', short: 'improves central insulin signalling', text: 'Improving central insulin signalling slows Alzheimer’s pathology.', evidence: [] },
+      { id: 'c2', node: 'cognition', short: 'improves cognition in AD or MCI', text: 'Metformin improves cognition in Alzheimer’s disease or MCI.', evidence: [{ source: 'koenig-2017', direction: 'supports' }, { source: 'luchsinger-2016', direction: 'supports' }] },
     ],
   },
   prerequisites: [
@@ -770,7 +777,7 @@ export const metforminAd = draft({
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2016-01-01', value: { resolution: 'met', word: 'acceptable', note: 'Renal monitoring in older adults.', sources: ['luchsinger-2016'] } }] },
   ],
   drivers: { mechanism: 1, clinical: 1, exposure: 0, safety: 3 },
-  best_evidence: [{ from: '2017-04-01', value: { design: 'RCT pilot', controlled: true, outcome: 'mixed', n: 80, source: 'luchsinger-2016' } }],
+  best_evidence: [{ from: '2017-04-01', value: { design: 'RCT pilot', controlled: true, outcome: 'mixed', n: 80, source: 'luchsinger-2016', stage: 'phase-2', label: 'Luchsinger 2016 · Koenig 2017' } }],
   weakest_link: [{ from: '2016-01-01', value: { claim: 'c1', why: 'The mechanism is asserted, not shown; nothing links insulin signalling to slowed pathology in people.', sources: ['luchsinger-2016'] } }],
 })
 
@@ -810,8 +817,8 @@ export const metforminCrc = draft({
     drug: 'metformin',
     condition: 'Colorectal adenoma',
     claims: [
-      { id: 'c1', short: 'AMPK / mTOR', text: 'Metformin reduces colonic epithelial proliferation via AMPK/mTOR at clinical doses.', evidence: [] },
-      { id: 'c2', short: 'clinical benefit', text: 'Metformin reduces adenoma recurrence after polypectomy.', evidence: [{ source: 'higurashi-2016', direction: 'supports' }] },
+      { id: 'c1', node: 'AMPK / mTOR', short: 'reduces epithelial proliferation', text: 'Metformin reduces colonic epithelial proliferation via AMPK/mTOR at clinical doses.', evidence: [] },
+      { id: 'c2', node: 'fewer adenomas', short: 'reduces adenoma recurrence', text: 'Metformin reduces adenoma recurrence after polypectomy.', evidence: [{ source: 'higurashi-2016', direction: 'supports' }] },
     ],
   },
   prerequisites: [
@@ -822,6 +829,6 @@ export const metforminCrc = draft({
     { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2016-04-01', value: { resolution: 'met', word: 'acceptable', note: 'Low dose, non-diabetic adults.', sources: ['higurashi-2016'] } }] },
   ],
   drivers: { mechanism: 1, clinical: 2, exposure: 1, safety: 3 },
-  best_evidence: [{ from: '2016-04-01', value: { design: 'RCT', controlled: true, outcome: 'positive', n: 151, source: 'higurashi-2016' } }],
+  best_evidence: [{ from: '2016-04-01', value: { design: 'RCT', controlled: true, outcome: 'positive', n: 151, source: 'higurashi-2016', stage: 'phase-3', label: 'Higurashi 2016' } }],
   weakest_link: [{ from: '2016-04-01', value: { claim: 'c2', why: 'One trial from one group on a surrogate endpoint carries the whole case.', sources: ['higurashi-2016'] } }],
 })

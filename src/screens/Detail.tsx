@@ -3,19 +3,18 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { Banner, Header, Sheet } from '../components/frame'
-import { Appraisal, AsOfControl, AssessmentSection, Chain, Prerequisites, Rail, SafetySection, type RailState } from '../components/detail'
+import { DataNote, Header } from '../components/frame'
+import { AsOfControl, BeforeTrial, Mechanism, Objections, SafetyPanel, YourCall } from '../components/detail'
+import { bestEvidenceText, DriverBar, OutcomeChip } from '../components/evidence'
 import { source } from '../data/source'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
-import { findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
+import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
 
 export function Detail({ banner }: { banner: string }) {
   const { query = '', candidate: candidateParam = '' } = useParams()
   const [params, setParams] = useSearchParams()
   const [q, setQ] = useState<QueryRecord | undefined>()
   const [c, setC] = useState<CandidateDetail | undefined | null>(undefined)
-  const [rail, setRail] = useState<RailState>({ kind: 'ledger' })
-  const [fading, setFading] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -34,56 +33,71 @@ export function Detail({ banner }: { banner: string }) {
 
   const cutoff = findCutoff(c, params.get('asof'))
   const isToday = isTodayCutoff(c, cutoff)
+  const be = bestEvidenceAt(c, cutoff.date)
+  const refuted = !!be && be.controlled && be.outcome === 'negative'
+  const sourcesHref = `/q/${query}/sources`
+  const exportHref = `/q/${query}/${candidateParam}/export${isToday ? '' : `?asof=${cutoff.id}`}`
 
   const changeCutoff = (next: Cutoff) => {
     if (next.id === cutoff.id) return
-    setFading(true)
-    setTimeout(() => {
-      // Replace, not push: the date is view state, so Back returns to the list (spec §3).
-      const p = new URLSearchParams(params)
-      if (isTodayCutoff(c, next)) p.delete('asof')
-      else p.set('asof', next.id)
-      setParams(p, { replace: true })
-      setFading(false)
-    }, 120)
+    // Replace, not push: the date is view state, so Back returns to the list (spec §3).
+    const p = new URLSearchParams(params)
+    if (isTodayCutoff(c, next)) p.delete('asof')
+    else p.set('asof', next.id)
+    setParams(p, { replace: true })
   }
 
-  const backTo = q.kind === 'pair' ? { to: `/q/${c.condition_slug}`, word: `← All candidates for ${c.condition}` } : { to: `/q/${query}`, word: '← Results · as of today' }
-  const selectedClaim = rail.kind === 'claim' ? rail.id : null
+  const backTo = q.kind === 'pair' ? { to: `/q/${c.condition_slug}`, word: `← all candidates for ${c.condition}` } : { to: `/q/${query}`, word: '← results · as of today' }
 
   return (
     <main className="page">
       <Header />
-      <Banner text={banner} />
-      <div className="page__body">
-        <Sheet>
-          <div className="detail__bar">
-            <Link className="detail__back" to={backTo.to}>
-              {backTo.word}
-            </Link>
-            <div className="detail__bar-row">
-              <div>
-                <h1 className="display-md">{c.name}</h1>
-                <p className="detail__meta">
-                  {c.drug_class} · approved for {c.approved_indication} · for {c.condition}
-                  {c.curation === 'draft' ? ' · draft record, sources not yet verified' : ''}
-                </p>
-              </div>
-              <AsOfControl cutoffs={c.cutoffs} current={cutoff} onChange={changeCutoff} />
+      <div className="col">
+        <div className="title rise">
+          <div className="title__main">
+            <p className="detail__meta">
+              <Link to={backTo.to}>{backTo.word}</Link> · {c.drug_class} · approved for {c.approved_indication} · {c.mechanism.split('→').slice(1).join('→').trim()}
+              {c.curation === 'draft' ? ' · draft record, sources not yet verified' : ''}
+            </p>
+            <h1 className="display-sm detail__title">
+              {c.name} <span className="muted">for {c.condition}</span>
+            </h1>
+            <div className="detail__evidence">
+              {be && (
+                <>
+                  <OutcomeChip be={be} />
+                  <span>
+                    {bestEvidenceText(be)}
+                    {be.label ? ` · ${be.label}` : ''}
+                  </span>
+                </>
+              )}
+              {isToday && <DriverBar drivers={c.drivers} refutedClinical={refuted} />}
             </div>
-            <p className="detail__frozen">{cutoff.note}</p>
           </div>
+          <div className="title__aside">
+            <AsOfControl cutoffs={c.cutoffs} current={cutoff} onChange={changeCutoff} />
+          </div>
+        </div>
 
-          <div className={`detail__body fade${fading ? ' fade--out' : ''}`}>
-            <Appraisal candidate={c} cutoff={cutoff} onCite={(id) => setRail({ kind: 'citation', id })} />
-            <Chain candidate={c} cutoff={cutoff} selected={selectedClaim} onSelect={(id) => setRail(id ? { kind: 'claim', id } : { kind: 'ledger' })} />
-            <SafetySection candidate={c} cutoff={cutoff} />
-            <Prerequisites candidate={c} cutoff={cutoff} isToday={isToday} />
-            <AssessmentSection candidate={c} cutoff={cutoff} query={query} dataNote={`${banner} ${cutoff.note}`} />
+        {/* Keyed on the cutoff: a date change re-mounts the body as one staggered reveal. */}
+        <div className="detail__body" key={cutoff.id}>
+          <div className="rise" style={{ '--i': 1 } as React.CSSProperties}>
+            <Objections candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
           </div>
-        </Sheet>
-        <Rail candidate={c} cutoff={cutoff} isToday={isToday} ledger={q.ledger.rows} state={rail} onState={setRail} />
+          <div className="rise" style={{ '--i': 2 } as React.CSSProperties}>
+            <Mechanism candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
+          </div>
+          <div className="two rise" style={{ '--i': 3 } as React.CSSProperties}>
+            <SafetyPanel candidate={c} cutoff={cutoff} />
+            <BeforeTrial candidate={c} cutoff={cutoff} isToday={isToday} />
+          </div>
+          <div className="rise" style={{ '--i': 4 } as React.CSSProperties}>
+            <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
+          </div>
+        </div>
       </div>
+      <DataNote text={banner} />
     </main>
   )
 }
@@ -92,20 +106,18 @@ function Frame({ banner, missing = false }: { banner: string; missing?: boolean 
   return (
     <main className="page">
       <Header />
-      <Banner text={banner} />
-      <div className="page__body page__body--full">
-        <Sheet>
-          {missing && (
-            <div className="empty">
-              <h1 className="display-md">No curated appraisal at this address</h1>
-              <p>
-                Fixture mode covers <Link to="/q/parkinsons-disease">Parkinson’s disease</Link>, <Link to="/q/metformin">metformin</Link>, and{' '}
-                <Link to="/q/nilotinib--parkinsons-disease">nilotinib for Parkinson’s</Link>.
-              </p>
-            </div>
-          )}
-        </Sheet>
+      <div className="col">
+        {missing && (
+          <div className="empty">
+            <h1 className="display-sm">no curated appraisal at this address</h1>
+            <p>
+              Fixture mode covers <Link to="/q/parkinsons-disease">Parkinson’s disease</Link>, <Link to="/q/metformin">metformin</Link>, and{' '}
+              <Link to="/q/nilotinib--parkinsons-disease">nilotinib for Parkinson’s</Link>.
+            </p>
+          </div>
+        )}
       </div>
+      <DataNote text={banner} />
     </main>
   )
 }

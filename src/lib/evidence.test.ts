@@ -72,7 +72,7 @@ describe('contradiction-only and refutes', () => {
     ...over,
   })
   it('contradicts only → contested, with the no-support why', () => {
-    const claim: Claim = { id: 'k', short: 's', text: 't', evidence: [{ source: 'x', direction: 'contradicts' }] }
+    const claim: Claim = { id: 'k', node: 'n', short: 's', text: 't', evidence: [{ source: 'x', direction: 'contradicts' }] }
     const r = deriveLabel(claim, [src({})], '2021-01-01')
     expect(r.label).toBe('contested')
     expect(r.why).toMatch(/No published evidence supports/)
@@ -80,6 +80,7 @@ describe('contradiction-only and refutes', () => {
   it('refutes → refuted before contested is considered', () => {
     const claim: Claim = {
       id: 'k',
+      node: 'n',
       short: 's',
       text: 't',
       evidence: [
@@ -94,7 +95,7 @@ describe('contradiction-only and refutes', () => {
     expect(deriveLabel(claim, s, '2021-01-01').label).toBe('refuted')
   })
   it('nothing visible → unknown', () => {
-    const claim: Claim = { id: 'k', short: 's', text: 't', evidence: [{ source: 'x', direction: 'supports' }] }
+    const claim: Claim = { id: 'k', node: 'n', short: 's', text: 't', evidence: [{ source: 'x', direction: 'supports' }] }
     expect(deriveLabel(claim, [src({ published: '2022-01-01' })], '2021-01-01').label).toBe('unknown')
   })
 })
@@ -157,12 +158,12 @@ describe('scatter mapping is exhaustive', () => {
     const outcomes = ['positive', 'negative', 'mixed', 'none'] as const
     for (const controlled of [true, false]) {
       for (const outcome of outcomes) {
-        const level = clinicalLevel({ design: 'x', controlled, outcome })
+        const level = clinicalLevel({ design: 'x', controlled, outcome, stage: 'phase-2' })
         expect(level).toBeGreaterThanOrEqual(0)
         expect(level).toBeLessThanOrEqual(4)
       }
     }
-    expect(clinicalLevel({ design: 'x', controlled: true, outcome: 'negative' })).toBe(0)
-    expect(clinicalLevel({ design: 'x', controlled: false, outcome: 'none' })).toBe(2)
+    expect(clinicalLevel({ design: 'x', controlled: true, outcome: 'negative', stage: 'phase-2' })).toBe(0)
+    expect(clinicalLevel({ design: 'x', controlled: false, outcome: 'none', stage: 'preclinical' })).toBe(2)
   })
 })

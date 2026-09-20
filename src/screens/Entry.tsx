@@ -1,66 +1,75 @@
-/* elute — Entry (Figma Desktop-1): white band, shard hero with three example chips,
- * and the worked nilotinib appraisal below so the tool's character shows before anyone types. */
+/* elute — Entry: one field with the Appraise button, three mode examples, and the recent list. */
 
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Banner, Shard, Sheet, Wordmark } from '../components/frame'
+import { useNavigate } from 'react-router-dom'
+import { DataNote, Header, Kicker } from '../components/frame'
 import { SearchField } from '../components/SearchField'
-import { Appraisal } from '../components/detail'
 import { source } from '../data/source'
-import type { CandidateDetail } from '../data/types'
-import { findCutoff } from '../lib/evidence'
+import type { QueryRecord } from '../data/types'
+import { loadRecent, whenWord } from '../lib/recent'
 
-const CHIPS = [
-  { word: 'Parkinson’s disease', slug: 'parkinsons-disease' },
-  { word: 'metformin', slug: 'metformin' },
-  { word: 'nilotinib for Parkinson’s', slug: 'nilotinib--parkinsons-disease' },
+const MODES = [
+  { word: 'condition → candidates', slug: 'parkinsons-disease', title: 'Try: Parkinson’s disease' },
+  { word: 'drug → indications', slug: 'metformin', title: 'Try: metformin' },
+  { word: 'pair → appraisal', slug: 'nilotinib--parkinsons-disease', title: 'Try: nilotinib for Parkinson’s disease' },
 ]
+
+type RecentRow = { q: QueryRecord; at: string; meta: string }
 
 export function Entry({ banner }: { banner: string }) {
   const navigate = useNavigate()
-  const [worked, setWorked] = useState<CandidateDetail | undefined>()
+  const [rows, setRows] = useState<RecentRow[]>([])
 
   useEffect(() => {
-    source.candidate('parkinsons-disease', 'nilotinib').then(setWorked)
+    const seed = ['parkinsons-disease', 'nilotinib--parkinsons-disease', 'metformin']
+    const recent = loadRecent()
+    const slugs = [...recent.map((r) => r.slug), ...seed.filter((s) => !recent.some((r) => r.slug === s))]
+    Promise.all(slugs.map((s) => source.query(s))).then(async (qs) => {
+      const out: RecentRow[] = []
+      for (const q of qs) {
+        if (!q) continue
+        const page = await source.results(q.slug)
+        const n = page?.candidates.length ?? 0
+        const meta = q.kind === 'pair' ? 'appraisal' : q.kind === 'drug' ? `${n} indications` : `${n} candidates`
+        const at = recent.find((r) => r.slug === q.slug)?.at
+        out.push({ q, at: at ? whenWord(at) : 'example', meta })
+      }
+      setRows(out)
+    })
   }, [])
 
   return (
     <main className="page">
-      <header className="band">
-        <div className="band__mark">
-          <Wordmark variant="entry" />
+      <Header entry />
+      <div className="col col--narrow entry">
+        <div className="entry__block rise" style={{ '--i': 0 } as React.CSSProperties}>
+          <Kicker>appraise</Kicker>
+          <SearchField big autoFocus />
+          <div className="entry__modes">
+            {MODES.map((m) => (
+              <button key={m.slug} type="button" className="chip chip--button" title={m.title} onClick={() => navigate(`/q/${m.slug}`)}>
+                {m.word}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="band__ask">
-          <p className="band__sentence">Approved drugs that might treat something else — and the strongest case against each one.</p>
-          <SearchField autoFocus />
-        </div>
-        <Banner text={banner} />
-      </header>
 
-      <div className="hero">
-        <Shard />
-        <div className="hero__chips pill-group" role="group" aria-label="Examples">
-          {CHIPS.map((c) => (
-            <button key={c.slug} type="button" className="pill" onClick={() => navigate(`/q/${c.slug}`)}>
-              {c.word}
-            </button>
-          ))}
-        </div>
+        {rows.length > 0 && (
+          <div className="entry__block rise" style={{ '--i': 2 } as React.CSSProperties}>
+            <Kicker>recent</Kicker>
+            <div className="panel" role="list">
+              {rows.map((r) => (
+                <div key={r.q.slug} className="panel__row recent__row" role="listitem" onClick={() => navigate(`/q/${r.q.slug}`)}>
+                  <span className="display-xs recent__name">{r.q.heading}</span>
+                  <span className="recent__meta">{r.meta}</span>
+                  <span className="recent__when">{r.at}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-
-      {worked && (
-        <section className="worked" aria-labelledby="worked">
-          <h2 className="section__title" id="worked">
-            What an appraisal looks like — nilotinib for Parkinson’s disease
-          </h2>
-          <Sheet>
-            <Appraisal candidate={worked} cutoff={findCutoff(worked, 'today')} limit={3} />
-          </Sheet>
-          <Link className="worked__link" to="/q/parkinsons-disease/nilotinib">
-            Open the full appraisal →
-          </Link>
-        </section>
-      )}
+      <DataNote text={banner} />
     </main>
   )
 }

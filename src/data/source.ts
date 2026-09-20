@@ -6,6 +6,7 @@ import type {
   CandidateDetail,
   CandidateSlug,
   EntityIndex,
+  Ledger,
   LedgerEvent,
   Provenance,
   QueryRecord,
@@ -29,6 +30,14 @@ export interface DataSource {
 const REPLAY_TOTAL_MS = 12_000
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
+
+/** Playback duration per row. Scripted: even spacing. Recorded: elapsed_ms scaled by one constant. */
+export function rowDurations(ledger: Ledger): number[] {
+  const rows = ledger.rows
+  const recorded = ledger.kind === 'recorded' && rows.every((r) => r.elapsed_ms !== undefined)
+  const total = recorded ? rows.reduce((s, r) => s + (r.elapsed_ms ?? 0), 0) : rows.length
+  return rows.map((r) => Math.max(200, (recorded ? (r.elapsed_ms ?? 0) / total : 1 / total) * REPLAY_TOTAL_MS))
+}
 
 export class FixtureSource implements DataSource {
   mode = 'fixture' as const
@@ -60,12 +69,9 @@ export class FixtureSource implements DataSource {
     const q = queries.find((x) => x.slug === slug)
     if (!q) return
     const rows = q.ledger.rows
-    // Scripted: even spacing. Recorded: scale elapsed_ms by one constant.
-    const recorded = q.ledger.kind === 'recorded' && rows.every((r) => r.elapsed_ms !== undefined)
-    const total = recorded ? rows.reduce((s, r) => s + (r.elapsed_ms ?? 0), 0) : rows.length
+    const durations = rowDurations(q.ledger)
     for (let i = 0; i < rows.length; i++) {
-      const share = recorded ? (rows[i].elapsed_ms ?? 0) / total : 1 / total
-      await sleep(Math.max(200, share * REPLAY_TOTAL_MS))
+      await sleep(durations[i])
       yield { row: rows[i], done: i === rows.length - 1 }
     }
     this.completed.add(slug)

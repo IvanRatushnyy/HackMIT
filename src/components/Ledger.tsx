@@ -1,7 +1,6 @@
-/* elute — the evidence ledger: rows, provenance block, and the collapsed disclosure.
+/* elute — the evidence ledger while it runs (Working) and its provenance block.
  * Every count is derived from the row's dated records at the current cutoff. */
 
-import { useState } from 'react'
 import type { ISODate, LedgerRow } from '../data/types'
 import { ledgerResult } from '../lib/evidence'
 
@@ -18,124 +17,59 @@ export function ProvenanceBlock({ row, cutoff, isToday }: { row: LedgerRow; cuto
     ['extracted', visible.length ? visible.map((r) => `${r.value}    ${r.published}`).join('\n            ') : '—'],
     ['verified', verified],
   ]
-  return (
-    <pre className="raw raw-block">
-      {lines.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n')}
-    </pre>
-  )
+  return <pre className="raw raw-block">{lines.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n')}</pre>
 }
 
-export function LedgerRowView({
+export type RowState = 'done' | 'running' | 'pending'
+
+/** One ledger row on the Working page: number and glyph, step, what came back, elapsed. */
+export function WorkingRow({
   row,
+  index,
+  state,
   cutoff,
-  isToday,
-  compact = false,
-  running = false,
-  open,
-  onToggle,
-  className,
+  selected,
+  onSelect,
+  durationMs,
+  recorded,
 }: {
   row: LedgerRow
+  index: number
+  state: RowState
   cutoff: ISODate
-  isToday: boolean
-  compact?: boolean
-  running?: boolean
-  open: boolean
-  onToggle: () => void
-  className?: string
+  selected: boolean
+  onSelect: () => void
+  durationMs: number
+  recorded: boolean
 }) {
-  const result = running ? '…' : ledgerResult(row, cutoff)
+  const glyph = state === 'done' ? (row.execution.retry ? '!' : '✓') : state === 'running' ? '●' : ''
+  const result =
+    state === 'done'
+      ? `${row.execution.retry ? `${row.execution.retry.reason} · retried · ` : ''}${ledgerResult(row, cutoff)}`
+      : state === 'running'
+        ? `${row.source} · running`
+        : row.source
+  const time = state === 'done' && recorded && row.elapsed_ms !== undefined ? `${(row.elapsed_ms / 1000).toFixed(1)} s` : state === 'running' ? 'running' : ''
   return (
-    <li className={className}>
+    <li className="rise" style={{ '--i': index } as React.CSSProperties}>
       <button
         type="button"
-        className={`ledger__row${compact ? ' ledger__row--compact' : ''}`}
-        aria-expanded={open}
-        onClick={onToggle}
-        disabled={running}
+        className={`panel__row ledger__row ledger__row--${state}${selected ? ' ledger__row--selected' : ''}`}
+        onClick={state === 'done' ? onSelect : undefined}
+        disabled={state !== 'done'}
+        aria-pressed={selected}
       >
-        <span className="ledger__id figure">{row.id}</span>
-        <span className="row__main">{row.step}</span>
-        {!compact && <span className="row__main muted">{row.source}</span>}
-        {!compact && (
-          <span className="ledger__result">
-            {row.execution.retry && !running ? <span className="ledger__retry">0 records → retried · </span> : null}
-            {result}
+        <span className="ledger__num">
+          <span>{index + 1}</span>
+          <span className={`ledger__glyph${row.execution.retry && state === 'done' ? ' ledger__glyph--retry' : ''}`} aria-hidden="true">
+            {glyph}
           </span>
-        )}
-        <span className="ledger__disclosure" aria-hidden="true">
-          {running ? '' : open ? '▾' : '▸'}
         </span>
+        <span className="ledger__step">{row.step}</span>
+        <span className="ledger__result">{result}</span>
+        <span className="ledger__time">{time}</span>
+        {state === 'running' && <span className="ledger__bar" style={{ '--dur': `${durationMs}ms` } as React.CSSProperties} aria-hidden="true" />}
       </button>
-      {open && (
-        <div className="ledger__body">
-          <ProvenanceBlock row={row} cutoff={cutoff} isToday={isToday} />
-        </div>
-      )}
     </li>
-  )
-}
-
-export function LedgerList({
-  rows,
-  cutoff,
-  isToday,
-  compact = false,
-  runningId,
-  openId,
-  onOpen,
-  animate = false,
-}: {
-  rows: LedgerRow[]
-  cutoff: ISODate
-  isToday: boolean
-  compact?: boolean
-  runningId?: string
-  openId?: string | null
-  onOpen?: (id: string | null) => void
-  animate?: boolean
-}) {
-  const [local, setLocal] = useState<string | null>(null)
-  const open = openId !== undefined ? openId : local
-  const setOpen = onOpen ?? setLocal
-  return (
-    <ul className="ledger">
-      {rows.map((row) => (
-        <LedgerRowView
-          key={row.id}
-          row={row}
-          cutoff={cutoff}
-          isToday={isToday}
-          compact={compact}
-          running={row.id === runningId}
-          open={open === row.id}
-          onToggle={() => setOpen(open === row.id ? null : row.id)}
-          className={animate ? 'rise' : undefined}
-        />
-      ))}
-    </ul>
-  )
-}
-
-export function LedgerDisclosure({
-  rows,
-  cutoff,
-  isToday,
-}: {
-  rows: LedgerRow[]
-  cutoff: ISODate
-  isToday: boolean
-}) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div>
-      <button type="button" className="disclosure" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
-        <span>Evidence ledger · {rows.length} steps</span>
-        <span className="disclosure__mark" aria-hidden="true">
-          {open ? '▾' : '▸'}
-        </span>
-      </button>
-      {open && <LedgerList rows={rows} cutoff={cutoff} isToday={isToday} compact />}
-    </div>
   )
 }

@@ -1,4 +1,4 @@
-/* elute — page frame: shard, wordmark, entry band, inner header, data banner, sheet. */
+/* elute — page frame: shard, wordmark, header, data note, kicker. */
 
 import { Link } from 'react-router-dom'
 import shardSvg from '../../design/shard/shard.svg?raw'
@@ -12,40 +12,40 @@ const shardMarkup = shardSvg
   .replace(/\soverflow="visible"/, '')
 
 export function Shard({ className, offsetY }: { className?: string; offsetY?: string }) {
-  // offsetY shifts the viewBox so a header band shows the dense middle of the composition.
   const markup = offsetY ? shardMarkup.replace('viewBox="0 0 1440 744"', `viewBox="0 ${offsetY} 1440 744"`) : shardMarkup
   return <div className={className} aria-hidden="true" dangerouslySetInnerHTML={{ __html: markup }} />
 }
 
-export function Wordmark({ variant }: { variant: 'entry' | 'inner' }) {
+export function Wordmark() {
   return (
-    <Link to="/" className={`wordmark wordmark--${variant}`} aria-label="elute, home">
+    <Link to="/" className="wordmark" aria-label="elute, home">
       elute
     </Link>
   )
 }
 
-export function Banner({ text }: { text: string }) {
+/** The curated-data statement: one quiet line at the foot of every page (PRD §9 Must). */
+export function DataNote({ text }: { text: string }) {
   return (
-    <p className="banner" role="note">
+    <footer className="datanote" role="contentinfo">
       {text}
-    </p>
+    </footer>
   )
 }
 
-/** Inner-page header (Figma Desktop-2): wordmark and field on white, shard band beside. */
-export function Header() {
+/** The same header on every page: wordmark, the field (not on Entry, where the field is the page), shard band. */
+export function Header({ entry = false }: { entry?: boolean }) {
   return (
-    <header className="header">
+    <header className={`header${entry ? ' header--entry' : ''}`}>
       <div className="header__block">
-        <Wordmark variant="inner" />
-        <SearchField compact />
+        <Wordmark />
+        {!entry && <SearchField compact />}
       </div>
       <Shard className="header__shard" offsetY="280" />
     </header>
   )
 }
 
-export function Sheet({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <section className={`sheet${className ? ` ${className}` : ''}`}>{children}</section>
+export function Kicker({ children }: { children: React.ReactNode }) {
+  return <p className="kicker">{children}</p>
 }

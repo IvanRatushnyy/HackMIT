@@ -287,7 +287,8 @@ export const nilotinib: CandidateDetail = {
     claims: [
       {
         id: 'c1',
-        short: 'ABL1 inhibited',
+        node: 'ABL1',
+        short: 'inhibits ABL1',
         text: 'Nilotinib inhibits the ABL1 kinase at clinical doses.',
         evidence: [
           { source: S.fda_label, direction: 'supports' },
@@ -296,6 +297,7 @@ export const nilotinib: CandidateDetail = {
       },
       {
         id: 'c2',
+        node: 'c-Abl in PD brain',
         short: 'c-Abl active in PD brain',
         text: 'c-Abl is activated in the Parkinson’s brain.',
         scope: 'in postmortem tissue',
@@ -307,7 +309,8 @@ export const nilotinib: CandidateDetail = {
       },
       {
         id: 'c3',
-        short: 'α-synuclein cleared',
+        node: 'α-syn clearance',
+        short: 'clears α-syn in mice',
         text: 'Inhibiting c-Abl clears α-synuclein and protects dopamine neurons.',
         scope: 'in mouse models',
         evidence: [
@@ -317,7 +320,8 @@ export const nilotinib: CandidateDetail = {
       },
       {
         id: 'c4',
-        short: 'CNS exposure',
+        node: 'brain exposure',
+        short: 'brain exposure at tolerated doses',
         text: 'Nilotinib reaches the Parkinson’s brain at a concentration that inhibits c-Abl.',
         evidence: [
           { source: S.reinwald_2014, direction: 'contradicts' },
@@ -327,7 +331,8 @@ export const nilotinib: CandidateDetail = {
       },
       {
         id: 'c5',
-        short: 'clinical benefit',
+        node: 'benefit in patients',
+        short: 'improves outcomes in patients',
         text: 'Nilotinib improves Parkinson’s clinical outcomes.',
         evidence: [
           { source: S.pagan_2016, direction: 'supports' },
@@ -476,11 +481,11 @@ export const nilotinib: CandidateDetail = {
   best_evidence: [
     {
       from: '2016-07-11',
-      value: { design: 'open-label pilot', controlled: false, outcome: 'positive', n: 12, source: S.pagan_2016 },
+      value: { design: 'open-label pilot', controlled: false, outcome: 'positive', n: 12, source: S.pagan_2016, stage: 'open-label', label: 'Georgetown pilot 2016' },
     },
     {
       from: '2020-12-14',
-      value: { design: 'RCT', controlled: true, outcome: 'negative', n: 76, source: S.simuni_2021 },
+      value: { design: 'RCT', controlled: true, outcome: 'negative', n: 76, source: S.simuni_2021, stage: 'phase-2', label: 'NILO-PD 2021' },
     },
   ],
   weakest_link: [

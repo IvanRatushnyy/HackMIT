@@ -106,7 +106,8 @@ export type ClaimEvidence = { source: SourceId; direction: EvidenceDirection }
 
 export type Claim = {
   id: ClaimId
-  short: string // the row's noun phrase
+  node: string // the node this claim arrives at, drawn as a box: "ABL1", "brain exposure"
+  short: string // the link's caption under the label word: "inhibits ABL1"
   text: string // the full claim
   scope?: string // e.g. "in mouse models", shown after the label word
   evidence: ClaimEvidence[]
@@ -131,12 +132,16 @@ export type PrerequisiteStatus = {
 }
 export type Prerequisite = { id: string; condition: string; status: Timeline<PrerequisiteStatus> }
 
+export type TrialStage = 'preclinical' | 'open-label' | 'phase-2' | 'phase-3-enrolling' | 'phase-3'
+
 export type BestEvidence = {
   design: string
   controlled: boolean
   outcome: 'positive' | 'negative' | 'mixed' | 'none'
   n?: number
   source?: SourceId
+  stage: TrialStage // the most decisive study that exists, enrolling included: the board column
+  label?: string // "NILO-PD 2021 · Georgetown 2020"
 }
 
 export type CandidateDetail = {

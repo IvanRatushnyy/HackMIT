@@ -30,8 +30,8 @@
   --gutter-wide:   32px;     /* tablet and up */
   --panel-index:   320px;    /* results list column */
   --panel-detail:  384px;    /* detail rail: ledger, citations, claim evidence */
-  --header-height: 184px;    /* inner pages: wordmark, field, shard band */
-  --band-entry:    280px;    /* entry: the white band above the shard hero */
+  --header-height: 120px;    /* inner pages: one row of wordmark and field, shard band beside */
+  --band-entry:    256px;    /* entry: the white band above the shard hero */
   --page-max:      1920px;
 
   /* ---- Shape ------------------------------------------------------------- */

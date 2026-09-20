@@ -1,5 +1,6 @@
 /* elute — the one field. Accepts a drug, a condition, or a pair; resolves through the
- * entity index so an open field never dead-ends. Enter on an unmatched string does not navigate. */
+ * entity index so an open field never dead-ends. Enter on an unmatched string does not navigate.
+ * `big` is the Entry page's 64px box with the Appraise button inside; `compact` lives in the header. */
 
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +17,7 @@ function matches(entities: Entity[], text: string): Entity[] {
     .slice(0, 6)
 }
 
-export function SearchField({ compact = false, autoFocus = false }: { compact?: boolean; autoFocus?: boolean }) {
+export function SearchField({ compact = false, big = false, autoFocus = false }: { compact?: boolean; big?: boolean; autoFocus?: boolean }) {
   const navigate = useNavigate()
   const [entities, setEntities] = useState<Entity[]>([])
   const [text, setText] = useState('')
@@ -47,6 +48,11 @@ export function SearchField({ compact = false, autoFocus = false }: { compact?: 
     navigate(`/q/${e.slug}`)
   }
 
+  const submit = () => {
+    if (hits.length) go(hits[Math.min(active, hits.length - 1)])
+    else if (text.trim()) setNote(COVERED)
+  }
+
   const onKey = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if (ev.key === 'ArrowDown') {
       ev.preventDefault()
@@ -57,46 +63,52 @@ export function SearchField({ compact = false, autoFocus = false }: { compact?: 
       setActive((a) => Math.max(a - 1, 0))
     } else if (ev.key === 'Enter') {
       ev.preventDefault()
-      if (hits.length) go(hits[Math.min(active, hits.length - 1)])
-      else if (text.trim()) setNote(COVERED)
+      submit()
     } else if (ev.key === 'Escape') {
       setOpen(false)
     }
   }
 
+  const input = (
+    <input
+      className={big ? 'ask__input' : 'field'}
+      type="text"
+      role="combobox"
+      aria-expanded={open && hits.length > 0}
+      aria-controls={listId}
+      aria-autocomplete="list"
+      aria-label="Drug, condition, or drug for condition"
+      placeholder={big ? 'Drug, condition, or drug for condition' : 'drug, condition, or drug for condition'}
+      autoFocus={autoFocus}
+      value={text}
+      onChange={(e) => {
+        setText(e.target.value)
+        setOpen(true)
+        setActive(0)
+        setNote(null)
+      }}
+      onFocus={() => setOpen(true)}
+      onKeyDown={onKey}
+    />
+  )
+
   return (
-    <div className="typeahead" ref={wrap}>
-      <input
-        className={`field${compact ? ' field--compact' : ''}`}
-        type="text"
-        role="combobox"
-        aria-expanded={open && hits.length > 0}
-        aria-controls={listId}
-        aria-autocomplete="list"
-        aria-label="A drug, a condition, or a drug and a condition"
-        placeholder="a drug, a condition, or a drug and a condition"
-        autoFocus={autoFocus}
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value)
-          setOpen(true)
-          setActive(0)
-          setNote(null)
-        }}
-        onFocus={() => setOpen(true)}
-        onKeyDown={onKey}
-      />
+    <div className="typeahead" ref={wrap} style={compact ? { width: 384 } : undefined}>
+      {big ? (
+        <div className="ask">
+          {input}
+          <button type="button" className="btn btn--primary btn--lg" onClick={submit}>
+            Appraise
+          </button>
+        </div>
+      ) : (
+        input
+      )}
       {open && hits.length > 0 && (
         <ul className="typeahead__menu" role="listbox" id={listId}>
           {hits.map((e, i) => (
             <li key={e.slug} role="option" aria-selected={i === active}>
-              <button
-                type="button"
-                className="typeahead__item"
-                aria-selected={i === active}
-                onMouseEnter={() => setActive(i)}
-                onClick={() => go(e)}
-              >
+              <button type="button" className="typeahead__item" aria-selected={i === active} onMouseEnter={() => setActive(i)} onClick={() => go(e)}>
                 <span>{e.name}</span>
                 <span className="muted">{e.kind}</span>
               </button>

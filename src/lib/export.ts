@@ -1,4 +1,4 @@
-/* elute — one export model for clipboard and print (spec §5.11).
+/* elute — one export model for Markdown, JSON, and print (spec §5.11).
  * Built from the same cutoff-filtered data the page shows. */
 
 import type { CandidateDetail, Cutoff } from '../data/types'
@@ -6,10 +6,28 @@ import { bestEvidenceAt, deriveLabel, resolvePrerequisite, resolveTimeline, unre
 
 export type Assessment = { choice?: 'pursue' | 'needs specific data' | 'deprioritise'; line?: string }
 
-export type ExportSection = { heading: string; lines: string[] }
-export type ExportDocument = { title: string; dateLine: string; sections: ExportSection[]; dataNote: string }
+export type ExportInclude = {
+  objections: boolean
+  mechanism: boolean
+  safety: boolean
+  call: boolean
+  sources: boolean
+  note: boolean
+}
+export const INCLUDE_ALL: ExportInclude = { objections: true, mechanism: true, safety: true, call: true, sources: true, note: true }
 
-export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Assessment, dataNote: string): ExportDocument {
+export type ExportSection = { key: keyof ExportInclude; heading: string; lines: string[] }
+export type ExportDocument = {
+  title: string
+  meta: string
+  dateLine: string
+  call: { choice: string; line: string }
+  sections: ExportSection[]
+  dataNote: string
+  sourceCount: number
+}
+
+export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Assessment, dataNote: string, include: ExportInclude = INCLUDE_ALL): ExportDocument {
   const d = cutoff.date
   const srcById = new Map(c.sources.map((s) => [s.id, s]))
   const cite = (ids: string[]) =>
@@ -19,63 +37,88 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
       .map((s) => `${s!.first_author}, ${s!.journal} ${s!.year} [${s!.ledger}]`)
       .join('; ')
 
-  const objections = visibleObjections(c, d).map((o, i) => `${i + 1}. ${o.claim} ${o.evidence} (${cite(o.sources)})`)
+  const sections: ExportSection[] = []
 
-  const chain = c.chain.claims.map((k, i) => {
-    const r = deriveLabel(k, c.sources, d)
-    return `${i + 1}. ${k.text} — ${r.label}${r.qualifier ? ` (${r.qualifier})` : ''} — ${r.why}`
-  })
-  const weak = resolveTimeline(c.weakest_link, d)
-  if (weak) {
-    const k = c.chain.claims.find((x) => x.id === weak.claim)
-    if (k) chain.push(`Weakest link: ${k.short} — ${weak.why}`)
+  if (include.objections) {
+    sections.push({
+      key: 'objections',
+      heading: 'Critical appraisal',
+      lines: visibleObjections(c, d).map((o, i) => `${i + 1} · ${o.claim} ${o.evidence} (${cite(o.sources)})`),
+    })
   }
 
-  const safety = resolveTimeline(c.safety, d)
-  const safetyLines = safety ? [`${safety.flag} — ${safety.kind}: ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`] : []
+  if (include.mechanism) {
+    const lines = c.chain.claims.map((k, i) => {
+      const r = deriveLabel(k, c.sources, d)
+      return `${i + 1} · ${k.text} — ${r.label}${r.qualifier ? ` (${r.qualifier})` : ''} — ${r.why}`
+    })
+    const weak = resolveTimeline(c.weakest_link, d)
+    if (weak) {
+      const k = c.chain.claims.find((x) => x.id === weak.claim)
+      if (k) lines.push(`Weakest link: ${k.short} — ${weak.why}`)
+    }
+    sections.push({ key: 'mechanism', heading: 'Mechanism', lines })
+  }
 
-  const prereqs = c.prerequisites.map((p) => {
-    const s = resolvePrerequisite(p, d)
-    return `${p.condition}: ${s?.word ?? 'unknown'} — ${s?.note ?? ''}${s ? ` (${cite(s.sources)})` : ''}`
-  })
-  prereqs.push(`${unresolvedCount(c, d)} of ${c.prerequisites.length} unresolved at this date.`)
+  if (include.safety) {
+    const safety = resolveTimeline(c.safety, d)
+    sections.push({
+      key: 'safety',
+      heading: 'Safety',
+      lines: safety ? [`${safety.flag} — ${safety.kind}: ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`] : ['None flagged on or before this date.'],
+    })
+    const prereqs = c.prerequisites.map((p) => {
+      const s = resolvePrerequisite(p, d)
+      return `${p.condition}: ${s?.word ?? 'unknown'} — ${s?.note ?? ''}${s ? ` (${cite(s.sources)})` : ''}`
+    })
+    prereqs.push(`${unresolvedCount(c, d)} of ${c.prerequisites.length} unresolved at this date.`)
+    const be = bestEvidenceAt(c, d)
+    if (be) prereqs.push(`Best evidence: ${be.design} · ${be.outcome}${be.n ? ` · n = ${be.n}` : ''}${be.label ? ` · ${be.label}` : ''}`)
+    sections.push({ key: 'safety', heading: 'Before a trial', lines: prereqs })
+  }
 
-  const be = bestEvidenceAt(c, d)
+  if (include.call) {
+    sections.push({
+      key: 'call',
+      heading: 'Your call',
+      lines: assessment.choice || assessment.line ? [assessment.choice ?? 'not yet chosen', assessment.line ?? ''].filter(Boolean) : ['not yet chosen'],
+    })
+  }
 
-  const assessmentLines = assessment.choice || assessment.line ? [assessment.choice ?? '', assessment.line ?? ''].filter(Boolean) : ['none recorded']
-
-  const sources = c.sources
-    .filter((s) => s.published <= d)
-    .sort((a, b) => a.ledger.localeCompare(b.ledger) || a.published.localeCompare(b.published))
-    .map((s) => `[${s.ledger}] ${s.first_author}, ${s.journal} ${s.year}. ${s.url}`)
+  const visibleSources = c.sources.filter((s) => s.published <= d).sort((a, b) => a.ledger.localeCompare(b.ledger) || a.published.localeCompare(b.published))
+  if (include.sources) {
+    sections.push({
+      key: 'sources',
+      heading: 'Sources',
+      lines: visibleSources.map((s) => `[${s.ledger}] ${s.first_author}, ${s.journal} ${s.year}. ${s.url}`),
+    })
+  }
 
   return {
     title: `${c.name} for ${c.condition}`,
+    meta: `Appraisal · ${cutoff.note.replace(/^Evidence (frozen at|as of) /, 'evidence as of ')} · elute`,
     dateLine: cutoff.note,
-    sections: [
-      { heading: 'Critical appraisal', lines: objections },
-      { heading: 'Mechanism chain', lines: chain },
-      ...(safetyLines.length ? [{ heading: 'Safety in the likely trial population', lines: safetyLines }] : []),
-      {
-        heading: 'Trial prerequisites',
-        lines: [...prereqs, ...(be ? [`Best evidence: ${be.design} · ${be.outcome}${be.n ? ` · n = ${be.n}` : ''}`] : [])],
-      },
-      { heading: 'Your assessment', lines: assessmentLines },
-      { heading: 'Sources', lines: sources },
-    ],
-    dataNote,
+    call: { choice: assessment.choice ?? 'not yet chosen', line: assessment.line ?? '' },
+    sections,
+    dataNote: include.note ? dataNote : '',
+    sourceCount: visibleSources.length,
   }
 }
 
 export function toMarkdown(doc: ExportDocument): string {
-  const out: string[] = [`# ${doc.title}`, '', `*${doc.dateLine}*`, '', `> ${doc.dataNote}`, '']
+  const out: string[] = [`# ${doc.title}`, '', `*${doc.meta}*`, '']
+  if (doc.dataNote) out.push(`> ${doc.dataNote}`, '')
   for (const s of doc.sections) {
     out.push(`## ${s.heading}`, '')
-    for (const l of s.lines) out.push(l.startsWith('[') || /^\d+\./.test(l) ? l : `- ${l}`)
+    for (const l of s.lines) out.push(l.startsWith('[') || /^\d+ ·/.test(l) ? l : `- ${l}`)
     out.push('')
   }
-  out.push('---', '', `*Data note: ${doc.dataNote}*`, '')
+  if (doc.dataNote) out.push('---', '', `*${doc.dataNote}*`, '')
   return out.join('\n')
+}
+
+export function toJson(doc: ExportDocument): string {
+  return JSON.stringify(doc, null, 2)
 }
 
 // ---- Assessment persistence: one per candidate per cutoff --------------------------

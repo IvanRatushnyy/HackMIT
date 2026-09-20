@@ -1,4 +1,4 @@
-/* elute — evidence label, driver bar, best-evidence badge, source line. */
+/* elute — evidence primitives: label, outcome chip, driver bar, source line, dates. */
 
 import type { BestEvidence, CandidateDetail, Label, Source } from '../data/types'
 
@@ -6,9 +6,21 @@ export function EvidenceLabel({ label, qualifier }: { label: Label; qualifier?: 
   return (
     <span className={`label label--${label}`}>
       {label}
-      {qualifier && <span className="label__qualifier"> · {qualifier}</span>}
+      {qualifier && <span className="label__qualifier">· {qualifier}</span>}
     </span>
   )
+}
+
+/** The outcome of the most decisive study, as an outlined word. */
+export function OutcomeChip({ be }: { be: BestEvidence }) {
+  const word = be.outcome === 'none' ? 'untested' : be.outcome
+  const cls = be.outcome === 'negative' && be.controlled ? ' chip--negative' : be.outcome === 'none' ? ' chip--muted' : ''
+  return <span className={`chip${cls}`}>{word}</span>
+}
+
+export function bestEvidenceText(be: BestEvidence): string {
+  if (be.outcome === 'none') return 'no human test'
+  return `${be.design}${be.n !== undefined ? ` · n = ${be.n}` : ''}`
 }
 
 const SEGMENTS = ['mechanism', 'clinical', 'exposure', 'safety'] as const
@@ -24,29 +36,13 @@ export function DriverBar({ drivers, refutedClinical }: { drivers: CandidateDeta
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                className={`drivers__pip${i < drivers[s] ? ' drivers__pip--on' : ''}${
-                  s === 'clinical' && refutedClinical ? ' drivers__pip--refuted' : ''
-                }`}
+                className={`drivers__pip${i < drivers[s] ? ' drivers__pip--on' : ''}${s === 'clinical' && refutedClinical ? ' drivers__pip--refuted' : ''}`}
               />
             ))}
           </span>
         </div>
       ))}
     </div>
-  )
-}
-
-export function BestEvidenceBadge({ be }: { be: BestEvidence }) {
-  const dot = be.outcome === 'none' ? 'none' : be.outcome === 'negative' && be.controlled ? 'negative' : 'ok'
-  const text =
-    be.outcome === 'none'
-      ? 'no human test'
-      : `${be.design} · ${be.outcome}${be.n !== undefined ? ` · n = ${be.n}` : ''}`
-  return (
-    <span className="row__badge">
-      <span className={`row__dot${dot === 'negative' ? ' row__dot--negative' : dot === 'none' ? ' row__dot--none' : ''}`} />
-      {text}
-    </span>
   )
 }
 
@@ -88,20 +84,24 @@ export function designWord(s: Source): string {
   return parts.join(' · ')
 }
 
-export function SourceLine({ s, onCite }: { s: Source; onCite?: (ledger: string) => void }) {
+export function shortCite(s: Source): string {
+  return `${s.first_author.split(' ')[0]} ${s.year}`
+}
+
+export function SourceLine({ s, cite }: { s: Source; cite?: string }) {
   return (
-    <span className="evidence__source">
+    <span className="evidence__src">
       <a href={s.url} target="_blank" rel="noreferrer">
         {s.first_author}, <em>{s.journal}</em> {s.year}
-      </a>
+      </a>{' '}
       <span className="evidence__meta">
         {designWord(s)}
-        {onCite && (
+        {cite && (
           <>
             {' '}
-            <button type="button" className="cite" onClick={() => onCite(s.ledger)}>
+            <a className="cite" href={cite}>
               [{s.ledger}]
-            </button>
+            </a>
           </>
         )}
       </span>
@@ -113,4 +113,9 @@ export function formatDate(iso: string): string {
   const [y, m, d] = iso.split('-').map(Number)
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   return `${d} ${months[m - 1]} ${y}`
+}
+
+export function formatClock(ms: number): string {
+  const s = Math.floor(ms / 1000)
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 }
