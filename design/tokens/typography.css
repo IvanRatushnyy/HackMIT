@@ -80,6 +80,6 @@ body {
  * numbers must be right-aligned rather than relying on equal digit widths. */
 .figure { text-align: right; font-variant-numeric: lining-nums; }
 
-/* Raw tool calls and sources behind the "Show the agent's work" toggle.
+/* The provenance block inside an expanded ledger row: tool, query, records.
  * No brand mono; the system's is honest enough. Tracking resets to 0. */
 .raw { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--line-3); letter-spacing: 0; }

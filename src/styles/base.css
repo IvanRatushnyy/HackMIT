@@ -1,0 +1,499 @@
+/* elute — base styles and page frame.
+ * Tokens come from design/tokens/index.css. Every value here is on the 8px grid. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 1280px; /* v1 supports 1280 and up; below it the page scrolls sideways */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+strong {
+  font-weight: var(--weight-bold);
+}
+
+em {
+  font-style: italic;
+}
+
+.medium {
+  font-weight: var(--weight-medium);
+}
+
+.faint {
+  color: var(--color-ink-faint);
+}
+
+.critical {
+  color: var(--color-critical);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---- Page frame -------------------------------------------------------------- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page__body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-3xl) var(--space-3xl) 80px;
+  max-width: var(--page-max);
+}
+
+.page__body--full {
+  padding-right: 80px;
+}
+
+/* ---- Wordmark ---------------------------------------------------------------- */
+
+.wordmark {
+  font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.wordmark:hover {
+  text-decoration: none;
+}
+.wordmark--entry {
+  font-size: 96px;
+}
+.wordmark--inner {
+  font-size: 64px;
+}
+
+/* ---- Entry band (Figma Desktop-1) ------------------------------------------- */
+
+.band {
+  height: var(--band-entry);
+  display: grid;
+  grid-template-columns: 512px 1fr;
+  grid-template-rows: 1fr 32px;
+  padding-left: 80px;
+  background: var(--color-surface);
+}
+.band__mark {
+  display: flex;
+  align-items: center;
+}
+.band__ask {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding-right: 80px;
+}
+.band__sentence {
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+  max-width: 640px;
+}
+.band .banner {
+  grid-column: 1 / -1;
+  margin-left: -80px;
+}
+
+/* ---- Inner header (Figma Desktop-2) ------------------------------------------ */
+
+.header {
+  height: var(--header-height);
+  display: grid;
+  grid-template-columns: 512px 1fr;
+  background: var(--color-surface);
+}
+.header__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg) 0 0 80px;
+}
+.header__shard {
+  position: relative;
+  overflow: hidden;
+}
+.header__shard svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Data banner --------------------------------------------------------------- */
+
+.banner {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+  background: var(--color-surface-sunken);
+  color: var(--color-ink-muted);
+  font-style: italic;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Sheet ------------------------------------------------------------------- */
+
+.sheet {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-sheet);
+  box-shadow: var(--shadow-sheet);
+  padding: var(--space-xl);
+}
+
+/* ---- Rail (Detail only) ------------------------------------------------------- */
+
+.rail {
+  flex: 0 0 var(--panel-detail);
+  width: var(--panel-detail);
+  position: sticky;
+  top: var(--space-md);
+  max-height: calc(100vh - var(--space-2xl));
+  overflow-y: auto;
+  border-left: var(--line-width) solid var(--color-line);
+  padding-left: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.rail__back {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+
+/* ---- Shared controls ---------------------------------------------------------- */
+
+.field {
+  height: var(--size-control-lg);
+  width: 640px;
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: var(--radius);
+}
+.field--compact {
+  height: var(--size-control);
+  width: 384px;
+}
+.field::placeholder {
+  color: var(--color-ink-faint);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.typeahead {
+  position: relative;
+}
+.typeahead__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-dropdown);
+  background: var(--color-surface);
+  border: var(--line-width) solid var(--color-line);
+  border-top: 0;
+}
+.typeahead__item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  align-items: center;
+  text-align: left;
+}
+.typeahead__item[aria-selected='true'],
+.typeahead__item:hover {
+  background: var(--color-surface-selected);
+}
+.typeahead__note {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--color-ink);
+  border-radius: var(--radius);
+  font-weight: var(--weight-medium);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.btn--primary {
+  background: var(--color-surface-inverse);
+  color: var(--color-ink-inverse);
+}
+.btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Segmented control: sharp, solid, 40px (Evidence as of; List · Scatter) */
+.seg {
+  display: inline-flex;
+  border: var(--line-width) solid var(--color-line);
+  height: var(--size-control);
+}
+.seg__item {
+  height: 100%;
+  padding: 0 var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+.seg__item + .seg__item {
+  border-left: var(--line-width) solid var(--color-line);
+}
+.seg__item[aria-checked='true'],
+.seg__item[aria-selected='true'] {
+  background: var(--color-surface-selected);
+  color: var(--color-ink);
+}
+.seg__item:disabled {
+  cursor: default;
+}
+
+/* Pill container + pill buttons: the only round shapes (chips, chain filter).
+ * Same markup for the CSS fallback and, later, the WebGL glass. */
+.pill-group {
+  display: inline-flex;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+  border-radius: var(--radius-round);
+  background: oklch(99% 0.003 276 / 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: var(--line-width) solid var(--color-line);
+  box-shadow: 0 8px 24px oklch(13.1% 0.016 276 / 0.12);
+}
+.pill {
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-round);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.pill:hover {
+  transform: translateY(-1px);
+}
+.pill:active {
+  transform: scale(0.98);
+}
+.pill[aria-checked='true'] {
+  background: var(--color-surface);
+  color: var(--color-accent-strong);
+}
+
+/* ---- Section rhythm ----------------------------------------------------------- */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.section + .section {
+  margin-top: var(--space-xl);
+}
+.section__title {
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+  font-weight: var(--weight-regular);
+}
+.section__lede {
+  font-style: italic;
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  font-size: var(--display-md);
+}
+
+/* ---- Evidence label ----------------------------------------------------------- */
+
+.label {
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+.label--established {
+  color: var(--evidence-established);
+}
+.label--contested {
+  color: var(--evidence-contested);
+}
+.label--single-source {
+  color: var(--evidence-single-source);
+}
+.label--unknown {
+  color: var(--evidence-unknown);
+}
+.label--refuted {
+  color: var(--evidence-refuted);
+}
+.label__qualifier {
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- Driver bar --------------------------------------------------------------- */
+
+.drivers {
+  display: grid;
+  grid-template-columns: repeat(4, 56px);
+  gap: var(--space-xs);
+  width: 248px;
+  flex: none;
+}
+.drivers__seg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* half unit: inside a control only */
+}
+.drivers__word {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-muted);
+}
+.drivers__pips {
+  display: flex;
+  gap: var(--space-xs);
+}
+.drivers__pip {
+  width: 8px;
+  height: 8px;
+  border: var(--line-width) solid var(--color-line);
+}
+.drivers__pip--on {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.drivers__pip--refuted {
+  border-color: var(--evidence-refuted);
+}
+.drivers__pip--on.drivers__pip--refuted {
+  background: var(--evidence-refuted);
+}
+
+/* ---- Motion ------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise var(--duration-base) var(--ease-out) both;
+}
+
+.fade {
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.fade--out {
+  opacity: 0;
+}

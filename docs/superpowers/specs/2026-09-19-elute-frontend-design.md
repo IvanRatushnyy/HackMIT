@@ -203,7 +203,7 @@ Three lines on the grid, 16px padding above and below (row height 104px), 1px `-
 
 - **Line 1.** Name in Medium · class · *approved for* indication (muted, `--text-sm`; truncates with an ellipsis only when the main column is narrower than 640px, which does not occur at or above 1280). Right block: *4 of 5 prerequisites open* in Regular.
 - **Line 2.** *Weakest link:* in raspberry Medium followed by its text in Regular (*CNS exposure — CSF/plasma 0.53 %*). Right block, muted `--text-sm`: *12 sources · 3 trials*. This is the row's most important line (PRD Principle 4) and gets its own line so it never wraps against a column.
-- **Line 3.** Best-evidence badge, 224px (design · outcome · n with an 8px status square: *RCT · negative · n = 76* ■) · driver bar, 176px (§5.9) · mechanism one-liner in `--text-sm` muted, flexible with a **minimum of 256px** (*nilotinib → ABL1 → α-synuclein clearance* measures ≈ 220px in Supreme at 14px) · safety chip only when a boxed warning exists, **maximum 224px**: raspberry word + reason (*QT prolongation — boxed warning*). At 1280 the line has 960px: 224 + 176 + 224 + 3 × 16 = 672, leaving 288px for the mechanism. The mechanism one-liner is the only element that may truncate, and only below its minimum.
+- **Line 3.** Best-evidence badge, 192px (design · outcome · n with an 8px status square: *RCT · negative · n = 76* ■) · driver bar, 248px (§5.9) · mechanism one-liner in `--text-sm` muted, flexible with a **minimum of 256px** (*nilotinib → ABL1 → α-synuclein clearance* measures ≈ 220px in Supreme at 14px) · safety chip only when a boxed warning exists, **maximum 192px**: raspberry word + reason (*QT prolongation — boxed warning*). At 1280 the line has 960px: 192 + 248 + 192 + 3 × 16 = 680, leaving 280px for the mechanism. The mechanism one-liner is the only element that may truncate, and only below its minimum.
 
 Six rows = 624px; at 1440×1024 the list starts at y ≈ 400 (header 184, banner 32, gap 24, padding 48, heading and disclosure ~112), so five rows are visible and the sixth is one scroll away. Not on the row: any number that reads as a score, the case-for prose, the chain.
 
@@ -245,7 +245,7 @@ The export and print render the same chain as a numbered list (§5.11); a horizo
 
 ### 5.9 Driver bar
 
-Four segments in a row, 176px total: for each, the segment word in `--text-xs` muted (*mechanism* · *clinical* · *exposure* · *safety*) above three 8px squares with 8px gaps. Filled square = `--color-ink`; empty = 1px `--color-line`. The clinical segment's squares are `--evidence-refuted` when `best_evidence.outcome` is `negative` from a controlled study. A `title` and `aria-label` spell it out: *mechanism 3 of 3, clinical 0 of 3 (controlled negative), exposure 1 of 3, safety 1 of 3.* Never a total.
+Four segments in a row, 248px total (56px columns — the narrowest that holds *mechanism* at 12px): for each, the segment word in `--text-xs` muted (*mechanism* · *clinical* · *exposure* · *safety*) above three 8px squares with 8px gaps. Filled square = `--color-ink`; empty = 1px `--color-line`. The clinical segment's squares are `--evidence-refuted` when `best_evidence.outcome` is `negative` from a controlled study. A `title` and `aria-label` spell it out: *mechanism 3 of 3, clinical 0 of 3 (controlled negative), exposure 1 of 3, safety 1 of 3.* Never a total.
 
 ### 5.10 Evidence label
 

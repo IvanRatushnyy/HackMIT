@@ -61,5 +61,6 @@
   --evidence-contested:     var(--slate);
   --evidence-single-source: var(--raspberry);
   --evidence-unknown:       var(--neutral-500);
-  --evidence-dimmed:        var(--dust);       /* a link outside the active filter */
+  --evidence-refuted:       var(--raspberry);  /* tested directly in a blinded controlled study and found false */
+  --evidence-dimmed:        var(--dust);       /* a claim outside the active filter */
 }
