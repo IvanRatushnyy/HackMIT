@@ -9,6 +9,7 @@ import asyncio
 import json
 import logging
 import re
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timezone
@@ -32,6 +33,7 @@ from elute.pipeline.temporal import TemporalLeak
 log = logging.getLogger("elute.api")
 router = APIRouter()
 _pool = ThreadPoolExecutor(max_workers=2, thread_name_prefix="elute-run")
+_index_lock = threading.Lock()  # the demo index is read-modify-written by whichever run thread finishes
 
 
 def err(status: int, code: str, message: str) -> JSONResponse:
@@ -55,14 +57,16 @@ def startup(app) -> None:
             from elute.llm.openai_client import OpenAIClient
 
             app.state.llm = OpenAIClient(settings)
-        elif settings.ELUTE_MODE == "live" and settings.ELUTE_LLM_CASSETTES and Path(settings.ELUTE_LLM_CASSETTES).is_dir():
+        elif settings.ELUTE_MODE == "live" and settings.llm_cassettes is not None and settings.llm_cassettes.is_dir():
             # No key: recorded OpenAI outputs are replayed by prompt hash. An output is reused only when the prompt is
             # byte-identical, so nothing is ever invented; a miss degrades exactly as NullClient does.
             from elute.llm.client import ReplayClient
 
-            app.state.llm = ReplayClient(Path(settings.ELUTE_LLM_CASSETTES))
-            log.info("no OpenAI key: replaying recorded model outputs from %s", settings.ELUTE_LLM_CASSETTES)
+            app.state.llm = ReplayClient(settings.llm_cassettes)
+            log.info("no OpenAI key: replaying recorded model outputs from %s", settings.llm_cassettes)
         else:
+            if settings.ELUTE_MODE == "live" and settings.llm_cassettes is not None:
+                log.warning("ELUTE_LLM_CASSETTES=%s is not a directory; no model output will be replayed", settings.llm_cassettes)
             app.state.llm = NullClient()
     app.state.tu = ov.get("tu")
     app.state.direct = ov.get("direct")
@@ -90,7 +94,8 @@ def _llm_client_name(app) -> str:
 
 
 def _estimate(app, drug: str, disease: str) -> dict[str, Any]:
-    llm = _llm_client_name(app) != "null"
+    # Only a client that actually waits on a model adds model time; a cassette replay answers at once.
+    llm = _llm_client_name(app) in ("openai", "recording")
     try:
         return estimate_from_store(app.state.store, drug, disease, llm)
     except Exception:  # noqa: BLE001 — an estimate must never break a run
@@ -104,9 +109,17 @@ def _run_live(app, run_id: str, drug: str, disease: str, as_of: str) -> None:
     t_start = time.monotonic()
     at_ms = lambda: int((time.monotonic() - t_start) * 1000)  # noqa: E731
 
+    held: dict[str, tuple[str, str, dict[str, Any]]] = {}
+
     def emit(step: str, phase: str, entry) -> None:
         row = ledger_row(entry, list(getattr(runner, "evidence_all", []))) if phase == "settled" else None
-        store.append_event(run_id, step, phase, {"entry": entry.model_dump(mode="json"), "row": row, "at_ms": at_ms(), "done": phase == "settled" and step == "L10"})
+        event = {"entry": entry.model_dump(mode="json"), "row": row, "at_ms": at_ms(), "done": False}
+        if phase == "settled" and step == "L10":
+            # The closing event ends the /events stream, so it is held back until the appraisal is stored and the
+            # run marked complete: a client that asks for /detail the moment the stream ends must never find 409.
+            held["last"] = (step, phase, event)
+            return
+        store.append_event(run_id, step, phase, event)
 
     def progress(step: str, note: str) -> None:
         store.append_event(run_id, step, "progress", {"note": note, "at_ms": at_ms(), "done": False})
@@ -118,6 +131,9 @@ def _run_live(app, run_id: str, drug: str, disease: str, as_of: str) -> None:
         gaps = ap.data_mode == "mixed" or ap.llm != "openai" or any(e.status == "failed" for e in ap.ledger)
         status = "complete_with_gaps" if gaps else "complete"
         store.set_status(run_id, status)
+        if "last" in held:
+            step, phase, event = held["last"]
+            store.append_event(run_id, step, phase, {**event, "done": True})
         _write_demo(app, run_id, ap, status, at_ms())
     except TemporalLeak as e:
         log.error("run %s failed validation: temporal leak", run_id)
@@ -146,7 +162,6 @@ def _write_demo(app, run_id: str, ap: CandidateAppraisal, status: str, elapsed_m
             "run": {"id": run_id, "slug": slug, "drug": ap.drug, "disease": ap.disease, "as_of": ap.as_of, "mode": run.get("mode", "live"), "status": status,
                     "started_at": run.get("created_at"), "elapsed_ms": elapsed_ms, "data_mode": ap.data_mode, "llm": ap.llm, "llm_client": _llm_client_name(app),
                     "resolved": ap.resolved.model_dump(mode="json")},
-            "estimate": _estimate(app, ap.drug, ap.disease),
             "events": events,
             "detail": adapt(ap, ledger_kind="recorded"),
             "appraisal": ap.model_dump(mode="json"),
@@ -158,15 +173,16 @@ def _write_demo(app, run_id: str, ap: CandidateAppraisal, status: str, elapsed_m
         latest.write_text(text)
         (root / "runs" / f"{slug}--{run_id}.json").write_text(text)
         # the index Entry reads to offer the recorded pairs, worded as they were asked
-        index_path = root / "index.json"
-        try:
-            index = json.loads(index_path.read_text()) if index_path.exists() else {"version": 1, "recordings": []}
-        except Exception:  # noqa: BLE001
-            index = {"version": 1, "recordings": []}
         entry = {"slug": slug, "drug": drug_asked, "disease": disease_asked, "text": f"{drug_asked} for {disease_asked}", "as_of": ap.as_of, "recorded_at": doc["recorded_at"],
                  "elapsed_ms": elapsed_ms, "llm": ap.llm, "llm_client": doc["run"]["llm_client"], "status": status, "run_id": run_id}
-        index["recordings"] = [r for r in index.get("recordings", []) if r.get("slug") != slug] + [entry]
-        index_path.write_text(json.dumps(index, indent=1, ensure_ascii=False))
+        index_path = root / "index.json"
+        with _index_lock:  # two runs finishing together must both keep their entry
+            try:
+                index = json.loads(index_path.read_text()) if index_path.exists() else {"version": 1, "recordings": []}
+            except Exception:  # noqa: BLE001
+                index = {"version": 1, "recordings": []}
+            index["recordings"] = [r for r in index.get("recordings", []) if r.get("slug") != slug] + [entry]
+            index_path.write_text(json.dumps(index, indent=1, ensure_ascii=False))
         log.info("run %s written for replay: %s (%d events, %d ms)", run_id, latest, len(events), elapsed_ms)
         return latest
     except Exception as e:  # noqa: BLE001 — the run is complete whether or not the demo file could be written

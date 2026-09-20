@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest'
-import { replaySchedule, type RecordedEvent } from './session'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { replaySchedule, type RecordedEvent, type Recording } from './session'
+import { candidates, queries } from '../fixtures'
 
 const ev = (seq: number, step: string, phase: RecordedEvent['phase'], at_ms: number, note?: string): RecordedEvent => ({ seq, step, phase, at_ms, done: false, note })
 
@@ -106,5 +107,47 @@ describe('SessionSource with a scripted slug', () => {
     expect((await s.query(SLUG))?.ledger.kind).toBe('scripted')
     s.forget(SLUG)
     expect((await s.query(SLUG))?.heading).toBe('from the api')
+  })
+})
+
+/* A recording of the pair plays only when the ask resolved to it. A slug opened any other way in fixture mode keeps
+ * the curated record, so a draft recording never displaces it on a direct URL. */
+describe('SessionSource and a recording of the pair', () => {
+  const recording = (): Recording => ({
+    version: 1,
+    recorded_at: '2026-09-20T10:00:00+00:00',
+    run: { id: 'ap_1', slug: SLUG, drug: 'nilotinib', disease: 'Parkinson disease', as_of: '2026-09-19', status: 'complete_with_gaps', elapsed_ms: 102_500, llm: 'unavailable', data_mode: 'live' },
+    events: EVENTS,
+    detail: { candidate: candidates.find((c) => c.slug === SLUG)!, query: { ...queries.find((q) => q.slug === SLUG)!, heading: 'from the recording' } },
+  })
+  let fetched = 0
+  const serve = () => {
+    fetched++
+    return Promise.resolve(new Response(JSON.stringify(recording()), { headers: { 'content-type': 'application/json' } }))
+  }
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    fetched = 0
+  })
+
+  it('an unmarked slug in fixture mode is served by the fixture; the recording is not even fetched', async () => {
+    vi.stubGlobal('fetch', serve)
+    const s = new SessionSource(new FixtureSource())
+    expect((await s.query(SLUG))?.ledger.kind).toBe('scripted')
+    expect(fetched).toBe(0)
+  })
+
+  it('an ask that resolved to the recording replays it, at demo pace, as a recorded ledger', async () => {
+    vi.stubGlobal('fetch', serve)
+    const s = new SessionSource(new FixtureSource())
+    s.forget(SLUG, { replay: true })
+    const rec = await s.query(SLUG)
+    expect(rec?.heading).toBe('from the recording')
+    expect(rec?.ledger.kind).toBe('recorded')
+    expect(rec?.ledger.replay_of?.run_id).toBe('ap_1')
+    expect(rec?.ledger.estimate?.basis).toMatch(/^a recorded run of 1 min 43 s real time, replayed/)
+    expect((await s.results(SLUG))?.candidates.map((c) => c.slug)).toEqual([SLUG])
+    expect(fetched).toBe(1)
   })
 })

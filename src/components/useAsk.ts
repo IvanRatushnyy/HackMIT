@@ -31,7 +31,7 @@ export async function loadRecordedIndex(): Promise<Recorded[]> {
     const r = await fetch('/demo/index.json', { headers: { accept: 'application/json' } })
     if (!r.ok || !(r.headers.get('content-type') ?? '').includes('json')) return []
     const doc = (await r.json()) as { version: number; recordings: Recorded[] }
-    return Array.isArray(doc?.recordings) ? doc.recordings.filter((x) => x.slug && x.text) : []
+    return Array.isArray(doc?.recordings) ? doc.recordings.filter((x) => typeof x?.slug === 'string' && typeof x?.text === 'string') : []
   } catch {
     return []
   }
@@ -120,7 +120,7 @@ export function useAsk(onLaunch?: () => number) {
   /** What Entry offers under "try:": the hard-coded example always, recorded runs beside it worded as they were
    * asked; a recording asked in the example's own words stands in for it. */
   const examples = useMemo<{ key: string; text: string; title: string; pick: () => void }[]>(() => {
-    const recs = recorded.map((rec) => ({ key: rec.slug, text: rec.text, title: `a run recorded ${rec.recorded_at.slice(0, 10)}, replayed at demo pace`, pick: () => replay(rec) }))
+    const recs = recorded.map((rec) => ({ key: rec.slug, text: rec.text, title: `a run recorded ${rec.recorded_at ? rec.recorded_at.slice(0, 10) : 'earlier'}, replayed at demo pace`, pick: () => replay(rec) }))
     if (recorded.some((rec) => isScriptedAsk(rec.text))) return recs
     return [{ key: 'example', text: SCRIPTED_ASK, title: 'the curated example: a scripted sequence with real source names, not a live run', pick: example }, ...recs]
     // eslint-disable-next-line react-hooks/exhaustive-deps

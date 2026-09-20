@@ -181,8 +181,14 @@ def evidence_from_label(c: CanonRecord, drug: str, disease: str, attempts: list[
                              verbatim_sentence=L.clean(section_text, 300)))
     elif no_warnings:
         rel.append(Relevance(claim_id="C_SAFETY", direction="supports", statement="The label lists no warnings.", verbatim_sentence=L.clean(section_text, 120)))
-    what = (f"boxed warning for {L.lower_first(title)}" if title else "withdrawn" if withdrawn else
-            "no boxed warning" if sections or no_warnings else "no boxed warning on record; warnings not readable")
+    if withdrawn:  # the same precedence as the relevance edge above, so the statement never disagrees with the claim
+        what = f"withdrawn{' in ' + where if where else ''}" + (f"; boxed warning for {L.lower_first(title)}" if title else "")
+    elif title:
+        what = f"boxed warning for {L.lower_first(title)}"
+    elif sections or no_warnings:
+        what = "no boxed warning"
+    else:
+        what = "no boxed warning on record; warnings not readable"
     statement = f"FDA label ({brand}), effective {c.published}: {what}" + (f"; {len(sections)} warning section{'s' if len(sections) != 1 else ''}" if sections else "") + "."
     set_id = p.get("set_id")
     url = f"https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={set_id}" if set_id else f"https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22{generic}%22"

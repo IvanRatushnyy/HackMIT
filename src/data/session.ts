@@ -2,14 +2,15 @@
  * every run so the research stage can be reopened without running again.
  *
  * A recording is what the backend writes to public/demo/<slug>.json when a live run completes (gitignored): the run's
- * events with their real offsets, the settled rows, and the adapted detail. When Entry's example chip asks for a
- * replay (live mode), or whenever a recording exists (fixture mode, where it replaces the scripted sequence), this
- * source plays the real events back compressed to about REPLAY_TARGET_MS, keeping every step's share of the time and
- * a floor per step so each one can be read. A slug asked for as the hard-coded example (`forget(slug, { scripted })`)
- * is served from the fixture's scripted sequence whatever the inner source is, so the demo never waits on the
- * backend. Everything else is delegated to the inner source. */
+ * events with their real offsets, the settled rows, and the adapted detail. When an ask from Entry resolves to a
+ * recording (`forget(slug, { replay: true })`: the chip, or the pair typed as it was recorded), this source plays the
+ * real events back compressed to about REPLAY_TARGET_MS, keeping every step's share of the time and a floor per step
+ * so each one can be read. A slug opened any other way — a direct URL, a bookmark — is served by the inner source, so
+ * in fixture mode the curated record with its cutoffs is never displaced by a draft recording of the same pair. A
+ * slug asked for as the hard-coded example (`forget(slug, { scripted })`) is served from the fixture's scripted
+ * sequence whatever the inner source is, so the demo never waits on the backend. Everything else is delegated. */
 
-import type { CandidateDetail, CandidateSlug, EntityIndex, LedgerEvent, LedgerNote, LedgerRow, Provenance, QueryRecord, QuerySlug, ResultsPage, RunEstimate } from './types'
+import type { CandidateDetail, CandidateSlug, EntityIndex, LedgerEvent, LedgerNote, LedgerRow, Provenance, QueryRecord, QuerySlug, ResultsPage } from './types'
 import type { DataSource } from './source'
 import { validateCandidate } from '../lib/evidence'
 import { clearRunLog, durationWord, isReplayMarked, isScriptedMarked, loadRunLog, markReplay, markScripted, saveRunLog, type RunLogKind } from '../lib/runlog'
@@ -34,7 +35,6 @@ export type Recording = {
   version: number
   recorded_at: string
   run: { id: string; slug: string; drug: string; disease: string; as_of: string; status: string; elapsed_ms: number; llm: string; llm_client?: string; data_mode: string }
-  estimate?: RunEstimate
   events: RecordedEvent[]
   detail: { candidate: CandidateDetail; query: QueryRecord }
 }
@@ -120,6 +120,7 @@ export class SessionSource implements DataSource {
   private replays = new Map<QuerySlug, Replay>()
   private remembered = new Map<QuerySlug, QueryRecord>() // records served from the run log this page load
   private scripted = new Set<QuerySlug>() // slugs asked for as the hard-coded example this page load
+  private replayAsked = new Set<QuerySlug>() // slugs whose ask resolved to a recording this page load
 
   /** `script` is where the hard-coded example is served from: the fixture, when `inner` is the backend. */
   constructor(private inner: DataSource, private script: DataSource = inner) {
@@ -135,8 +136,9 @@ export class SessionSource implements DataSource {
     return this.usesScript(slug) ? this.script : this.inner
   }
 
+  /** Only an ask that resolved to a recording plays it; the mark is session-scoped so a reload mid-replay keeps to it. */
   private wantsReplay(slug: QuerySlug): boolean {
-    return !this.usesScript(slug) && (this.mode === 'fixture' || isReplayMarked(slug))
+    return !this.usesScript(slug) && (this.replayAsked.has(slug) || isReplayMarked(slug))
   }
 
   entities(): Promise<EntityIndex> {
@@ -192,6 +194,8 @@ export class SessionSource implements DataSource {
     this.replays.delete(slug)
     this.remembered.delete(slug)
     clearRunLog(slug)
+    if (opts?.replay) this.replayAsked.add(slug)
+    else this.replayAsked.delete(slug)
     markReplay(slug, !!opts?.replay)
     if (opts?.scripted) this.scripted.add(slug)
     else this.scripted.delete(slug)

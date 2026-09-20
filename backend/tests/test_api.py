@@ -174,3 +174,36 @@ def test_live_run_streams_progress_writes_the_demo_file_and_informs_the_next_est
         est = r2.json()["estimate"]
         assert est["basis"].startswith("the last recorded run of nilotinib for Parkinson disease") and est["total_ms"] == sum(est["steps"].values())
         assert all(v >= 200 for v in est["steps"].values())
+
+
+def test_detail_is_ready_the_moment_the_event_stream_ends(tmp_path):
+    """The closing `done` event is sent only after the appraisal is stored and the run marked complete, so a client
+    that asks for /detail as soon as the stream ends never meets a 409."""
+    with TestClient(live_app(tmp_path)) as c:
+        rid = c.post("/api/appraisals", json={"drug": "nilotinib", "disease": "Parkinson disease", "as_of": "2017-11-20"}).json()["id"]
+        with c.stream("GET", f"/api/appraisals/{rid}/events") as s:
+            payloads = [json.loads(ln[5:]) for ln in s.iter_lines() if ln.startswith("data:")]
+        assert payloads[-1]["step"] == "L10" and payloads[-1]["phase"] == "settled" and payloads[-1]["done"] is True
+        assert sum(1 for p in payloads if p["done"]) == 1
+        assert c.get(f"/api/appraisals/{rid}").json()["status"].startswith("complete")
+        assert c.get(f"/api/appraisals/{rid}/detail").status_code == 200
+
+
+def test_a_cassette_replay_adds_no_model_time_to_the_estimate(tmp_path):
+    from elute.llm.client import ReplayClient
+
+    app = live_app(tmp_path)
+    app.state.overrides["llm"] = ReplayClient(FIXTURES / "llm")
+    with TestClient(app) as c:
+        r = c.post("/api/appraisals", json={"drug": "nilotinib", "disease": "Parkinson disease", "as_of": "2017-11-20"})
+        assert r.status_code == 202 and r.json()["estimate"]["basis"] == "defaults, no model configured"
+
+
+def test_a_relative_cassette_path_is_taken_from_the_backend_directory(monkeypatch, tmp_path):
+    from pathlib import Path
+
+    monkeypatch.chdir(tmp_path)  # wherever the server happens to be launched from
+    s = Settings(ELUTE_LLM_CASSETTES=Path("tests/fixtures/llm"), _env_file=None)
+    assert s.llm_cassettes is not None and s.llm_cassettes.is_absolute() and s.llm_cassettes.is_dir()
+    assert s.redacted()["llm_cassettes"] == str(s.llm_cassettes)
+    assert Settings(ELUTE_LLM_CASSETTES=None, _env_file=None).llm_cassettes is None

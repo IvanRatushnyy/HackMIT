@@ -64,6 +64,10 @@ class DirectConnector:
             payload = fn(**arguments)
         except httpx.HTTPError as e:
             raise ToolError(f"{DIRECT_NAMES.get(tool, tool)}: {type(e).__name__}: {e}", retriable=True) from e
+        except (ValueError, KeyError, TypeError, AttributeError) as e:
+            # A body that is not the JSON shape the mapper expects (an HTML error page, a list where a dict was
+            # due) is a failed call, never a failed run: the step degrades to zero records like any other error.
+            raise ToolError(f"{DIRECT_NAMES.get(tool, tool)}: unreadable response: {type(e).__name__}: {e}", retriable=True) from e
         elapsed = int((time.monotonic() - t0) * 1000)
         if self.cache is not None:
             self.cache.put(TRANSPORT, tool, arguments, payload)

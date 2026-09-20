@@ -72,6 +72,13 @@ def dedupe_sentences(text: str | None, limit: int | None = None) -> str:
     return clean(" ".join(out), limit)
 
 
+def _is_acronym(core: str) -> bool:
+    """Written as one: "QT", "ECGs", "QTc" — never an ordinary word that happens to spell one ("all", "men", "us")."""
+    if core.isupper():
+        return core in ACRONYMS or (core.isalpha() and len(core) <= 2)
+    return core.upper() in ACRONYMS and core[:2].isupper()
+
+
 def sentence_case(title: str) -> str:
     """"QT PROLONGATION and SUDDEN DEATHS" → "QT prolongation and sudden deaths": acronyms keep their case."""
     out = []
@@ -79,8 +86,8 @@ def sentence_case(title: str) -> str:
         core = re.sub(r"[^A-Za-z0-9]", "", w)
         if core.lower() in JOINERS:
             out.append(w.lower())
-        elif core.upper() in ACRONYMS or (core.isalpha() and core.isupper() and len(core) <= 2):
-            out.append(w.upper())
+        elif _is_acronym(core):
+            out.append(w)
         else:
             out.append(w.lower())
     s = " ".join(out)
@@ -101,23 +108,27 @@ def parse_boxed(text: str | None) -> tuple[str | None, str | None]:
         return None, None
     body = _LEAD.sub("", _WS.sub(" ", text).strip(), count=1).lstrip("•· ")
     words = body.split(" ")
-    title_words: list[str] = []
+    # The title is the run of capitalised words (joiners allowed inside it) up to the first ordinary word or a
+    # sentence mark; the words are kept as written so the reason starts exactly where the title stopped.
+    taken: list[str] = []
     for w in words:
         core = re.sub(r"[^A-Za-z0-9]", "", w)
         if not core:
             break
-        if core.isupper() or core.upper() in ACRONYMS or (w.lower() in JOINERS and title_words) or re.fullmatch(r"[A-Z0-9][A-Z0-9\-/+]*", core):
-            title_words.append(w.rstrip(".:;,"))
+        if core.isupper() or _is_acronym(core) or (core.lower() in JOINERS and taken) or re.fullmatch(r"[A-Z0-9][A-Z0-9\-/+]*", core):
+            taken.append(w)
             if w.endswith((".", ":", ";")):
                 break
             continue
         break
-    while title_words and title_words[-1].lower() in JOINERS:
+    if not taken:
+        taken = words[:8]
+    consumed = len(" ".join(taken))
+    title_words = [w.rstrip(".:;,") for w in taken]
+    while title_words and title_words[-1].lower() in JOINERS:  # a trailing joiner belongs to neither
         title_words.pop()
-    if not title_words:
-        title_words = words[:8]
     title = sentence_case(" ".join(title_words)).rstrip(".:;,")
-    rest = body[len(" ".join(title_words)):].strip(" .:;-–—•")
+    rest = body[consumed:].strip(" .:;-–—•")
     rest = re.sub(r"^See full prescribing information for (the )?complete boxed warning\.?\s*", "", rest, flags=re.I)
     reason = first_sentence(rest) if rest else None
     return title or None, reason or None

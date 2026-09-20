@@ -1,8 +1,9 @@
 /* elute — ApiSource: the DataSource seam over the backend (docs/BACKEND_PLAN.md v4.4 §15).
  * A pair query is one appraisal: query() creates it and returns a ten-row scaffold carrying the backend's time
  * estimate; run() yields every event of the /events stream (question, progress, settled) and fills the rows in
- * place; results() and candidate() read /detail. When the backend cannot be reached and this browser remembers a
- * finished run of the slug, that run is served instead (src/lib/runlog.ts). Switched on by VITE_ELUTE_API. */
+ * place; results() and candidate() read /detail. When /detail cannot be reached and this browser remembers the
+ * finished run, what it remembers is served instead (src/lib/runlog.ts); a remembered run is otherwise served by
+ * the session layer before this source is asked (src/data/session.ts). Switched on by VITE_ELUTE_API. */
 
 import type { CandidateDetail, CandidateSlug, EntityIndex, LedgerEvent, LedgerNote, LedgerRow, Provenance, QueryRecord, QuerySlug, ResultsPage, RunEstimate } from './types'
 import type { DataSource } from './source'
@@ -24,7 +25,7 @@ const STEPS: [string, string][] = [
 ]
 
 type Detail = { candidate: CandidateDetail; query: QueryRecord }
-type Run = { id: string; status: string; record: QueryRecord; done: boolean; remembered?: Detail; notes: Record<string, LedgerNote[]> }
+type Run = { id: string; status: string; record: QueryRecord; done: boolean; notes: Record<string, LedgerNote[]> }
 
 const RUN_KEY = (slug: string) => `elute:run:${slug}`
 const rememberRun = (slug: string, id: string) => {
@@ -109,8 +110,7 @@ export class ApiSource implements DataSource {
   }
 
   /** One appraisal per ask: a remount, the Detail page or a reload adopts the run this session already started for
-   *  the slug (its id is kept in sessionStorage); a run this browser remembers is served when the backend has
-   *  forgotten it or cannot be reached; only a slug with neither posts a new one. */
+   *  the slug (its id is kept in sessionStorage); only a slug without one posts a new one. */
   private async create(slug: QuerySlug): Promise<QueryRecord | undefined> {
     const [drugSlug, ...rest] = slug.split('--')
     if (!rest.length) return undefined // Phase 1: pair queries only
@@ -118,12 +118,6 @@ export class ApiSource implements DataSource {
     const { drug, disease } = recallPair(slug) ?? { drug: deslug(drugSlug), disease: deslug(rest.join('--')) }
     let created = await this.adopt(slug)
     if (!created) {
-      const log = loadRunLog(slug)
-      if (log?.candidate) {
-        const run: Run = { id: log.id ?? '', status: 'remembered', record: log.record, done: true, remembered: { candidate: log.candidate, query: log.record }, notes: {} }
-        this.runs.set(slug, run)
-        return run.record
-      }
       created = await this.json<Created>('/appraisals', { method: 'POST', body: JSON.stringify({ drug, disease }) })
       if (!created) return undefined
       rememberRun(slug, created.id)
@@ -147,7 +141,6 @@ export class ApiSource implements DataSource {
   }
 
   private async detail(run: Run): Promise<Detail | undefined> {
-    if (run.remembered) return run.remembered
     try {
       const d = await this.json<Detail>(`/appraisals/${run.id}/detail`)
       if (d) return d

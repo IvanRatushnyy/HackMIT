@@ -15,6 +15,8 @@ import type {
 } from './types'
 import { candidates, entities, provenance, queries, TODAY } from '../fixtures'
 import { orderCandidates, validateCandidate } from '../lib/evidence'
+import { ApiSource } from './api'
+import { SessionSource } from './session'
 
 export interface DataSource {
   mode: 'fixture' | 'live'
@@ -121,5 +123,5 @@ const apiBase = (import.meta.env.VITE_ELUTE_API as string | undefined)?.replace(
 /** VITE_ELUTE_API=http://localhost:8000/api switches the seam to the backend; unset, the bundle stays fixture-only.
  * Either way the session layer sits on top: it replays a recorded run at demo pace, remembers finished runs, and
  * serves the hard-coded example from the fixture's scripted sequence even when the backend is the inner source. */
-const inner: DataSource = apiBase ? new (await import('./api')).ApiSource(apiBase) : new FixtureSource()
-export const source: DataSource = new (await import('./session')).SessionSource(inner, inner.mode === 'live' ? new FixtureSource() : inner)
+const inner: DataSource = apiBase ? new ApiSource(apiBase) : new FixtureSource()
+export const source: DataSource = new SessionSource(inner, inner.mode === 'live' ? new FixtureSource() : inner)

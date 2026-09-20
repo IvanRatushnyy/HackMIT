@@ -37,6 +37,15 @@ class Settings(BaseSettings):
         return self.ELUTE_DEMO_DIR or Path(__file__).resolve().parents[2] / "public" / "demo"
 
     @property
+    def llm_cassettes(self) -> Path | None:
+        """A relative ELUTE_LLM_CASSETTES (the documented `tests/fixtures/llm`) is taken from the backend directory,
+        where `.env` lives, whatever the process's working directory."""
+        p = self.ELUTE_LLM_CASSETTES
+        if p is None:
+            return None
+        return p if p.is_absolute() else Path(__file__).resolve().parents[1] / p
+
+    @property
     def llm_credentials_present(self) -> bool:
         return bool(self.OPENAI_API_KEY and self.OPENAI_MODEL)
 
@@ -44,7 +53,7 @@ class Settings(BaseSettings):
         """Safe for logs and /health: never the key."""
         return {"mode": self.ELUTE_MODE, "model_set": bool(self.OPENAI_MODEL), "key_set": bool(self.OPENAI_API_KEY),
                 "cache_dir": str(self.ELUTE_CACHE_DIR), "db_path": str(self.ELUTE_DB_PATH), "demo_disable_tool": self.ELUTE_DEMO_DISABLE_TOOL,
-                "demo_dir": str(self.demo_dir), "llm_cassettes": str(self.ELUTE_LLM_CASSETTES) if self.ELUTE_LLM_CASSETTES else None}
+                "demo_dir": str(self.demo_dir), "llm_cassettes": str(self.llm_cassettes) if self.llm_cassettes else None}
 
 
 @lru_cache(maxsize=1)

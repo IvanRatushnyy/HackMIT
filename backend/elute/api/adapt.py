@@ -133,6 +133,11 @@ def safety_prerequisite(lab: Evidence | None, claim, result, disease: str) -> di
                 "note": claim.status_why + " No label was visible on this date, so the warnings a trial would inherit are unread.", "sources": sources}
     s = lab.safety
     year = lab.publication_date[:4]
+    if claim.status == "refuted":
+        # A controlled, blinded, negative study on tolerability outranks whatever the label says; the stepper must
+        # not read "with monitoring" beside a claim the page prints as refuted.
+        return {"resolution": "unmet", "word": "no", "note": claim.status_why + f" The {s.brand} label ({year}) adds its own warnings on top of that.",
+                "sources": [e.id for e in result.against] or [lab.id]}
     if s.withdrawn:
         return {"resolution": "unmet", "word": "withdrawn", "note": f"Withdrawn{' in ' + s.withdrawn_where if s.withdrawn_where else ''}{' for ' + ', '.join(s.toxicity_classes) if s.toxicity_classes else ''} ({s.brand} label, {year})." + tail, "sources": [lab.id]}
     if s.boxed_title:

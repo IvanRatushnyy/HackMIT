@@ -21,7 +21,6 @@ export type RunLog = {
 }
 
 const KEY = (slug: QuerySlug) => `elute:runlog:${slug}`
-const RUN_ID_KEY = (slug: QuerySlug) => `elute:run:${slug}` // the API source's session run id (src/data/api.ts)
 const REPLAY_KEY = (slug: QuerySlug) => `elute:replay:${slug}`
 const SCRIPTED_KEY = (slug: QuerySlug) => `elute:scripted:${slug}`
 
@@ -86,17 +85,6 @@ export function isScriptedMarked(slug: QuerySlug): boolean {
     return sessionStorage.getItem(SCRIPTED_KEY(slug)) === '1'
   } catch {
     return false
-  }
-}
-
-/** A new ask from Entry: forget the previous run of this slug in this browser so the stage runs again from the start. */
-export function resetAsk(slug: QuerySlug, replay: boolean): void {
-  clearRunLog(slug)
-  markReplay(slug, replay)
-  try {
-    sessionStorage.removeItem(RUN_ID_KEY(slug))
-  } catch {
-    /* nothing to forget */
   }
 }
 

@@ -32,6 +32,19 @@ def test_boxed_warning_title_and_first_sentence():
     assert sentence_case("RISK OF THYROID C-CELL TUMORS") == "Risk of thyroid c-cell tumors"
 
 
+def test_acronyms_keep_their_case_only_when_written_as_acronyms():
+    assert sentence_case("Fractures in all patients") == "Fractures in all patients"  # never "ALL" (acute lymphoblastic leukemia)
+    assert sentence_case("Use in MEN 2 and in men") == "Use in MEN 2 and in men"
+    assert sentence_case("Monitor ECGs and QTc") == "Monitor ECGs and QTc"
+
+
+def test_boxed_reason_starts_exactly_where_the_title_stopped():
+    # punctuation inside the title and a trailing joiner are consumed by the title, never carried into the reason
+    assert parse_boxed("WARNING: SERIOUS INFECTIONS and MALIGNANCY. Increased risk of serious infections leading to hospitalization.") == (
+        "Serious infections and malignancy", "Increased risk of serious infections leading to hospitalization")
+    assert parse_boxed("WARNING: RISK OF Serious infections have occurred. Monitor closely.") == ("Risk", "Serious infections have occurred")
+
+
 def test_sections_are_read_from_the_highlights_in_label_order_and_a_none_section_is_empty():
     got = parse_sections(HIGHLIGHTS)
     assert [h for h, _ in got] == ["Myelosuppression", "Cardiac and Arterial Vascular Occlusive Events", "Hepatotoxicity"]
@@ -149,3 +162,31 @@ def test_safety_block_severity_ladder():
     assert safety_block(clean, "x", "2026-09-20", False)["severity"] == "none"
     w = safety_block(warned, "x", "2026-09-20", False)
     assert w["severity"] == "warning" and w["kind"] == "label warning" and w["flag"] == "myelosuppression"
+
+
+def test_a_withdrawn_drug_with_a_boxed_label_says_withdrawn_first_on_the_claim_and_on_the_record(tu, direct):
+    from dataclasses import replace
+
+    ep = run_task(task("safety", "L2"), tu, direct)
+    chosen, extra = enrich.drug_safety(task("safety", "L2"), enrich.pick_originator(ep.records), tu, direct, 3)
+    withdrawn = replace(chosen, payload={**chosen.payload, "withdrawn": True, "withdrawn_where": "EU"})
+    e = evidence_from_label(canonicalize(withdrawn), "nilotinib", "Parkinson disease", ep.attempts + extra)
+    assert e.relevance[0].direction == "contradicts" and e.relevance[0].statement.startswith("Tasigna has been withdrawn in EU")
+    assert e.statement.startswith("FDA label (Tasigna), effective 2025-12-16: withdrawn in EU; boxed warning for QT prolongation")
+
+
+def test_a_refuted_safety_claim_outranks_the_label_in_the_fifth_prerequisite():
+    from types import SimpleNamespace as NS
+
+    from elute.api.adapt import safety_prerequisite
+
+    b = load_bundle()
+    fda = next(e for e in b.evidence if e.safety is not None)
+    trial = next(e for e in b.evidence if e.safety is None)
+    claim = NS(status="refuted", status_why="Refuted: a blinded, placebo-controlled trial reported unacceptable toxicity.")
+    p = safety_prerequisite(fda, claim, NS(against=[trial], supports=[]), "Parkinson disease")
+    assert p["resolution"] == "unmet" and p["word"] == "no" and p["sources"] == [trial.id]
+    assert p["note"].startswith(claim.status_why) and "Tasigna label" in p["note"]
+    # the boxed label alone stays what CLAUDE.md says it is: conditional, with monitoring
+    boxed = safety_prerequisite(fda, NS(status="contested", status_why="x"), NS(against=[fda], supports=[]), "Parkinson disease")
+    assert boxed["resolution"] == "conditional" and boxed["word"] == "with monitoring"

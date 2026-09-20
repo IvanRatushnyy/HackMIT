@@ -21,7 +21,7 @@ No keys, no server: by default the app runs on curated fixtures. The one live su
 cd backend
 uv sync --extra dev
 uv run uvicorn elute.main:app --port 8000   # ELUTE_MODE=fixture by default; ELUTE_MODE=live for the real pipeline
-uv run pytest                               # 91 tests, offline on recorded cassettes
+uv run pytest                               # 119 tests, offline on recorded cassettes
 ```
 
 Then from the repo root: `VITE_ELUTE_API=http://localhost:8000/api npm run dev` (or put that line in `.env.development.local`, which is gitignored; Vite restarts on its own). The frontend switches from `FixtureSource` to `ApiSource` (`src/data/api.ts`) over the same `DataSource` seam; nothing else changes. Fixture mode needs no key. Live mode runs the three ToolUniverse tools (Open Targets, ClinicalTrials.gov, Europe PMC) with direct API fallbacks and degrades honestly without `OPENAI_API_KEY` (`llm: unavailable`, never an abort); with `ELUTE_LLM_CASSETTES=tests/fixtures/llm` in `backend/.env` and no key, recorded OpenAI outputs are replayed by prompt hash, reused only when the prompt is byte-identical. Details in `backend/README.md`.
