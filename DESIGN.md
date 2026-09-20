@@ -10,19 +10,22 @@ To elute is to wash a mixture through a column so that its compounds come out on
 HackMIT/
 ├── DESIGN.md                 this document
 ├── .impeccable.md            design context for AI design tooling
-├── docs/redesign/            the 20 Sep redesign note, screenshots, the type specimen, screenshot scripts
+├── docs/redesign/            the 20 Sep notes, screenshots (shots/restore is the current state), shot scripts
+├── docs/superpowers/specs/   the design specs and their review history
 ├── src/
-│   ├── styles/base.css       reset, type roles, page frame, header, the block material, controls, labels, motion
+│   ├── styles/base.css       reset, type roles, page frame, header, shard and flow, the paper material, controls, labels, motion
 │   ├── styles/<screen>.css   splash, entry, working, results, detail, pathway, sources, export
+│   ├── lib/shard.ts          the mark read into planes the components animate one by one
+│   ├── lib/splash.ts         the startup screen's timeline
 │   └── lib/motion.ts         the Motion vocabulary: curves, durations, arrive, stagger, presence
 └── design/
     ├── palette.md            the four colors, roles, contrast, rules
     ├── shard/shard.svg       the brand composition, exported from the mockup
-    ├── fonts/                Lusitana and Instrument Sans, with licences
+    ├── fonts/                Aujournuit (the wordmark and the titles) and Supreme (everything else), with metric-matched fallbacks
     └── tokens/               colors.css, space.css, typography.css, index.css
 ```
 
-`src/main.tsx` imports `design/tokens/index.css` once, then `base.css`, then one stylesheet per screen.
+`src/main.tsx` imports `design/tokens/index.css` once, then `base.css`, then one stylesheet per screen. Every stylesheet is one generation: no overrides of overrides.
 
 ## Who it is for
 
@@ -36,58 +39,76 @@ The test the design has to pass: a domain expert who has never seen the tool, sh
 
 **Quiet, exact, skeptical.** Confidence that comes from showing its work. A peer review, not a press release. Doubt is presented as rigor: the counter-case is the most polished element on the page, not a disclaimer box. Emphasis is carried by weight and placement, never by flashing, glow, or noise.
 
-## The material: glass on a living ground
+## The material: paper on the sunken page
 
-Under every page is the ground: a slow mesh gradient in the brand's tints (paper, slate, raspberry, dust), drifting the way a mixture drifts down a column (`src/components/Ground.tsx`, Paper's `@paper-design/shaders-react`, MIT, WebGL). It is still under reduced motion and hidden under reduced transparency. Every reading surface is glass over it: a translucent sheet at a 16px radius with a hairline of light along its inside edge and a soft ink shadow beneath. Rows inside a sheet are separated by hairlines; sections by whitespace. Controls on the glass stay solid and sharp (radius 0); the only circles are the two buttons in the ask box and the radio dots. One accent (slate); raspberry is rare by rule, and a raspberry glow gathers at a sheet's rim while something is happening on it (the field has focus, the ledger is running).
-
-The startup screen is glass over the same ground, so it dissolves into the first page rather than cutting to it. The header is a glass bar with the wordmark alone; the ground carries the brand's colour. Controls share one soft radius (8px); sheets are 16px.
+The page is the sunken neutral (`--color-surface-sunken`). Every reading surface is white paper with one 1px dust line and sharp corners, like the shard's planes: the results registers, the pipeline boxes, the facts strip, the objections, the pathway, safety, the five prerequisites, your call, the ledger, the export preview. No blur, no shadow, no glow. Rows inside a panel are separated by hairlines; sections by whitespace. Controls are sharp too; the only round things are the radio dots. One accent (slate); raspberry is rare by rule. While a step is running its box carries a 2px ink border and a slate bar filling beneath it.
 
 ## The six moments
 
 | Moment | The person should feel | Treatment |
 |---|---|---|
-| Startup | "I understand the name." | Over the ground: the wordmark at 96px settling from Wide to Airy along its width axis; beneath it a column in which one dark mixture separates into four bands, ink, slate, dust-grey, raspberry, each band's word appearing at the detector as it lands. About three seconds, once per load. |
-| Appraise | "I understand what this does in five seconds." | One glass sheet centred under the header: the field, the + and send circles inside it, three example chips beneath that teach the three modes. The ground drifts behind it. Nothing else. |
-| Working | "It's doing real work, and I can follow it." | A strip of ten marks, then the run one step at a time: the current step in focus with its question, its source, its records arriving one by one and its count, a bar filling beneath; finished steps above it as one line each, opening on a click; nothing shown ahead. No spinner, no percentage. |
-| Results | "I can triage this in fifteen seconds." | Two registers, *Tested in placebo-controlled trials* and *Not yet tested against placebo*, each with its rule printed once beneath. Rows on one sheet: rank, class in Medium at 20px, the name beneath, the fine print when the record has it, and four answer cells under the four questions. A row opens in place into a four-step walk. The board by stage remains. |
-| Detail | "I can defend or kill this myself." | The name at 80px, then class, mechanism, best evidence, the drivers; the evidence date at the right. *Critical appraisal* first: objections numbered by consequence, each opening to its evidence sentence in the reading serif with its sources and ledger citations. *Pathway*: the hypothesis drawn as biology on its sheet, revealed action by action, every action labelled by the evidence rules, the weakest link marked, the claim panel opening beneath; the fine print and the Reactome thumbnail folded under a disclosure. *Safety* and *before a trial* (five glass boxes, a walkthrough) side by side. *Your call*. |
+| Startup | "I understand the name." | The hero from the mockup, once per load: the wordmark at 128px on a white band, the shard beneath. The planes compose topmost first, the wordmark fades in, the hero holds a second, the planes come apart ground first, and the wordmark travels into the header while the page fades in beneath. About three seconds; reduced motion skips it. |
+| Appraise | "I understand what this does in five seconds." | Under the flow, one centred stack with the same air above and below: `prove it to me`, one sentence, the field with one rule of ink under it and `appraise →` at its end, three example words. Nothing else: the header band is the page's brand element. |
+| Working | "It's doing real work, and I can follow it." | Ten boxes on paper, one per check, each with its question, its source and, when done, what came back as one count. The current box is in ink with a slate bar filling beneath it; boxes ahead are faint with a dashed line. Under the grid, the current step's records arrive one by one. Click a finished box for its records. |
+| Results | "I can triage this in fifteen seconds." | Two registers, *not yet tested against placebo* and *tested in placebo-controlled trials*. Rows on one paper panel: rank, the name in Medium at 20px with class and mechanism beneath, then the three things a scientist asks first: the best human evidence as an outlined outcome word with design and n, the weakest link in a sentence, the safety flag as a raspberry word with its reason. The board by stage remains. |
+| Detail | "I can defend or kill this myself." | The name at 96px, class and indication beneath, the evidence date at the right. A paper strip of the three answers and a page map. Then the numbered sections: *the case against*, objections by consequence, each opening to its evidence sentence and dated sources; *the pathway*, the hypothesis drawn as biology, every action's stroke and word from the evidence rules, the weakest link marked, the claim panel opening beneath; *safety* and *before a trial* (five paper boxes) side by side; *your call*. |
 | Sources | "I can see exactly what it did." | The run's ledger with every record numbered; a row opens to what was consulted; tool calls, packages and the status rules on secondary tabs. |
 | Export | "I can take this with me." | Format and includes beside a preview typeset like the page. |
 
 ## Typography
 
-Two faces from Google Fonts (OFL), self-hosted in `design/fonts`.
+Two faces, self-hosted in `design/fonts`, with metric-matched fallbacks so text does not jump on load. Aujournuit is for the titles that matter most, about a tenth of the type on any page; Supreme is the rest.
 
 | Role | Face | Setting | Use |
 |---|---|---|---|
-| Display | Lusitana | Regular (Bold available), tracking −1%, **always lowercase** | Wordmark (40px), the Detail title (96px), page titles (40px), section titles (28px), the numerals on objections, prerequisites and the running step |
-| Text | Instrument Sans | Regular 400, tracking −1%, tabular figures on `.figure` | Everything else: interface text, rows, controls, and what the record says |
-| Emphasis | Instrument Sans | Medium 500 | Interactive labels, the current item, the class on a results row, the label word, the question of the running step |
-| Headline figure | Instrument Sans | Bold 700 | Only the one figure that carries an argument, such as *n = 12* or *0.53 %* |
-| Reading | Instrument Sans | 18/28 | An objection's evidence sentence: a size up, the same face |
+| Wordmark | Aujournuit | Airy width (`font-stretch: 175%`), tracking −2%, lowercase | The header wordmark (48px) and the startup hero (128px). Nowhere else. |
+| Display | Aujournuit | Regular width (100%), tracking −2%, **always lowercase** | The landing headline, the Detail title (96px), page titles (40px), section titles (28px), and the numerals on objections, prerequisites and the unresolved count |
+| Names | Supreme | Medium 500, 20/32 | A candidate's name in a row, a register's word, a pipeline question, the feed title |
+| Text | Supreme | Regular 400, tracking −4% | Everything else: body, rows, controls, the flow, the pathway's words |
+| Emphasis | Supreme | Medium 500 | Interactive labels, the current item, kickers, the evidence-label word |
+| Headline figure | Supreme | Bold 700 | Only the one figure that carries an argument, such as *n = 12* |
 | Raw | System monospace | Regular | The tool-call blocks on Sources only |
 
-Scale: 12/16, 14/24, 16/24, 20/32, 28/32, 40/48, plus 96/88 for the Detail title and 18/28 for an evidence sentence. Nothing is set in all caps. Body measure caps at 65ch.
+Scale: 12/16, 14/24, 16/24, 20/32, 28/32, 40/48, plus 96/88 for the Detail title. Every line height is on the 8px grid. Aujournuit is set in lowercase everywhere it appears; Supreme keeps normal casing; nothing is set in all caps. Body measure caps at 65ch. Neither face has tabular figures, so columns of numbers are right-aligned (`.figure`).
 
 ## Color
 
-Read `design/palette.md`. In short: paper `#fbfcfe` is the page; ink `#06070e` is the text, the rules, the primary button and the *established* label; slate `#47667d` is the one recurring accent (links, selection, *contested*); dust `#d3d3d3` is lines and inactive shard planes; raspberry `#82204a` is rare (*single-source*, *refuted*, the safety flag, the negative outcome, the weakest link). Slate and raspberry each have three OKLCH steps in the tokens (deep, mid, tint). Contrast on paper: ink 19.6:1, raspberry 9.1:1, slate 5.9:1, muted text 5.4:1.
+Read `design/palette.md`. In short: white `#fbfcfe` is the paper; the page beneath it is the sunken neutral; ink `#06070e` is the text, the rules, the primary button and the *established* label; slate `#47667d` is the one recurring accent (links, selection, the running bar, *contested*); dust `#d3d3d3` is lines and the ground of the shard; raspberry `#82204a` is rare (*single-source*, *refuted*, the safety flag, the negative outcome, the weakest link). All neutrals are tinted toward hue 276. Contrast on paper: ink 19.6:1, raspberry 9.1:1, slate 5.9:1, muted text 5.4:1.
 
 Evidence labels are never color alone: an 8px square in the label's color sits before the word, and on the drawing the stroke repeats the label (3px solid established, 2px dashed contested, 2px short-dashed single-source, 1.5px dotted unknown, 2px solid raspberry refuted).
 
 ## The shard
 
-`design/shard/shard.svg`: thirteen planes in the four colors, a mixture coming apart into bands. On screen it appears as the four bands of the startup column and as the tints of the ground; the composition itself is the mark for print and the deck. It is never placed behind text.
+`design/shard/shard.svg`: thirteen planes in the four colors, a mixture coming apart into bands. It is the startup hero and the band in the 120px header on every page, cropped to its dense middle, from the edge of the wordmark's white block across the rest (`Shard` in `src/components/frame.tsx`). It composes plane by plane once, when the startup screen lifts, and then stands still: the same band on every page. It is never placed behind text.
+
+## The flow
+
+Under the header on every page, centred: the five stages, `1 ask` to `5 share`, each an icon in a sharp 32px box with its number and word, joined by hairlines; the current stage's box is ink (`Stages` in `src/components/Stages.tsx`, rendered by `Header`). It is the only wayfinding, so no page repeats its stage as a kicker, and no section carries a sentence explaining what it is for.
+
+## Icons
+
+Every icon is from Phosphor (`@phosphor-icons/react`, MIT), Regular weight at 16px unless it is the one arrow in a button (Bold) or the arrow on a results row (20px): the five stages, the twelve checks of the pipeline and their check mark, the plus and minus that open a row, the close on the claim panel. Nothing is drawn by hand; the shard and the pathway are drawings, not icons.
 
 ## Motion
 
-One orchestrated moment per screen, and motion that answers an action. Curves and durations are tokens (`--ease-out`, 120/240/400/640 ms); the Motion library (`motion/react`) carries the choreography, `src/lib/motion.ts` the shared vocabulary.
+State changes only, on opacity, transform and blur; ease-out curves, 120/240/400/640 ms from the tokens, the Motion library (`motion/react`) for choreography and CSS keyframes for the shard.
 
-- Startup: the elution (bands 3.2 to 5.9 s, staggered), the wordmark's tracking settling, a 400 ms lift.
-- Entry: the sheet arrives after the startup screen lifts; submitting sends one ripple outward and the ledger page arrives on its wake.
-- Working: the person is walked through the run one step at a time, about 2.6 s each. Only the current step moves: its question, then its source, then its records one by one, then the count; a bar fills under it. Finished steps settle above it as one line each and open on a click; steps not yet reached are not shown, the strip says how many remain.
-- Detail: the objections list re-lays itself out when the evidence date changes, entries arriving and leaving; the drawing reveals each action from its source in the order of the argument, status words after; the claim panel and a prerequisite's note enter under their block; the count of objections and of unresolved prerequisites crossfades.
-- Everywhere: hover settles over 240 ms, press scales to 0.98, a row expanding is a height change on the grid. `prefers-reduced-motion` collapses every duration through the tokens and skips the startup screen.
+- The shard composes and decomposes plane by plane, 40ms apart, 240ms each: in from the topmost plane down to the ground, out from the ground up to the topmost; the two ground pieces sit a further 80ms apart (`--shard-fade`, `--shard-stagger`, `--shard-ground-gap`).
+- Startup: the hero composes, holds, decomposes; the wordmark travels into the header (FLIP); then the header band composes once (`--band-cascade`, 800ms; `src/components/Splash.tsx`, `src/lib/splash.ts`). On later pages it mounts composed.
+- The flow fades in stage by stage, 40ms apart (`.fade`): after the band on the first page, at once on later pages. When the stage changes within a page the ink box moves over 240ms.
+- A page arrives as one reveal: blocks come in at 102% and soft, settling to size over 640ms, 40ms apart (`.arrive`). On Entry the blocks wait under the startup screen and arrive after the band and the flow.
+- Working: each step about 2.6s; the current box's bar fills over its duration; its records arrive one by one.
+- Detail: the objections re-lay themselves out when the evidence date changes; the drawing reveals each action from its source in the order of the argument, status words after; the claim panel enters under its block.
+- Everywhere: hover settles over 240ms, press scales to 0.98, a row expanding is a height change on the grid. `prefers-reduced-motion` collapses every duration through the tokens and skips the startup screen.
+
+## The 8px grid
+
+- **Spacing** uses only the scale in `space.css`: 8, 16, 24, 32, 48, 64, 96. No 10px, no 12px, no 20px, and no 4px between elements. If a composition needs something in between, change the composition, not the scale.
+- **Sizes** snap to the grid: controls are 32, 40 or 48px tall, icons are 16 or 24px, the header is 120px, the pipeline boxes 168px, the prerequisite boxes 144px.
+- **Line heights** are multiples of 8, so stacked text lands back on the grid; stacked lines need no gap between them.
+- **Vary spacing for hierarchy** within the scale: 8 and 16 inside a group, 32 and 48 between groups, 64 between sections and between the landing's title and its field.
+- **Use `gap`** for sibling spacing rather than margins.
+- The one deliberate exception is the header block's 40/45px inset around the wordmark, set optically against the mark.
 
 ## Principles
 
@@ -97,9 +118,9 @@ One orchestrated moment per screen, and motion that answers an action. Curves an
 4. **Show the work, never force it.** Sources one click away; every citation lands on the Sources page.
 5. **Say what is synthetic.** On the Sources page and in every export.
 6. **Never a recommendation.** The scientist decides.
-7. **The shard is the brand.** Once per flow, with restraint.
+7. **The shard is the brand.** The hero once, the band on every page; never behind text.
 8. **One grid, one scale.** 8px everywhere.
 
 ## Not this
 
-A flat grey ground. Glass on controls. Dark "AI lab" dashboards with cyan glow. Chat bubbles. Sparkle icons. Icons above headings. Red, amber, green confidence lights. Bare percentage scores. Gradient text. Colored side stripes. A kicker above every block. Meta lines joined with middle dots. An em-dash in text the tool writes. A sentence that explains what a section is for. A tab or button that leads nowhere. Anything that looks like a pitch deck.
+Glass, blur or glow on any surface. Dark "AI lab" dashboards with cyan glow. Chat bubbles. Sparkle icons. Icons above headings. Red, amber, green confidence lights. Bare percentage scores. Gradient text. Colored side stripes. A kicker above every block. An em-dash in text the tool writes. A sentence that explains what a section is for. A tab or button that leads nowhere. Anything that looks like a pitch deck.

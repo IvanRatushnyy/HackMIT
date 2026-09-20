@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { Minus, Plus } from '@phosphor-icons/react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { Header, Kicker } from '../components/frame'
 import { ProvenanceBlock } from '../components/Ledger'
@@ -74,7 +75,7 @@ export function Sources() {
 
   return (
     <main className="page">
-      <Header stage="research" links={{ research: `/q/${query}` }} />
+      <Header stage="research" />
       <div className="col">
         <div className="title arrive">
           <div className="title__main">
@@ -134,9 +135,9 @@ export function Sources() {
                       {ledgerResult(row, today)}
                       {row.execution.retry ? `, ${row.execution.retry.reason}, retried` : ''}
                     </span>
-                    <span className="sources__time">{recorded && row.elapsed_ms !== undefined ? `${(row.elapsed_ms / 1000).toFixed(1)} s` : '–'}</span>
+                    <span className="sources__time">{recorded && row.elapsed_ms !== undefined ? `${(row.elapsed_ms / 1000).toFixed(1)} s` : ''}</span>
                     <span className="sources__mark" aria-hidden="true">
-                      {opened.has(row.id) ? '–' : '+'}
+                      {opened.has(row.id) ? <Minus size={16} /> : <Plus size={16} />}
                     </span>
                   </button>
                   <AnimatePresence initial={false}>

@@ -1,31 +1,31 @@
 /* elute — typography tokens
  *
- * Lusitana for the wordmark, titles and numerals: always lowercase, tracking −1%.
- * Instrument Sans for everything else, tracking −1%, tabular figures where numbers line up.
+ * Aujournuit at the Regular width, tracking −2%, always lowercase: the titles that matter most (the landing
+ * headline, a page's title, a drug's name on Detail, a section's title). The wordmark alone is the Airy width.
+ * Supreme, tracking −4%, for everything else: Regular for text, Medium for names, emphasis and interactive labels.
  */
 
 :root {
-  --font-display: "Lusitana", "Lusitana Fallback", Georgia, serif;
-  --font-text:    "Instrument Sans", "Instrument Sans Fallback", system-ui, sans-serif;
-  --font-reading: var(--font-text);
+  --font-display: "Aujournuit", "Aujournuit Fallback", Georgia, serif;
+  --font-text:    "Supreme", "Supreme Fallback", system-ui, sans-serif;
   --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* the tool-call blocks only */
 
-  --display-width:    100%;
-  --wordmark-width:   100%;
-  --tracking-display: -0.01em;
-  --tracking-text:    -0.01em;
+  --display-width:    100%;     /* Aujournuit "Regular" named instance: titles */
+  --wordmark-width:   175%;     /* Aujournuit "Airy" named instance: the wordmark only */
+  --tracking-display: -0.02em;
+  --tracking-text:    -0.04em;
 
   --weight-regular: 400;
-  --weight-medium:  500;  /* emphasis, interactive labels */
+  --weight-medium:  500;  /* names, emphasis, interactive labels, the evidence-label word */
   --weight-bold:    700;  /* only the number that must be read first */
 
   /* Fixed rem scale for product UI, ratio ≈ 1.25. Each size pairs with a line height on the 8px grid. */
-  --text-xs:  0.75rem;   /* 12px  captions, dates, sources  line 16px */
-  --text-sm:  0.875rem;  /* 14px  secondary UI, metadata    line 24px */
-  --text-md:  1rem;      /* 16px  body                      line 24px */
-  --text-lg:  1.25rem;   /* 20px  section headings          line 32px */
-  --text-xl:  1.75rem;   /* 28px  key figures               line 32px */
-  --text-2xl: 2.5rem;    /* 40px  page titles               line 48px */
+  --text-xs:  0.75rem;   /* 12px  captions, dates, sources, kickers   line 16px */
+  --text-sm:  0.875rem;  /* 14px  secondary UI, metadata, sub lines    line 24px */
+  --text-md:  1rem;      /* 16px  body                                 line 24px */
+  --text-lg:  1.25rem;   /* 20px  names, claims, register words        line 32px */
+  --text-xl:  1.75rem;   /* 28px  section titles                       line 32px */
+  --text-2xl: 2.5rem;    /* 40px  page titles                          line 48px */
 
   /* Fluid sizes for titles on landing surfaces */
   --display-md: clamp(2.25rem, 1.5rem + 3vw, 4rem);
@@ -36,7 +36,7 @@
   --line-3: 1.5rem;
   --line-4: 2rem;
   --line-6: 3rem;
-  --leading-display: 1;
+  --leading-display: 1;  /* display titles: size sets the rhythm, margins snap it to grid */
   --measure: 65ch;
 }
 
@@ -51,12 +51,12 @@ body {
   font-size: var(--text-md);
   line-height: var(--line-3);
   color: var(--color-ink);
-  background: var(--color-surface);
 }
 
-/* Display: the wordmark, page titles, a drug or condition name as a heading. Always lowercase. */
+/* Display: the titles that matter most. Aujournuit, Regular width, always lowercase. */
 .display {
   font-family: var(--font-display);
+  font-stretch: var(--display-width);
   font-weight: 400;
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
@@ -77,11 +77,8 @@ body {
 .annotation { font-style: italic; color: var(--color-ink-muted); }
 .prose { max-width: var(--measure); }
 
-/* Columns of numbers line up on tabular figures */
-.figure { text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+/* Neither face has tabular figures, so columns of numbers are right-aligned. */
+.figure { text-align: right; font-variant-numeric: lining-nums; }
 
-/* What the record says (an evidence sentence, a claim, a note) is set a size up in the same face */
-.reading { font-family: var(--font-reading); letter-spacing: var(--tracking-text); }
-
-/* The provenance block inside an expanded ledger row: tool, query, records. */
+/* The provenance block inside an expanded ledger row: tool, query, records. Tracking resets to 0. */
 .raw { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--line-3); letter-spacing: 0; }

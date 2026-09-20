@@ -13,6 +13,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { X } from '@phosphor-icons/react'
 import type { ActionKind, CandidateDetail, Cutoff, Label, PathwayDrawing } from '../data/types'
 import { deriveLabel, resolveTimeline, type LabelResult } from '../lib/evidence'
 import {
@@ -376,7 +377,6 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
           <h2 className="display-xs" id="pathway">
             <span className="section__n">2</span>the pathway
           </h2>
-          <p className="section__purpose">The hypothesis drawn as biology. Line weight is the evidence; grey is what nobody disputes. Select an arrow for its sources.</p>
         </div>
         <span className="section__status">
           {status === 'live' && `live from Open Targets and Reactome, ${fetched}`}
@@ -412,7 +412,7 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
                 <ClaimEvidence r={currentLabel} sourcesHref={sourcesHref} />
               </div>
               <button type="button" className="claim-panel__close" aria-label="Close" onClick={() => setSelected(null)}>
-                ×
+                <X size={16} aria-hidden="true" />
               </button>
             </div>
           </motion.div>

@@ -52,8 +52,9 @@
   text-align: right;
 }
 .sources__mark {
+  display: inline-flex;
+  justify-content: center;
   color: var(--color-ink-faint);
-  text-align: center;
 }
 .sources__prov {
   overflow: hidden;

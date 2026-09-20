@@ -1,72 +1,65 @@
-/* elute — Entry: stage 1 of 5. The headline says what the tool does; the field is the pivot of the page;
- * under it, the four stages that follow, so the person knows what pressing Enter starts and where it ends. */
+/* elute — Entry: stage 1 of 5. Under the flow, the title, one sentence, and the field, centred. Under the
+ * startup screen the blocks wait; when it lifts and the header band has composed, they arrive in turn. */
 
-import { Header } from '../components/frame'
-import { Molecule } from '../components/Molecule'
-import { StageIcon } from '../components/Stages'
+import { useContext, useState } from 'react'
+import { ArrowRight } from '@phosphor-icons/react'
+import { Header, StartupDone } from '../components/frame'
 import { useAsk } from '../components/useAsk'
 
 const EXAMPLES = ['Parkinson’s disease', 'metformin', 'nilotinib for Parkinson’s']
 
-const NEXT = [
-  { id: 'research', word: 'research', line: 'ten checks against public sources, about half a minute' },
-  { id: 'candidates', word: 'candidates', line: 'every drug with human data, ranked, weakest link shown' },
-  { id: 'appraisal', word: 'appraisal', line: 'the case against, the pathway, what a trial would need' },
-  { id: 'share', word: 'share', line: 'a discussion deck for the meeting, with your call' },
-] as const
+/* wait: under the startup screen · go: arriving after it · settled: an ordinary page reveal */
+type Arrival = 'wait' | 'go' | 'settled'
+
+function useArrival(): Arrival {
+  const done = useContext(StartupDone)
+  const [underSplash] = useState(() => !done)
+  return !underSplash ? 'settled' : done ? 'go' : 'wait'
+}
 
 export function Entry() {
   const t = useAsk()
+  const arrival = useArrival()
   return (
     <main className="page">
       <Header stage="ask" />
-      <div className="land">
-        <div className="land__top">
-          <div className="land__lead">
-            <h1 className="land__title">
-              prove it
-              <br />
-              to me
-            </h1>
-            <p className="land__body">
-              Name a condition, an approved drug, or a candidate pair. Elute checks it against the public record and puts
-              the strongest argument against it on the page first, dated and sourced. It organises evidence for a scientist
-              who is qualified to weigh it. It never recommends.
-            </p>
-          </div>
-          <Molecule className="land__art" />
+      <div className={`land land--${arrival}`}>
+        <div className="land__lead arrive" style={{ '--i': 0 } as React.CSSProperties}>
+          <h1 className="land__title">
+            prove it
+            <br />
+            to me
+          </h1>
+          <p className="land__body">The strongest argument against a repurposing candidate first, dated and sourced. It never recommends.</p>
         </div>
 
         <form
-          className="land__ask"
+          className="land__ask arrive"
+          style={{ '--i': 2 } as React.CSSProperties}
           onSubmit={(e) => {
             e.preventDefault()
             t.submit()
           }}
         >
-          <label className="land__label" htmlFor="ask">
-            1 ask
-          </label>
           <div className="land__field">
             <input
               id="ask"
               className="land__input"
               type="text"
+              aria-label="A condition, a drug, or a drug for a condition"
               placeholder="a condition, a drug, or a drug for a condition"
               value={t.text}
               onChange={(e) => t.onChange(e.target.value)}
               autoComplete="off"
               autoFocus
             />
-            <button type="submit" className="land__go" disabled={!t.text.trim() || t.launching}>
+            <button type="submit" className="btn btn--primary btn--lg" disabled={!t.text.trim() || t.launching}>
               appraise
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
+              <ArrowRight size={16} weight="bold" aria-hidden="true" />
             </button>
           </div>
           <div className="land__examples" aria-label="Examples">
-            <span className="land__try">try</span>
+            <span className="faint">try</span>
             {EXAMPLES.map((word) => (
               <button key={word} type="button" className="land__example" onClick={() => t.go(word)} disabled={t.launching}>
                 {word}
@@ -79,19 +72,6 @@ export function Entry() {
             </p>
           )}
         </form>
-
-        <ol className="land__next" aria-label="What happens next">
-          {NEXT.map((s, i) => (
-            <li key={s.id} className="land__step">
-              <span className="land__step-icon">
-                <StageIcon id={s.id} />
-              </span>
-              <span className="land__step-n">{i + 2}</span>
-              <span className="land__step-word">{s.word}</span>
-              <span className="land__step-line">{s.line}</span>
-            </li>
-          ))}
-        </ol>
       </div>
     </main>
   )

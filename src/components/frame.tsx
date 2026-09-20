@@ -1,4 +1,5 @@
-/* elute — page frame: shard, wordmark, header, kicker, and the startup context. */
+/* elute — page frame: the shard, the wordmark, the header, the flow under it, the kicker, and the startup
+ * context. */
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -41,8 +42,8 @@ export function Shard({
   )
 }
 
-/** True once the startup screen has lifted, or was skipped. The header band composes then, and Entry's
- * ask box arrives once the band has. */
+/** True once the startup screen has lifted, or was skipped. The header band composes then, and the first
+ * page's blocks arrive once the band has. */
 export const StartupDone = createContext(true)
 
 let bandComposed = false
@@ -65,16 +66,22 @@ export function Wordmark() {
 }
 
 /** The same header on every page: the wordmark (the way home; there is no search up here) centred in its
- * white block, then the shard band from the block's edge. */
-export function Header({ stage, links }: { stage?: StageId; links?: Partial<Record<StageId, string>> }) {
-  useBandPhase()
+ * white block, then the shard band from the block's edge. Under it, centred, the five stages with the
+ * current one in ink; they fade in after the band has composed, and at once on later pages. */
+export function Header({ stage = 'ask' }: { stage?: StageId }) {
+  const phase = useBandPhase()
   return (
-    <header className="header">
-      <div className="header__block">
-        <Wordmark />
-        {stage && <Stages current={stage} links={{ ask: '/', ...links }} />}
-      </div>
-    </header>
+    <>
+      <header className="header">
+        <div className="header__block">
+          <Wordmark />
+        </div>
+        <Shard className="header__shard" offsetY={280} phase={phase} />
+      </header>
+      <nav className={`flow flow--${phase}`} aria-label="Stages">
+        <Stages current={stage} />
+      </nav>
+    </>
   )
 }
 

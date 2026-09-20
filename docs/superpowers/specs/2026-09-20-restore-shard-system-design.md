@@ -85,3 +85,33 @@ Entry, Working mid-run, Results, Detail top and pathway, Sources, Export.
 ## Out of scope
 
 Data, routing or label-rule changes; mobile; paste-a-paper; the raspberry working glow; the mesh gradient.
+
+## Amendments during implementation (20 Sep, same day)
+
+Decided in review of the running app; the sections above stand except where these say otherwise.
+
+- **Type.** Poppins was dropped before it shipped. Supreme takes every role except the wordmark: Medium 500 for titles
+  (lowercase, tracking −3%), Regular for text. The ladder is 96 / 40 / 28 / 20 / 16 / 14 / 12.
+- **The band.** No plane is dimmed: the planes ahead stay in full colour, and the hairline of light on the current plane
+  went with the dimming. A stage transition is slow: `--stage-fade` (1200ms, ease-in-out) for the plane leaving or
+  returning, the label following it. The dust under the slate (plane 6) belongs to stage 1, so the band empties cleanly
+  from the left. The header crop moved from offset 280 to 176 so that five planes cross the strip.
+- **Grid pass.** Half-unit gaps between elements, 13px labels, the 18/28 reading size and 24px names were brought onto
+  the scale; the `Stages` rail lost its link and done-state code, which nothing used once it left the header.
+- **The band, again.** The stage indicator was withdrawn after review: the band is static, composing once when the
+  startup screen lifts, at the original crop (offset 280), with no label. The five-stage rail moved to the top centre
+  of every page, under the header, rendered by `Header`. `STAGE_PLANES`, `planeState` and their tests are gone.
+- **Entry** became one centred stack under the flow: title, one sentence, the field, the examples. The `1 ask`
+  kicker, the paragraph, the four next-step boxes and the illustration are all gone.
+- **Text.** The flow is the only wayfinding, so the `2 research` / `3 candidates` / `4 appraisal` kickers and the
+  sentence under every section title were removed; the Results sub line stays because it carries the count, the date
+  and the link to Sources.
+- **Icons.** Every hand-drawn SVG icon was replaced by Phosphor (`@phosphor-icons/react`): the stages, the pipeline
+  steps and check, the arrows, the plus/minus row marks on Detail and Sources, the claim panel's close.
+- **Type, again.** Satoshi (Fontshare, self-hosted) for titles, Bold, and for names, Medium, in sentence case; the
+  lowercase rule now applies to the wordmark alone. Supreme stays for text.
+- **Ask section.** The stack is centred in the space under the flow with equal air above and below, one gap (48px)
+  between its blocks.
+- **Type, final.** Satoshi withdrawn. Two faces: Aujournuit at the Regular width, lowercase, for the titles that
+  matter most (the landing headline, page titles, the Detail name, section titles, the display numerals); Supreme
+  for everything else, names and register words included. The wordmark stays at the Airy width.

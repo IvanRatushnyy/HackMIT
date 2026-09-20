@@ -1,96 +1,50 @@
-/* elute — the startup screen: on the page's own paper, the elution column and the wordmark settling on its width axis.
- * Timings come from src/lib/splash.ts through the --splash-* and --dur variables set inline. */
+/* elute — the startup screen: the hero from the mockup, once per page load. The planes compose, the wordmark
+ * fades in, the hero holds, the planes come apart, and the wordmark travels to its place in the header as the
+ * page fades in beneath. Timings come from the tokens; the schedule is computed in src/lib/splash.ts. */
 
 .splash {
+  --splash-word: var(--duration-slow); /* the wordmark's fade-in */
+  --splash-hold: 1000ms;               /* the composed hero on screen */
+  --splash-move: var(--duration-slow); /* the wordmark's travel to the header, the page fading in beneath */
   position: fixed;
   inset: 0;
   z-index: var(--z-splash);
   display: grid;
-  place-items: center;
-  background: oklch(99% 0.003 276 / 0.55);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
-  color: var(--color-ink);
+  grid-template-rows: var(--band-entry) 1fr;
 }
-.splash--lift {
+.splash__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface);
+}
+.splash--move .splash__bg {
   opacity: 0;
-  transition: opacity var(--splash-lift) var(--ease-in-out);
+  transition: opacity var(--splash-move) var(--ease-in-out);
 }
-.splash__center {
-  display: grid;
-  justify-items: center;
-  gap: var(--space-lg);
-  transform: translateY(-16px);
-}
-
-/* The wordmark: Aujournuit at 96px, wide, settling to the header's Airy width as the first band lands */
-.splash__word {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 96px;
-  line-height: 1;
-  letter-spacing: var(--tracking-display);
-  text-transform: lowercase;
-  color: var(--color-ink);
-  letter-spacing: 0.12em;
-  opacity: 0;
-  animation: splash-word-in var(--duration-slow) var(--ease-out) var(--splash-delay) both;
-  transition: letter-spacing var(--splash-word) var(--ease-out);
-}
-.splash--settled .splash__word,
-.splash--lift .splash__word {
-  letter-spacing: -0.01em;
-}
-@keyframes splash-word-in {
-  from { opacity: 0; filter: blur(6px); }
-  to { opacity: 1; filter: blur(0); }
-}
-
-/* The column: a faint glass wall on the stage, the detector a dashed line */
-.splash__column {
-  display: block;
-  width: 480px;
-  height: 400px;
-}
-.splash__glass {
-  fill: oklch(100% 0 0 / 0.5);
-  stroke: var(--color-line);
-}
-.splash__detector {
-  stroke: var(--color-line-strong);
-  stroke-dasharray: 2 5;
-}
-
-/* The bands: each starts above the mouth and travels to its own resting place over its own duration */
 .splash__band {
-  animation: splash-band var(--dur) cubic-bezier(0.5, 0, 0.3, 1) var(--splash-delay) both;
+  position: relative;
 }
-@keyframes splash-band {
-  from { transform: translateY(0); }
-  to { transform: translateY(var(--rest)); }
-}
-.splash__band--established { fill: var(--evidence-established); }
-.splash__band--contested { fill: var(--evidence-contested); }
-.splash__band--unknown { fill: var(--evidence-unknown); }
-.splash__band--single-source { fill: var(--evidence-single-source); }
-
-/* The words appear as their band reaches the detector */
-.splash__label {
-  font-family: var(--font-text);
-  font-size: 14px;
-  letter-spacing: var(--tracking-text);
-  fill: var(--color-ink);
+/* The mockup's wordmark: 128px at the page's 80px gutter, its baseline in the band's lower third */
+.splash__word {
+  position: absolute;
+  left: 80px;
+  top: 64px;
+  font-size: 128px;
   opacity: 0;
-  animation: splash-label var(--dur) linear var(--splash-delay) both;
+  transform-origin: 0 0;
+  transition:
+    opacity var(--splash-word) var(--ease-out),
+    transform var(--splash-move) var(--ease-in-out);
 }
-@keyframes splash-label {
-  0%, 82% { opacity: 0; }
-  100% { opacity: 1; }
+.splash--word .splash__word,
+.splash--decompose .splash__word,
+.splash--move .splash__word {
+  opacity: 1;
 }
-.splash__label--contested { fill: var(--evidence-contested); }
-.splash__label--unknown { fill: var(--evidence-unknown); }
-.splash__label--single-source { fill: var(--evidence-single-source); }
-
-@media (prefers-reduced-motion: reduce) {
-  .splash__band, .splash__label, .splash__word { animation: none; opacity: 1; }
+/* FLIP: --dx, --dy and --s are measured against the header's wordmark just before the move */
+.splash--move .splash__word {
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(var(--s, 1));
+}
+.splash__shard {
+  position: relative;
 }

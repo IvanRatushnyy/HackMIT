@@ -147,7 +147,7 @@
 .plate__button {
   display: block;
   width: 160px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   overflow: hidden;
   background: var(--color-surface);
   box-shadow: 0 0 0 1px oklch(var(--shadow-ink) / 0.08);

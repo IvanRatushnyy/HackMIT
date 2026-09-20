@@ -30,19 +30,14 @@
   --gutter-wide:   32px;     /* tablet and up */
   --panel-index:   320px;    /* results list column */
   --panel-detail:  384px;    /* detail rail: ledger, citations, claim evidence */
-  --header-height: 88px;     /* every page: the glass bar with the wordmark */
+  --header-height: 120px;    /* every page: the wordmark's white block, the shard band beside */
   --band-entry:    280px;    /* startup: the white band above the shard hero */
   --page-max:      1920px;
 
-  /* ---- Shape ------------------------------------------------------------- */
-  --radius:       0;         /* sharp by default, matching the shard geometry: the controls */
-  --radius-glass: 16px;      /* every paper surface */
-  --radius-sm:    8px;       /* every control */
-  --radius-round: 999px;     /* pills, glass circle buttons */
-  --radius-sheet: 32px;      /* the one rounded sheet per page; nothing inside it is rounded */
-
-  /* ---- Shadow (the sheet only) ------------------------------------------- */
-  --shadow-sheet: 0 4px 10px oklch(13.1% 0.016 276 / 0.18);
+  /* ---- Shape: sharp, like the shard's planes. The only round things are the radio dots. ---- */
+  --radius-panel:   0;
+  --radius-control: 0;
+  --radius-round:   999px;
 
   /* ---- Lines ------------------------------------------------------------- */
   --line-width: 1px;
@@ -67,7 +62,8 @@
   /* The shard composes and decomposes plane by plane */
   --shard-fade:    var(--duration-base);  /* one plane fading */
   --shard-stagger: 40ms;                  /* between planes */
-  --shard-ground-gap: 80ms;               /* extra between the two ground pieces: 120ms apart; thirteen planes take 800ms */
+  --shard-ground-gap: 80ms;               /* extra between the two ground pieces: 120ms apart */
+  --band-cascade: calc(12 * var(--shard-stagger) + var(--shard-ground-gap) + var(--shard-fade)); /* thirteen planes composing: 800ms; the flow and the first page wait for it */
 }
 
 @media (min-width: 768px) {

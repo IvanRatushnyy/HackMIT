@@ -1,9 +1,9 @@
-/* elute — Detail: the title band, critical appraisal, safety, before a trial, your call.
- * The pathway's rules are in pathway.css. Base material and controls are in base.css. */
+/* elute — Detail: the title band, the three answers and the page map, the case against, safety, before a
+ * trial, your call. The pathway's rules are in pathway.css; base material and controls in base.css. */
 
 .detail {
   display: grid;
-  gap: var(--space-2xl);
+  gap: var(--space-xl);
 }
 
 /* ---- Title band ------------------------------------------------------------------- */
@@ -11,9 +11,8 @@
 .detail__title {
   display: grid;
   grid-template-columns: 1fr 320px;
-  padding-bottom: var(--space-md);
   gap: var(--space-2xl);
-  align-items: end;
+  align-items: flex-start;
 }
 .detail__title-main {
   display: grid;
@@ -28,15 +27,7 @@
 .detail__name {
   margin: var(--space-xs) 0 var(--space-sm);
 }
-.detail__for {
-  color: var(--color-ink-muted);
-}
 .detail__class {
-  font-size: var(--text-lg);
-  line-height: var(--line-4);
-  font-weight: var(--weight-medium);
-}
-.detail__mechanism {
   font-size: var(--text-md);
   line-height: var(--line-3);
   color: var(--color-ink-muted);
@@ -44,19 +35,6 @@
 .detail__draft {
   margin-left: var(--space-sm);
   font-style: italic;
-}
-.detail__evidence {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-top: var(--space-sm);
-  min-height: var(--size-control);
-}
-.detail__evidence-text {
-  font-weight: var(--weight-medium);
-}
-.detail__evidence .drivers {
-  margin-left: auto;
 }
 .detail__title-aside {
   justify-self: end;
@@ -134,7 +112,81 @@
   text-align: right;
 }
 
-/* ---- Sections ------------------------------------------------------------------------ */
+/* ---- The three answers and the page map, in one paper strip ---------------------------------- */
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.4fr;
+  border: var(--line-width) solid var(--color-line);
+  background: var(--color-surface);
+  margin-bottom: var(--space-xs);
+}
+.fact,
+.pagemap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border-left: var(--line-width) solid var(--color-line);
+  min-width: 0;
+}
+.fact:first-child {
+  border-left: 0;
+}
+.fact__k {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-faint);
+}
+.fact__v {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+}
+.fact__v.critical {
+  color: var(--color-critical);
+}
+.fact__s {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+.pagemap ol {
+  display: flex;
+  flex-direction: column;
+}
+.pagemap a {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: var(--space-xs);
+  align-items: baseline;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.pagemap a:hover .pagemap__w {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pagemap__n {
+  font-size: var(--text-xs);
+  color: var(--color-ink-faint);
+}
+.pagemap__w {
+  font-weight: var(--weight-medium);
+}
+.pagemap__c {
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+
+/* ---- Sections: a number, a title, what the section is for, a status at the right --------------- */
 
 .detail__body {
   display: grid;
@@ -146,10 +198,18 @@
 }
 .section__head {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-md);
   min-height: var(--line-4);
+}
+.section__n {
+  display: inline-block;
+  width: var(--size-control);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-text);
+  color: var(--color-ink-faint);
 }
 .section__status,
 .section__count {
@@ -168,6 +228,8 @@
 }
 .section__hero-n {
   font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
   font-size: var(--text-xl);
   line-height: var(--line-4);
   letter-spacing: var(--tracking-display);
@@ -183,7 +245,7 @@
   align-items: start;
 }
 
-/* ---- Critical appraisal ---------------------------------------------------------------- */
+/* ---- The case against ---------------------------------------------------------------- */
 
 .objections {
   overflow: hidden;
@@ -195,7 +257,7 @@
   color: var(--color-ink-muted);
 }
 .objection + .objection {
-  border-top: var(--line-width) solid var(--color-line-soft);
+  border-top: var(--line-width) solid var(--color-line);
 }
 .objection__row {
   display: grid;
@@ -206,13 +268,6 @@
   min-height: 80px;
   padding: var(--space-sm) 0;
   text-align: left;
-  transition: background-color var(--duration-base) var(--ease-out);
-}
-.objection__row:hover .objection__claim {
-  color: var(--color-accent-strong);
-}
-.objection__claim {
-  transition: color var(--duration-base) var(--ease-out);
 }
 .objection__n {
   color: var(--color-ink-faint);
@@ -222,40 +277,25 @@
   font-size: var(--text-lg);
   line-height: var(--line-4);
   font-weight: var(--weight-medium);
+  transition: color var(--duration-base) var(--ease-out);
+}
+.objection__row:hover .objection__claim {
+  color: var(--color-accent-strong);
 }
 .objection__src {
   font-size: var(--text-sm);
   color: var(--color-ink-muted);
   white-space: nowrap;
 }
-/* The mark: a plus that turns into a minus */
+/* The mark: a plus, a minus once open */
 .objection__mark {
-  position: relative;
-  width: 16px;
-  height: 16px;
+  display: inline-flex;
   justify-self: center;
+  color: var(--color-ink-faint);
+  transition: color var(--duration-base) var(--ease-out);
 }
-.objection__mark::before,
-.objection__mark::after {
-  content: '';
-  position: absolute;
-  background: var(--color-ink-faint);
-  transition: transform var(--duration-base) var(--ease-out);
-}
-.objection__mark::before {
-  left: 0;
-  top: 7px;
-  width: 16px;
-  height: 2px;
-}
-.objection__mark::after {
-  left: 7px;
-  top: 0;
-  width: 2px;
-  height: 16px;
-}
-.objection__mark--open::after {
-  transform: scaleY(0);
+.objection__row:hover .objection__mark {
+  color: var(--color-ink);
 }
 .objection__body {
   display: grid;
@@ -264,8 +304,8 @@
   max-width: 64ch;
 }
 .objection__evidence {
-  font-size: 18px;
-  line-height: 28px;
+  font-size: var(--text-md);
+  line-height: var(--line-3);
 }
 .objection__evidence strong {
   font-weight: var(--weight-bold);
@@ -277,6 +317,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0 var(--space-xs);
+}
+.objections__more {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm) 0;
+  border-top: var(--line-width) solid var(--color-line);
+  text-align: left;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+  transition: color var(--duration-base) var(--ease-out);
+}
+.objections__more:hover {
+  color: var(--color-ink);
 }
 
 /* ---- Claim panel (under the pathway) and evidence rows ---------------------------------- */
@@ -313,9 +367,11 @@
   position: absolute;
   top: var(--space-sm);
   right: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: var(--size-control-sm);
   height: var(--size-control-sm);
-  font-size: var(--text-lg);
   color: var(--color-ink-faint);
   transition: color var(--duration-base) var(--ease-out);
 }
@@ -404,12 +460,13 @@
   min-height: 144px;
   padding: var(--space-sm);
   text-align: left;
-  transition: box-shadow var(--duration-base) var(--ease-out);
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+.step:hover {
+  border-color: var(--color-line-strong);
 }
 .step--on {
-  box-shadow:
-    inset 0 0 0 1px var(--color-ink),
-    0 24px 48px -28px oklch(var(--shadow-ink) / 0.28);
+  border-color: var(--color-ink);
 }
 .step__n {
   color: var(--color-ink-faint);
@@ -417,8 +474,7 @@
 }
 .step__condition {
   font-size: var(--text-sm);
-  line-height: var(--line-2);
-  line-height: 18px;
+  line-height: var(--line-3);
 }
 .step__word {
   font-size: var(--text-sm);
@@ -474,70 +530,3 @@
   display: flex;
   justify-content: flex-end;
 }
-
-/* ---- Empty ---------------------------------------------------------------------- */
-
-.empty {
-  display: grid;
-  gap: var(--space-sm);
-  max-width: var(--measure);
-}
-
-/* ---- Detail, paper and ink (20 Sep): the three answers, a page map, numbered sections ------------ */
-
-.detail__title { margin-bottom: 24px; align-items: flex-start; }
-.detail__name { margin-top: 6px; }
-.detail__class { font-size: 15px; color: var(--ink-muted); margin-top: 8px; }
-.detail__mechanism, .detail__evidence { display: none; }
-
-.facts {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1.4fr;
-  border: 1px solid var(--hair);
-  margin-bottom: 56px;
-}
-.fact, .pagemap {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 18px 24px 20px;
-  border-left: 1px solid var(--hair);
-  min-width: 0;
-}
-.fact:first-child { border-left: 0; }
-.fact__k { font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: var(--ink-faint); }
-.fact__v { display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 26px; font-weight: 500; color: var(--ink); }
-.fact__v.critical { color: var(--color-critical); }
-.fact__s { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
-.pagemap ol { display: flex; flex-direction: column; gap: 4px; }
-.pagemap a {
-  display: grid;
-  grid-template-columns: 20px 1fr auto;
-  gap: 10px;
-  align-items: baseline;
-  font-size: 14px;
-  color: var(--ink);
-  text-decoration: none;
-}
-.pagemap a:hover .pagemap__w { text-decoration: underline; text-underline-offset: 3px; }
-.pagemap__n { font-size: 12px; color: var(--ink-faint); }
-.pagemap__w { font-weight: 500; }
-.pagemap__c { font-size: 12px; color: var(--ink-muted); }
-
-.section__head { align-items: flex-start; }
-.section__n { display: inline-block; width: 36px; color: var(--ink-faint); font-weight: 500; font-size: 16px; letter-spacing: 0; }
-.section__purpose { margin-top: 6px; font-size: 14px; line-height: 20px; color: var(--ink-muted); max-width: 64ch; }
-.objections__more {
-  display: block;
-  width: 100%;
-  padding: 14px 24px;
-  border-top: 1px solid var(--hair);
-  text-align: left;
-  font-size: 14px;
-  color: var(--ink-muted);
-}
-.objections__more:hover { color: var(--ink); background: var(--paper-raised); }
-.detail__body { gap: 64px; }
-.detail { gap: 40px; }
-.detail__title { padding-bottom: 0; margin-bottom: 0; }
-.facts { margin-bottom: 8px; }

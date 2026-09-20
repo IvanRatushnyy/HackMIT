@@ -19,8 +19,8 @@ No keys, no server: v1 runs on curated fixtures. The one live surface is the pat
 
 | Screen | Route | What it does |
 |---|---|---|
-| Appraise | `/` | One field for a drug, a condition, or a pair, three example chips, the shard beside it; the **+** opens paste a paper (PMID, DOI, abstract) and shows what was read before anything runs |
-| Working | `/q/parkinsons-disease` | The evidence ledger builds step by step in three beats (the question, the source, what came back); finished steps open beside it |
+| Appraise | `/` | Under the five stages (centred under the header on every page, the current one in ink): `prove it to me`, one field for a drug, a condition, or a pair, and three example words |
+| Working | `/q/parkinsons-disease` | Ten checks as ten boxes that light up one at a time, each with its question, its source and what came back; the current step's records arrive beneath |
 | Results | same route | Two registers, *tested in placebo-controlled trials* (by outcome, then size) and *not yet tested against placebo* (by unresolved prerequisites), each with its rule printed; a row opens into the four questions a scientist asks. List or board (by trial stage). |
 | Detail | `/q/parkinsons-disease/nilotinib` | Critical appraisal; the pathway panel (below); the mechanism chain with a label on every link and the weakest link marked; safety in the likely trial population; the five prerequisites a trial would assume; your call |
 | Pathway | on Detail | The hypothesis drawn as biology: the drug in the blood, the barrier it must cross, the molecules it acts on in the brain, the outcome in the patient. Inhibition is a bar, phosphorylation a circle, transport a diamond. Every action of the hypothesis is weighted and labelled by the evidence rules and opens its claim's evidence when selected; background biology is grey. Beside it, Reactome's own diagram of a pathway the target is actually filed under, muted, the target flagged. Under both, the fine print: where the target sits, whether it is tractable, the route, what the drug has to cross, and what the target is filed under. Live from Open Targets and Reactome; for nilotinib it says "ABL1 appears in 13 curated Reactome pathways. None is this hypothesis." Records without a drawing get the chain as a line. |
@@ -51,8 +51,8 @@ Three people who did not build the interface, the nilotinib case, verbatim answe
 
 ```
 PRD Elute.md                 the product requirements document
-DESIGN.md, design/           the design system: type, color, 8px grid, the shard, the reprint material
-docs/redesign/               the 20 Sep redesign note, screenshots, type specimen
+DESIGN.md, design/           the design system: type, color, 8px grid, the shard, the paper material
+docs/redesign/               the 20 Sep notes, screenshots (shots/restore is the current state), shot scripts
 docs/superpowers/specs/      the frontend design spec and its review history
 src/data/types.ts            the fixture contract a backend fills
 src/data/source.ts           the DataSource seam; FixtureSource replays bundled JSON

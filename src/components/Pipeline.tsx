@@ -6,34 +6,32 @@
  * so the person sees the work as it happens without reading a log. Click a finished box to see its records. */
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { BookOpenText, Brain, ChartBar, Check, ClipboardText, Crosshair, Dna, Flask, Graph, MagnifyingGlass, Pill, ShieldCheck, Target, WarningCircle, type Icon } from '@phosphor-icons/react'
 import type { EntityKind, ISODate, LedgerRow } from '../data/types'
 import { ledgerResult } from '../lib/evidence'
 import { EASE_OUT } from '../lib/motion'
 import { plain } from './evidence'
 import { question } from './Ledger'
 
-/** One line icon per step, in the same stroke as the stage rail. */
-const ICON: Record<string, React.ReactNode> = {
-  'Resolve the query': <path d="M7 12a5 5 0 1 0 10 0a5 5 0 1 0-10 0M15.5 15.5L20 20" />,
-  'Disease → targets with genetic evidence': <path d="M6 3c0 6 12 6 12 12M18 3c0 6-12 6-12 12M6 21c0-2 1-3 3-3M18 21c0-2-1-3-3-3M8 8h8M8 16h8" />,
-  'Targets → approved drugs': <path d="M8.5 3.5l12 12a4 4 0 0 1-5.7 5.7l-12-12a4 4 0 0 1 5.7-5.7zM5.5 9.5l9 9" />,
-  'Drug → targets and pathways': <path d="M12 3v3M12 18v3M3 12h3M18 12h3M12 7a5 5 0 1 0 0 10a5 5 0 1 0 0-10M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2" />,
-  'Targets → conditions with evidence': <path d="M12 3v3M12 18v3M3 12h3M18 12h3M12 7a5 5 0 1 0 0 10a5 5 0 1 0 0-10M12 11a1 1 0 1 0 0 2a1 1 0 1 0 0-2" />,
-  'Mechanism paths ≤ 4 hops': <path d="M4 6a2 2 0 1 0 4 0a2 2 0 1 0-4 0M16 12a2 2 0 1 0 4 0a2 2 0 1 0-4 0M4 18a2 2 0 1 0 4 0a2 2 0 1 0-4 0M8 6.5l8 4.5M8 17.5l8-4.5" />,
-  'Registered trials, blinding and n extracted': <path d="M8 4h8v3H8zM6 6h12v14H6zM9 12h6M9 16h4" />,
-  'Literature, study design classified': <path d="M4 5a2 2 0 0 1 2-2h6v16H6a2 2 0 0 0-2 2zM20 5a2 2 0 0 0-2-2h-6v16h6a2 2 0 0 1 2 2z" />,
-  'CNS exposure': <path d="M12 3v18M4 8h5M4 12h5M4 16h5M15 12h5M17 9l3 3-3 3" />,
-  'Safety in the likely population': <path d="M12 3l8 3v6c0 5-3.5 8-8 9c-4.5-1-8-4-8-9V6zM9 12l2 2 4-4" />,
-  'Objections — each must cite a ledger line': <path d="M4 7h12M4 12h16M4 17h10M19 4l-4 4M15 4l4 4" />,
-  'Confidence drivers': <path d="M5 20V10M10 20V4M15 20v-8M20 20v-5M3 20h18" />,
+/** One glyph per step, from the same set as the stages. */
+const ICON: Record<string, Icon> = {
+  'Resolve the query': MagnifyingGlass,
+  'Disease → targets with genetic evidence': Dna,
+  'Targets → approved drugs': Pill,
+  'Drug → targets and pathways': Crosshair,
+  'Targets → conditions with evidence': Target,
+  'Mechanism paths ≤ 4 hops': Graph,
+  'Registered trials, blinding and n extracted': ClipboardText,
+  'Literature, study design classified': BookOpenText,
+  'CNS exposure': Brain,
+  'Safety in the likely population': ShieldCheck,
+  'Objections — each must cite a ledger line': WarningCircle,
+  'Confidence drivers': ChartBar,
 }
 
 function StepIcon({ step }: { step: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {ICON[step] ?? <path d="M5 12h14" />}
-    </svg>
-  )
+  const Glyph = ICON[step] ?? Flask
+  return <Glyph size={16} aria-hidden="true" />
 }
 
 /** A source string like "Open Targets Platform · MONDO" becomes its first name. */
@@ -73,13 +71,7 @@ export function Pipeline({
               <button type="button" className="pipe__hit" disabled={state !== 'done'} onClick={() => onSelect(selected === i ? null : i)} aria-pressed={isShown && state === 'done'}>
                 <span className="pipe__head">
                   <span className="pipe__icon">
-                    {state === 'done' ? (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M5 12.5l4.5 4.5L19 7" />
-                      </svg>
-                    ) : (
-                      <StepIcon step={row.step} />
-                    )}
+                    {state === 'done' ? <Check size={16} weight="bold" aria-hidden="true" /> : <StepIcon step={row.step} />}
                   </span>
                   <span className="pipe__n">{String(i + 1).padStart(2, '0')}</span>
                 </span>

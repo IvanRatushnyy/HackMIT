@@ -167,10 +167,9 @@ export function Export({ banner }: { banner: string }) {
 }
 
 function Shell({ children }: { children?: React.ReactNode }) {
-  const { query = '', candidate = '' } = useParams()
   return (
     <main className="page">
-      <Header stage="share" links={{ research: `/q/${query}`, candidates: `/q/${query}`, appraisal: `/q/${query}/${candidate}` }} />
+      <Header stage="share" />
       <div className="col">{children}</div>
     </main>
   )

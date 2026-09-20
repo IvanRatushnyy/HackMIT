@@ -7,6 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { source } from '../data/source'
 import { StartupDone } from '../components/frame'
 import { Splash } from '../components/Splash'
+import { prefersReducedMotion } from '../lib/splash'
 import { Entry } from '../screens/Entry'
 import { Query } from '../screens/Query'
 import { Detail } from '../screens/Detail'
@@ -17,7 +18,7 @@ const FALLBACK = 'Fixture mode. Not a clinical decision tool. Curated from dated
 
 export function App() {
   const [banner, setBanner] = useState(FALLBACK)
-  const [started, setStarted] = useState(true) // PROTOTYPE: startup screen off for the landing vibe check (was prefersReducedMotion)
+  const [started, setStarted] = useState(prefersReducedMotion)
   const start = useCallback(() => setStarted(true), [])
   useEffect(() => {
     source

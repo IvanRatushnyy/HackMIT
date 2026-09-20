@@ -12,7 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@paper-design/shaders-react": "^0.0.81",
+    "@phosphor-icons/react": "^2.1.10",
     "html2canvas-pro": "^2.4.4",
     "motion": "^13.4.0",
     "react": "^19.1.0",

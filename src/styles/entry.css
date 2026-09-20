@@ -1,310 +1,68 @@
-/* elute — Entry: the ask box on paper, centred in the space under the header; the shard rippling behind;
- * one ripple outward on submit; paste a paper beneath. */
+/* elute — Entry: under the flow, the title, one sentence and the field, one centred stack. The header band
+ * is the page's brand element; nothing else is drawn. */
 
-.entry {
-  position: relative;
-  flex: 1 1 auto;
+.land {
+  flex: 1 1 auto; /* the space under the flow; the stack sits in the middle of it, the same air above and below */
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--col-pad);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: var(--space-xl) var(--col-pad) var(--space-3xl);
-  overflow: hidden;
-  isolation: isolate;
+  justify-content: center;
+  gap: var(--space-xl);
 }
 
-/* The shard: the one composition on the page, to the right of the box, its planes moving slowly against
- * each other. The box is paper, so no text sits on it. */
-.entry__bg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 48%;
-  z-index: 0;
-  pointer-events: none;
+/* Arrival. Under the startup screen the blocks wait; when the screen lifts, the band composes, the flow fades
+ * in, and then the blocks come in the way every block does, 80ms apart. A later visit plays the arrival at once. */
+.land--wait .arrive {
+  animation: none;
+  opacity: 0;
 }
-.entry__shard {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  animation: entry-shard-in 1200ms var(--ease-out) both;
-}
-@keyframes entry-shard-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.entry__loop {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5;
-}
-@media (prefers-reduced-motion: reduce) {
-  .entry__shard { animation: none; }
-  .entry__loop { display: none; }
+.land--go .arrive {
+  --arrive-after: calc(var(--band-cascade) + var(--duration-base));
 }
 
-.entry__block {
-  position: relative;
-  z-index: 1;
+/* The title, two lines, and one sentence under it */
+.land__lead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+.land__title {
+  font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
+  font-size: clamp(88px, 9vw, 128px);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  text-transform: lowercase;
+  color: var(--color-ink);
+}
+.land__body {
+  max-width: 48ch;
+  font-size: var(--text-md);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+
+/* The field: one rule of ink under it, the button at its end, the examples beneath */
+.land__ask {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   width: 100%;
   max-width: 896px;
 }
-
-/* Arrival. Under the startup screen the box waits; when the screen lifts and the header band has composed,
- * the box comes in already there at slightly larger bounds and soft, settling to size. */
-.entry--wait .ask-wrap {
-  opacity: 0;
-}
-.entry--go .ask-wrap {
-  animation: arrive var(--duration-arrive) 720ms both;
-}
-.entry--settled .ask-wrap {
-  animation: arrive var(--duration-arrive) both;
-}
-
-/* One ripple from the box outward: a circle the width of the page, scaled up and fading */
-.entry__ripple {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1600px;
-  height: 1600px;
-  margin: -800px 0 0 -800px;
-  border-radius: 50%;
-  border: 1px solid var(--color-accent);
-  background: var(--slate-tint);
-  opacity: 0;
-  transform: scale(0.2);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ---- The ask box ------------------------------------------------------------------- */
-
-.ask-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  width: 100%;
-}
-.ask {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  align-items: start;
-  gap: var(--space-md);
-  min-height: 224px;
-  padding: var(--space-lg);
-  transition: box-shadow var(--duration-arrive) var(--ease-out), transform var(--duration-slow) var(--ease-out);
-}
-.ask:focus-within {
-  box-shadow:
-    inset 0 1px 0 oklch(100% 0 0 / 0.75),
-    inset 0 0 0 1px oklch(41.5% 0.137 359 / 0.35),
-    0 1px 2px oklch(var(--shadow-ink) / 0.04),
-    0 32px 64px -28px oklch(41.5% 0.137 359 / 0.45);
-}
-.ask--launching {
-  transform: scale(0.99);
-}
-.ask__input {
-  display: block;
-  width: 100%;
-  min-height: calc(var(--line-4) * 2);
-  max-height: calc(var(--line-4) * 5);
-  padding: 0;
-  border: 0;
-  background: none;
-  resize: none;
-  overflow-y: auto;
-  font-size: var(--text-lg);
-  line-height: var(--line-4);
-}
-.ask__input:focus {
-  outline: none;
-}
-.ask__input::placeholder {
-  color: var(--color-ink-faint);
-}
-.ask__actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-/* The paste circle: outlined; the send circle: ink. The two circles on the page. */
-.ask__plus,
-.ask__send {
-  width: var(--size-control-lg);
-  height: var(--size-control-lg);
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    color var(--duration-base) var(--ease-out),
-    background-color var(--duration-base) var(--ease-out),
-    box-shadow var(--duration-base) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out),
-    opacity var(--duration-base) var(--ease-out);
-}
-.ask__plus {
-  color: var(--color-ink-muted);
-  box-shadow: inset 0 0 0 var(--line-width) var(--color-line-strong);
-}
-.ask__plus:hover,
-.ask__plus[aria-expanded='true'] {
-  color: var(--color-ink);
-  box-shadow: inset 0 0 0 var(--line-width) var(--color-ink);
-}
-.ask__send {
-  background: var(--color-surface-inverse);
-  color: var(--color-ink-inverse);
-}
-.ask__send:hover {
-  background: var(--neutral-700);
-}
-.ask__plus:active,
-.ask__send:active {
-  transform: scale(0.98);
-}
-.ask__send:disabled {
-  opacity: 0.32;
-  cursor: default;
-  transform: none;
-}
-
-.ask__under {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding: 0 var(--space-xs);
-}
-.ask__examples {
-  display: flex;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
-}
-.ask__examples .chip {
-  background: transparent;
-}
-.ask__note {
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-  color: var(--color-ink-muted);
-}
-
-/* ---- Paste a paper (opens under the box) ---------------------------------------- */
-
-.paste {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-.paste__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.paste__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
-.paste__none,
-.paste__stop,
-.paste__cite {
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-  color: var(--color-ink-muted);
-}
-.paste__read {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-  padding-top: var(--space-sm);
-  border-top: var(--line-width) solid var(--color-line-soft);
-}
-.paste__facts {
-  display: grid;
-  grid-template-columns: 128px 1fr;
-  gap: 0 var(--space-sm);
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-}
-.paste__facts dt {
-  color: var(--color-ink-faint);
-}
-
-/* ---- The landing (20 Sep, paper and ink) --------------------------------------------------------- */
-
-.land {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 40px 80px 64px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-.land__top {
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  align-items: end;
-  gap: 40px;
-  min-height: 300px;
-}
-.land__lead {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.land__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(88px, 9vw, 152px);
-  line-height: 0.86;
-  letter-spacing: -0.04em;
-  text-transform: lowercase;
-  color: var(--ink);
-}
-.land__body {
-  margin: 0;
-  max-width: 560px;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--ink-muted);
-}
-.land__art {
-  width: 100%;
-  height: 320px;
-  justify-self: end;
-}
-
-/* The field: the pivot of the page */
-.land__ask {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.land__label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink-muted);
-}
 .land__field {
   display: flex;
   align-items: center;
-  gap: 24px;
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 12px;
+  gap: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-ink);
 }
 .land__input {
   flex: 1 1 auto;
@@ -312,89 +70,46 @@
   border: 0;
   background: none;
   padding: 0;
-  font: inherit;
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+  font-size: var(--text-xl);
+  line-height: var(--line-6);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
 }
-.land__input::placeholder { color: var(--ink-faint); font-weight: 400; }
-.land__input:focus { outline: none; }
-.land__go {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 48px;
-  padding: 0 20px;
-  background: var(--ink);
-  color: var(--paper);
-  font: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  border: 0;
-  cursor: pointer;
-  transition: opacity 200ms ease-out, background-color 200ms ease-out;
+.land__input::placeholder {
+  color: var(--color-ink-faint);
 }
-.land__go svg { width: 18px; height: 18px; }
-.land__go:hover { background: #222; }
-.land__go:disabled { opacity: 0.3; cursor: default; }
+.land__input:focus {
+  outline: none;
+}
+.land__field .btn svg {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
 .land__examples {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 20px;
-  font-size: 14px;
+  gap: var(--space-xs) var(--space-md);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
 }
-.land__try { color: var(--ink-faint); }
 .land__example {
-  border: 0;
-  background: none;
-  padding: 0;
-  font: inherit;
-  color: var(--ink-2);
+  color: var(--color-accent);
   text-decoration: underline;
   text-underline-offset: 4px;
-  text-decoration-color: var(--hair);
-  cursor: pointer;
+  text-decoration-color: var(--color-line);
+  transition: color var(--duration-base) var(--ease-out), text-decoration-color var(--duration-base) var(--ease-out);
 }
-.land__example:hover { color: var(--ink); text-decoration-color: currentColor; }
-.land__note { margin: 0; font-size: 13px; color: var(--ink-muted); }
-
-/* What happens next: the four stages after this one, as a row of boxes */
-.land__next {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border: 1px solid var(--hair);
+.land__example:hover {
+  color: var(--color-accent-strong);
+  text-decoration-color: currentColor;
 }
-.land__step {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 10px;
-  row-gap: 8px;
-  align-items: center;
-  padding: 20px 24px 22px;
-  border-left: 1px solid var(--hair);
+.land__example:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
-.land__step:first-child { border-left: 0; }
-.land__step-icon {
-  display: inline-flex;
-  width: 28px;
-  height: 28px;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--ink-2);
-  color: var(--ink-2);
-}
-.land__step-icon svg { width: 16px; height: 16px; }
-.land__step-n { font-size: 13px; font-weight: 500; color: var(--ink-faint); }
-.land__step-word { font-size: 16px; font-weight: 600; color: var(--ink); }
-.land__step-line {
-  grid-column: 1 / -1;
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--ink-muted);
+.land__note {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
 }

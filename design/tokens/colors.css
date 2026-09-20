@@ -2,7 +2,7 @@
  *
  * Four brand colours and a neutral ramp tinted toward the ink hue (276). Slate and raspberry each come in
  * three steps (deep, mid, tint) defined in OKLCH so the steps are perceptually even. Components use the
- * semantic tokens, never the primitives.
+ * semantic tokens, never the primitives. The page is the sunken neutral; every panel is white paper.
  *
  * Contrast on --color-surface (paper):
  *   ink 19.6:1   slate 5.9:1   slate-deep 8.9:1   raspberry 9.1:1   raspberry-deep 12.5:1
@@ -81,10 +81,4 @@
   --evidence-refuted:       var(--raspberry);
   --evidence-dimmed:        var(--dust);
 
-  /* ---- Kept for older rules; the glass material is retired ------------- */
-  --color-glass:          var(--color-surface);
-  --color-glass-hover:    var(--color-surface-raised);
-  --color-glass-selected: var(--color-surface-selected);
-  --color-glass-line:     var(--color-line-soft);
-  --color-glass-shade:    oklch(13.1% 0.016 276 / 0.14);
 }

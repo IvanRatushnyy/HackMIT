@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { Header, Kicker } from '../components/frame'
+import { Header } from '../components/frame'
 import { Pipeline } from '../components/Pipeline'
 import { formatDate } from '../components/evidence'
 import { rowDurations, source } from '../data/source'
@@ -91,15 +91,13 @@ export function Query() {
   const total = q?.ledger.rows.length ?? 0
   return (
     <main className="page">
-      <Header stage={phase === 'results' ? 'candidates' : 'research'} links={{ research: `/q/${query}` }} />
+      <Header stage={phase === 'results' ? 'candidates' : 'research'} />
       {q && (
         <div className="col">
           {phase === 'working' && (
             <div className="working-title arrive">
               <div className="title__main">
-                <Kicker>2 research</Kicker>
                 <h1 className="display-sm">checking {q.heading}</h1>
-                <p className="purpose">Ten questions, each asked of a public database. What comes back is the evidence every later page cites.</p>
               </div>
               <p className="working-title__count" aria-live="polite">
                 <b>{Math.min(done, total)}</b> of {total} done{recorded ? '' : ', scripted replay'}
@@ -109,7 +107,6 @@ export function Query() {
           {phase === 'results' && page && (
             <div className="title arrive">
               <div className="title__main">
-                <Kicker>3 candidates</Kicker>
                 <h1 className="display-sm">{q.heading}</h1>
                 <p className="purpose">
                   {page.candidates.length} approved drugs with human data in this indication as of {formatDate(today)}. Open one to read the case against it.{' '}

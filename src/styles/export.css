@@ -50,19 +50,14 @@
   padding: var(--space-sm) var(--space-md);
   display: flex;
   flex-direction: column;
-  gap: 4px;
   max-width: var(--measure);
 }
 .preview__section {
   display: flex;
   flex-direction: column;
-  gap: 4px;
   font-size: var(--text-sm);
   line-height: var(--line-3);
   max-width: var(--measure);
-}
-.preview__section .kicker {
-  margin-bottom: 4px;
 }
 .preview__foot {
   margin-top: auto;

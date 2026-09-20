@@ -3,6 +3,7 @@
  * row opens the same four questions as a stepper in place. Rendered on /q/:query once the ledger has run. */
 
 import { Link, useNavigate } from 'react-router-dom'
+import { ArrowRight } from '@phosphor-icons/react'
 import { bestEvidenceText, OutcomeChip, plain } from '../components/evidence'
 import type { CandidateDetail, ResultsPage, TrialStage } from '../data/types'
 import { bestEvidenceAt, resolveTimeline, todayDate } from '../lib/evidence'
@@ -118,9 +119,7 @@ function Row({ c, rank, page }: { c: CandidateDetail; rank: number; page: Result
         )}
       </div>
       <Link className="results__open" to={path} aria-label={`Open ${drugFirst ? c.condition : c.name}`} onClick={(e) => e.stopPropagation()}>
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <ArrowRight size={20} aria-hidden="true" />
       </Link>
     </div>
   )

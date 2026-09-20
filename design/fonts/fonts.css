@@ -1,42 +1,35 @@
-/* elute — web fonts: two faces from Google Fonts (OFL).
+/* elute — web fonts, two faces
  *
- * Lusitana         display face, Regular and Bold (no italic). The wordmark, page titles, section titles, numerals.
- * Instrument Sans  text face, variable (wght 400–700, wdth 75–100), upright and italic, tabular figures.
- *                  Everything else: interface text, rows, controls, and what the record says.
+ * Aujournuit  display face, variable width axis (wdth 50–200). The wordmark at the Airy width (175%); the
+ *             titles that matter most at the Regular width (100%), always lowercase.
+ * Supreme     text face, variable weight axis (wght 100–800), upright and italic. Everything else.
  *
- * Import this file once, before tokens/typography.css. Files and licences sit beside this file.
+ * Import this file once, before tokens/typography.css.
  */
 
 @font-face {
-  font-family: "Lusitana";
-  src: url("./Lusitana/Lusitana-Regular.ttf") format("truetype");
+  font-family: "Aujournuit";
+  src: url("./Aujournuit-VariableVF.ttf") format("truetype") tech("variations"),
+       url("./Aujournuit-VariableVF.ttf") format("truetype-variations");
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Lusitana";
-  src: url("./Lusitana/Lusitana-Bold.ttf") format("truetype");
-  font-weight: 700;
+  font-stretch: 50% 200%;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Instrument Sans";
-  src: url("./InstrumentSans/InstrumentSans.ttf") format("truetype") tech("variations"),
-       url("./InstrumentSans/InstrumentSans.ttf") format("truetype-variations");
-  font-weight: 400 700;
-  font-stretch: 75% 100%;
+  font-family: "Supreme";
+  src: url("./Supreme-Variable.ttf") format("truetype") tech("variations"),
+       url("./Supreme-Variable.ttf") format("truetype-variations");
+  font-weight: 100 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Instrument Sans";
-  src: url("./InstrumentSans/InstrumentSans-Italic.ttf") format("truetype") tech("variations"),
-       url("./InstrumentSans/InstrumentSans-Italic.ttf") format("truetype-variations");
-  font-weight: 400 700;
-  font-stretch: 75% 100%;
+  font-family: "Supreme";
+  src: url("./Supreme-VariableItalic.ttf") format("truetype") tech("variations"),
+       url("./Supreme-VariableItalic.ttf") format("truetype-variations");
+  font-weight: 100 800;
   font-style: italic;
   font-display: swap;
 }
@@ -44,17 +37,16 @@
 /* Metric-matched fallbacks so text does not jump when the real fonts arrive (hhea ascent and descent). */
 
 @font-face {
-  font-family: "Lusitana Fallback";
+  font-family: "Aujournuit Fallback";
   src: local("Georgia"), local("Times New Roman");
-  ascent-override: 95%;
-  descent-override: 25%;
+  ascent-override: 95.8%;
+  descent-override: 20%;
   line-gap-override: 0%;
 }
-
 @font-face {
-  font-family: "Instrument Sans Fallback";
+  font-family: "Supreme Fallback";
   src: local("Helvetica Neue"), local("Arial");
-  ascent-override: 97%;
-  descent-override: 25%;
+  ascent-override: 98%;
+  descent-override: 28%;
   line-gap-override: 0%;
 }

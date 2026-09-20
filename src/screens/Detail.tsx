@@ -65,14 +65,13 @@ export function Detail() {
 
   return (
     <main className="page">
-      <Header stage="appraisal" links={{ research: `/q/${query}`, candidates: `/q/${query}` }} />
+      <Header stage="appraisal" />
       <div className="col detail">
         <motion.div className="detail__title" {...arrive(reduce)}>
           <div className="detail__title-main">
             <p className="detail__back">
               <Link to={backTo.to}>← {backTo.word}</Link>
             </p>
-            <p className="kicker">4 appraisal</p>
             <h1 className="display-hero detail__name">{c.name}</h1>
             <p className="detail__class">
               {c.drug_class} · for {c.condition} · approved for {c.approved_indication}

@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { Minus, Plus } from '@phosphor-icons/react'
 import type { CandidateDetail, Cutoff, Source } from '../data/types'
 import { resolvePrerequisite, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
 import { EASE_OUT } from '../lib/motion'
@@ -78,7 +79,6 @@ export function Objections({ candidate, cutoff, sourcesHref }: { candidate: Cand
           <h2 className="display-xs" id="objections">
             <span className="section__n">1</span>the case against
           </h2>
-          <p className="section__purpose">The strongest objections, in order of consequence, each dated and cited. Open one for the evidence.</p>
         </div>
         <span className="section__count">
           <AnimatePresence mode="popLayout" initial={false}>
@@ -105,7 +105,9 @@ export function Objections({ candidate, cutoff, sourcesHref }: { candidate: Cand
                   <span className="objection__n display-xs">{i + 1}</span>
                   <span className="objection__claim">{o.claim}</span>
                   <span className="objection__src">{srcs.map(shortCite).join(', ')}</span>
-                  <span className={`objection__mark${isOpen ? ' objection__mark--open' : ''}`} aria-hidden="true" />
+                  <span className="objection__mark" aria-hidden="true">
+                    {isOpen ? <Minus size={16} /> : <Plus size={16} />}
+                  </span>
                 </button>
                 <div className={`grow${isOpen ? ' grow--open' : ''}`} aria-hidden={!isOpen}>
                   <div>
@@ -173,7 +175,6 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
           <h2 className="display-xs" id="safety">
             safety
           </h2>
-          <p className="section__purpose">What the label means for the people who would be in this trial.</p>
         </div>
       </div>
       <div className="panel panel--pad safety">
@@ -245,7 +246,6 @@ export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: Candida
           <h2 className="display-xs" id="prereqs">
             <span className="section__n">3</span>before a trial
           </h2>
-          <p className="section__purpose">Five things that would have to be true first. Select one for its status and evidence.</p>
         </div>
         <span className="section__hero">
           <AnimatePresence mode="popLayout" initial={false}>
@@ -344,7 +344,6 @@ export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: 
           <h2 className="display-xs" id="call">
             <span className="section__n">4</span>your call
           </h2>
-          <p className="section__purpose">Recorded in your words and attributed to you. It goes on the last slide of the deck, or not at all.</p>
         </div>
       </div>
       <div className="panel panel--pad call">
