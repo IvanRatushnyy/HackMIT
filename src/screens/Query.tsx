@@ -3,7 +3,7 @@
  * Results: a grouped list (not yet refuted / refuted in controlled studies) or a board by trial stage. */
 
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { DataNote, Header, Kicker } from '../components/frame'
 import { WorkingRow, type RowState } from '../components/Ledger'
 import { bestEvidenceText, formatClock, formatDate, OutcomeChip } from '../components/evidence'
@@ -23,7 +23,14 @@ export function Query({ banner }: { banner: string }) {
   const [phase, setPhase] = useState<Phase>('loading')
   const [done, setDone] = useState(0) // rows completed
   const [page, setPage] = useState<ResultsPage | undefined>()
-  const [view, setView] = useState<'list' | 'board'>('list')
+  const [params, setParams] = useSearchParams()
+  const view: 'list' | 'board' = params.get('view') === 'board' ? 'board' : 'list'
+  const setView = (v: 'list' | 'board') => {
+    const p = new URLSearchParams(params)
+    if (v === 'board') p.set('view', 'board')
+    else p.delete('view')
+    setParams(p, { replace: true })
+  }
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
   const [elapsed, setElapsed] = useState(0)
   const started = useRef(0)
@@ -329,7 +336,15 @@ function Board({ page }: { page: ResultsPage }) {
               const be = bestEvidenceAt(c, todayDate(c))!
               const weak = resolveTimeline(c.weakest_link, todayDate(c))
               return (
-                <div key={c.slug} className="panel card rise" style={{ '--i': si + i } as React.CSSProperties} onClick={() => navigate(candidatePath(page, c))} role="link" tabIndex={0}>
+                <div
+                  key={c.slug}
+                  className="panel card rise"
+                  style={{ '--i': si + i } as React.CSSProperties}
+                  onClick={() => navigate(candidatePath(page, c))}
+                  onKeyDown={(e) => e.key === 'Enter' && navigate(candidatePath(page, c))}
+                  role="link"
+                  tabIndex={0}
+                >
                   <span className="display-xs">{drugFirst ? c.condition : c.name}</span>
                   <span className="cell__line">
                     <OutcomeChip be={be} />

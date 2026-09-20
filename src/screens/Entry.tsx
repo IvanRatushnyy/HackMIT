@@ -1,7 +1,7 @@
 /* elute — Entry: one field with the Appraise button, three mode examples, and the recent list. */
 
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { DataNote, Header, Kicker } from '../components/frame'
 import { SearchField } from '../components/SearchField'
 import { PastePaper } from '../components/PastePaper'
@@ -20,7 +20,8 @@ type RecentRow = { q: QueryRecord; at: string; meta: string }
 export function Entry({ banner }: { banner: string }) {
   const navigate = useNavigate()
   const [rows, setRows] = useState<RecentRow[]>([])
-  const [paste, setPaste] = useState(false)
+  const [params] = useSearchParams()
+  const [paste, setPaste] = useState(params.get('paste') === '1')
 
   useEffect(() => {
     const seed = ['parkinsons-disease', 'nilotinib--parkinsons-disease', 'metformin']
@@ -67,7 +68,9 @@ export function Entry({ banner }: { banner: string }) {
             <div className="panel" role="list">
               {rows.map((r) => (
                 <div key={r.q.slug} className="panel__row recent__row" role="listitem" onClick={() => navigate(`/q/${r.q.slug}`)}>
-                  <span className="display-xs recent__name">{r.q.heading}</span>
+                  <Link className="display-xs recent__name" to={`/q/${r.q.slug}`} onClick={(e) => e.stopPropagation()}>
+                    {r.q.heading}
+                  </Link>
                   <span className="recent__meta">{r.meta}</span>
                   <span className="recent__when">{r.at}</span>
                 </div>

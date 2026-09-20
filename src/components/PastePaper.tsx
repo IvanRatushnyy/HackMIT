@@ -2,14 +2,17 @@
  * anything runs, so a wrong read is caught in two seconds. Unmatched text never navigates. */
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Kicker } from './frame'
 import { readPaper, type Paper } from '../fixtures/papers'
 
 export function PastePaper({ onClose }: { onClose: () => void }) {
   const navigate = useNavigate()
-  const [text, setText] = useState('')
-  const [paper, setPaper] = useState<Paper | null | undefined>(undefined)
+  const [params] = useSearchParams()
+  // ?paste=1&text=… pre-fills and reads, so the moment is deep-linkable for the demo.
+  const initial = params.get('text') ?? ''
+  const [text, setText] = useState(initial)
+  const [paper, setPaper] = useState<Paper | null | undefined>(initial ? (readPaper(initial) ?? null) : undefined)
 
   const read = () => setPaper(readPaper(text) ?? null)
 
