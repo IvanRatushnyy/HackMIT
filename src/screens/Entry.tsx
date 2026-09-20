@@ -1,13 +1,12 @@
-/* elute — Entry: the ask box, with paste a paper behind its + button, centred in the space under the header.
- * Mounted under the startup screen, the box arrives after it, once the header band has composed. Later
- * visits fade in like any other page. */
+/* elute — Entry: stage 1 of 4. Under the flow, the title, one sentence, and the field, centred. Under the
+ * startup screen the blocks wait; when it lifts and the header band has composed, they arrive in turn. */
 
-import { useContext, useId, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { Header, SHARD, StartupDone } from '../components/frame'
-import { Ask } from '../components/Ask'
-import { PastePaper } from '../components/PastePaper'
-import { GROUND_PLANES } from '../lib/shard'
+import { useContext, useState } from 'react'
+import { ArrowRight } from '@phosphor-icons/react'
+import { Header, StartupDone } from '../components/frame'
+import { useAsk } from '../components/useAsk'
+
+const EXAMPLES = ['nilotinib for Parkinson’s']
 
 /* wait: under the startup screen · go: arriving after it · settled: an ordinary page reveal */
 type Arrival = 'wait' | 'go' | 'settled'
@@ -18,23 +17,63 @@ function useArrival(): Arrival {
   return !underSplash ? 'settled' : done ? 'go' : 'wait'
 }
 
-/* The band's cascade, for the stylesheet to wait out before the box arrives */
-const BAND = { '--shard-n': SHARD.planes.length, '--shard-ground': GROUND_PLANES } as React.CSSProperties
-
 export function Entry() {
-  const [params] = useSearchParams()
-  const [paste, setPaste] = useState(params.get('paste') === '1')
-  const pasteId = useId()
+  const t = useAsk()
   const arrival = useArrival()
-
   return (
     <main className="page">
-      <Header />
-      <div className={`col col--narrow entry entry--${arrival}`} style={BAND}>
-        <div className="entry__block">
-          <Ask pasteOpen={paste} pasteId={pasteId} onPaste={() => setPaste((p) => !p)} />
-          {paste && <PastePaper id={pasteId} onClose={() => setPaste(false)} />}
+      <Header stage="ask" />
+      <div className={`land land--${arrival}`}>
+        <div className="land__lead arrive" style={{ '--i': 0 } as React.CSSProperties}>
+          <h1 className="land__title">
+            find the trials
+            <br />
+            worth running
+          </h1>
+          <p className="land__body">
+            Name a drug and a disease. Elute reads the targets, trials and papers, shows where the case is weakest, and tells you what to test first. Every claim is dated and sourced.
+          </p>
         </div>
+
+        <form
+          className="land__ask arrive"
+          style={{ '--i': 2 } as React.CSSProperties}
+          onSubmit={(e) => {
+            e.preventDefault()
+            t.submit()
+          }}
+        >
+          <div className="land__field">
+            <input
+              id="ask"
+              className="land__input"
+              type="text"
+              aria-label="A drug for a condition, for example nilotinib for Parkinson’s disease"
+              placeholder="which drug, for which condition?"
+              value={t.text}
+              onChange={(e) => t.onChange(e.target.value)}
+              autoComplete="off"
+              autoFocus
+            />
+            <button type="submit" className="btn btn--primary btn--lg" disabled={!t.text.trim() || t.launching}>
+              appraise
+              <ArrowRight size={16} weight="bold" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="land__examples" aria-label="Examples">
+            <span className="faint">try:</span>
+            {EXAMPLES.map((word) => (
+              <button key={word} type="button" className="land__example" onClick={() => t.go(word)} disabled={t.launching}>
+                {word}
+              </button>
+            ))}
+          </div>
+          {t.note && (
+            <p className="land__note" role="status">
+              {t.note}
+            </p>
+          )}
+        </form>
       </div>
     </main>
   )

@@ -1,7 +1,8 @@
-/* elute — web fonts
+/* elute — web fonts, two faces
  *
- * Aujournuit  display face, variable width axis (wdth 50–200). Big titles only.
- * Supreme     text face, variable weight axis (wght 100–800), upright and italic.
+ * Aujournuit  display face, variable width axis (wdth 50–200). The wordmark at the Airy width (175%); the
+ *             titles that matter most at the Regular width (100%), always lowercase.
+ * Supreme     text face, variable weight axis (wght 100–800), upright and italic. Everything else.
  *
  * Import this file once, before tokens/typography.css.
  */
@@ -24,7 +25,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Supreme";
   src: url("./Supreme-VariableItalic.ttf") format("truetype") tech("variations"),
@@ -34,8 +34,7 @@
   font-display: swap;
 }
 
-/* Metric-matched fallbacks so text does not jump when the real fonts arrive.
- * Overrides come from the fonts' own vertical metrics (hhea, 1000 upm). */
+/* Metric-matched fallbacks so text does not jump when the real fonts arrive (hhea ascent and descent). */
 
 @font-face {
   font-family: "Aujournuit Fallback";
@@ -44,7 +43,6 @@
   descent-override: 20%;
   line-gap-override: 0%;
 }
-
 @font-face {
   font-family: "Supreme Fallback";
   src: local("Helvetica Neue"), local("Arial");

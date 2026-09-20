@@ -33,7 +33,7 @@ describe('nilotinib expected labels (spec §7.3)', () => {
 
   it('c5 at Jul 2016 carries the single-source qualifier', () => {
     const r = deriveLabel(nilotinib.chain.claims[4], nilotinib.sources, cutoff('jul-2016'))
-    expect(r.qualifier).toBe('n = 12 · open-label · not replicated')
+    expect(r.qualifier).toBe('n = 12, open-label, not replicated')
   })
 
   it('c3 carries its scope', () => {

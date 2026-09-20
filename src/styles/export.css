@@ -1,0 +1,83 @@
+/* elute — Export screen styles. Base material and controls are in base.css. */
+
+.export {
+  display: grid;
+  grid-template-columns: 384px 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+.export__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: sticky;
+  top: var(--space-xl);
+}
+.export__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.export__formats {
+  display: flex;
+  gap: var(--space-xs);
+}
+.export__actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+.preview {
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  min-height: 720px;
+}
+.preview__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-md);
+  border-bottom: var(--line-width) solid var(--color-ink);
+}
+.preview__meta {
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+.preview__call {
+  background: var(--color-surface-sunken);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  max-width: var(--measure);
+}
+.preview__section {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  max-width: var(--measure);
+}
+.preview__foot {
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: var(--line-width) solid var(--color-line-soft);
+  color: var(--color-ink-faint);
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  max-width: var(--measure);
+}
+
+@media print {
+  .export {
+    display: block;
+  }
+  .export__side {
+    display: none;
+  }
+  .preview {
+    padding: 0;
+    min-height: 0;
+  }
+}

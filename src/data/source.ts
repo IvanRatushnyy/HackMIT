@@ -27,7 +27,7 @@ export interface DataSource {
   provenance(): Promise<Provenance>
 }
 
-const REPLAY_TOTAL_MS = 12_000
+const REPLAY_TOTAL_MS = 26_000
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
 

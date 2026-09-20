@@ -1,0 +1,50 @@
+/* elute — the startup screen: the hero from the mockup, once per page load. The planes compose, the wordmark
+ * fades in, the hero holds, the planes come apart, and the wordmark travels to its place in the header as the
+ * page fades in beneath. Timings come from the tokens; the schedule is computed in src/lib/splash.ts. */
+
+.splash {
+  --splash-word: var(--duration-slow); /* the wordmark's fade-in */
+  --splash-hold: 1000ms;               /* the composed hero on screen */
+  --splash-move: var(--duration-slow); /* the wordmark's travel to the header, the page fading in beneath */
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash);
+  display: grid;
+  grid-template-rows: var(--band-entry) 1fr;
+}
+.splash__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface);
+}
+.splash--move .splash__bg {
+  opacity: 0;
+  transition: opacity var(--splash-move) var(--ease-in-out);
+}
+.splash__band {
+  position: relative;
+}
+/* The mockup's wordmark: 128px at the page's 80px gutter, its baseline in the band's lower third */
+.splash__word {
+  position: absolute;
+  left: 80px;
+  top: 64px;
+  font-size: 128px;
+  opacity: 0;
+  transform-origin: 0 0;
+  transition:
+    opacity var(--splash-word) var(--ease-out),
+    transform var(--splash-move) var(--ease-in-out);
+}
+.splash--word .splash__word,
+.splash--decompose .splash__word,
+.splash--move .splash__word {
+  opacity: 1;
+}
+/* FLIP: --dx, --dy and --s are measured against the header's wordmark just before the move */
+.splash--move .splash__word {
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(var(--s, 1));
+}
+.splash__shard {
+  position: relative;
+}

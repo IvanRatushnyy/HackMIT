@@ -1,0 +1,181 @@
+/* elute — the pathway drawing (SVG), the fine print, and the Reactome plate. */
+
+.pw__panel {
+  padding: var(--space-xs);
+  overflow: hidden;
+}
+.pw {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pw text {
+  font-family: var(--font-text);
+  letter-spacing: var(--tracking-text);
+  user-select: none;
+}
+.pw__band {
+  fill: oklch(13.1% 0.016 276 / 0.035);
+}
+.pw__band-label {
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  fill: var(--color-ink-faint);
+}
+
+/* molecules */
+.pw__mol rect {
+  fill: var(--color-surface);
+  stroke: var(--color-ink);
+  stroke-width: 1;
+}
+.pw__mol text {
+  font-size: 16px;
+  fill: var(--color-ink);
+}
+.pw__mol--drug rect {
+  stroke-width: 2;
+}
+.pw__mol--process rect {
+  stroke-dasharray: 4 3;
+}
+.pw__mol--process text,
+.pw__mol--cell text {
+  font-size: 14px;
+  fill: var(--color-ink-muted);
+}
+.pw__mol--cell rect,
+.pw__mol--outcome rect {
+  fill: var(--color-surface-sunken);
+}
+.pw__mol--cell rect {
+  stroke: var(--color-line-strong);
+}
+
+/* actions */
+.pw__edge {
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.pw__edge.is-off,
+.pw__status.is-off {
+  opacity: 0.32;
+}
+.pw__status {
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.pw__hit {
+  cursor: pointer;
+  outline: none;
+}
+.pw__hit:focus-visible + text,
+.pw__hit:focus-visible {
+  outline: 2px solid var(--color-focus);
+}
+.pw__status {
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  fill: var(--color-ink-muted);
+  paint-order: stroke;
+  stroke: var(--color-surface);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.pw__edge--hyp .pw__status {
+  stroke: var(--color-surface);
+}
+.pw__status--established { fill: var(--evidence-established); }
+.pw__status--contested { fill: var(--evidence-contested); }
+.pw__status--single-source { fill: var(--evidence-single-source); }
+.pw__status--unknown { fill: var(--evidence-unknown); }
+.pw__status--refuted { fill: var(--evidence-refuted); }
+.pw__status--weak {
+  fill: var(--color-critical);
+}
+.pw__status--prov {
+  fill: var(--color-ink-faint);
+  font-weight: var(--weight-regular);
+}
+
+/* ---- Fine print and the plate ------------------------------------------------------- */
+
+.pw__fine {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-xl);
+  align-items: start;
+  padding: var(--space-sm) var(--space-xs) 0;
+}
+.pw__more {
+  padding: 0 var(--space-xs);
+}
+.pw__more summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-accent);
+  width: max-content;
+}
+.pw__more summary::-webkit-details-marker {
+  display: none;
+}
+.pw__more[open] summary {
+  color: var(--color-ink-muted);
+}
+.fine {
+  display: grid;
+  grid-template-columns: 136px 1fr;
+  gap: var(--space-xs) var(--space-md);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  max-width: 72ch;
+}
+.fine dt {
+  color: var(--color-ink-muted);
+}
+.fine dd {
+  margin: 0;
+}
+
+.plate {
+  display: grid;
+  gap: var(--space-xs);
+  justify-items: end;
+  margin: 0;
+}
+.plate__button {
+  display: block;
+  width: 160px;
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: 0 0 0 1px oklch(var(--shadow-ink) / 0.08);
+  transition: width var(--duration-slow) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+}
+.plate__button:hover {
+  box-shadow: 0 0 0 1px oklch(var(--shadow-ink) / 0.3);
+}
+.plate__button img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) contrast(0.9);
+  opacity: 0.85;
+  transition: filter var(--duration-base) var(--ease-out), opacity var(--duration-base) var(--ease-out);
+}
+.plate__button:hover img,
+.plate--open .plate__button img {
+  filter: none;
+  opacity: 1;
+}
+.plate--open .plate__button {
+  width: 320px;
+}
+.plate__caption {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-muted);
+  text-align: right;
+  max-width: 320px;
+}

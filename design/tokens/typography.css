@@ -1,42 +1,41 @@
 /* elute — typography tokens
  *
- * Aujournuit at the Regular width (100%) with −2% tracking: big titles only.
- * The wordmark alone is set at the Airy width (175%).
- * Supreme with −4% tracking, Regular weight for almost everything else.
+ * Aujournuit at the Regular width, tracking −2%, always lowercase: the titles that matter most (the landing
+ * headline, a page's title, a drug's name on Detail, a section's title). The wordmark alone is the Airy width.
+ * Supreme, tracking −4%, for everything else: Regular for text, Medium for names, emphasis and interactive labels.
  */
 
 :root {
   --font-display: "Aujournuit", "Aujournuit Fallback", Georgia, serif;
   --font-text:    "Supreme", "Supreme Fallback", system-ui, sans-serif;
-  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* the agent's-work panel only */
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* the tool-call blocks only */
 
-  --display-width:    100%;     /* Aujournuit "Regular" named instance: titles, names */
+  --display-width:    100%;     /* Aujournuit "Regular" named instance: titles */
   --wordmark-width:   175%;     /* Aujournuit "Airy" named instance: the wordmark only */
   --tracking-display: -0.02em;
   --tracking-text:    -0.04em;
 
   --weight-regular: 400;
-  --weight-medium:  500;  /* emphasis, interactive labels */
+  --weight-medium:  500;  /* names, emphasis, interactive labels, the evidence-label word */
   --weight-bold:    700;  /* only the number that must be read first */
 
-  /* Fixed rem scale for product UI, ratio ≈ 1.25.
-   * Each size pairs with a line height on the 8px grid. */
-  --text-xs:  0.75rem;   /* 12px  captions, dates, sources  line 16px */
-  --text-sm:  0.875rem;  /* 14px  secondary UI, metadata    line 24px */
-  --text-md:  1rem;      /* 16px  body                      line 24px */
-  --text-lg:  1.25rem;   /* 20px  section headings          line 32px */
-  --text-xl:  1.75rem;   /* 28px  key figures, confidence   line 32px */
-  --text-2xl: 2.5rem;    /* 40px  the headline figure       line 48px */
+  /* Fixed rem scale for product UI, ratio ≈ 1.25. Each size pairs with a line height on the 8px grid. */
+  --text-xs:  0.75rem;   /* 12px  captions, dates, sources, kickers   line 16px */
+  --text-sm:  0.875rem;  /* 14px  secondary UI, metadata, sub lines    line 24px */
+  --text-md:  1rem;      /* 16px  body                                 line 24px */
+  --text-lg:  1.25rem;   /* 20px  names, claims, register words        line 32px */
+  --text-xl:  1.75rem;   /* 28px  section titles                       line 32px */
+  --text-2xl: 2.5rem;    /* 40px  page titles                          line 48px */
 
-  /* Fluid sizes for Aujournuit titles on landing and marketing surfaces */
+  /* Fluid sizes for titles on landing surfaces */
   --display-md: clamp(2.25rem, 1.5rem + 3vw, 4rem);
   --display-lg: clamp(3.5rem, 2rem + 6vw, 7rem);
 
   /* Line heights in grid units (1rem = 16px = 2 units) */
-  --line-2: 1rem;      /* 16px */
-  --line-3: 1.5rem;    /* 24px */
-  --line-4: 2rem;      /* 32px */
-  --line-6: 3rem;      /* 48px */
+  --line-2: 1rem;
+  --line-3: 1.5rem;
+  --line-4: 2rem;
+  --line-6: 3rem;
   --leading-display: 1;  /* display titles: size sets the rhythm, margins snap it to grid */
   --measure: 65ch;
 }
@@ -52,11 +51,9 @@ body {
   font-size: var(--text-md);
   line-height: var(--line-3);
   color: var(--color-ink);
-  background: var(--color-surface);
 }
 
-/* Display: the wordmark, page titles, a drug or condition name as a heading.
- * Aujournuit titles are always lowercase; Supreme text keeps its casing. */
+/* Display: the titles that matter most. Aujournuit, Regular width, always lowercase. */
 .display {
   font-family: var(--font-display);
   font-stretch: var(--display-width);
@@ -80,10 +77,8 @@ body {
 .annotation { font-style: italic; color: var(--color-ink-muted); }
 .prose { max-width: var(--measure); }
 
-/* Supreme has proportional figures only (no tabular set), so columns of
- * numbers must be right-aligned rather than relying on equal digit widths. */
+/* Neither face has tabular figures, so columns of numbers are right-aligned. */
 .figure { text-align: right; font-variant-numeric: lining-nums; }
 
-/* The provenance block inside an expanded ledger row: tool, query, records.
- * No brand mono; the system's is honest enough. Tracking resets to 0. */
+/* The provenance block inside an expanded ledger row: tool, query, records. Tracking resets to 0. */
 .raw { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--line-3); letter-spacing: 0; }

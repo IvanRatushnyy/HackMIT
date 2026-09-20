@@ -65,7 +65,7 @@ describe('pathway layer', () => {
   it('marks only the drug → target link as curated by ChEMBL', () => {
     const claims = nilotinib.chain.claims
     expect(edgeCuration(claims[0], 0, [abl1]).kind).toBe('mechanism')
-    expect(edgeCuration(claims[1], 1, [abl1])).toEqual({ kind: 'uncurated', text: 'not a curated pathway · 3 sources' })
+    expect(edgeCuration(claims[1], 1, [abl1])).toEqual({ kind: 'uncurated', text: 'not a curated pathway, 3 sources' })
     expect(edgeCuration(claims[0], 0, undefined).kind).toBe('uncurated') // offline: nothing is asserted as curated
   })
 

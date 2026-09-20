@@ -1,95 +1,76 @@
-/* elute — base styles and page frame.
- * Tokens come from design/tokens/index.css. Every value here is on the 8px grid.
- * Surfaces: the page is the sunken neutral; reading panels are white with one 1px line. */
+/* elute — base stylesheet: reset, type roles, the page frame and header, the shard, the paper material,
+ * controls, evidence primitives, and motion. Screen-specific rules live in src/styles/<screen>.css.
+ *
+ * Material: the page is the sunken neutral; every reading surface is white paper with one 1px dust line and
+ * sharp corners, like the shard's planes. No blur, no shadow, no glow. Controls are sharp too; the only round
+ * things are the radio dots. One accent (slate); raspberry is rare by rule. */
+
+/* ---- Reset ------------------------------------------------------------------------ */
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
-html,
-body,
-#root {
-  min-height: 100%;
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
-
 body {
   margin: 0;
-  min-width: 1280px; /* v1 supports 1280 and up; below it the page scrolls sideways */
   background: var(--color-surface-sunken);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  min-width: 1280px; /* v1 supports 1280 and up; below it the page scrolls sideways */
 }
-
-h1,
-h2,
-h3,
-p,
-ul,
-ol,
-figure,
-pre {
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, pre {
   margin: 0;
 }
-
-ul,
-ol {
+ul, ol {
   padding: 0;
   list-style: none;
 }
-
-a {
-  color: var(--color-accent);
-  text-decoration: none;
+button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
 }
-a:hover {
-  text-decoration: underline;
-}
-
-button,
-input,
-textarea {
+textarea, input {
   font: inherit;
   letter-spacing: inherit;
   color: inherit;
 }
-
-button {
-  cursor: pointer;
-  background: none;
-  border: 0;
-  padding: 0;
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
 }
-
-:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+a:hover {
+  color: var(--color-accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
-
-strong {
+strong, b {
   font-weight: var(--weight-bold);
 }
 em {
   font-style: italic;
 }
-.medium {
-  font-weight: var(--weight-medium);
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
-.faint {
-  color: var(--color-ink-faint);
-}
-.critical {
-  color: var(--color-critical);
-}
-.nowrap {
-  white-space: nowrap;
+::selection {
+  background: var(--slate-tint);
 }
 
 /* ---- Type roles beyond the tokens ---------------------------------------------- */
 
-/* A kicker: the small lowercase label above a title or a panel ("recent", "claim", "evidence").
- * Nothing in elute is set in all caps; weight and colour do the labelling. */
+/* A kicker: the small lowercase label above a group the eye cannot otherwise separate. Nothing in elute is
+ * set in all caps; weight and colour do the labelling. */
 .kicker {
   font-size: var(--text-xs);
   line-height: var(--line-2);
@@ -97,51 +78,47 @@ em {
   color: var(--color-ink-muted);
 }
 
-/* Aujournuit roles: always lowercase */
-.display-lg,
-.display-md,
-.display-sm,
-.display-xs {
+/* Display roles: Aujournuit at the Regular width, always lowercase */
+.display-lg, .display-md, .display-sm, .display-xs, .display-hero {
   font-family: var(--font-display);
   font-stretch: var(--display-width);
   font-weight: 400;
   letter-spacing: var(--tracking-display);
   line-height: 1;
   text-transform: lowercase;
+  text-wrap: balance;
+  color: var(--color-ink);
 }
-.display-lg {
-  font-size: var(--display-lg);
-}
-.display-md {
-  font-size: var(--display-md);
-}
-.display-sm {
-  font-size: var(--text-2xl); /* 40px: page titles inside content */
-  line-height: var(--line-6);
-}
-.display-xs {
-  font-size: var(--text-xl); /* 28px: section titles, row names */
-  line-height: var(--line-4);
-}
+.display-lg { font-size: var(--display-lg); }
+.display-md { font-size: var(--display-md); }
+.display-hero { font-size: 96px; line-height: 88px; } /* the drug's name on Detail */
+.display-sm { font-size: var(--text-2xl); line-height: var(--line-6); } /* a page title */
+.display-xs { font-size: var(--text-xl); line-height: var(--line-4); } /* a section title */
+
+.muted { color: var(--color-ink-muted); }
+.faint { color: var(--color-ink-faint); }
+.critical { color: var(--color-critical); }
+.medium { font-weight: var(--weight-medium); }
+.nowrap { white-space: nowrap; }
+.annotation { font-style: italic; color: var(--color-ink-muted); }
+.prose { max-width: var(--measure); }
+.figure { text-align: right; font-variant-numeric: lining-nums; }
+.raw { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--line-3); letter-spacing: 0; }
 
 /* ---- Page frame ---------------------------------------------------------------- */
 
 .page {
+  --col-pad: 80px;       /* the column's side padding: text starts here */
+  --col-narrow: 1184px;  /* 1024 content + gutters: export */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-/* One content column on every page */
-.page {
-  --col-pad: 80px;       /* the column's side padding: text starts here */
-  --col-narrow: 1184px;  /* 1024 content + gutters: entry and export */
 }
 .col {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: var(--space-xl) var(--col-pad) var(--space-2xl);
+  padding: var(--space-xl) var(--col-pad) var(--space-3xl);
 }
 .col--narrow {
   max-width: var(--col-narrow);
@@ -172,14 +149,21 @@ em {
   gap: var(--space-sm);
   flex: none;
 }
+/* What this page is for, in one line under its title */
+.purpose {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+  max-width: 62ch;
+}
 
-/* ---- Header (every page): the wordmark, the shard band ------------------------------- */
+/* ---- Header (every page): the wordmark's white block, the shard band beside it -------------------- */
 
 .header {
   height: var(--header-height);
   display: grid;
-  /* The white block hugs the wordmark, 40px to its left (optically the same as the air above and below
-   * its ink) and 45px to its right, and the band starts at its edge: the same place on every page. */
+  /* The white block hugs the wordmark, 40px to its left (optically the same as the air above and below its
+   * ink) and 45px to its right, and the band starts at its edge: the same place on every page. */
   grid-template-columns: max-content 1fr;
   background: var(--color-surface); /* no line beneath: the white block meets the sunken page directly */
 }
@@ -188,6 +172,103 @@ em {
   align-items: center;
   padding: 0 45px 0 40px;
 }
+
+/* The flow: the four stages, centred under the header on every page, the current one in ink. The stages fade
+ * in one after another; under the startup screen they wait, and on the first page they follow the band. */
+.flow {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-md) var(--col-pad, 80px) 0;
+}
+.flow--hidden .stage {
+  animation: none;
+  opacity: 0;
+}
+.flow--in .stage {
+  --arrive-after: var(--band-cascade);
+}
+.flow + .col {
+  padding-top: var(--space-lg);
+}
+.stages {
+  display: flex;
+  align-items: center;
+}
+.stage {
+  display: flex;
+  align-items: center;
+}
+.stage + .stage::before {
+  content: '';
+  display: block;
+  width: var(--space-xl);
+  height: var(--line-width);
+  margin: 0 var(--space-sm);
+  background: var(--color-line);
+}
+.stage__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-ink-faint);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
+}
+a.stage__link:hover {
+  color: var(--color-ink-muted);
+}
+.stage__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-control-sm);
+  height: var(--size-control-sm);
+  border: var(--line-width) solid var(--color-line);
+  color: var(--color-ink-faint);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
+}
+.stage__box svg {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+.stage--now .stage__link {
+  color: var(--color-ink);
+}
+.stage--now .stage__box {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-ink-inverse);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-stretch: var(--wordmark-width); /* the one Airy setting; every other title is Regular */
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  text-transform: lowercase;
+  font-size: 48px;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.wordmark:hover {
+  text-decoration: none;
+}
+/* While the startup screen is up its wordmark stands in for the header's, and the page holds still */
+html[data-splash] {
+  overflow: hidden;
+}
+html[data-splash] .header .wordmark {
+  opacity: 0;
+}
+
 /* ---- The shard: thirteen planes, composed topmost first, decomposed bottommost first ------- */
 
 .shard {
@@ -218,233 +299,64 @@ em {
   animation-delay: calc(var(--k) * var(--shard-stagger) + var(--gap-out, 0) * var(--shard-ground-gap));
 }
 
-.wordmark {
-  font-family: var(--font-display);
-  font-stretch: var(--wordmark-width); /* the one Airy setting; every other title is Regular */
-  font-weight: 400;
-  letter-spacing: var(--tracking-display);
-  line-height: 1;
-  text-transform: lowercase;
-  font-size: 48px;
-  color: var(--color-ink);
-  text-decoration: none;
-}
-.wordmark:hover {
-  text-decoration: none;
-}
-/* While the startup screen is up its wordmark stands in for the header's, and the page holds still */
-html[data-splash] {
-  overflow: hidden;
-}
-html[data-splash] .header .wordmark {
-  opacity: 0;
-}
+/* ---- Paper: every reading surface ------------------------------------------------------ */
 
-/* ---- Panel: a glass reading surface -------------------------------------------------- */
-
-/* Every surface in the flow is the same glass as the ask box: translucent white, a hairline of light along
- * the inside edge, and a soft shadow behind it (a pseudo-element, inset from the top and let out below, so
- * it shows through the lower part and spills beneath). The shadow sits at z-index -1, which puts it behind
- * the panel's own background only while the panel is not a stacking context: a panel never carries a
- * transform, filter, opacity, or backdrop-filter of its own. The block that arrives is a wrapper. */
 .panel {
   position: relative;
-  background: var(--color-glass);
-  border-radius: var(--radius-glass);
-  box-shadow:
-    inset 0 1px 0 oklch(100% 0 0 / 0.7),
-    inset 0 0 0 1px oklch(100% 0 0 / 0.35);
+  padding: 0 var(--space-md);
+  background: var(--color-surface);
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-panel);
 }
 .panel--pad {
   padding: var(--space-md);
 }
+/* A row on paper: a hairline above every row but the first, a raised fill under the pointer */
 .panel__row {
   display: grid;
   align-items: center;
+  gap: var(--space-sm);
   min-height: 56px;
-  padding: 0 var(--space-md);
-  border-top: var(--line-width) solid var(--color-glass-line);
+  padding: 0;
+  border-top: var(--line-width) solid var(--color-line-soft);
+  text-align: left;
+  width: 100%;
+  transition: background-color var(--duration-base) var(--ease-out);
 }
-.panel__row:first-child {
-  border-top: 0;
-}
-/* A row's fill follows the panel's corners */
 .panel > .panel__row:first-child,
 .panel > :first-child > .panel__row:first-child {
-  border-top-left-radius: var(--radius-glass);
-  border-top-right-radius: var(--radius-glass);
+  border-top: 0;
 }
-.panel > .panel__row:last-child,
-.panel > :last-child > .panel__row:last-child {
-  border-bottom-left-radius: var(--radius-glass);
-  border-bottom-right-radius: var(--radius-glass);
+button.panel__row:hover,
+[role='listitem'].panel__row:hover {
+  background: var(--color-surface-raised);
 }
-
-/* The shadow behind a glass surface: the panel's pseudo-element, or the ask box's sibling. It turns
- * raspberry, with a glow gathering at the rim, while something is happening on the surface: the field
- * has focus, the ledger is running. */
-.panel::before,
-.ask__shadow {
-  position: absolute;
-  inset: var(--space-md) var(--space-md) calc(-1 * var(--space-xs));
-  border-radius: var(--radius-glass);
-  background: var(--glass-shade, var(--color-glass-shade));
-  box-shadow: 0 0 40px 8px var(--glass-rim, transparent);
-  filter: blur(24px);
-  pointer-events: none;
-  transition:
-    background-color var(--duration-arrive) var(--ease-out),
-    box-shadow var(--duration-arrive) var(--ease-out);
-}
-/* A panel can be tall, so its shade starts lower and is lighter than the box's, or the whole interior dims */
-.panel::before {
-  content: '';
-  z-index: -1;
-  inset: 40% var(--space-md) calc(-1 * var(--space-xs));
-  background: var(--glass-shade, oklch(13.1% 0.016 276 / 0.14));
-}
-.panel--working,
-.ask-wrap:focus-within {
-  --glass-shade: oklch(from var(--color-glow) l c h / 0.14);
-  --glass-rim: oklch(from var(--color-glow) l c h / 0.3);
-}
-@media (prefers-reduced-transparency: reduce) {
-  .panel,
-  .ask {
-    background: var(--color-surface);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-
-/* Table headers inside panels and lists */
 .thead {
   display: grid;
   align-items: end;
+  gap: var(--space-sm);
   padding: 0 var(--space-md) var(--space-xs);
 }
 .thead .kicker {
   color: var(--color-ink-faint);
 }
 
-/* ---- Controls ------------------------------------------------------------------------ */
-
-/* The ask box on Entry: a chat composer on the same glass as every panel, with a backdrop blur it can
- * afford because its shadow is a sibling (.ask__shadow) rather than its own pseudo-element: the box
- * animates its arrival, and an animated element would trap its own shadow in front of its background. */
-.ask-wrap {
-  position: relative;
-  width: 100%;
-}
-.ask {
-  position: relative;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  align-items: start;
-  gap: var(--space-md);
-  width: 100%;
-  min-height: 288px;
-  padding: var(--space-lg);
-  border-radius: var(--radius-glass);
-  background: var(--color-glass);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  backdrop-filter: blur(24px) saturate(1.2);
-  box-shadow:
-    inset 0 1px 0 oklch(100% 0 0 / 0.7),
-    inset 0 0 0 1px oklch(100% 0 0 / 0.35);
-}
-.ask__note {
-  margin-top: var(--space-xs);
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-}
-.ask__input {
-  display: block;
-  width: 100%;
-  min-height: calc(var(--line-3) * 2);
-  max-height: calc(var(--line-3) * 6);
-  padding: 0;
-  border: 0;
-  background: none;
-  resize: none;
-  overflow-y: auto;
-  font-size: var(--text-md);
-  line-height: var(--line-3);
-}
-.ask__input:focus {
-  outline: none;
-}
-.ask__input::placeholder {
-  color: var(--color-ink-faint);
-}
-.ask__actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-/* The paste button: an outlined circle of the same glass */
-.ask__plus {
-  width: var(--size-control-lg);
-  height: var(--size-control-lg);
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-ink-muted);
-  background: oklch(100% 0 0 / 0.4);
-  box-shadow: inset 0 0 0 var(--line-width) var(--color-line-strong);
-  transition:
-    color var(--duration-base) var(--ease-out),
-    box-shadow var(--duration-base) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
-}
-.ask__plus:hover,
-.ask__plus[aria-expanded='true'] {
-  color: var(--color-ink);
-  box-shadow: inset 0 0 0 var(--line-width) var(--color-ink);
-}
-.ask__plus:active {
-  transform: scale(0.98);
-}
-/* The send button: ink, like every primary action */
-.ask__send {
-  width: var(--size-control-lg);
-  height: var(--size-control-lg);
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-surface-inverse);
-  color: var(--color-ink-inverse);
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    background-color var(--duration-base) var(--ease-out),
-    opacity var(--duration-base) var(--ease-out);
-}
-.ask__send:hover {
-  background: var(--neutral-700);
-}
-.ask__send:active {
-  transform: scale(0.98);
-}
-.ask__send:disabled {
-  opacity: 0.4;
-  cursor: default;
-  transform: none;
-}
+/* ---- Controls: sharp, 32 / 40 / 48 tall ---------------------------------------------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
+  gap: var(--space-xs);
   height: var(--size-control);
   padding: 0 var(--space-sm);
   border: var(--line-width) solid var(--color-ink);
-  border-radius: var(--radius);
+  border-radius: var(--radius-control);
   font-weight: var(--weight-medium);
   white-space: nowrap;
   transition:
     transform var(--duration-fast) var(--ease-out),
-    background-color var(--duration-base) var(--ease-out);
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 .btn--lg {
   height: var(--size-control-lg);
@@ -473,7 +385,7 @@ html[data-splash] .header .wordmark {
   transform: none;
 }
 
-/* Segmented control: List | Board, Evidence as of, tabs. The active segment is ink. */
+/* Segmented control: List | Board, tabs, the evidence dates. The active segment is ink. */
 .seg {
   display: inline-flex;
   gap: var(--space-xs);
@@ -484,6 +396,7 @@ html[data-splash] .header .wordmark {
   display: inline-flex;
   align-items: center;
   border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-control);
   background: var(--color-surface);
   font-weight: var(--weight-medium);
   color: var(--color-ink);
@@ -492,6 +405,9 @@ html[data-splash] .header .wordmark {
     background-color var(--duration-base) var(--ease-out),
     color var(--duration-base) var(--ease-out),
     border-color var(--duration-base) var(--ease-out);
+}
+.seg__item:hover {
+  border-color: var(--color-line-strong);
 }
 .seg__item[aria-checked='true'],
 .seg__item[aria-selected='true'] {
@@ -503,13 +419,14 @@ html[data-splash] .header .wordmark {
   cursor: default;
 }
 
-/* Chip: an outlined word (a mode example, a trial outcome). Sharp, 32px. */
+/* Chip: an outlined word (a trial outcome). Sharp, 32px. */
 .chip {
   display: inline-flex;
   align-items: center;
   height: var(--size-control-sm);
   padding: 0 var(--space-xs);
   border: var(--line-width) solid var(--color-line-strong);
+  border-radius: var(--radius-control);
   background: var(--color-surface);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
@@ -528,13 +445,13 @@ html[data-splash] .header .wordmark {
   height: var(--size-control);
   padding: 0 var(--space-sm);
   border-color: var(--color-line);
-  transition: border-color var(--duration-base) var(--ease-out);
+  transition: border-color var(--duration-base) var(--ease-out), background-color var(--duration-base) var(--ease-out);
 }
 .chip--button:hover {
   border-color: var(--color-ink);
 }
 
-/* Radio pill for Your call */
+/* Radio pill for Your call: the dot is the one circle on the page */
 .choice {
   height: var(--size-control-lg);
   padding: 0 var(--space-sm);
@@ -542,6 +459,7 @@ html[data-splash] .header .wordmark {
   align-items: center;
   gap: var(--space-xs);
   border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-control);
   background: var(--color-surface);
   font-weight: var(--weight-medium);
   transition:
@@ -552,9 +470,12 @@ html[data-splash] .header .wordmark {
   content: '';
   width: 12px;
   height: 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-round);
   border: var(--line-width) solid var(--color-line-strong);
   transition: all var(--duration-base) var(--ease-out);
+}
+.choice:hover {
+  border-color: var(--color-line-strong);
 }
 .choice[aria-checked='true'] {
   border-color: var(--color-ink);
@@ -571,13 +492,18 @@ html[data-splash] .header .wordmark {
   min-height: 96px;
   padding: var(--space-sm);
   border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius-control);
   background: var(--color-surface);
   resize: vertical;
   line-height: var(--line-3);
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 .textarea:focus {
   outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--color-ink);
+}
+.textarea::placeholder {
+  color: var(--color-ink-faint);
 }
 
 .check {
@@ -585,8 +511,8 @@ html[data-splash] .header .wordmark {
   align-items: center;
   gap: var(--space-sm);
   min-height: 56px;
-  padding: 0 var(--space-md);
-  border-top: var(--line-width) solid var(--color-glass-line);
+  padding: 0;
+  border-top: var(--line-width) solid var(--color-line-soft);
   text-align: left;
   width: 100%;
 }
@@ -607,6 +533,14 @@ html[data-splash] .header .wordmark {
   box-shadow: inset 0 0 0 3px var(--color-surface);
 }
 
+/* A citation: [L7] in the accent, small */
+.cite {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
 /* ---- Evidence label: an 8px square and the word, never the colour alone -------------- */
 
 .label {
@@ -623,40 +557,30 @@ html[data-splash] .header .wordmark {
   background: currentColor;
   flex: none;
 }
-.label--established {
-  color: var(--evidence-established);
-}
-.label--contested {
-  color: var(--evidence-contested);
-}
-.label--single-source {
-  color: var(--evidence-single-source);
-}
-.label--unknown {
-  color: var(--evidence-unknown);
-}
-.label--refuted {
-  color: var(--evidence-refuted);
-}
+.label--established { color: var(--evidence-established); }
+.label--contested { color: var(--evidence-contested); }
+.label--single-source { color: var(--evidence-single-source); }
+.label--unknown { color: var(--evidence-unknown); }
+.label--refuted { color: var(--evidence-refuted); }
 .label__qualifier {
   font-weight: var(--weight-regular);
   color: var(--color-ink-muted);
   font-size: var(--text-sm);
 }
 
-/* ---- Driver bar ------------------------------------------------------------------------ */
+/* ---- Driver bar: four named segments with three pips each; never a number ------------ */
 
 .drivers {
   display: grid;
-  grid-template-columns: repeat(4, 56px);
+  grid-template-columns: repeat(4, 64px);
   gap: var(--space-xs);
-  width: 248px;
+  width: 280px;
   flex: none;
 }
 .drivers__seg {
   display: flex;
   flex-direction: column;
-  gap: 4px; /* half unit: inside a control only */
+  gap: 4px;
 }
 .drivers__word {
   font-size: var(--text-xs);
@@ -683,59 +607,39 @@ html[data-splash] .header .wordmark {
   background: var(--evidence-refuted);
 }
 
-/* ---- Motion: state changes only, opacity and transform only; nothing slides ------------ */
+/* ---- Empty states ------------------------------------------------------------------- */
+
+.empty {
+  display: grid;
+  gap: var(--space-sm);
+  max-width: var(--measure);
+}
+
+/* ---- Motion: state changes only; opacity, transform and blur; nothing slides ------------ */
 
 @keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes vanish {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
-
-/* A row that has just arrived fades in. --i staggers siblings by 40ms. */
 .fade {
   animation: appear var(--duration-base) var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 40ms);
+  animation-delay: calc(var(--i, 0) * 40ms + var(--arrive-after, 0ms));
 }
-
-/* A block arriving on a page, the way the ask box does: already there at slightly larger bounds and soft,
- * fading in and settling to size with one small undershoot, sharp by the time it stops. --i staggers
- * siblings by 40ms so a page reads as one reveal. On the block around a surface, never on a panel itself. */
+/* A block arriving on a page: already there at 102% and soft, fading in and settling to size. */
 .arrive {
   animation: arrive var(--duration-arrive) both;
-  animation-delay: calc(var(--i, 0) * 40ms);
+  animation-delay: calc(var(--i, 0) * 40ms + var(--arrive-after, 0ms));
 }
 @keyframes arrive {
-  0% {
-    opacity: 0;
-    transform: scale(1.03);
-    filter: blur(8px);
-    animation-timing-function: var(--ease-out);
-  }
-  62% {
-    opacity: 1;
-    transform: scale(0.996);
-    filter: blur(0);
-    animation-timing-function: var(--ease-in-out);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
+  0% { opacity: 0; transform: scale(1.02); filter: blur(6px); animation-timing-function: var(--ease-out); }
+  62% { opacity: 1; transform: scale(0.995); filter: blur(0); animation-timing-function: var(--ease-in-out); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
 }
-
-/* Disclosure bodies open as a height change on the grid, never a slide */
+/* A row expanding: a height change on the grid, never a slide */
 .grow {
   display: grid;
   grid-template-rows: 0fr;
@@ -752,23 +656,8 @@ html[data-splash] .header .wordmark {
 /* ---- Print --------------------------------------------------------------------------- */
 
 @media print {
-  body {
-    min-width: 0;
-    background: var(--color-surface);
-  }
-  .header,
-  .no-print {
-    display: none !important;
-  }
-  .col {
-    padding: 0;
-    max-width: none;
-  }
-  .panel {
-    background: #fff;
-    box-shadow: none;
-  }
-  .panel::before {
-    display: none;
-  }
+  body { background: white; min-width: 0; }
+  .header, .no-print { display: none !important; }
+  .panel { background: white; border: 1px solid #d3d3d3; }
+  .arrive, .fade { animation: none; }
 }

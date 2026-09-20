@@ -1,20 +1,21 @@
-/* elute — the evidence ledger while it runs (Working) and its provenance block.
- * Every count is derived from the row's dated records at the current cutoff. */
+/* elute — the evidence ledger's words: the question each step asks (Working's pipeline boxes) and its
+ * provenance block (Sources). Every count is derived from the row's dated records at the cutoff. */
 
-import type { ISODate, LedgerRow } from '../data/types'
+import type { EntityKind, ISODate, LedgerRow } from '../data/types'
 import { ledgerResult } from '../lib/evidence'
+import { plain } from './evidence'
 
 export function ProvenanceBlock({ row, cutoff, isToday }: { row: LedgerRow; cutoff: ISODate; isToday: boolean }) {
   const visible = row.records.filter((r) => r.published <= cutoff)
   const v = row.execution.verified
-  const verified = v.by === 'human' ? `yes — human, ${v.date}${v.initials ? ` (${v.initials})` : ''}` : 'no — automated'
+  const verified = v.by === 'human' ? `yes, human, ${v.date}${v.initials ? ` (${v.initials})` : ''}` : 'no, automated'
   const lines = [
     ['tool', row.execution.tool],
     ['query', row.execution.query],
     ...(row.execution.retry ? [['retried', `${row.execution.retry.reason} → ${row.execution.retry.query}`]] : []),
     ['run at', row.execution.run_at],
     ['records', `${ledgerResult(row, cutoff)}${isToday ? '' : ` on or before ${cutoff}`}`],
-    ['extracted', visible.length ? visible.map((r) => `${r.value}    ${r.published}`).join('\n            ') : '—'],
+    ['extracted', visible.length ? visible.map((r) => `${plain(r.value)}    ${r.published}`).join('\n            ') : 'none'],
     ['verified', verified],
   ]
   const r = row.reasoning
@@ -37,56 +38,30 @@ export function ProvenanceBlock({ row, cutoff, isToday }: { row: LedgerRow; cuto
   )
 }
 
-export type RowState = 'done' | 'running' | 'pending'
-
-/** One ledger row on the Working page: number and glyph, step, what came back, elapsed. */
-export function WorkingRow({
-  row,
-  index,
-  state,
-  cutoff,
-  selected,
-  onSelect,
-  durationMs,
-  recorded,
-}: {
-  row: LedgerRow
-  index: number
-  state: RowState
-  cutoff: ISODate
-  selected: boolean
-  onSelect: () => void
-  durationMs: number
-  recorded: boolean
-}) {
-  const glyph = state === 'done' ? (row.execution.retry ? '!' : '✓') : state === 'running' ? '●' : ''
-  const result =
-    state === 'done'
-      ? `${row.execution.retry ? `${row.execution.retry.reason} · retried · ` : ''}${ledgerResult(row, cutoff)}`
-      : state === 'running'
-        ? `${row.source} · running`
-        : row.source
-  const time = state === 'done' && recorded && row.elapsed_ms !== undefined ? `${(row.elapsed_ms / 1000).toFixed(1)} s` : state === 'running' ? 'running' : ''
-  return (
-    <li className="fade" style={{ '--i': index } as React.CSSProperties}>
-      <button
-        type="button"
-        className={`panel__row ledger__row ledger__row--${state}${selected ? ' ledger__row--selected' : ''}`}
-        onClick={state === 'done' ? onSelect : undefined}
-        disabled={state !== 'done'}
-        aria-pressed={selected}
-      >
-        <span className="ledger__num">
-          <span>{index + 1}</span>
-          <span className={`ledger__glyph${row.execution.retry && state === 'done' ? ' ledger__glyph--retry' : ''}`} aria-hidden="true">
-            {glyph}
-          </span>
-        </span>
-        <span className="ledger__step">{row.step}</span>
-        <span className="ledger__result">{result}</span>
-        <span className="ledger__time">{time}</span>
-        {state === 'running' && <span className="ledger__bar" style={{ '--dur': `${durationMs}ms` } as React.CSSProperties} aria-hidden="true" />}
-      </button>
-    </li>
-  )
+/** The question each step asks, in six words or fewer; the step's own name is the fallback. */
+const QUESTIONS: Record<string, string> = {
+  'Resolve the query': 'Which disease is this?',
+  'Disease → targets with genetic evidence': 'Which targets have genetic evidence?',
+  'Targets → approved drugs': 'Which approved drugs touch them?',
+  'Drug → targets and pathways': 'What does the drug act on?',
+  'Targets → conditions with evidence': 'Which conditions have evidence?',
+  'Mechanism paths ≤ 4 hops': 'How does it reach the disease?',
+  'Registered trials, blinding and n extracted': 'Has anyone tried this, how carefully?',
+  'Literature, study design classified': 'Which papers, and what kind?',
+  'CNS exposure': 'Does it reach the tissue?',
+  'Safety in the likely population': 'What does the label mean here?',
+  'Objections — each must cite a ledger line': 'What argues against it?',
+  'Confidence drivers': 'In what order, and why?',
+  // the backend's ten steps (src/data/api.ts)
+  'Target and disease biology': 'What does the drug act on?',
+  'Normalize to evidence': 'What counts as evidence here?',
+  'Historical visibility audit': 'What was visible, and when?',
+  'Claims and mechanism': 'How does it reach the disease?',
+  'Statuses, weakest link, stance': 'Which link is weakest?',
+  'Case for, case against, opinion': 'What argues against it?',
+  'Next question': 'What should be asked next?',
+}
+export function question(row: LedgerRow, kind: EntityKind): string {
+  if (row.step === 'Resolve the query' && kind !== 'condition') return 'Which drug is this?'
+  return QUESTIONS[row.step] ?? row.step
 }

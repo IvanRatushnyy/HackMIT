@@ -14,11 +14,11 @@ import { Detail } from '../screens/Detail'
 import { Sources } from '../screens/Sources'
 import { Export } from '../screens/Export'
 
-const FALLBACK = 'Fixture mode · not a clinical decision tool · curated from dated public sources.'
+const FALLBACK = 'Fixture mode. Not a clinical decision tool. Curated from dated public sources.'
 
 export function App() {
   const [banner, setBanner] = useState(FALLBACK)
-  const [started, setStarted] = useState(prefersReducedMotion) // reduced motion skips the startup screen
+  const [started, setStarted] = useState(prefersReducedMotion)
   const start = useCallback(() => setStarted(true), [])
   useEffect(() => {
     source

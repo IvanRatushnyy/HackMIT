@@ -1,12 +1,14 @@
 /* elute — color tokens
  *
- * Primitives are the four brand colors plus a neutral ramp tinted toward the
- * ink hue (276). Components use the semantic tokens, never the primitives.
+ * Four brand colours and a neutral ramp tinted toward the ink hue (276). Slate and raspberry each come in
+ * three steps (deep, mid, tint) defined in OKLCH so the steps are perceptually even. Components use the
+ * semantic tokens, never the primitives. The page is the sunken neutral; every panel is white paper.
  *
- * Contrast on --color-surface:
- *   ink 19.6:1   slate 5.9:1   raspberry 9.1:1
- *   ink-muted 5.4:1 (AA body text)   ink-faint 3.8:1 (large text and icons only)
+ * Contrast on --color-surface (paper):
+ *   ink 19.6:1   slate 5.9:1   slate-deep 8.9:1   raspberry 9.1:1   raspberry-deep 12.5:1
+ *   ink-muted 5.4:1 (AA body)   ink-faint 3.8:1 (large text, icons, label squares at 3:1+)
  *   dust 1.5:1 (lines and fills only, never text)
+ * Contrast on --color-stage (ink):  paper 19.6:1   dust 14.2:1   slate-light 7.1:1   raspberry-light 6.2:1
  */
 
 :root {
@@ -18,31 +20,33 @@
   --white:     oklch(99.0% 0.003 276);   /* #fbfcfe, never pure white */
 
   /* ---- Neutral ramp, hue 276 ------------------------------------------- */
-  --neutral-100: oklch(96.5% 0.004 276); /* #f3f3f6 */
-  --neutral-200: oklch(92.5% 0.005 276); /* #e5e6ea */
+  --neutral-100: oklch(96.5% 0.004 276);
+  --neutral-150: oklch(95.2% 0.006 276);
+  --neutral-200: oklch(92.5% 0.005 276);
   --neutral-300: var(--dust);
-  --neutral-500: oklch(60.0% 0.012 276); /* #7e8088 */
-  --neutral-600: oklch(52.0% 0.014 276); /* #666871 */
-  --neutral-700: oklch(42.0% 0.016 276); /* #4a4c56 */
+  --neutral-500: oklch(60.0% 0.012 276);
+  --neutral-600: oklch(52.0% 0.014 276);
+  --neutral-700: oklch(42.0% 0.016 276);
+  --neutral-800: oklch(24.0% 0.018 276);
 
-  /* ---- Accent variants ------------------------------------------------- */
-  --slate-strong:   oklch(42.0% 0.055 241); /* hover, pressed */
-  --slate-tint:     oklch(94.0% 0.015 241); /* selected row, active control */
-  --raspberry-tint: oklch(95.0% 0.020 359); /* a safety flag's expanded evidence */
+  /* ---- Accent steps ---------------------------------------------------- */
+  --slate-deep:      oklch(38.0% 0.060 241);
+  --slate-strong:    var(--slate-deep);
+  --slate-light:     oklch(76.0% 0.050 241);   /* on the ink stage */
+  --slate-tint:      oklch(94.0% 0.015 241);
+  --raspberry-deep:  oklch(32.0% 0.130 359);
+  --raspberry-light: oklch(72.0% 0.120 359);   /* on the ink stage */
+  --raspberry-tint:  oklch(95.5% 0.020 359);
 
   /* ---- Semantic: surfaces ---------------------------------------------- */
-  --color-surface:          var(--white);
-  --color-surface-sunken:   var(--neutral-100);
+  --color-surface:          var(--white);        /* paper: every reading surface */
+  --color-surface-sunken:   var(--neutral-150);  /* the ground the paper sits on */
+  --color-surface-raised:   oklch(97.8% 0.004 276); /* a row under the pointer, a step aside */
   --color-surface-selected: var(--slate-tint);
   --color-surface-critical: var(--raspberry-tint);
   --color-surface-inverse:  var(--black);
-
-  /* ---- Semantic: glass (every reading surface, and the ask box) ------- */
-  --color-glass:          oklch(99.0% 0.003 276 / 0.58); /* the translucent surface */
-  --color-glass-hover:    oklch(13.1% 0.016 276 / 0.04); /* a row under the pointer, a running step */
-  --color-glass-selected: oklch(49.6% 0.052 241 / 0.12); /* slate, the selected row */
-  --color-glass-line:     oklch(13.1% 0.016 276 / 0.10); /* dividers on glass */
-  --color-glass-shade:    oklch(13.1% 0.016 276 / 0.24); /* the shadow behind the ask box, before its blur; panels use 0.14 */
+  --color-stage:            var(--black);        /* the startup screen and the ledger's running row */
+  --color-stage-raised:     var(--neutral-800);
 
   /* ---- Semantic: ink --------------------------------------------------- */
   --color-ink:           var(--black);
@@ -50,25 +54,31 @@
   --color-ink-faint:     var(--neutral-500);
   --color-ink-on-accent: var(--white);
   --color-ink-inverse:   var(--white);
+  --color-ink-on-stage:  var(--white);
+  --color-ink-on-stage-muted: oklch(72% 0.010 276);
 
-  /* ---- Semantic: lines ------------------------------------------------- */
+  /* ---- Semantic: lines and shadow -------------------------------------- */
   --color-line:        var(--dust);
+  --color-line-soft:   oklch(13.1% 0.016 276 / 0.08);
   --color-line-strong: var(--neutral-500);
+  --shadow-ink:        13.1% 0.016 276; /* the L C H of every shadow, so shadows are tinted ink */
 
-  /* ---- Semantic: accent (slate is the only recurring color) ------------ */
+  /* ---- Semantic: accent (slate is the only recurring colour) ----------- */
   --color-accent:        var(--slate);
-  --color-accent-strong: var(--slate-strong);
+  --color-accent-strong: var(--slate-deep);
   --color-focus:         var(--slate);
 
-  /* ---- Semantic: critical (raspberry is rare by design) ---------------- */
-  --color-critical: var(--raspberry);      /* the safety flag, destructive actions */
-  --color-glow:     var(--raspberry);      /* the ask box's shadow while the field has focus */
+  /* ---- Semantic: critical (raspberry stays rare by rule) --------------- */
+  --color-critical:       var(--raspberry);
+  --color-critical-deep:  var(--raspberry-deep);
+  --color-glow:           var(--raspberry);
 
-  /* ---- Evidence labels (never color alone: the word is always shown) --- */
+  /* ---- Evidence labels (never colour alone: the word is always shown) --- */
   --evidence-established:   var(--black);
   --evidence-contested:     var(--slate);
   --evidence-single-source: var(--raspberry);
   --evidence-unknown:       var(--neutral-500);
-  --evidence-refuted:       var(--raspberry);  /* tested directly in a blinded controlled study and found false */
-  --evidence-dimmed:        var(--dust);       /* a claim outside the active filter */
+  --evidence-refuted:       var(--raspberry);
+  --evidence-dimmed:        var(--dust);
+
 }

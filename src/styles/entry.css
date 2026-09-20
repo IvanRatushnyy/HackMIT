@@ -1,0 +1,116 @@
+/* elute — Entry: under the flow, the title, one sentence and the field, one centred stack. The header band
+ * is the page's brand element; nothing else is drawn. */
+
+.land {
+  flex: 1 1 auto; /* the space under the flow; the stack sits in the middle of it, the same air above and below */
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--col-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+}
+
+/* Arrival. Under the startup screen the blocks wait; when the screen lifts, the band composes, the flow fades
+ * in, and then the blocks come in the way every block does, 80ms apart. A later visit plays the arrival at once. */
+.land--wait .arrive {
+  animation: none;
+  opacity: 0;
+}
+.land--go .arrive {
+  --arrive-after: calc(var(--band-cascade) + var(--duration-base));
+}
+
+/* The title, two lines, and one sentence under it */
+.land__lead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+.land__title {
+  font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
+  font-size: clamp(88px, 9vw, 128px);
+  line-height: 0.86;
+  letter-spacing: var(--tracking-display);
+  text-transform: lowercase;
+  color: var(--color-ink);
+}
+.land__body {
+  max-width: 48ch;
+  font-size: var(--text-md);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+
+/* The field: one rule of ink under it, the button at its end, the examples beneath */
+.land__ask {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 896px;
+}
+.land__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-ink);
+}
+.land__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: var(--text-md);
+  line-height: var(--line-3);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+}
+.land__input::placeholder {
+  color: var(--color-ink-faint);
+}
+.land__input:focus {
+  outline: none;
+}
+.land__field .btn svg {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+.land__examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs) var(--space-md);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+.land__example {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-line);
+  transition: color var(--duration-base) var(--ease-out), text-decoration-color var(--duration-base) var(--ease-out);
+}
+.land__example:hover {
+  color: var(--color-accent-strong);
+  text-decoration-color: currentColor;
+}
+.land__example:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.land__note {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}

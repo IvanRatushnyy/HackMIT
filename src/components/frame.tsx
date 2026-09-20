@@ -1,9 +1,11 @@
-/* elute — page frame: shard, wordmark, header, kicker, and the startup context. */
+/* elute — page frame: the shard, the wordmark, the header, the flow under it, the kicker, and the startup
+ * context. */
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import shardSvg from '../../design/shard/shard.svg?raw'
 import { GROUND_PLANES, parseShard } from '../lib/shard'
+import { Stages, type StageId } from './Stages'
 
 export const SHARD = parseShard(shardSvg)
 
@@ -40,8 +42,8 @@ export function Shard({
   )
 }
 
-/** True once the startup screen has lifted, or was skipped. The header band composes then, and Entry's
- * ask box arrives once the band has. */
+/** True once the startup screen has lifted, or was skipped. The header band composes then, and the first
+ * page's blocks arrive once the band has. */
 export const StartupDone = createContext(true)
 
 let bandComposed = false
@@ -64,19 +66,34 @@ export function Wordmark() {
 }
 
 /** The same header on every page: the wordmark (the way home; there is no search up here) centred in its
- * white block, then the shard band from the block's edge. */
-export function Header() {
+ * white block, then the shard band from the block's edge. Under it, centred, the four stages with the
+ * current one in ink; they fade in after the band has composed, and at once on later pages. Each stage is
+ * the way back to that part of the flow — `query`/`candidate`/`asof` are whatever this page already knows,
+ * so a stage the page can't address (no candidate picked yet, say) stays plain, not a link. */
+export function Header({ stage = 'ask', query, candidate, asof }: { stage?: StageId; query?: string; candidate?: string; asof?: string }) {
   const phase = useBandPhase()
+  const suffix = asof ? `?asof=${asof}` : ''
+  const hrefs: Partial<Record<StageId, string>> = { ask: '/' }
+  if (query) hrefs.research = `/q/${query}`
+  if (query && candidate) {
+    hrefs.appraisal = `/q/${query}/${candidate}${suffix}`
+    hrefs.share = `/q/${query}/${candidate}/export${suffix}`
+  }
   return (
-    <header className="header">
-      <div className="header__block">
-        <Wordmark />
-      </div>
-      <Shard className="header__shard" offsetY={280} phase={phase} />
-    </header>
+    <>
+      <header className="header">
+        <div className="header__block">
+          <Wordmark />
+        </div>
+        <Shard className="header__shard" offsetY={280} phase={phase} />
+      </header>
+      <nav className={`flow flow--${phase}`} aria-label="Stages">
+        <Stages current={stage} hrefs={hrefs} />
+      </nav>
+    </>
   )
 }
 
-export function Kicker({ children }: { children: React.ReactNode }) {
-  return <p className="kicker">{children}</p>
+export function Kicker({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <p className={`kicker${className ? ` ${className}` : ''}`}>{children}</p>
 }

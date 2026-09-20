@@ -43,19 +43,19 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
     sections.push({
       key: 'objections',
       heading: 'Critical appraisal',
-      lines: visibleObjections(c, d).map((o, i) => `${i + 1} · ${o.claim} ${o.evidence} (${cite(o.sources)})`),
+      lines: visibleObjections(c, d).map((o, i) => `${i + 1}. ${o.claim} ${o.evidence} (${cite(o.sources)})`),
     })
   }
 
   if (include.mechanism) {
     const lines = c.chain.claims.map((k, i) => {
       const r = deriveLabel(k, c.sources, d)
-      return `${i + 1} · ${k.text} — ${r.label}${r.qualifier ? ` (${r.qualifier})` : ''} — ${r.why}`
+      return `${i + 1}. ${k.text} Label: ${r.label}${r.qualifier ? ` (${r.qualifier})` : ''}. ${r.why}`
     })
     const weak = resolveTimeline(c.weakest_link, d)
     if (weak) {
       const k = c.chain.claims.find((x) => x.id === weak.claim)
-      if (k) lines.push(`Weakest link: ${k.short} — ${weak.why}`)
+      if (k) lines.push(`Weakest link: ${k.short}. ${weak.why}`)
     }
     sections.push({ key: 'mechanism', heading: 'Mechanism', lines })
   }
@@ -66,18 +66,18 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
       key: 'safety',
       heading: 'Safety',
       lines: safety
-        ? [`${safety.flag} — ${safety.kind}: ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`]
+        ? [`${safety.flag} (${safety.kind}): ${safety.reason}.`, safety.population, `(${cite(safety.sources)})`]
         : c.safety
           ? ['The label review in this record is dated after the selected evidence date.']
           : ['Not assessed: this record carries no safety review. Absence of a flag is missing data, not reassurance.'],
     })
     const prereqs = c.prerequisites.map((p) => {
       const s = resolvePrerequisite(p, d)
-      return `${p.condition}: ${s?.word ?? 'unknown'} — ${s?.note ?? ''}${s ? ` (${cite(s.sources)})` : ''}`
+      return `${p.condition}: ${s?.word ?? 'unknown'}. ${s?.note ?? ''}${s ? ` (${cite(s.sources)})` : ''}`
     })
     prereqs.push(`${unresolvedCount(c, d)} of ${c.prerequisites.length} unresolved at this date.`)
     const be = bestEvidenceAt(c, d)
-    if (be) prereqs.push(`Best evidence: ${be.design} · ${be.outcome}${be.n ? ` · n = ${be.n}` : ''}${be.label ? ` · ${be.label}` : ''}`)
+    if (be) prereqs.push(`Best evidence: ${be.design}, ${be.outcome}${be.n ? `, n = ${be.n}` : ''}${be.label ? ` (${be.label})` : ''}`)
     sections.push({ key: 'safety', heading: 'Before a trial', lines: prereqs })
   }
 
@@ -100,7 +100,7 @@ export function buildExport(c: CandidateDetail, cutoff: Cutoff, assessment: Asse
 
   return {
     title: `${c.name} for ${c.condition}`,
-    meta: `Appraisal · ${cutoff.note.replace(/^Evidence (frozen at|as of) /, 'evidence as of ')} · elute`,
+    meta: `Appraisal, ${cutoff.note.replace(/^Evidence (frozen at|as of) /, 'evidence as of ')}`,
     dateLine: cutoff.note,
     call: include.call ? { choice: assessment.choice ?? 'not yet chosen', line: assessment.line ?? '' } : undefined,
     sections,
@@ -114,7 +114,7 @@ export function toMarkdown(doc: ExportDocument): string {
   if (doc.dataNote) out.push(`> ${doc.dataNote}`, '')
   for (const s of doc.sections) {
     out.push(`## ${s.heading}`, '')
-    for (const l of s.lines) out.push(l.startsWith('[') || /^\d+ ·/.test(l) ? l : `- ${l}`)
+    for (const l of s.lines) out.push(l.startsWith('[') || /^\d+\./.test(l) ? l : `- ${l}`)
     out.push('')
   }
   if (doc.dataNote) out.push('---', '', `*${doc.dataNote}*`, '')

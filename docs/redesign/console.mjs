@@ -1,0 +1,10 @@
+import puppeteer from 'puppeteer-core'
+const browser = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true })
+const page = await browser.newPage()
+page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[console]', m.type(), m.text().slice(0, 600)) })
+page.on('pageerror', (e) => console.log('[pageerror]', String(e).slice(0, 800)))
+page.on('requestfailed', (r) => console.log('[requestfailed]', r.url().slice(0, 200)))
+await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' })
+await new Promise((r) => setTimeout(r, 3000))
+console.log('body text:', (await page.evaluate(() => document.body.innerText)).slice(0, 200))
+await browser.close()

@@ -1,0 +1,102 @@
+<!doctype html>
+<!--
+  elute type specimen, 20 Sep 2026. Screenshot in shots/type/specimen.png.
+  DECISION. Text face: Instrument Sans. It is the quietest of the six beside Aujournuit, sets the meta line and the
+  table at 14px without crowding, has tabular figures, a true italic, and a width axis (75-100) that answers the
+  display face's own. Hanken and Figtree are too round for a peer review; Schibsted's x-height reads as news;
+  Geist is fine but generic; Onest has no italic; Hanken's upright lacks tnum. Reading serif: Newsreader, for the
+  evidence sentence and the population paragraph only. In the specimen it separates what the record says from what
+  the interface says, which is the product's argument; Source Serif is close, Spectral is static, Literata is loose.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>elute type specimen</title>
+<style>
+  @font-face { font-family: "Aujournuit"; src: url("../../design/fonts/Aujournuit-VariableVF.ttf") format("truetype"); font-weight: 400; font-stretch: 50% 200%; }
+  @font-face { font-family: "Supreme"; src: url("../../design/fonts/Supreme-Variable.ttf") format("truetype"); font-weight: 100 800; }
+  @font-face { font-family: "Supreme"; src: url("../../design/fonts/Supreme-VariableItalic.ttf") format("truetype"); font-weight: 100 800; font-style: italic; }
+  @font-face { font-family: "Instrument Sans"; src: url("../../design/fonts/InstrumentSans/InstrumentSans.ttf") format("truetype"); font-weight: 400 700; font-stretch: 75% 100%; }
+  @font-face { font-family: "Instrument Sans"; src: url("../../design/fonts/InstrumentSans/InstrumentSans-Italic.ttf") format("truetype"); font-weight: 400 700; font-stretch: 75% 100%; font-style: italic; }
+  @font-face { font-family: "Newsreader"; src: url("../../design/fonts/Newsreader/Newsreader.ttf") format("truetype"); font-weight: 200 800; }
+  @font-face { font-family: "Newsreader"; src: url("../../design/fonts/Newsreader/Newsreader-Italic.ttf") format("truetype"); font-weight: 200 800; font-style: italic; }
+
+  :root {
+    --ink: oklch(13.1% 0.016 276); --muted: oklch(52% 0.014 276); --faint: oklch(60% 0.012 276);
+    --paper: oklch(99% 0.003 276); --ground: oklch(95.2% 0.006 276); --line: oklch(13.1% 0.016 276 / 0.08);
+    --slate: oklch(49.6% 0.052 241); --rasp: oklch(41.5% 0.137 359);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 48px 80px 96px; background: var(--ground); color: var(--ink); font-size: 16px; line-height: 24px; }
+  h1 { font: 400 40px/48px "Aujournuit"; letter-spacing: -0.02em; text-transform: lowercase; margin: 0 0 8px; }
+  .lede { color: var(--muted); margin: 0 0 40px; font-family: "Supreme"; letter-spacing: -0.02em; }
+  .group { margin: 0 0 56px; }
+  .group > h2 { font: 400 28px/32px "Aujournuit"; text-transform: lowercase; margin: 0 0 16px; letter-spacing: -0.02em; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card { background: var(--paper); border-radius: 16px; padding: 32px; box-shadow: 0 0 0 1px var(--line), 0 24px 48px -28px oklch(13.1% 0.016 276 / 0.28); font-family: var(--f); letter-spacing: var(--t, -0.01em); }
+  .card .name { font-size: 12px; line-height: 16px; color: var(--faint); margin: 0 0 24px; font-family: "Supreme"; letter-spacing: -0.02em; }
+  .card .name b { color: var(--ink); font-weight: 500; }
+  .title { font: 400 44px/44px "Aujournuit"; letter-spacing: -0.02em; text-transform: lowercase; margin: 0; }
+  .title span { color: var(--muted); }
+  .meta { margin: 8px 0 24px; font-size: 14px; line-height: 24px; color: var(--muted); }
+  .kicker { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--muted); margin: 0 0 8px; }
+  .obj { display: grid; grid-template-columns: 32px 1fr; gap: 8px; margin: 0 0 8px; }
+  .obj .n { font: 400 28px/28px "Aujournuit"; color: var(--faint); }
+  .obj .claim { font-size: 20px; line-height: 28px; font-weight: 500; margin: 0; }
+  .ev { margin: 0 0 4px; font-size: 16px; line-height: 24px; }
+  .ev b { font-weight: 700; }
+  .src { margin: 0 0 24px; font-size: 14px; line-height: 24px; color: var(--muted); font-style: italic; }
+  .src a { color: var(--slate); text-decoration: none; font-style: normal; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 24px; font-size: 14px; line-height: 24px; }
+  td { padding: 6px 0; border-top: 1px solid var(--line); }
+  td.w { font-weight: 500; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .labels { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; line-height: 24px; font-weight: 500; }
+  .labels span::before { content: ''; display: inline-block; width: 8px; height: 8px; background: currentColor; margin-right: 8px; vertical-align: 1px; }
+  .c-slate { color: var(--slate); } .c-rasp { color: var(--rasp); } .c-faint { color: var(--faint); }
+  .reading .ev { font-size: 17px; line-height: 26px; }
+</style>
+</head>
+<body>
+<h1>type specimen</h1>
+<p class="lede">The same Detail fragments in each candidate. Aujournuit stays the display face throughout. The losing candidates (Hanken Grotesk, Schibsted Grotesk, Geist, Onest, Figtree; Source Serif 4, Spectral, Literata) were auditioned from the same page and their files removed; the screenshot keeps them.</p>
+
+<section class="group">
+  <h2>text face candidates</h2>
+  <div class="grid" id="sans"></div>
+</section>
+<section class="group">
+  <h2>reading serif candidates, for evidence sentences only</h2>
+  <div class="grid" id="serif"></div>
+</section>
+
+<script>
+const fragment = (fam, track, note, reading) => `
+  <div class="card${reading ? ' reading' : ''}" style="--f:'${fam}'; --t:${track}">
+    <p class="name"><b>${fam}</b> · ${note}</p>
+    <p class="title">nilotinib <span>for parkinson's disease</span></p>
+    <p class="meta">BCR-ABL tyrosine kinase inhibitor, approved for chronic myeloid leukemia</p>
+    <p class="kicker">critical appraisal</p>
+    <div class="obj"><span class="n">1</span><p class="claim">Brain exposure at tolerated doses is very low.</p></div>
+    <p class="ev">CSF/plasma ratio <b>0.53 %</b> (range 0.23–1.5 %) in leukemia patients with CNS relapse.</p>
+    <p class="src"><a href="#">Reinwald M, BioMed Res Int 2014</a>, PK measurement</p>
+    <table>
+      <tr><td>Target engagement shown in the human brain</td><td class="w">not shown</td><td class="num">1,204</td></tr>
+      <tr><td>Effect observed under blinding</td><td class="w">no</td><td class="num">76</td></tr>
+      <tr><td>Independent replication of the human signal</td><td class="w">none</td><td class="num">12</td></tr>
+      <tr><td>Biomarker validated against an alternative</td><td class="w">no</td><td class="num">0.53</td></tr>
+      <tr><td>Safety acceptable in the intended population</td><td class="w c-faint">with monitoring</td><td class="num">2007</td></tr>
+    </table>
+    <div class="labels"><span>established</span><span class="c-slate">contested</span><span class="c-rasp">single-source</span><span class="c-faint">unknown</span><span class="c-rasp">refuted</span></div>
+  </div>`
+document.getElementById('sans').innerHTML = [
+  ['Supreme', '-0.04em', 'current, no tabular figures'],
+  ['Instrument Sans', '-0.01em', 'chosen: wdth and wght, tnum, italic'],
+].map(a => fragment(...a, false)).join('')
+document.getElementById('serif').innerHTML = [
+  ['Instrument Sans', '-0.01em', 'the sans, for comparison'],
+  ['Newsreader', '0', 'chosen for evidence sentences: opsz 6 to 72, tnum, italic'],
+].map(a => fragment(...a, true)).join('')
+</script>
+</body>
+</html>
