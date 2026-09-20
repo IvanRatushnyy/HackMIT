@@ -195,15 +195,34 @@ em {
   /* 40px left: optically the same as the ~40px above and below the wordmark's ink in the 120px header */
   padding: 0 var(--space-lg) 0 40px;
 }
-.header__shard {
+/* ---- The shard: thirteen planes, composed topmost first, decomposed bottommost first ------- */
+
+.shard {
   position: relative;
   overflow: hidden;
 }
-.header__shard svg {
+.shard svg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  display: block;
+}
+.shard path {
+  opacity: 0;
+}
+.shard--shown path {
+  opacity: 1;
+}
+/* In: the topmost plane (last in document order) first, down to the ground pieces, which arrive a gap apart */
+.shard--in path {
+  animation: appear var(--shard-fade) var(--ease-out) both;
+  animation-delay: calc((var(--shard-n) - 1 - var(--k)) * var(--shard-stagger) + var(--gap-in, 0) * var(--shard-ground-gap));
+}
+/* Out: the ground pieces first, a gap apart, then up to the topmost */
+.shard--out path {
+  animation: vanish var(--shard-fade) var(--ease-in) both;
+  animation-delay: calc(var(--k) * var(--shard-stagger) + var(--gap-out, 0) * var(--shard-ground-gap));
 }
 
 .wordmark {
@@ -219,6 +238,13 @@ em {
 }
 .wordmark:hover {
   text-decoration: none;
+}
+/* While the startup screen is up its wordmark stands in for the header's, and the page holds still */
+html[data-splash] {
+  overflow: hidden;
+}
+html[data-splash] .header .wordmark {
+  opacity: 0;
 }
 
 /* ---- Data note: one quiet line at the foot of every page --------------------------- */
@@ -374,8 +400,8 @@ em {
   background: var(--color-surface);
   color: var(--color-ink);
 }
-.btn:hover {
-  transform: translateY(-1px);
+.btn--secondary:hover {
+  background: var(--color-surface-sunken);
 }
 .btn:active {
   transform: scale(0.98);
@@ -441,13 +467,10 @@ em {
   height: var(--size-control);
   padding: 0 var(--space-sm);
   border-color: var(--color-line);
-  transition:
-    border-color var(--duration-base) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 .chip--button:hover {
   border-color: var(--color-ink);
-  transform: translateY(-1px);
 }
 
 /* Radio pill for Your call */
@@ -599,18 +622,8 @@ em {
   background: var(--evidence-refuted);
 }
 
-/* ---- Motion: state changes only, transform and opacity only ---------------------------- */
+/* ---- Motion: state changes only, opacity and transform only; nothing slides ------------ */
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 @keyframes appear {
   from {
     opacity: 0;
@@ -619,14 +632,19 @@ em {
     opacity: 1;
   }
 }
-
-/* A block that has just arrived. --i staggers siblings by 40ms so a page reads as one reveal. */
-.rise {
-  animation: rise var(--duration-base) var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 40ms);
+@keyframes vanish {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-.appear {
-  animation: appear var(--duration-slow) var(--ease-out) both;
+
+/* A block that has just arrived fades in. --i staggers siblings by 40ms so a page reads as one reveal. */
+.fade {
+  animation: appear var(--duration-base) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
 }
 
 /* Disclosure bodies open as a height change on the grid, never a slide */

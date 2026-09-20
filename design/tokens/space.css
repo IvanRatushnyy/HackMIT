@@ -31,7 +31,7 @@
   --panel-index:   320px;    /* results list column */
   --panel-detail:  384px;    /* detail rail: ledger, citations, claim evidence */
   --header-height: 120px;    /* inner pages: one row of wordmark and field, shard band beside */
-  --band-entry:    256px;    /* entry: the white band above the shard hero */
+  --band-entry:    280px;    /* startup: the white band above the shard hero */
   --page-max:      1920px;
 
   /* ---- Shape ------------------------------------------------------------- */
@@ -52,6 +52,7 @@
   --z-sheet:    300;
   --z-toast:    400;
   --z-tooltip:  500;
+  --z-splash:   600;         /* the startup screen, over everything */
 
   /* ---- Motion ------------------------------------------------------------ */
   --duration-fast: 120ms;
@@ -60,6 +61,11 @@
   --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* The shard composes and decomposes plane by plane */
+  --shard-fade:    var(--duration-base);  /* one plane fading */
+  --shard-stagger: 40ms;                  /* between planes */
+  --shard-ground-gap: 80ms;               /* extra between the two ground pieces: 120ms apart; thirteen planes take 800ms */
 }
 
 @media (min-width: 768px) {
@@ -71,5 +77,7 @@
     --duration-fast: 0.01ms;
     --duration-base: 0.01ms;
     --duration-slow: 0.01ms;
+    --shard-stagger: 0ms;
+    --shard-ground-gap: 0ms;
   }
 }

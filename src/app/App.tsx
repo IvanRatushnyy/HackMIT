@@ -1,8 +1,12 @@
-/* elute — routes, in the order of the flow. The data note text is composed once from the source. */
+/* elute — routes, in the order of the flow. The data note text is composed once from the source.
+ * The startup screen sits over the first page until its wordmark has landed in the header. */
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { source } from '../data/source'
+import { StartupDone } from '../components/frame'
+import { Splash } from '../components/Splash'
+import { prefersReducedMotion } from '../lib/splash'
 import { Entry } from '../screens/Entry'
 import { Query } from '../screens/Query'
 import { Detail } from '../screens/Detail'
@@ -13,6 +17,8 @@ const FALLBACK = 'Fixture mode · not a clinical decision tool · curated from d
 
 export function App() {
   const [banner, setBanner] = useState(FALLBACK)
+  const [started, setStarted] = useState(prefersReducedMotion) // reduced motion skips the startup screen
+  const start = useCallback(() => setStarted(true), [])
   useEffect(() => {
     source
       .provenance()
@@ -20,16 +26,19 @@ export function App() {
       .catch(() => setBanner('Fixture data failed to load — reload the page.'))
   }, [])
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Entry banner={banner} />} />
-        <Route path="/q/:query" element={<Query banner={banner} />} />
-        <Route path="/q/:query/sources" element={<Sources banner={banner} />} />
-        <Route path="/q/:query/:candidate" element={<Detail banner={banner} />} />
-        <Route path="/q/:query/:candidate/export" element={<Export banner={banner} />} />
-        <Route path="/methods" element={<Navigate to="/q/parkinsons-disease/sources" replace />} />
-        <Route path="*" element={<Query banner={banner} />} />
-      </Routes>
-    </BrowserRouter>
+    <StartupDone.Provider value={started}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Entry banner={banner} />} />
+          <Route path="/q/:query" element={<Query banner={banner} />} />
+          <Route path="/q/:query/sources" element={<Sources banner={banner} />} />
+          <Route path="/q/:query/:candidate" element={<Detail banner={banner} />} />
+          <Route path="/q/:query/:candidate/export" element={<Export banner={banner} />} />
+          <Route path="/methods" element={<Navigate to="/q/parkinsons-disease/sources" replace />} />
+          <Route path="*" element={<Query banner={banner} />} />
+        </Routes>
+        {!started && <Splash onDone={start} />}
+      </BrowserRouter>
+    </StartupDone.Provider>
   )
 }

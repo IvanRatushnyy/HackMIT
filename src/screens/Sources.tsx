@@ -62,7 +62,7 @@ export function Sources({ banner }: { banner: string }) {
     <main className="page">
       <Header />
       <div className="col">
-        <div className="title rise">
+        <div className="title fade">
           <div className="title__main">
             <Kicker>run · {runAt ? runAt.replace('T', ' ').slice(0, 16) : ''}</Kicker>
             <h1 className="display-sm">sources</h1>
@@ -98,7 +98,7 @@ export function Sources({ banner }: { banner: string }) {
         </div>
 
         {q && tab === 'ledger' && (
-          <div className="rise" style={{ '--i': 1 } as React.CSSProperties} key="ledger">
+          <div className="fade" style={{ '--i': 1 } as React.CSSProperties} key="ledger">
             <div className="thead sources__head">
               <span className="kicker">line</span>
               <span className="kicker">step</span>
@@ -144,7 +144,7 @@ export function Sources({ banner }: { banner: string }) {
         )}
 
         {q && tab === 'tools' && (
-          <div className="toolcalls rise" key="tools">
+          <div className="toolcalls fade" key="tools">
             {q.ledger.rows.map((row) => (
               <div key={row.id} className="section">
                 <Kicker>
@@ -157,7 +157,7 @@ export function Sources({ banner }: { banner: string }) {
         )}
 
         {tab === 'packages' && (
-          <div className="panel rise" key="packages">
+          <div className="panel fade" key="packages">
             <table className="deps">
               <thead>
                 <tr>
@@ -191,7 +191,7 @@ export function Sources({ banner }: { banner: string }) {
         )}
 
         {prov && tab === 'rules' && (
-          <div className="rules rise" key="rules">
+          <div className="rules fade" key="rules">
             <div className="section">
               <Kicker>label rules, in order</Kicker>
               <ol>

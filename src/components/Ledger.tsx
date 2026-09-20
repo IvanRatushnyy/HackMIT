@@ -51,7 +51,7 @@ export function WorkingRow({
         : row.source
   const time = state === 'done' && recorded && row.elapsed_ms !== undefined ? `${(row.elapsed_ms / 1000).toFixed(1)} s` : state === 'running' ? 'running' : ''
   return (
-    <li className="rise" style={{ '--i': index } as React.CSSProperties}>
+    <li className="fade" style={{ '--i': index } as React.CSSProperties}>
       <button
         type="button"
         className={`panel__row ledger__row ledger__row--${state}${selected ? ' ledger__row--selected' : ''}`}

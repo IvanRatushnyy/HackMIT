@@ -1,5 +1,51 @@
 /* elute — screen layouts, in the order of the flow:
- * Entry → Working → Results (list, board) → Detail → Sources → Export. */
+ * Startup → Entry → Working → Results (list, board) → Detail → Sources → Export. */
+
+/* ---- Startup: the hero from the mockup, once per page load ---------------------------- */
+
+.splash {
+  --splash-word: var(--duration-slow); /* the wordmark's fade-in */
+  --splash-hold: 1000ms;               /* the composed hero on screen */
+  --splash-move: var(--duration-slow); /* the wordmark's travel to the header, the page fading in beneath */
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-splash);
+  display: grid;
+  grid-template-rows: var(--band-entry) 1fr;
+}
+.splash__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface);
+}
+.splash--move .splash__bg {
+  opacity: 0;
+  transition: opacity var(--splash-move) var(--ease-in-out);
+}
+.splash__band {
+  position: relative;
+}
+/* The mockup's wordmark: 128px at the page's 80px gutter, its baseline in the band's lower third */
+.splash__word {
+  position: absolute;
+  left: 80px;
+  top: 64px;
+  font-size: 128px;
+  opacity: 0;
+  transform-origin: 0 0;
+  transition:
+    opacity var(--splash-word) var(--ease-out),
+    transform var(--splash-move) var(--ease-in-out);
+}
+.splash--word .splash__word,
+.splash--decompose .splash__word,
+.splash--move .splash__word {
+  opacity: 1;
+}
+/* FLIP: --dx, --dy and --s are measured against the header's wordmark just before the move */
+.splash--move .splash__word {
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(var(--s, 1));
+}
 
 /* ---- Entry ------------------------------------------------------------------------- */
 
@@ -245,12 +291,9 @@
   gap: var(--space-xs);
   padding: var(--space-sm) var(--space-md);
   cursor: pointer;
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    border-color var(--duration-base) var(--ease-out);
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 .card:hover {
-  transform: translateY(-1px);
   border-color: var(--color-line-strong);
 }
 .card__weak {

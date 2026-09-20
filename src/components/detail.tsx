@@ -154,7 +154,7 @@ export function Mechanism({ candidate, cutoff, sourcesHref }: { candidate: Candi
         ))}
       </div>
       {current && (
-        <div className="panel claim-panel rise" key={current.claim.id + cutoff.id}>
+        <div className="panel claim-panel fade" key={current.claim.id + cutoff.id}>
           <div className="claim-panel__col">
             <Kicker>claim</Kicker>
             <p className="claim-panel__text">{current.claim.text}</p>

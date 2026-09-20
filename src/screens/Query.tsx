@@ -111,7 +111,7 @@ export function Query({ banner }: { banner: string }) {
       <Header />
       {q && (
         <div className="col">
-          <div className="title rise">
+          <div className="title fade">
             <div className="title__main">
               <Kicker>{phase === 'working' ? KIND_WORD[q.kind] : q.kind === 'drug' ? 'drug' : 'condition'}</Kicker>
               <h1 className="display-sm">{q.heading}</h1>
@@ -164,7 +164,7 @@ export function Query({ banner }: { banner: string }) {
                 })}
               </ul>
               {selected && (
-                <aside className="panel panel--pad step-panel rise" key={selected.id} aria-label={`Step ${selected.id}`}>
+                <aside className="panel panel--pad step-panel fade" key={selected.id} aria-label={`Step ${selected.id}`}>
                   <Kicker>
                     step {selectedStep! + 1} · {selected.step}
                   </Kicker>
@@ -224,7 +224,7 @@ function ResultsList({ page }: { page: ResultsPage }) {
   ]
   let rank = 0
   return (
-    <div className="rise" style={{ '--i': 1 } as React.CSSProperties}>
+    <div className="fade" style={{ '--i': 1 } as React.CSSProperties}>
       <div className="thead results__head">
         <span className="kicker">#</span>
         <span className="kicker">{drugFirst ? 'indication' : 'candidate'}</span>
@@ -263,7 +263,7 @@ function Row({ c, rank, page }: { c: CandidateDetail; rank: number; page: Result
   const path = candidatePath(page, c)
   const drugFirst = page.query.kind === 'drug'
   return (
-    <div className="panel__row results__row rise" style={{ '--i': rank } as React.CSSProperties} role="listitem" onClick={() => navigate(path)}>
+    <div className="panel__row results__row fade" style={{ '--i': rank } as React.CSSProperties} role="listitem" onClick={() => navigate(path)}>
       <span className="results__rank">{String(rank).padStart(2, '0')}</span>
       <div className="cell">
         <Link className="display-xs cell__name" to={path} onClick={(e) => e.stopPropagation()}>
@@ -323,7 +323,7 @@ function Board({ page }: { page: ResultsPage }) {
   const navigate = useNavigate()
   const drugFirst = page.query.kind === 'drug'
   return (
-    <div className="board rise" style={{ '--i': 1 } as React.CSSProperties}>
+    <div className="board fade" style={{ '--i': 1 } as React.CSSProperties}>
       {STAGES.map((stage, si) => {
         const cards = page.candidates.filter((c) => bestEvidenceAt(c, todayDate(c))?.stage === stage.id)
         return (
@@ -338,7 +338,7 @@ function Board({ page }: { page: ResultsPage }) {
               return (
                 <div
                   key={c.slug}
-                  className="panel card rise"
+                  className="panel card fade"
                   style={{ '--i': si + i } as React.CSSProperties}
                   onClick={() => navigate(candidatePath(page, c))}
                   onKeyDown={(e) => e.key === 'Enter' && navigate(candidatePath(page, c))}

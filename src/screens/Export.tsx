@@ -80,7 +80,7 @@ export function Export({ banner }: { banner: string }) {
   return (
     <Shell banner={banner}>
       <div className="export">
-        <aside className="export__side no-print rise">
+        <aside className="export__side no-print fade">
           <div className="title__main">
             <Kicker>
               <Link to={detailHref}>← {c.name} for {c.condition}</Link>
@@ -130,7 +130,7 @@ export function Export({ banner }: { banner: string }) {
           </div>
         </aside>
 
-        <div className="rise" style={{ '--i': 1 } as React.CSSProperties}>
+        <div className="fade" style={{ '--i': 1 } as React.CSSProperties}>
           <Kicker>preview</Kicker>
           <div className="panel preview" style={{ marginTop: 8 }}>
             <div>

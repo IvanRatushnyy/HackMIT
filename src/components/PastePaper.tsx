@@ -17,7 +17,7 @@ export function PastePaper({ onClose }: { onClose: () => void }) {
   const read = () => setPaper(readPaper(text) ?? null)
 
   return (
-    <div className="panel panel--pad paste rise" role="region" aria-label="Paste a paper">
+    <div className="panel panel--pad paste fade" role="region" aria-label="Paste a paper">
       <div className="paste__head">
         <Kicker>paste a paper</Kicker>
         <button type="button" className="cite" onClick={onClose}>
@@ -49,7 +49,7 @@ export function PastePaper({ onClose }: { onClose: () => void }) {
       )}
 
       {paper && (
-        <div className="paste__read rise" key={paper.id}>
+        <div className="paste__read fade" key={paper.id}>
           <Kicker>what was read</Kicker>
           <p className="medium">{paper.extraction.title}</p>
           <p className="cell__sub">{paper.extraction.citation}</p>

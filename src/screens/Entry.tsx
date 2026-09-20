@@ -45,7 +45,7 @@ export function Entry({ banner }: { banner: string }) {
     <main className="page">
       <Header entry />
       <div className="col col--narrow entry">
-        <div className="entry__block rise" style={{ '--i': 0 } as React.CSSProperties}>
+        <div className="entry__block fade" style={{ '--i': 0 } as React.CSSProperties}>
           <Kicker>appraise</Kicker>
           <SearchField big autoFocus />
           <div className="entry__modes">
@@ -63,7 +63,7 @@ export function Entry({ banner }: { banner: string }) {
         </div>
 
         {rows.length > 0 && (
-          <div className="entry__block rise" style={{ '--i': 2 } as React.CSSProperties}>
+          <div className="entry__block fade" style={{ '--i': 2 } as React.CSSProperties}>
             <Kicker>recent</Kicker>
             <div className="panel" role="list">
               {rows.map((r) => (
