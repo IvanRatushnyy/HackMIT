@@ -40,10 +40,10 @@ export function Export({ banner }: { banner: string }) {
     return buildExport(c, cutoff, a, banner, include)
   }, [c, cutoff, include, query, banner])
 
-  if (c === undefined) return <Shell />
+  if (c === undefined) return <Shell query={query} candidate={candidateParam} />
   if (c === null || !cutoff || !doc) {
     return (
-      <Shell>
+      <Shell query={query}>
         <p>
           No appraisal at this address. <Link to="/">Start again</Link>.
         </p>
@@ -79,13 +79,11 @@ export function Export({ banner }: { banner: string }) {
   }
 
   return (
-    <Shell>
+    <Shell query={query} candidate={candidateParam} asof={isTodayCutoff(c, cutoff) ? undefined : cutoff.id}>
       <div className="export">
         <aside className="export__side no-print arrive">
           <div className="title__main">
-            <Kicker>
-              <Link to={detailHref}>← {c.name} for {c.condition}</Link>
-            </Kicker>
+            <Kicker>{c.name} for {c.condition}</Kicker>
             <h1 className="display-sm">export appraisal</h1>
           </div>
 
@@ -166,10 +164,10 @@ export function Export({ banner }: { banner: string }) {
   )
 }
 
-function Shell({ children }: { children?: React.ReactNode }) {
+function Shell({ children, query, candidate, asof }: { children?: React.ReactNode; query?: string; candidate?: string; asof?: string }) {
   return (
     <main className="page">
-      <Header stage="share" />
+      <Header stage="share" query={query} candidate={candidate} asof={asof} />
       <div className="col">{children}</div>
     </main>
   )

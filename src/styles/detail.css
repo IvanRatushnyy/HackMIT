@@ -12,20 +12,15 @@
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: var(--space-2xl);
-  align-items: flex-start;
+  align-items: center;
 }
 .detail__title-main {
   display: grid;
   gap: var(--space-xs);
   min-width: 0;
 }
-.detail__back {
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-  margin-bottom: var(--space-sm);
-}
 .detail__name {
-  margin: var(--space-xs) 0 var(--space-sm);
+  margin: 0 0 var(--space-sm);
 }
 .detail__class {
   font-size: var(--text-md);
@@ -104,25 +99,20 @@
   background: var(--color-ink);
   transform-origin: left;
 }
-.asof__note {
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-  font-style: italic;
-  color: var(--color-ink-muted);
-  text-align: right;
+.asof__kicker {
+  text-align: center;
 }
 
-/* ---- The three answers and the page map, in one paper strip ---------------------------------- */
+/* ---- The three answers, in one paper strip ---------------------------------- */
 
 .facts {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1.4fr;
+  grid-template-columns: repeat(3, 1fr);
   border: var(--line-width) solid var(--color-line);
   background: var(--color-surface);
   margin-bottom: var(--space-xs);
 }
-.fact,
-.pagemap {
+.fact {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
@@ -156,37 +146,7 @@
   line-height: var(--line-3);
   color: var(--color-ink-muted);
 }
-.pagemap ol {
-  display: flex;
-  flex-direction: column;
-}
-.pagemap a {
-  display: grid;
-  grid-template-columns: 20px 1fr auto;
-  gap: var(--space-xs);
-  align-items: baseline;
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-  color: var(--color-ink);
-  text-decoration: none;
-}
-.pagemap a:hover .pagemap__w {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.pagemap__n {
-  font-size: var(--text-xs);
-  color: var(--color-ink-faint);
-}
-.pagemap__w {
-  font-weight: var(--weight-medium);
-}
-.pagemap__c {
-  font-size: var(--text-xs);
-  color: var(--color-ink-muted);
-}
-
-/* ---- Sections: a number, a title, what the section is for, a status at the right --------------- */
+/* ---- Sections: a title, what the section is for, a status at the right --------------- */
 
 .detail__body {
   display: grid;
@@ -202,14 +162,6 @@
   justify-content: space-between;
   gap: var(--space-md);
   min-height: var(--line-4);
-}
-.section__n {
-  display: inline-block;
-  width: var(--size-control);
-  font-size: var(--text-md);
-  font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-text);
-  color: var(--color-ink-faint);
 }
 .section__status,
 .section__count {
@@ -227,12 +179,9 @@
   gap: var(--space-xs);
 }
 .section__hero-n {
-  font-family: var(--font-display);
-  font-stretch: var(--display-width);
-  font-weight: 400;
+  font-weight: var(--weight-bold);
   font-size: var(--text-xl);
   line-height: var(--line-4);
-  letter-spacing: var(--tracking-display);
 }
 .section__hero-of {
   font-size: var(--text-sm);
@@ -272,6 +221,7 @@
 .objection__n {
   color: var(--color-ink-faint);
   font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
 }
 .objection__claim {
   font-size: var(--text-lg);
@@ -471,6 +421,7 @@
 .step__n {
   color: var(--color-ink-faint);
   font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
 }
 .step__condition {
   font-size: var(--text-sm);

@@ -3,7 +3,7 @@
  * enters and leaves rather than re-mounting the page, so the pathway's live context stays. */
 
 import { useEffect, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { Header } from '../components/frame'
 import { AsOfControl, BeforeTrial, EluteOpinion, Objections, SafetyPanel, YourCall } from '../components/detail'
@@ -12,7 +12,7 @@ import { bestEvidenceText, OutcomeChip, plain } from '../components/evidence'
 import { source } from '../data/source'
 import { Missing } from './Query'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
-import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff, resolveTimeline, unresolvedCount, visibleObjections } from '../lib/evidence'
+import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff, resolveTimeline } from '../lib/evidence'
 import { arrive } from '../lib/motion'
 
 export function Detail() {
@@ -37,8 +37,8 @@ export function Detail() {
     }
   }, [query, candidateParam])
 
-  if (c === undefined) return <Frame />
-  if (c === null || !q) return <Frame missing />
+  if (c === undefined) return <Frame query={query} candidate={candidateParam} />
+  if (c === null || !q) return <Frame query={query} candidate={candidateParam} missing />
 
   const cutoff = findCutoff(c, params.get('asof'))
   const isToday = isTodayCutoff(c, cutoff)
@@ -54,29 +54,16 @@ export function Detail() {
     setParams(p, { replace: true })
   }
 
-  const backTo = q.kind === 'pair' ? { to: `/q/${c.condition_slug}`, word: `all candidates for ${c.condition}` } : { to: `/q/${query}`, word: 'all candidates' }
   const weak = resolveTimeline(c.weakest_link, cutoff.date)
   const weakClaim = c.chain.claims.find((k) => k.id === weak?.claim)
   const safety = resolveTimeline(c.safety, cutoff.date)
-  const nObj = visibleObjections(c, cutoff.date).length
-  const nPre = unresolvedCount(c, cutoff.date)
-  const MAP = [
-    { id: 'objections', word: 'the case against', count: `${nObj}` },
-    { id: 'pathway', word: 'the pathway', count: weakClaim ? 'weakest link marked' : '' },
-    { id: 'prereqs', word: 'before a trial', count: `${nPre} of ${c.prerequisites.length} unresolved` },
-    ...(c.recommendation ? [{ id: 'opinion', word: 'elute’s opinion', count: '' }] : []),
-    { id: 'call', word: 'your call', count: '' },
-  ]
 
   return (
     <main className="page">
-      <Header stage="appraisal" />
+      <Header stage="appraisal" query={query} candidate={candidateParam} asof={isToday ? undefined : cutoff.id} />
       <div className="col detail">
         <motion.div className="detail__title" {...arrive(reduce)}>
           <div className="detail__title-main">
-            <p className="detail__back">
-              <Link to={backTo.to}>← {backTo.word}</Link>
-            </p>
             <h1 className="display-hero detail__name">{c.name}</h1>
             <p className="detail__class">
               {c.drug_class} · for {c.condition} · approved for {c.approved_indication}
@@ -117,20 +104,6 @@ export function Detail() {
               <span className="fact__v muted">not assessed</span>
             )}
           </div>
-          <nav className="pagemap" aria-label="On this page">
-            <span className="fact__k">on this page</span>
-            <ol>
-              {MAP.map((m, i) => (
-                <li key={m.id}>
-                  <a href={`#${m.id}`}>
-                    <span className="pagemap__n">{i + 1}</span>
-                    <span className="pagemap__w">{m.word}</span>
-                    {m.count && <span className="pagemap__c">{m.count}</span>}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
         </motion.div>
 
         <div className="detail__body">
@@ -150,7 +123,7 @@ export function Detail() {
             </motion.div>
           )}
           <motion.div {...arrive(reduce, c.recommendation ? 0.4 : 0.32)}>
-            <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} n={c.recommendation ? 5 : 4} />
+            <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
           </motion.div>
         </div>
       </div>
@@ -158,10 +131,10 @@ export function Detail() {
   )
 }
 
-function Frame({ missing = false }: { missing?: boolean }) {
+function Frame({ query, candidate, missing = false }: { query?: string; candidate?: string; missing?: boolean }) {
   return (
     <main className="page">
-      <Header stage="appraisal" />
+      <Header stage="appraisal" query={query} candidate={missing ? undefined : candidate} />
       <div className="col">
         {missing && <Missing />}
       </div>

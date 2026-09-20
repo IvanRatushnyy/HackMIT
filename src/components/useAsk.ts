@@ -1,9 +1,9 @@
-/* elute — the one field's behaviour. A drug, a condition, or a pair, resolved through the entity index so
- * an open field never dead-ends. Nothing is suggested while typing; Enter, the send button, or an example
- * chip submits the best match, exact name or alias first, and an unmatched string gets a note rather than
- * a navigation. `onLaunch` runs before the navigation and returns how long to wait for it (the ripple).
- * Live mode (the backend seam) appraises one drug for one condition: a typed pair goes to the backend as
- * typed; a lone name only when the index already knows it as a pair. */
+/* elute — the one field's behaviour. An appraisal is one drug for one condition (the backend's Phase 1
+ * contract), so the field takes a pair. Nothing is suggested while typing; Enter, the send button, or the
+ * example chip submits, and a string that isn't a pair gets a note rather than a navigation. `onLaunch`
+ * runs before the navigation and returns how long to wait for it (the ripple). Live: a typed pair goes
+ * to the backend as typed, and a lone name only when the index already knows it as a pair. Fixture: the
+ * pair has to be one the curated set holds, by name, alias, or the slug the typed pair makes. */
 
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,8 +11,8 @@ import type { Entity } from '../data/types'
 import { source } from '../data/source'
 import { pairSlug, parsePair, rememberPair } from '../lib/pair'
 
-const COVERED = 'Not in the curated set. Fixture mode covers Parkinson’s disease, metformin, and nilotinib for Parkinson’s.'
-const PAIR_ONLY = 'Live mode appraises one drug for one condition — write it as “nilotinib for Parkinson’s disease”.'
+const COVERED = 'Not in the curated set. Fixture mode covers one pair: nilotinib for Parkinson’s disease.'
+const PAIR_ONLY = 'An appraisal is one drug for one condition — write it as “nilotinib for Parkinson’s disease”.'
 
 function bestMatch(entities: Entity[], text: string): Entity | undefined {
   const q = text.trim().toLowerCase().replace(/[’']/g, "'")
@@ -28,14 +28,17 @@ function bestMatch(entities: Entity[], text: string): Entity | undefined {
 function resolve(entities: Entity[], value: string): { slug: string } | { note: string } | undefined {
   if (!value.trim()) return undefined
   const match = bestMatch(entities, value)
+  const pair = parsePair(value)
   if (source.mode === 'live') {
-    const pair = parsePair(value)
     const slug = pair ? pairSlug(pair.drug, pair.disease) : match?.kind === 'pair' ? match.slug : undefined
     if (!slug) return { note: PAIR_ONLY }
     if (pair) rememberPair(slug, pair.drug, pair.disease)
     return { slug }
   }
-  return match ? { slug: match.slug } : { note: COVERED }
+  if (match?.kind === 'pair') return { slug: match.slug }
+  if (!pair) return { note: PAIR_ONLY }
+  const known = entities.find((e) => e.kind === 'pair' && e.slug === pairSlug(pair.drug, pair.disease))
+  return known ? { slug: known.slug } : { note: COVERED }
 }
 
 export function useAsk(onLaunch?: () => number) {

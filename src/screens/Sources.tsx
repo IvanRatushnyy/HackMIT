@@ -75,7 +75,7 @@ export function Sources() {
 
   return (
     <main className="page">
-      <Header stage="research" />
+      <Header stage="research" query={query} candidate={frozen?.candidate.slug} asof={frozen?.cutoff.id} />
       <div className="col">
         <div className="title arrive">
           <div className="title__main">
@@ -89,8 +89,7 @@ export function Sources() {
             )}
             {frozen && (
               <p className="detail__frozen">
-                {frozen.cutoff.note} Records after this date are not shown.{' '}
-                <Link to={`/q/${query}/${params.get('c')}?asof=${frozen.cutoff.id}`}>← back to the appraisal</Link>
+                {frozen.cutoff.note} Records after this date are not shown.
               </p>
             )}
           </div>

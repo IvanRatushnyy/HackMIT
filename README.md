@@ -32,7 +32,6 @@ Then from the repo root: `VITE_ELUTE_API=http://localhost:8000/api npm run dev`.
 |---|---|---|
 | Appraise | `/` | Under the five stages (centred under the header on every page, the current one in ink): `prove it to me`, one field for a drug, a condition, or a pair, and three example words |
 | Working | `/q/parkinsons-disease` | Ten checks as ten boxes that light up one at a time, each with its question, its source and what came back; the current step's records arrive beneath |
-| Results | same route | Two registers, *tested in placebo-controlled trials* (by outcome, then size) and *not yet tested against placebo* (by unresolved prerequisites), each with its rule printed; a row opens into the four questions a scientist asks. List or board (by trial stage). |
 | Detail | `/q/parkinsons-disease/nilotinib` | Critical appraisal; the pathway panel (below); the mechanism chain with a label on every link and the weakest link marked; safety in the likely trial population; the five prerequisites a trial would assume; your call |
 | Pathway | on Detail | The hypothesis drawn as biology: the drug in the blood, the barrier it must cross, the molecules it acts on in the brain, the outcome in the patient. Inhibition is a bar, phosphorylation a circle, transport a diamond. Every action of the hypothesis is weighted and labelled by the evidence rules and opens its claim's evidence when selected; background biology is grey. Beside it, Reactome's own diagram of a pathway the target is actually filed under, muted, the target flagged. Under both, the fine print: where the target sits, whether it is tractable, the route, what the drug has to cross, and what the target is filed under. Live from Open Targets and Reactome; for nilotinib it says "ABL1 appears in 13 curated Reactome pathways. None is this hypothesis." Records without a drawing get the chain as a line. |
 | Evidence as of | `…/nilotinib?asof=nov-2017` | Freeze the page at a date. At Nov 2017 — the day NILO-PD enrolled its first patient — the three pre-trial objections are on screen and none of the post-trial ones. This is the backtest as an interaction. |
@@ -80,7 +79,7 @@ src/data/api.ts              ApiSource: the same seam over the backend's HTTP/SS
 src/lib/evidence.ts          label rules, cutoff filtering, ordering, publishability
 src/lib/pair.ts              drug–condition pair parsing for the entry field
 src/fixtures/                nilotinib (curated), drafts, ledgers, papers, provenance
-src/screens/                 Entry, Query (Working → Results), Detail, Sources, Export
+src/screens/                 Entry, Query (Working), Detail, Sources, Export
 backend/                     FastAPI + ToolUniverse pipeline (uv); fixture and live modes; cassette-backed tests
 scripts/validate-detail.ts   checks the backend adapter's output against the frontend validator
 ```

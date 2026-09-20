@@ -1,4 +1,4 @@
-/* elute — Entry: stage 1 of 5. Under the flow, the title, one sentence, and the field, centred. Under the
+/* elute — Entry: stage 1 of 4. Under the flow, the title, one sentence, and the field, centred. Under the
  * startup screen the blocks wait; when it lifts and the header band has composed, they arrive in turn. */
 
 import { useContext, useState } from 'react'
@@ -6,7 +6,7 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { Header, StartupDone } from '../components/frame'
 import { useAsk } from '../components/useAsk'
 
-const EXAMPLES = ['Parkinson’s disease', 'metformin', 'nilotinib for Parkinson’s']
+const EXAMPLES = ['nilotinib for Parkinson’s']
 
 /* wait: under the startup screen · go: arriving after it · settled: an ordinary page reveal */
 type Arrival = 'wait' | 'go' | 'settled'
@@ -26,11 +26,13 @@ export function Entry() {
       <div className={`land land--${arrival}`}>
         <div className="land__lead arrive" style={{ '--i': 0 } as React.CSSProperties}>
           <h1 className="land__title">
-            prove it
+            what would
             <br />
-            to me
+            make it wrong?
           </h1>
-          <p className="land__body">The strongest argument against a repurposing candidate first, dated and sourced. It never recommends.</p>
+          <p className="land__body">
+            Name a drug for a condition. It builds the strongest case against it first, labels every claim known or believed, dated and sourced, and leaves the call to you.
+          </p>
         </div>
 
         <form
@@ -46,8 +48,8 @@ export function Entry() {
               id="ask"
               className="land__input"
               type="text"
-              aria-label="A condition, a drug, or a drug for a condition"
-              placeholder="a condition, a drug, or a drug for a condition"
+              aria-label="A drug for a condition, for example nilotinib for Parkinson’s disease"
+              placeholder="which drug, for which condition?"
               value={t.text}
               onChange={(e) => t.onChange(e.target.value)}
               autoComplete="off"

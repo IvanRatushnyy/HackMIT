@@ -19,7 +19,6 @@ export function AsOfControl({ cutoffs, current, onChange }: { cutoffs: Cutoff[];
   const i = cutoffs.findIndex((x) => x.id === current.id)
   return (
     <div className="asof">
-      <Kicker>evidence as of</Kicker>
       <div className="asof__dates" role="radiogroup" aria-label="Evidence as of">
         {cutoffs.map((c, k) => (
           <button
@@ -42,11 +41,7 @@ export function AsOfControl({ cutoffs, current, onChange }: { cutoffs: Cutoff[];
           <motion.span className="asof__fill" animate={{ scaleX: cutoffs.length > 1 ? i / (cutoffs.length - 1) : 1 }} transition={{ duration: 0.4, ease: EASE_OUT }} />
         </span>
       </div>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.p key={current.id} className="asof__note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.24 }}>
-          {current.note}
-        </motion.p>
-      </AnimatePresence>
+      <Kicker className="asof__kicker">evidence as of</Kicker>
     </div>
   )
 }
@@ -76,9 +71,7 @@ export function Objections({ candidate, cutoff, sourcesHref }: { candidate: Cand
     <section className="section" aria-labelledby="objections">
       <div className="section__head">
         <div>
-          <h2 className="display-xs" id="objections">
-            <span className="section__n">1</span>the case against
-          </h2>
+          <h2 className="display-xs" id="objections">the case against</h2>
         </div>
         <span className="section__count">
           <AnimatePresence mode="popLayout" initial={false}>
@@ -102,7 +95,7 @@ export function Objections({ candidate, cutoff, sourcesHref }: { candidate: Cand
             return (
               <motion.div key={o.id} layout={!reduce} initial={reduce ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.4, ease: EASE_OUT, delay: reduce ? 0 : i * 0.05 }} className="objection">
                 <button type="button" className="objection__row" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : o.id)}>
-                  <span className="objection__n display-xs">{i + 1}</span>
+                  <span className="objection__n">{i + 1}</span>
                   <span className="objection__claim">{o.claim}</span>
                   <span className="objection__src">{srcs.map(shortCite).join(', ')}</span>
                   <span className="objection__mark" aria-hidden="true">
@@ -243,9 +236,7 @@ export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: Candida
     <section className="section" aria-labelledby="prereqs">
       <div className="section__head section__head--count">
         <div>
-          <h2 className="display-xs" id="prereqs">
-            <span className="section__n">3</span>before a trial
-          </h2>
+          <h2 className="display-xs" id="prereqs">before a trial</h2>
         </div>
         <span className="section__hero">
           <AnimatePresence mode="popLayout" initial={false}>
@@ -282,7 +273,7 @@ export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: Candida
                 if (e.key === 'End') move(total - 1)
               }}
             >
-              <span className="step__n display-xs">{i + 1}</span>
+              <span className="step__n">{i + 1}</span>
               <span className="step__condition">{p.condition}</span>
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span key={s?.word ?? 'unknown'} className="step__word" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.24 }}>
@@ -324,7 +315,7 @@ export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: Candida
 
 const CHOICES = ['pursue', 'needs specific data', 'deprioritise'] as const
 
-export function YourCall({ candidate, cutoff, query, exportHref, n = 4 }: { candidate: CandidateDetail; cutoff: Cutoff; query: string; exportHref: string; n?: number }) {
+export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: CandidateDetail; cutoff: Cutoff; query: string; exportHref: string }) {
   const key = assessmentKey(query, candidate.slug, cutoff.id)
   const [a, setA] = useState<Assessment>(() => loadAssessment(key))
 
@@ -341,9 +332,7 @@ export function YourCall({ candidate, cutoff, query, exportHref, n = 4 }: { cand
     <section className="section" aria-labelledby="call">
       <div className="section__head">
         <div>
-          <h2 className="display-xs" id="call">
-            <span className="section__n">{n}</span>your call
-          </h2>
+          <h2 className="display-xs" id="call">your call</h2>
         </div>
       </div>
       <div className="panel panel--pad call">
@@ -358,7 +347,7 @@ export function YourCall({ candidate, cutoff, query, exportHref, n = 4 }: { cand
           <textarea className="textarea" aria-label="Your reasoning" placeholder="In your words." value={a.line ?? ''} onChange={(e) => update({ ...a, line: e.target.value })} />
           <div className="call__actions">
             <Link className="btn btn--primary btn--lg" to={exportHref}>
-              5 share · export the deck
+              share · export the deck
             </Link>
           </div>
         </div>
@@ -386,9 +375,7 @@ export function EluteOpinion({ candidate }: { candidate: CandidateDetail }) {
     <section className="section" aria-labelledby="opinion">
       <div className="section__head">
         <div>
-          <h2 className="display-xs" id="opinion">
-            <span className="section__n">4</span>elute’s opinion
-          </h2>
+          <h2 className="display-xs" id="opinion">elute’s opinion</h2>
         </div>
         <span className="section__count">{STANCE_WORDS[r.stance] ?? r.stance}</span>
       </div>

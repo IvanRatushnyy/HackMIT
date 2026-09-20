@@ -1,4 +1,4 @@
-/* elute — Working, stage 2 of 5: the ten checks as ten boxes that light up one at a time.
+/* elute — Working, stage 2 of 4: the ten checks as ten boxes that light up one at a time.
  *
  * Each box asks one question, names the source it asks, and when it finishes shows what came back as one
  * count. The current box is in ink with a bar filling beneath it; finished boxes carry a check and their

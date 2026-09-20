@@ -407,9 +407,7 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
     <section className="section" aria-labelledby="pathway">
       <div className="section__head">
         <div>
-          <h2 className="display-xs" id="pathway">
-            <span className="section__n">2</span>the pathway
-          </h2>
+          <h2 className="display-xs" id="pathway">the pathway</h2>
         </div>
         <span className="section__status">
           {status === 'live' && `live from Open Targets and Reactome, ${fetched}`}

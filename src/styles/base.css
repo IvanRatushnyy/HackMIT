@@ -173,7 +173,7 @@ em {
   padding: 0 45px 0 40px;
 }
 
-/* The flow: the five stages, centred under the header on every page, the current one in ink. The stages fade
+/* The flow: the four stages, centred under the header on every page, the current one in ink. The stages fade
  * in one after another; under the startup screen they wait, and on the first page they follow the band. */
 .flow {
   display: flex;
@@ -197,13 +197,6 @@ em {
 .stage {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  color: var(--color-ink-faint);
-  font-size: var(--text-sm);
-  line-height: var(--line-3);
-  font-weight: var(--weight-medium);
-  white-space: nowrap;
-  transition: color var(--duration-base) var(--ease-out);
 }
 .stage + .stage::before {
   content: '';
@@ -212,6 +205,21 @@ em {
   height: var(--line-width);
   margin: 0 var(--space-sm);
   background: var(--color-line);
+}
+.stage__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-ink-faint);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
+}
+a.stage__link:hover {
+  color: var(--color-ink-muted);
 }
 .stage__box {
   display: inline-flex;
@@ -230,7 +238,7 @@ em {
   width: var(--size-icon-sm);
   height: var(--size-icon-sm);
 }
-.stage--now {
+.stage--now .stage__link {
   color: var(--color-ink);
 }
 .stage--now .stage__box {
