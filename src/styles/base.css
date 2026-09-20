@@ -1,0 +1,665 @@
+/* elute — base styles and page frame.
+ * Tokens come from design/tokens/index.css. Every value here is on the 8px grid.
+ * Surfaces: the page is the sunken neutral; reading panels are white with one 1px line. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 1280px; /* v1 supports 1280 and up; below it the page scrolls sideways */
+  background: var(--color-surface-sunken);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure,
+pre {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+strong {
+  font-weight: var(--weight-bold);
+}
+em {
+  font-style: italic;
+}
+.medium {
+  font-weight: var(--weight-medium);
+}
+.faint {
+  color: var(--color-ink-faint);
+}
+.critical {
+  color: var(--color-critical);
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ---- Type roles beyond the tokens ---------------------------------------------- */
+
+/* A kicker: the small uppercase label above a title or a panel ("appraise", "recent", "claim") */
+.kicker {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.08em; /* caps need positive tracking; Supreme's default is −4% */
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Aujournuit roles: always lowercase */
+.display-lg,
+.display-md,
+.display-sm,
+.display-xs {
+  font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  text-transform: lowercase;
+}
+.display-lg {
+  font-size: var(--display-lg);
+}
+.display-md {
+  font-size: var(--display-md);
+}
+.display-sm {
+  font-size: var(--text-2xl); /* 40px: page titles inside content */
+  line-height: var(--line-6);
+}
+.display-xs {
+  font-size: var(--text-xl); /* 28px: section titles, row names */
+  line-height: var(--line-4);
+}
+
+/* ---- Page frame ---------------------------------------------------------------- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* One content column on every page */
+.page {
+  --col-pad: 80px;       /* the column's side padding: text starts here */
+  --col-narrow: 1184px;  /* 1024 content + gutters: entry and export */
+}
+.col {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--col-pad) var(--space-2xl);
+}
+.col--narrow {
+  max-width: var(--col-narrow);
+}
+
+/* Title block: kicker, title, sub line; an optional right-hand control */
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+.title__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+.title__sub {
+  color: var(--color-ink-muted);
+  font-size: var(--text-md);
+  line-height: var(--line-3);
+}
+.title__aside {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: none;
+}
+
+/* ---- Header (every page): wordmark, the field, the shard band --------------------- */
+
+.header {
+  height: var(--header-height);
+  display: grid;
+  grid-template-columns: 720px 1fr;
+  background: var(--color-surface);
+  border-bottom: var(--line-width) solid var(--color-line);
+}
+.header--entry {
+  /* The band's left edge sits on the narrow column's text edge: the centring
+   * offset plus the column padding. Never narrower than the wordmark needs. */
+  grid-template-columns: minmax(max-content, calc(max(0px, (100% - var(--col-narrow)) / 2) + var(--col-pad))) 1fr;
+}
+.header__block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  /* 40px left: optically the same as the ~40px above and below the wordmark's ink in the 120px header */
+  padding: 0 var(--space-lg) 0 40px;
+}
+.header__shard {
+  position: relative;
+  overflow: hidden;
+}
+.header__shard svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-stretch: var(--wordmark-width); /* the one Airy setting; every other title is Regular */
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  text-transform: lowercase;
+  font-size: 48px;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.wordmark:hover {
+  text-decoration: none;
+}
+
+/* ---- Data note: one quiet line at the foot of every page --------------------------- */
+
+.datanote {
+  margin-top: auto;
+  padding: var(--space-md) var(--col-pad) var(--space-lg);
+  color: var(--color-ink-faint);
+  font-style: italic;
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  max-width: 120ch;
+}
+
+/* ---- Panel: a white reading surface with one line ---------------------------------- */
+
+.panel {
+  background: var(--color-surface);
+  border: var(--line-width) solid var(--color-line);
+  border-radius: var(--radius);
+}
+.panel--pad {
+  padding: var(--space-md);
+}
+.panel__row {
+  display: grid;
+  align-items: center;
+  min-height: 56px;
+  padding: 0 var(--space-md);
+  border-top: var(--line-width) solid var(--color-line);
+}
+.panel__row:first-child {
+  border-top: 0;
+}
+
+/* Table headers inside panels and lists */
+.thead {
+  display: grid;
+  align-items: end;
+  padding: 0 var(--space-md) var(--space-xs);
+}
+.thead .kicker {
+  color: var(--color-ink-faint);
+}
+
+/* ---- Controls ------------------------------------------------------------------------ */
+
+.field {
+  height: var(--size-control);
+  width: 384px;
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+.field::placeholder {
+  color: var(--color-ink-faint);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* The one big field on Entry: input and the Appraise button inside one 64px box */
+.ask {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: 64px;
+  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
+  border: var(--line-width) solid var(--color-ink);
+  background: var(--color-surface);
+  transition: box-shadow var(--duration-base) var(--ease-out);
+}
+.ask:focus-within {
+  box-shadow: 0 0 0 1px var(--color-ink);
+}
+.ask__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: none;
+  font-size: var(--text-lg);
+  padding: 0;
+}
+.ask__input:focus {
+  outline: none;
+}
+.ask__input::placeholder {
+  color: var(--color-ink-faint);
+}
+
+.typeahead {
+  position: relative;
+  width: 100%;
+}
+.typeahead__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  z-index: var(--z-dropdown);
+  background: var(--color-surface);
+  border: var(--line-width) solid var(--color-line);
+}
+.typeahead__item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  align-items: center;
+  text-align: left;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+.typeahead__item[aria-selected='true'],
+.typeahead__item:hover {
+  background: var(--color-surface-selected);
+}
+.typeahead__note {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--color-ink);
+  border-radius: var(--radius);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+.btn--lg {
+  height: var(--size-control-lg);
+  padding: 0 var(--space-md);
+}
+.btn--primary {
+  background: var(--color-surface-inverse);
+  color: var(--color-ink-inverse);
+}
+.btn--primary:hover {
+  background: var(--neutral-700);
+}
+.btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
+/* Segmented control: List | Board, Evidence as of, tabs. The active segment is ink. */
+.seg {
+  display: inline-flex;
+  gap: var(--space-xs);
+}
+.seg__item {
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  border: var(--line-width) solid var(--color-line);
+  background: var(--color-surface);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+.seg__item[aria-checked='true'],
+.seg__item[aria-selected='true'] {
+  background: var(--color-surface-inverse);
+  color: var(--color-ink-inverse);
+  border-color: var(--color-ink);
+}
+.seg__item:disabled {
+  cursor: default;
+}
+
+/* Chip: an outlined word (a mode example, a trial outcome). Sharp, 32px. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: var(--size-control-sm);
+  padding: 0 var(--space-xs);
+  border: var(--line-width) solid var(--color-line-strong);
+  background: var(--color-surface);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  color: var(--color-ink);
+}
+.chip--negative {
+  color: var(--color-critical);
+  border-color: var(--color-critical);
+}
+.chip--muted {
+  color: var(--color-ink-muted);
+  border-color: var(--color-line);
+}
+.chip--button {
+  height: var(--size-control);
+  padding: 0 var(--space-sm);
+  border-color: var(--color-line);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.chip--button:hover {
+  border-color: var(--color-ink);
+  transform: translateY(-1px);
+}
+
+/* Radio pill for Your call */
+.choice {
+  height: var(--size-control-lg);
+  padding: 0 var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border: var(--line-width) solid var(--color-line);
+  background: var(--color-surface);
+  font-weight: var(--weight-medium);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out);
+}
+.choice::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: var(--line-width) solid var(--color-line-strong);
+  transition: all var(--duration-base) var(--ease-out);
+}
+.choice[aria-checked='true'] {
+  border-color: var(--color-ink);
+  background: var(--color-surface-selected);
+}
+.choice[aria-checked='true']::before {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  box-shadow: inset 0 0 0 2px var(--color-surface);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: var(--space-sm);
+  border: var(--line-width) solid var(--color-line);
+  background: var(--color-surface);
+  resize: vertical;
+  line-height: var(--line-3);
+}
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 56px;
+  padding: 0 var(--space-md);
+  border-top: var(--line-width) solid var(--color-line);
+  text-align: left;
+  width: 100%;
+}
+.check:first-child {
+  border-top: 0;
+}
+.check__box {
+  width: 16px;
+  height: 16px;
+  border: var(--line-width) solid var(--color-line-strong);
+  background: var(--color-surface);
+  flex: none;
+  transition: all var(--duration-base) var(--ease-out);
+}
+.check[aria-checked='true'] .check__box {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  box-shadow: inset 0 0 0 3px var(--color-surface);
+}
+
+/* ---- Evidence label: an 8px square and the word, never the colour alone -------------- */
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+.label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  flex: none;
+}
+.label--established {
+  color: var(--evidence-established);
+}
+.label--contested {
+  color: var(--evidence-contested);
+}
+.label--single-source {
+  color: var(--evidence-single-source);
+}
+.label--unknown {
+  color: var(--evidence-unknown);
+}
+.label--refuted {
+  color: var(--evidence-refuted);
+}
+.label__qualifier {
+  font-weight: var(--weight-regular);
+  color: var(--color-ink-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- Driver bar ------------------------------------------------------------------------ */
+
+.drivers {
+  display: grid;
+  grid-template-columns: repeat(4, 56px);
+  gap: var(--space-xs);
+  width: 248px;
+  flex: none;
+}
+.drivers__seg {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* half unit: inside a control only */
+}
+.drivers__word {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-muted);
+}
+.drivers__pips {
+  display: flex;
+  gap: var(--space-xs);
+}
+.drivers__pip {
+  width: 8px;
+  height: 8px;
+  border: var(--line-width) solid var(--color-line);
+}
+.drivers__pip--on {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.drivers__pip--refuted {
+  border-color: var(--evidence-refuted);
+}
+.drivers__pip--on.drivers__pip--refuted {
+  background: var(--evidence-refuted);
+}
+
+/* ---- Motion: state changes only, transform and opacity only ---------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* A block that has just arrived. --i staggers siblings by 40ms so a page reads as one reveal. */
+.rise {
+  animation: rise var(--duration-base) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+.appear {
+  animation: appear var(--duration-slow) var(--ease-out) both;
+}
+
+/* Disclosure bodies open as a height change on the grid, never a slide */
+.grow {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-base) var(--ease-out);
+}
+.grow--open {
+  grid-template-rows: 1fr;
+}
+.grow > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ---- Print --------------------------------------------------------------------------- */
+
+@media print {
+  body {
+    min-width: 0;
+    background: var(--color-surface);
+  }
+  .header,
+  .datanote,
+  .no-print {
+    display: none !important;
+  }
+  .col {
+    padding: 0;
+    max-width: none;
+  }
+  .panel {
+    border: 0;
+  }
+}

@@ -1,6 +1,6 @@
 # elute — design
 
-**elute** is a drug-repurposing decision tool, built for the Regeneron challenge at HackMIT 2026. Given a condition or an approved drug, a backend ranks repurposing candidates. The frontend does the part no ranking tool does: it puts the strongest case *against* each candidate on screen first, labels every link in the mechanism chain as established, contested, single-source, or unknown, and never pretends to be more certain than it is. It organizes evidence for a scientist who is qualified to weigh it. It never recommends.
+**elute** is a drug-repurposing decision tool, built for the Regeneron challenge at HackMIT 2026. Given a condition, an approved drug, or a drug–condition pair, a backend ranks repurposing candidates. The frontend does the part no ranking tool does: it puts the strongest case *against* each candidate on screen first, labels every link in the mechanism chain as established, contested, single-source, unknown, or refuted, and never pretends to be more certain than it is. It organizes evidence for a scientist who is qualified to weigh it. It never recommends.
 
 To elute is to wash a mixture through a column so that its compounds come out one at a time, separated. The tool does the same to a hypothesis: what is known comes apart from what is merely believed.
 
@@ -10,9 +10,11 @@ To elute is to wash a mixture through a column so that its compounds come out on
 HackMIT/
 ├── DESIGN.md                 this document
 ├── .impeccable.md            design context for AI design tooling
-├── package.json              shared front-end dependencies (html2canvas for the glass layer)
+├── package.json              the app (Vite + React + TypeScript) and the glass layer's html2canvas
+├── src/                      the app; src/styles/base.css and screens.css are the only stylesheets
 └── design/
     ├── palette.md            the four colors, roles, contrast, rules
+    ├── shard/shard.svg       the brand composition, exported from the mockup
     ├── glass/
     │   ├── README.md         how to load the glass layer, its constraints and fallbacks
     │   ├── glass-theme.css   brand overrides for the glass controls
@@ -31,7 +33,7 @@ HackMIT/
         └── typography.css    families, tracking, weights, type scale, text roles
 ```
 
-In a Vite or React app, import `design/tokens/index.css` once from the entry file and use the semantic tokens and classes everywhere else.
+`src/main.tsx` imports `design/tokens/index.css` once; everything else uses the semantic tokens and the classes in `src/styles/`.
 
 ## Who it is for
 
@@ -52,25 +54,26 @@ Every screen is one of these, and each has a fixed treatment.
 
 | Moment | The person should feel | Treatment |
 |---|---|---|
-| Entry | "I understand what this does in five seconds." | One Aujournuit sentence over the shard hero, then two glass pill choices: *Start from a condition* / *Start from a drug*. Nothing else. |
-| Waiting | "It's doing real work, not stalling." | Named steps appear as they happen, in Supreme, one line each: *pulling targets · tracing pathways · checking literature · stress-testing*. No spinner, no progress bar. |
-| Results | "I can triage this in fifteen seconds." | A ranked list of rows separated by 1px lines, not a card grid. Each row: the candidate in Medium, a one-line plain-language why, a confidence figure that opens its drivers, a safety flag as a word with its reason. Why #1 is above #2 is a sentence, not a bar. |
-| Detail | "I can defend or kill this myself." | Counter-case first, above the fold, under the heading *Assume this is wrong. Here's the strongest case against it.* Each argument dated and sourced. Below it, the walkable mechanism chain with an evidence label on every link. Then safety as a reason with its evidence. Then the closing question: *Worth a trial? What would kill it?* |
-| Depth | "As deep as I want, never forced." | A *Show the agent's work* toggle, off by default. Raw tool calls, sources, and dependencies in a plain panel set in the system monospace. |
-| Exit | "I can take this with me." | Export as a document in the same type system: argument, counter-case, caveats, and the data note, intact and in that order. |
+| Appraise | "I understand what this does in five seconds." | A kicker, one 64px field with the *Appraise* button inside it, three outlined mode examples (*condition → candidates · drug → indications · pair → appraisal*), and *paste a paper*, which shows what was read — design, blinding, n — before anything runs. Below, a *recent* list in a panel, names in Aujournuit. |
+| Working | "It's doing real work, not stalling." | The evidence ledger in a panel: numbered rows with a ✓ / ! / ● glyph, the step, what came back with its real source, and the elapsed time when a run was recorded. The running row sits on the sunken surface with a 2px bar; pending rows are faint. A finished step's records open in a panel beside it. A status line says *step 6 of 10 · 0:31 · scripted, about 12 s · results open when done*. No spinner. |
+| Results | "I can triage this in fifteen seconds." | A table in a panel, grouped *not yet refuted* / *refuted in controlled studies*, ordered by fewest unresolved trial prerequisites — never by a score, and the sub line says so. Each row: rank, the candidate in Aujournuit with its mechanism under it, the best evidence as an outlined outcome chip with design and n, the weakest link in a sentence, safety as a raspberry word with its reason or *none flagged*, the unresolved count. A *board* view lays the same candidates out by trial stage. |
+| Detail | "I can defend or kill this myself." | One column. *Critical appraisal* first: numbered objections in a panel, each expanding to its evidence sentence and dated sources. Then *mechanism*: a horizontal chain, nodes as boxes, each link carrying its label square and word, a caption, and *weakest link* on one of them; selecting a link opens its claim and evidence below. Then *safety* and *before a trial* side by side. Then *your call* with reasoning and *Export appraisal*. *Evidence as of* sits top right and freezes the whole page at a date. |
+| Sources | "I can see exactly what it did." | The run's ledger with every record numbered (1.1, 2.2 …), the tool calls in system mono, the packages, and the status rules that assign each label. Citations on Detail land here. |
+| Export | "I can take this with me." | Format (Markdown, JSON, print), what to include, and a live preview built from the same dated model the page shows. The evidence date and the data note travel with the document. |
 
-A data banner sits on every screen: one plain sentence in muted ink on the sunken surface, saying which parts are curated or synthetic and what real data the tool would run on. Not raspberry, not glass, not dismissible.
+A data note sits at the foot of every page: one italic 12px line in faint ink saying which parts are curated or draft and what real data the tool would run on. Not raspberry, not a banner, not dismissible.
 
 ## Typography
 
 | Role | Face | Setting | Use |
 |---|---|---|---|
-| Display | Aujournuit | Airy width (`font-stretch: 175%`), tracking −2%, weight 400 | Wordmark, page titles, a drug or condition name as a heading, the counter-case heading |
+| Display | Aujournuit | Regular width (`font-stretch: 100%`), tracking −2%, weight 400, **always lowercase**; the wordmark alone is Airy (`175%`) | Wordmark (48px), page titles (40px), section titles and row names (28px) |
+| Kicker | Supreme | 12px Medium, uppercase, tracking +8% | The small label above a title or a panel: *appraise*, *recent*, *claim*, *evidence*, table headers |
 | Text | Supreme | Tracking −4%, Regular 400 | Body, labels, tables, controls, the chain: everything that is not a big title |
 | Emphasis | Supreme | Medium 500 | Interactive labels, the current item, a candidate's name in the results, the evidence-label word |
 | Headline figure | Supreme | Bold 700 | Only the one figure that carries an argument, such as *n = 12* or *0.53%* |
 | Annotation | Supreme Italic | Regular 400 | Dates and sources under a claim, the data banner, caveats |
-| Raw | System monospace | Regular | The agent's-work panel only. There is no brand mono; the system's is honest enough for tool calls. |
+| Raw | System monospace | Regular | The tool-call blocks on Sources only. There is no brand mono; the system's is honest enough for tool calls. |
 
 Scale for product UI is fixed in rem, ratio about 1.25, and every size pairs with a line height on the 8px grid:
 
@@ -83,11 +86,11 @@ Scale for product UI is fixed in rem, ratio about 1.25, and every size pairs wit
 | `--text-xl` | 28px | 32px | Key figures, the confidence figure |
 | `--text-2xl` | 40px | 48px | The headline figure |
 
-Aujournuit titles on landing surfaces use the fluid `--display-md` and `--display-lg` sizes at line height 1, with margins that return the block to the grid. Body measure caps at 65ch.
+Aujournuit is set in lowercase everywhere it appears; Supreme keeps normal casing (MONDO ids, *NILO-PD*, drug classes). Body measure caps at 65ch.
 
 Notes from the font files:
 
-- Aujournuit has one weight and five named widths: Condensed 50, Densed 75, Regular 100, Airy 175, Wide 200. Only Airy is used.
+- Aujournuit has one weight and five named widths: Condensed 50, Densed 75, Regular 100, Airy 175, Wide 200. Regular is used everywhere except the wordmark, which is Airy.
 - Aujournuit supports `ss01`, `dlig`, `frac`, `ordn` and `sups`. Supreme supports `salt`, `frac`, `ordn` and `sups`.
 - Neither face has tabular figures. Columns of numbers are right-aligned with the `.figure` class rather than relying on equal digit widths.
 - Fallback faces in `fonts.css` carry the real fonts' ascent and descent so text does not jump on load.
@@ -99,28 +102,26 @@ Read `design/palette.md` for the full table. In short:
 1. **White** `#fbfcfe` is the page. Tinted toward the ink hue, never pure.
 2. **Black** `#06070e` is the ink, primary buttons, the dominant shard, and the *established* label.
 3. **Slate** `#47667d` is the main highlight and the only recurring color: selection, links, active controls, the *contested* label.
-4. **Dust grey** `#d3d3d3` is a secondary accent for dividers, inactive shards, disabled states, and chain links outside the active filter.
-5. **Raspberry** `#82204a` is a secondary accent that stays rare: the *single-source* label, the safety flag, and destructive actions.
+4. **Dust grey** `#d3d3d3` is a secondary accent for dividers, inactive shards, and disabled states.
+5. **Raspberry** `#82204a` is a secondary accent that stays rare: the *single-source* and *refuted* labels, the safety flag, the *negative* outcome chip, and destructive actions.
+
+The page is the sunken neutral (`--color-surface-sunken`); reading surfaces are white panels with one 1px dust line. Nothing is rounded.
 
 All neutrals are tinted toward hue 276, the black's hue, at chroma 0.003 to 0.016. Contrast is verified against the white surface: black 19.6:1, raspberry 9.1:1, slate 5.9:1, muted text 5.4:1.
 
-Evidence labels are never color alone: every link carries its word, and *single-source* carries its qualifier (n, blinding, replication). Confidence is a figure in ink that opens its drivers, never a color scale or a bar.
+Evidence labels are never color alone: an 8px square in the label's color sits before the word, *single-source* carries its qualifier (n, blinding, replication), and a chain link's line repeats the label (solid for established and refuted, dashed for contested and single-source, dotted for unknown). What set a candidate's rank is a driver bar of four named segments with three monochrome pips each — never a number.
 
 ## The shard
 
-The one unforgettable element is the composition from the mood board: large intersecting curved planes in black, slate, raspberry, and dust, a mixture coming apart into bands the way compounds separate as they elute. It is the brand mark, the hero behind the entry sentence, and, sparingly, an abstract element behind a candidate header. It is never placed behind body text or the counter-case, and it is the only decoration allowed.
+The one unforgettable element is the composition from the mood board: large intersecting curved planes in black, slate, raspberry, and dust, a mixture coming apart into bands the way compounds separate as they elute. It is the brand mark and the band beside the wordmark in the 120px header on every page (`design/shard/shard.svg`, cropped to its dense middle). It is never placed behind body text or the counter-case, and it is the only decoration allowed.
 
 ## Glass
 
-Glassmorphism is used in two places and for one reason: a control that floats over something being read must not hide it. On Entry the two choices float over the shard hero, the one time glass meets the brand mark. On Detail the chain controls float over the walkable mechanism chain: the chain is the evidence, and a solid panel over it would cover the very link being judged. The effect comes from [liquid-glass-js](https://github.com/dashersw/liquid-glass-js), a WebGL refraction library vendored in `design/glass/vendor`, with the elute preset in `design/glass/glass.config.js` and brand overrides in `design/glass/glass-theme.css`. Wiring and constraints are in `design/glass/README.md`.
+Glass is reserved for one situation: a control that floats over something being read must not hide it. The v1 flow has no such control — nothing floats over the chain or the shard — so no glass is loaded. The layer stays vendored for the moment one is needed. The effect comes from [liquid-glass-js](https://github.com/dashersw/liquid-glass-js), a WebGL refraction library vendored in `design/glass/vendor`, with the elute preset in `design/glass/glass.config.js` and brand overrides in `design/glass/glass-theme.css`. Wiring and constraints are in `design/glass/README.md`.
 
-Where glass appears:
+Where glass may appear, when a floating control returns: a pill container of pill buttons over the shard or over the chain.
 
-- The two entry choices (*Start from a condition* / *Start from a drug*) as one pill container with two pill buttons over the shard hero.
-- The chain controls: the label filter (All, Contested, Single-source) as a pill container, and fit and zoom as circle buttons.
-- The handle and header of the narrow-screen bottom sheet, so the chain stays visible while the sheet is collapsed.
-
-Where glass never appears: the counter-case, the results list, link and source detail, the data banner, the agent's-work panel, the export, or any surface whose job is reading. Glass is a control material, not a panel material. At most three glass containers on screen at once, nested one level deep at most.
+Where glass never appears: the counter-case, the results, claim and source detail, the data note, the tool calls, the export, or any surface whose job is reading. Glass is a control material, not a panel material. At most two glass containers on screen at once, never nested.
 
 Rules:
 
@@ -136,8 +137,8 @@ Rules:
 1. **The counter-case is the headline.** Every Detail view answers "what would kill this?" before anything else, and answers it as the most polished block on the page.
 2. **Known vs. believed, labeled on every claim.** Established, contested, single-source, or unknown, on every link, always with its word and its source. *Unknown* is a valid and valuable label. Never a bare number: confidence is always one click from its drivers.
 3. **Doubt reads as rigor.** Emphasis by weight and placement; the rare use of raspberry marks the weakest link and the safety flag. No alarm styling, no disclaimer boxes.
-4. **Show the work, never force it.** Sources one click away; the agent's raw work behind a toggle that is off by default.
-5. **Say what is synthetic.** The data banner is on every screen and says what real data this would run on.
+4. **Show the work, never force it.** Sources one click away; every citation lands on the Sources page, where the ledger, the tool calls, the packages, and the label rules live.
+5. **Say what is synthetic.** The data note is at the foot of every page and says what real data this would run on.
 6. **Never a recommendation.** The tool organizes and challenges; the scientist decides. No language that reads as promotion of pursuing or prescribing anything.
 7. **The shard is the brand.** Geometry from the mood board, used with restraint.
 
@@ -155,12 +156,12 @@ Everything is built on an 8px grid, and consistency matters more than any single
 ## Layout and motion
 
 - Light theme. The mood board sets black on white; a scientist reads a reprint on paper, and the page should feel like one. No dark mode.
-- Minimal chrome: white surfaces, few 1px lines, generous whitespace, asymmetric compositions. Ranked results are rows, not cards. No card grids, no cards inside cards.
-- The chain reads left to right, drug to condition, on the grid: nodes are sharp-cornered rectangles, links are 1px lines whose style repeats the label (solid for established, dashed for contested and single-source, dotted for unknown). The word and the color do the rest.
-- Corners are sharp by default, matching the shard geometry. Round only pills and the glass circle buttons.
-- Motion only for state changes, on transform and opacity, 120 to 400 ms, ease-out curves. Waiting steps rise and fade in one after another and stay. A link expanding is a height change on the grid, not a slide. Reduced motion respected.
-- Adapt for narrow screens rather than shrink: the counter-case comes first at every width; the chain scrolls horizontally under a bottom sheet.
+- One header on every page: 120px, the wordmark and the field on white, the shard band beside them. One content column, 80px gutters, 1440px max (1184px on Appraise and Export). Minimum supported width 1280px.
+- Minimal chrome: the sunken page, white panels with one 1px line, generous whitespace, asymmetric compositions. Results are rows in a panel; the board's cards are the one place a card is allowed, and never a card inside a card.
+- The chain reads left to right, drug to condition: nodes are sharp rectangles, each link between them is one claim with its own evidence and label. The link's 1px line repeats the label; the square and the word do the rest. Six nodes fit the column; more scroll sideways inside the chain.
+- Corners are sharp everywhere, matching the shard geometry; the only round shapes are the radio dots.
+- Motion only for state changes, on transform and opacity, 120 to 400 ms, ease-out curves. A page arrives as one reveal: blocks rise 8px and fade in, staggered 40ms. Ledger rows rise in as they complete and stay; the running row's bar fills over the step's duration. A row expanding is a height change on the grid (`grid-template-rows`), never a slide. Changing the evidence date re-mounts the body as one reveal. Hover lifts by 1px; press scales to 0.98; colour settles over 240ms. Reduced motion collapses every duration through the tokens.
 
 ## Not this
 
-Dark "AI lab" dashboards with cyan glow. Chat bubbles. Sparkle icons. Icons above every heading. Red, amber, green confidence lights. Bare percentage scores. Gradient text. Colored side stripes on cards. Glass on reading surfaces or glass everywhere. A disclaimer box where the counter-case should be. Anything that looks like a pitch deck or a press release.
+Dark "AI lab" dashboards with cyan glow. Chat bubbles. Sparkle icons. Icons above every heading. Red, amber, green confidence lights. Bare percentage scores. Gradient text. Colored side stripes on cards. Rounded cards with drop shadows. Glass on reading surfaces or glass everywhere. A disclaimer box where the counter-case should be. A tab or button that leads nowhere. A count of what a historical view hides. Anything that looks like a pitch deck or a press release.

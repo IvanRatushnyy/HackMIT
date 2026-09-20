@@ -1,0 +1,936 @@
+/* elute — draft candidate records.
+ *
+ * Structurally complete so they pass the publishability gate and render every
+ * section, but `curation: 'draft'`: the sources below were entered from memory of
+ * the literature and have not been verified by a human against the papers. The
+ * banner and /methods say so. Where a citation is uncertain, the URL is a PubMed
+ * search that finds the paper rather than an asserted identifier. */
+
+import type { CandidateDetail, Source } from '../data/types'
+
+const TODAY = '2026-09-19'
+const todayOnly = [{ id: 'today', label: 'Today', date: TODAY, note: 'Evidence as of 19 Sep 2026 (fixture date).' }]
+
+type Src = Omit<Source, 'ledger'> & { ledger?: string }
+const src = (s: Src): Source => ({ ledger: 'L6', ...s })
+
+function draft(
+  base: Omit<CandidateDetail, 'curation' | 'cutoffs' | 'counts'> & { trials: number },
+): CandidateDetail {
+  const { trials, ...rest } = base
+  return { ...rest, curation: 'draft', cutoffs: todayOnly, counts: { sources: base.sources.length, trials } }
+}
+
+const pm = (term: string) => `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(term)}`
+const dailymed = (drug: string) => `https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=${encodeURIComponent(drug)}`
+
+/** US prescribing information, reached through the openFDA/DailyMed step (L8). */
+const label = (id: string, drug: string, year: number, published: string): Source =>
+  src({ id, first_author: 'FDA', journal: `${drug} prescribing information`, year, published, design: 'label', controlled: false, outcome: 'na', group: 'FDA', url: dailymed(drug), ledger: 'L8' })
+
+// ---- Ambroxol -----------------------------------------------------------------
+
+const ambroxolSources: Source[] = [
+  src({
+    id: 'sidransky-2009',
+    first_author: 'Sidransky E',
+    journal: 'N Engl J Med',
+    year: 2009,
+    published: '2009-10-22',
+    title: 'Multicenter analysis of glucocerebrosidase mutations in Parkinson’s disease',
+    design: 'observational',
+    controlled: false,
+    n: 5691,
+    outcome: 'positive',
+    group: 'Sidransky (NIH)',
+    url: 'https://www.nejm.org/doi/full/10.1056/NEJMoa0901281',
+  }),
+  src({
+    id: 'maegawa-2009',
+    first_author: 'Maegawa GH',
+    journal: 'J Biol Chem',
+    year: 2009,
+    published: '2009-08-21',
+    title: 'Identification and characterization of ambroxol as an enzyme enhancement agent for Gaucher disease',
+    design: 'preclinical',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Mahuran (Toronto)',
+    url: pm('Maegawa 2009 ambroxol glucocerebrosidase chaperone'),
+  }),
+  src({
+    id: 'mcneill-2014',
+    first_author: 'McNeill A',
+    journal: 'Brain',
+    year: 2014,
+    published: '2014-05-01',
+    title: 'Ambroxol improves lysosomal biochemistry in glucocerebrosidase mutation-linked Parkinson disease cells',
+    design: 'preclinical',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Schapira (UCL)',
+    url: pm('McNeill 2014 ambroxol lysosomal glucocerebrosidase Parkinson cells'),
+  }),
+  src({
+    id: 'mullin-2020',
+    first_author: 'Mullin S',
+    journal: 'JAMA Neurol',
+    year: 2020,
+    published: '2020-01-13',
+    title: 'Ambroxol for the treatment of patients with Parkinson disease with and without glucocerebrosidase gene mutations (AiM-PD)',
+    design: 'open-label',
+    controlled: false,
+    blinded: false,
+    n: 17,
+    outcome: 'positive',
+    group: 'Schapira (UCL)',
+    url: pm('Mullin 2020 ambroxol Parkinson JAMA Neurology'),
+  }),
+  src({
+    id: 'aspro-pd-2026',
+    first_author: 'ASPro-PD investigators',
+    journal: 'J Neurol',
+    year: 2026,
+    published: '2026-01-15',
+    title: 'Ambroxol to slow progression in Parkinson disease (ASPro-PD): phase 3 protocol',
+    design: 'protocol',
+    controlled: true,
+    blinded: true,
+    outcome: 'na',
+    group: 'Schapira (UCL)',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/41708985/',
+    ledger: 'L5',
+  }),
+]
+
+export const ambroxol = draft({
+  slug: 'ambroxol--parkinsons-disease',
+  name: 'Ambroxol',
+  drug_class: 'mucolytic; glucocerebrosidase chaperone',
+  approved_indication: 'respiratory secretion clearance (EU)',
+  condition: 'Parkinson’s disease',
+  condition_slug: 'parkinsons-disease',
+  drug_slug: 'ambroxol',
+  mechanism: 'ambroxol → GCase (GBA1) → lysosomal α-synuclein clearance',
+  sources: ambroxolSources,
+  trials: 2,
+  objections: [
+    {
+      id: 'o1',
+      consequence_rank: 1,
+      claim: 'No controlled efficacy evidence exists yet.',
+      evidence: 'The only human data is an open-label study of 17; the phase 3 (ASPro-PD) is enrolling and its outcome is unknown.',
+      figure: 'n = 17',
+      published: '2020-01-13',
+      sources: ['mullin-2020', 'aspro-pd-2026'],
+      cites: ['L5', 'L6'],
+    },
+    {
+      id: 'o2',
+      consequence_rank: 2,
+      claim: 'Target engagement was measured in CSF, not brain tissue.',
+      evidence: 'AiM-PD showed ambroxol in CSF and a rise in CSF GCase protein; whether neuronal GCase activity rises is inferred.',
+      published: '2020-01-13',
+      sources: ['mullin-2020'],
+      cites: ['L7'],
+    },
+    {
+      id: 'o3',
+      consequence_rank: 3,
+      claim: 'The genetic rationale is strongest in GBA1 carriers, who are a minority of patients.',
+      evidence: 'GBA1 variants are found in roughly 5–10 % of Parkinson’s patients; benefit in non-carriers is a further assumption.',
+      published: '2009-10-22',
+      sources: ['sidransky-2009'],
+      cites: ['L2'],
+    },
+  ],
+  chain: {
+    drug: 'ambroxol',
+    condition: 'Parkinson’s disease',
+    claims: [
+      {
+        id: 'c1',
+        node: 'GBA1 / GCase',
+        short: 'GBA1 variants raise PD risk',
+        text: 'GBA1 variants reduce glucocerebrosidase activity and raise Parkinson’s risk.',
+        evidence: [{ source: 'sidransky-2009', direction: 'supports' }],
+        override: [
+          {
+            from: '2009-10-22',
+            value: {
+              label: 'established',
+              why: 'A 16-centre genetic analysis of 5,691 patients; the association has since been replicated in every large cohort.',
+            },
+          },
+        ],
+      },
+      {
+        id: 'c2',
+        node: 'GCase activity',
+        short: 'raises GCase in cells',
+        text: 'Ambroxol raises glucocerebrosidase activity.',
+        scope: 'in cell models',
+        evidence: [
+          { source: 'maegawa-2009', direction: 'supports' },
+          { source: 'mcneill-2014', direction: 'supports' },
+        ],
+      },
+      {
+        id: 'c3',
+        node: 'brain engagement',
+        short: 'reaches CSF, raises CSF GCase',
+        text: 'Ambroxol reaches the brain and engages GCase in people.',
+        evidence: [{ source: 'mullin-2020', direction: 'supports' }],
+      },
+      {
+        id: 'c4',
+        node: 'slowed progression',
+        short: 'slows clinical progression',
+        text: 'Raising GCase slows clinical progression.',
+        evidence: [],
+      },
+    ],
+  },
+  prerequisites: [
+    {
+      id: 'p1',
+      condition: 'Target engagement shown in the human brain',
+      status: [
+        {
+          from: '2020-01-13',
+          value: { resolution: 'conditional', word: 'in CSF', note: 'CSF GCase protein rose in 17 patients; brain activity inferred.', sources: ['mullin-2020'] },
+        },
+      ],
+    },
+    {
+      id: 'p2',
+      condition: 'Effect observed under blinding',
+      status: [
+        { from: '2020-01-13', value: { resolution: 'unmet', word: 'not yet', note: 'ASPro-PD is enrolling.', sources: ['aspro-pd-2026'] } },
+      ],
+    },
+    {
+      id: 'p3',
+      condition: 'Independent replication of the human signal',
+      status: [{ from: '2020-01-13', value: { resolution: 'unmet', word: 'none', note: 'One group, one open-label study.', sources: ['mullin-2020'] } }],
+    },
+    {
+      id: 'p4',
+      condition: 'Biomarker validated against an alternative explanation',
+      status: [
+        { from: '2020-01-13', value: { resolution: 'unmet', word: 'not yet', note: 'CSF GCase rise not yet tied to a clinical outcome.', sources: ['mullin-2020'] } },
+      ],
+    },
+    {
+      id: 'p5',
+      condition: 'Safety acceptable in the intended population',
+      status: [
+        {
+          from: '2020-01-13',
+          value: { resolution: 'met', word: 'acceptable', note: 'Decades of over-the-counter use; tolerated at 1.26 g/day in AiM-PD.', sources: ['mullin-2020'] },
+        },
+      ],
+    },
+  ],
+  safety: [
+    {
+      from: '2020-01-13',
+      value: {
+        severity: 'none',
+        flag: 'no boxed warning',
+        kind: 'label reviewed',
+        reason: 'decades of over-the-counter use in Europe; no US label',
+        population: 'AiM-PD dosed to 1.26 g/day for six months in 17 patients with no serious adverse events attributed to the drug. An older Parkinson’s population adds nothing specific to watch beyond the usual gastrointestinal effects.',
+        sources: ['mullin-2020'],
+      },
+    },
+  ],
+  drivers: { mechanism: 3, clinical: 1, exposure: 2, safety: 3 },
+  best_evidence: [{ from: '2020-01-13', value: { design: 'open-label', controlled: false, outcome: 'positive', n: 17, source: 'mullin-2020', stage: 'phase-3-enrolling', label: 'AiM-PD 2020 · ASPro-PD enrolling' } }],
+  weakest_link: [
+    {
+      from: '2020-01-13',
+      value: { claim: 'c4', why: 'Nothing yet shows that raising GCase changes the clinical course; the phase 3 is the first test.', sources: ['aspro-pd-2026'] },
+    },
+  ],
+})
+
+// ---- Exenatide ----------------------------------------------------------------
+
+const exenatideSources: Source[] = [
+  src({
+    id: 'li-2009',
+    first_author: 'Li Y',
+    journal: 'Proc Natl Acad Sci USA',
+    year: 2009,
+    published: '2009-01-27',
+    title: 'GLP-1 receptor stimulation preserves primary cortical and dopaminergic neurons in cellular and rodent models of stroke and Parkinsonism',
+    design: 'preclinical',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Greig (NIA)',
+    url: pm('Li 2009 GLP-1 receptor dopaminergic neurons Parkinsonism PNAS'),
+  }),
+  src({
+    id: 'harkavyi-2008',
+    first_author: 'Harkavyi A',
+    journal: 'J Neuroinflammation',
+    year: 2008,
+    published: '2008-05-21',
+    title: 'Glucagon-like peptide 1 receptor stimulation reverses key deficits in distinct rodent models of Parkinson’s disease',
+    design: 'preclinical',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Whitton (UCL)',
+    url: pm('Harkavyi 2008 GLP-1 rodent Parkinson'),
+  }),
+  src({
+    id: 'aviles-olmos-2013',
+    first_author: 'Aviles-Olmos I',
+    journal: 'J Clin Invest',
+    year: 2013,
+    published: '2013-06-03',
+    title: 'Exenatide and the treatment of patients with Parkinson’s disease',
+    design: 'open-label',
+    controlled: true,
+    blinded: false,
+    n: 45,
+    outcome: 'positive',
+    group: 'Foltynie (UCL)',
+    url: pm('Aviles-Olmos 2013 exenatide Parkinson JCI'),
+  }),
+  src({
+    id: 'athauda-2017',
+    first_author: 'Athauda D',
+    journal: 'Lancet',
+    year: 2017,
+    published: '2017-08-03',
+    title: 'Exenatide once weekly versus placebo in Parkinson’s disease: a randomised, double-blind, placebo-controlled trial',
+    design: 'rct',
+    controlled: true,
+    blinded: true,
+    n: 62,
+    outcome: 'positive',
+    group: 'Foltynie (UCL)',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/28781108/',
+    ledger: 'L5',
+  }),
+  src({
+    id: 'vijiaratnam-2025',
+    first_author: 'Vijiaratnam N',
+    journal: 'Lancet',
+    year: 2025,
+    published: '2025-02-04',
+    title: 'Exenatide once a week versus placebo as a potential disease-modifying treatment for people with Parkinson’s disease (Exenatide-PD3)',
+    design: 'rct',
+    controlled: true,
+    blinded: true,
+    n: 194,
+    outcome: 'negative',
+    group: 'Foltynie (UCL)',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/39919773/',
+    ledger: 'L5',
+  }),
+  label('fda-bydureon', 'Bydureon (exenatide extended-release)', 2012, '2012-01-27'),
+]
+
+export const exenatide = draft({
+  slug: 'exenatide--parkinsons-disease',
+  name: 'Exenatide',
+  drug_class: 'GLP-1 receptor agonist',
+  approved_indication: 'type 2 diabetes',
+  condition: 'Parkinson’s disease',
+  condition_slug: 'parkinsons-disease',
+  drug_slug: 'exenatide',
+  mechanism: 'exenatide → GLP-1R → neuronal insulin signalling',
+  sources: exenatideSources,
+  trials: 3,
+  objections: [
+    {
+      id: 'o1',
+      consequence_rank: 1,
+      claim: 'The phase 3 was negative.',
+      evidence: 'Exenatide-PD3: 194 patients, 96 weeks, double-blind, no difference in the primary motor outcome.',
+      figure: 'n = 194',
+      published: '2025-02-04',
+      sources: ['vijiaratnam-2025'],
+      cites: ['L5'],
+    },
+    {
+      id: 'o2',
+      consequence_rank: 2,
+      claim: 'The phase 2 signal was small and from a single centre.',
+      evidence: 'A 3.5-point off-medication MDS-UPDRS III advantage at 60 weeks in 62 patients, one site, same group as the pilot.',
+      figure: '3.5 points',
+      published: '2017-08-03',
+      sources: ['athauda-2017'],
+      cites: ['L5'],
+    },
+    {
+      id: 'o3',
+      consequence_rank: 3,
+      claim: 'Brain target engagement was inferred, not measured.',
+      evidence: 'Evidence of central insulin-pathway activation comes from neuronal-derived exosomes in blood, not from the brain.',
+      published: '2017-08-03',
+      sources: ['athauda-2017'],
+      cites: ['L7'],
+    },
+  ],
+  chain: {
+    drug: 'exenatide',
+    condition: 'Parkinson’s disease',
+    claims: [
+      {
+        id: 'c1',
+        node: 'GLP-1R signalling',
+        short: 'protects dopamine neurons in rodents',
+        text: 'GLP-1 receptor agonism protects dopamine neurons.',
+        scope: 'in rodent models',
+        evidence: [
+          { source: 'li-2009', direction: 'supports' },
+          { source: 'harkavyi-2008', direction: 'supports' },
+        ],
+      },
+      {
+        id: 'c2',
+        node: 'brain exposure',
+        short: 'crosses the blood–brain barrier',
+        text: 'Exenatide crosses the blood–brain barrier at an active concentration in people.',
+        evidence: [],
+      },
+      {
+        id: 'c3',
+        node: 'benefit in patients',
+        short: 'slows progression in patients',
+        text: 'Exenatide slows Parkinson’s progression.',
+        evidence: [
+          { source: 'aviles-olmos-2013', direction: 'supports' },
+          { source: 'athauda-2017', direction: 'supports' },
+          { source: 'vijiaratnam-2025', direction: 'refutes' },
+        ],
+      },
+    ],
+  },
+  prerequisites: [
+    { id: 'p1', condition: 'Target engagement shown in the human brain', status: [{ from: '2017-08-03', value: { resolution: 'unmet', word: 'not shown', note: 'Inferred from blood exosomes.', sources: ['athauda-2017'] } }] },
+    { id: 'p2', condition: 'Effect observed under blinding', status: [{ from: '2025-02-04', value: { resolution: 'unmet', word: 'no', note: 'Phase 2 positive; phase 3 negative at 96 weeks.', sources: ['vijiaratnam-2025'] } }] },
+    { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2025-02-04', value: { resolution: 'unmet', word: 'no', note: 'The multicentre phase 3 did not reproduce the single-centre phase 2.', sources: ['vijiaratnam-2025'] } }] },
+    { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2017-08-03', value: { resolution: 'unmet', word: 'not tested', note: 'No validated progression biomarker was used.', sources: ['athauda-2017'] } }] },
+    { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2017-08-03', value: { resolution: 'met', word: 'acceptable', note: 'Weight loss and GI effects; no safety signal in 194 patients over 96 weeks.', sources: ['vijiaratnam-2025'] } }] },
+  ],
+  safety: [
+    {
+      from: '2012-01-27',
+      value: {
+        severity: 'boxed',
+        flag: 'thyroid C-cell tumours',
+        kind: 'boxed warning',
+        reason: 'rodent finding; the once-weekly formulation carries the warning',
+        population: 'The Parkinson’s trials used the once-weekly formulation. Personal or family history of medullary thyroid carcinoma excludes; weight loss and nausea are common and matter in an older population that is already losing weight.',
+        sources: ['fda-bydureon'],
+      },
+    },
+  ],
+  drivers: { mechanism: 2, clinical: 0, exposure: 1, safety: 2 },
+  best_evidence: [{ from: '2025-02-04', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 194, source: 'vijiaratnam-2025', stage: 'phase-3', label: 'Exenatide-PD3 2025' } }],
+  weakest_link: [{ from: '2025-02-04', value: { claim: 'c3', why: 'The definitive trial tested the clinical claim directly and found nothing.', sources: ['vijiaratnam-2025'] } }],
+})
+
+// ---- Isradipine ---------------------------------------------------------------
+
+const isradipineSources: Source[] = [
+  src({
+    id: 'chan-2007',
+    first_author: 'Chan CS',
+    journal: 'Nature',
+    year: 2007,
+    published: '2007-06-10',
+    title: '“Rejuvenation” protects neurons in mouse models of Parkinson’s disease',
+    design: 'preclinical',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Surmeier (Northwestern)',
+    url: pm('Chan 2007 rejuvenation protects neurons mouse Parkinson Nature'),
+  }),
+  src({
+    id: 'becker-2008',
+    first_author: 'Becker C',
+    journal: 'Neurology',
+    year: 2008,
+    published: '2008-04-15',
+    title: 'Use of antihypertensives and the risk of Parkinson disease',
+    design: 'observational',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Becker (Boston)',
+    url: pm('Becker 2008 antihypertensives risk Parkinson disease Neurology'),
+  }),
+  src({
+    id: 'steady-pd-iii-2020',
+    first_author: 'Parkinson Study Group STEADY-PD III Investigators',
+    journal: 'Ann Intern Med',
+    year: 2020,
+    published: '2020-03-31',
+    title: 'Isradipine versus placebo in early Parkinson disease: a randomized trial',
+    design: 'rct',
+    controlled: true,
+    blinded: true,
+    n: 336,
+    outcome: 'negative',
+    group: 'Parkinson Study Group',
+    url: pm('STEADY-PD III isradipine placebo early Parkinson randomized'),
+    ledger: 'L5',
+  }),
+  label('fda-isradipine', 'isradipine', 1990, '1990-12-21'),
+]
+
+export const isradipine = draft({
+  slug: 'isradipine--parkinsons-disease',
+  name: 'Isradipine',
+  drug_class: 'dihydropyridine calcium channel blocker',
+  approved_indication: 'hypertension',
+  condition: 'Parkinson’s disease',
+  condition_slug: 'parkinsons-disease',
+  drug_slug: 'isradipine',
+  mechanism: 'isradipine → Cav1.3 → reduced dopaminergic neuron stress',
+  sources: isradipineSources,
+  trials: 1,
+  objections: [
+    {
+      id: 'o1',
+      consequence_rank: 1,
+      claim: 'The phase 3 was negative.',
+      evidence: 'STEADY-PD III: 336 early patients, 36 months, no difference in progression.',
+      figure: 'n = 336',
+      published: '2020-03-31',
+      sources: ['steady-pd-iii-2020'],
+      cites: ['L5'],
+    },
+    {
+      id: 'o2',
+      consequence_rank: 2,
+      claim: 'The mechanism rests on one laboratory’s mouse work.',
+      evidence: 'Cav1.3-dependent neuronal stress and its rescue by isradipine come from a single group.',
+      published: '2007-06-10',
+      sources: ['chan-2007'],
+      cites: ['L4'],
+    },
+    {
+      id: 'o3',
+      consequence_rank: 3,
+      claim: 'Brain Cav1.3 engagement at tolerated doses was never shown.',
+      evidence: 'The tolerated dose (10 mg/day) may not reach channel-blocking concentrations in the substantia nigra.',
+      published: '2020-03-31',
+      sources: ['steady-pd-iii-2020'],
+      cites: ['L7'],
+    },
+  ],
+  chain: {
+    drug: 'isradipine',
+    condition: 'Parkinson’s disease',
+    claims: [
+      { id: 'c1', node: 'Cav1.3 stress', short: 'Cav1.3 entry stresses SNc neurons', text: 'Cav1.3 calcium entry stresses substantia nigra dopamine neurons.', scope: 'in mouse models', evidence: [{ source: 'chan-2007', direction: 'supports' }] },
+      { id: 'c2', node: 'lower PD risk', short: 'dihydropyridine use, lower risk', text: 'Dihydropyridine use is associated with lower Parkinson’s risk.', evidence: [{ source: 'becker-2008', direction: 'supports' }] },
+      { id: 'c3', node: 'nigral channel block', short: 'blocks nigral Cav1.3 at a tolerated dose', text: 'Isradipine blocks nigral Cav1.3 channels at a tolerated dose in people.', evidence: [] },
+      { id: 'c4', node: 'benefit in patients', short: 'slows progression in patients', text: 'Isradipine slows Parkinson’s progression.', evidence: [{ source: 'steady-pd-iii-2020', direction: 'refutes' }] },
+    ],
+  },
+  prerequisites: [
+    { id: 'p1', condition: 'Target engagement shown in the human brain', status: [{ from: '2020-03-31', value: { resolution: 'unmet', word: 'not shown', note: 'No measure of nigral channel block.', sources: ['steady-pd-iii-2020'] } }] },
+    { id: 'p2', condition: 'Effect observed under blinding', status: [{ from: '2020-03-31', value: { resolution: 'unmet', word: 'no', note: 'Tested in 336 patients; none.', sources: ['steady-pd-iii-2020'] } }] },
+    { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2020-03-31', value: { resolution: 'unmet', word: 'none', note: 'There was no human signal to replicate.', sources: ['steady-pd-iii-2020'] } }] },
+    { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2020-03-31', value: { resolution: 'unmet', word: 'not tested', note: 'No target-engagement biomarker.', sources: ['steady-pd-iii-2020'] } }] },
+    { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2020-03-31', value: { resolution: 'met', word: 'acceptable', note: 'Oedema and dizziness; well tolerated at 10 mg/day.', sources: ['steady-pd-iii-2020'] } }] },
+  ],
+  safety: [
+    {
+      from: '1990-12-21',
+      value: {
+        severity: 'warning',
+        flag: 'hypotension',
+        kind: 'label warning',
+        reason: 'an antihypertensive given to normotensive patients',
+        population: 'Parkinson’s already brings orthostatic hypotension and falls. STEADY-PD III saw oedema and dizziness at 10 mg/day; any successor trial would need blood-pressure and fall monitoring.',
+        sources: ['fda-isradipine'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 2 },
+  best_evidence: [{ from: '2020-03-31', value: { design: 'RCT', controlled: true, outcome: 'negative', n: 336, source: 'steady-pd-iii-2020', stage: 'phase-3', label: 'STEADY-PD III 2020' } }],
+  weakest_link: [{ from: '2020-03-31', value: { claim: 'c3', why: 'A tolerated antihypertensive dose was never shown to block the channel in the brain, so the negative trial may not have tested the mechanism.', sources: ['steady-pd-iii-2020'] } }],
+})
+
+// ---- Simvastatin --------------------------------------------------------------
+
+const simvastatinSources: Source[] = [
+  src({
+    id: 'wolozin-2007',
+    first_author: 'Wolozin B',
+    journal: 'BMC Med',
+    year: 2007,
+    published: '2007-07-19',
+    title: 'Simvastatin is associated with a reduced incidence of dementia and Parkinson’s disease',
+    design: 'observational',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Wolozin (Boston)',
+    url: pm('Wolozin 2007 simvastatin reduced incidence dementia Parkinson BMC Medicine'),
+  }),
+  src({
+    id: 'pd-stat-2024',
+    first_author: 'Carroll CB',
+    journal: 'PD STAT trial report',
+    year: 2024,
+    published: '2024-01-01',
+    title: 'Simvastatin as a neuroprotective treatment for Parkinson’s disease (PD STAT): a double-blind, randomised, placebo-controlled futility trial',
+    design: 'rct',
+    controlled: true,
+    blinded: true,
+    n: 235,
+    outcome: 'negative',
+    group: 'Carroll (Plymouth)',
+    url: pm('PD STAT simvastatin neuroprotective Parkinson futility trial'),
+    ledger: 'L5',
+  }),
+  label('fda-simvastatin', 'simvastatin', 1991, '1991-12-23'),
+]
+
+export const simvastatin = draft({
+  slug: 'simvastatin--parkinsons-disease',
+  name: 'Simvastatin',
+  drug_class: 'HMG-CoA reductase inhibitor',
+  approved_indication: 'hypercholesterolaemia',
+  condition: 'Parkinson’s disease',
+  condition_slug: 'parkinsons-disease',
+  drug_slug: 'simvastatin',
+  mechanism: 'simvastatin → HMG-CoA reductase → anti-inflammatory / isoprenoid effects',
+  sources: simvastatinSources,
+  trials: 1,
+  objections: [
+    {
+      id: 'o1',
+      consequence_rank: 1,
+      claim: 'The controlled trial met its futility threshold.',
+      evidence: 'PD STAT: 235 patients, 24 months, double-blind; simvastatin was futile as a disease-modifying treatment.',
+      figure: 'n = 235',
+      published: '2024-01-01',
+      sources: ['pd-stat-2024'],
+      cites: ['L5'],
+    },
+    {
+      id: 'o2',
+      consequence_rank: 2,
+      claim: 'The epidemiological signal is confounded by indication.',
+      evidence: 'Statin users differ from non-users in vascular risk, health-seeking behaviour and cholesterol, each linked to Parkinson’s risk.',
+      published: '2007-07-19',
+      sources: ['wolozin-2007'],
+      cites: ['L6'],
+    },
+  ],
+  chain: {
+    drug: 'simvastatin',
+    condition: 'Parkinson’s disease',
+    claims: [
+      { id: 'c1', node: 'lower PD incidence', short: 'statin use, lower incidence', text: 'Simvastatin use is associated with lower Parkinson’s incidence.', evidence: [{ source: 'wolozin-2007', direction: 'supports' }] },
+      { id: 'c2', node: 'CNS mechanism', short: 'acts on a PD pathway in the brain', text: 'Simvastatin acts on a Parkinson’s-relevant pathway in the brain.', evidence: [] },
+      { id: 'c3', node: 'benefit in patients', short: 'slows progression in patients', text: 'Simvastatin slows Parkinson’s progression.', evidence: [{ source: 'pd-stat-2024', direction: 'refutes' }] },
+    ],
+  },
+  prerequisites: [
+    { id: 'p1', condition: 'Target engagement shown in the human brain', status: [{ from: '2024-01-01', value: { resolution: 'unmet', word: 'not shown', note: 'No brain mechanism was measured.', sources: ['pd-stat-2024'] } }] },
+    { id: 'p2', condition: 'Effect observed under blinding', status: [{ from: '2024-01-01', value: { resolution: 'unmet', word: 'no', note: 'Futile in 235 patients.', sources: ['pd-stat-2024'] } }] },
+    { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2024-01-01', value: { resolution: 'unmet', word: 'none', note: 'No human signal.', sources: ['pd-stat-2024'] } }] },
+    { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2024-01-01', value: { resolution: 'unmet', word: 'not tested', note: 'No biomarker.', sources: ['pd-stat-2024'] } }] },
+    { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2024-01-01', value: { resolution: 'met', word: 'acceptable', note: 'Decades of use in older adults.', sources: ['pd-stat-2024'] } }] },
+  ],
+  safety: [
+    {
+      from: '1991-12-23',
+      value: {
+        severity: 'warning',
+        flag: 'myopathy',
+        kind: 'label warning',
+        reason: 'dose-related; the 80 mg dose is restricted',
+        population: 'PD STAT used 80 mg/day, the dose the label restricts to established users. Muscle symptoms overlap with Parkinson’s rigidity and would confound both safety and efficacy readouts.',
+        sources: ['fda-simvastatin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 2 },
+  best_evidence: [{ from: '2024-01-01', value: { design: 'RCT (futility)', controlled: true, outcome: 'negative', n: 235, source: 'pd-stat-2024', stage: 'phase-2', label: 'PD STAT 2024' } }],
+  weakest_link: [{ from: '2007-07-19', value: { claim: 'c2', why: 'No brain mechanism was ever specified, so nothing links the epidemiology to a testable biology.', sources: ['wolozin-2007'] } }],
+})
+
+// ---- Metformin × Parkinson's ---------------------------------------------------
+
+const metforminPdSources: Source[] = [
+  src({
+    id: 'wahlqvist-2012',
+    first_author: 'Wahlqvist ML',
+    journal: 'Parkinsonism Relat Disord',
+    year: 2012,
+    published: '2012-07-01',
+    title: 'Metformin-inclusive sulfonylurea therapy reduces the risk of Parkinson’s disease occurring with type 2 diabetes in a Taiwanese population cohort',
+    design: 'observational',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Wahlqvist (Monash)',
+    url: pm('Wahlqvist 2012 metformin sulfonylurea Parkinson Taiwan cohort'),
+  }),
+  src({
+    id: 'patil-2014',
+    first_author: 'Patil SP',
+    journal: 'Neuroscience',
+    year: 2014,
+    published: '2014-09-05',
+    title: 'Neuroprotective effect of metformin in MPTP-induced Parkinson’s disease in mice',
+    design: 'preclinical',
+    controlled: false,
+    outcome: 'positive',
+    group: 'Patil (Mumbai)',
+    url: pm('Patil 2014 metformin MPTP Parkinson mice Neuroscience'),
+  }),
+  src({
+    id: 'metformin-pd-pilot-2025',
+    first_author: 'Front Pharmacol authors',
+    journal: 'Front Pharmacol',
+    year: 2025,
+    published: '2025-02-20',
+    title: 'Metformin in Parkinson’s disease: a randomized pilot (n = 60)',
+    design: 'rct',
+    controlled: true,
+    blinded: false,
+    n: 60,
+    outcome: 'negative',
+    group: 'Front Pharmacol 2025 pilot group',
+    url: 'https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2025.1497261/full',
+    ledger: 'L5',
+  }),
+  label('fda-metformin', 'metformin', 1994, '1994-12-29'),
+]
+
+export const metforminPd = draft({
+  slug: 'metformin--parkinsons-disease',
+  name: 'Metformin',
+  drug_class: 'biguanide',
+  approved_indication: 'type 2 diabetes',
+  condition: 'Parkinson’s disease',
+  condition_slug: 'parkinsons-disease',
+  drug_slug: 'metformin',
+  mechanism: 'metformin → AMPK → mitochondrial / autophagy effects',
+  sources: metforminPdSources,
+  trials: 1,
+  objections: [
+    {
+      id: 'o1',
+      consequence_rank: 1,
+      claim: 'The only trial found no clinical difference.',
+      evidence: 'A randomised pilot of 60 patients: no difference in UPDRS.',
+      figure: 'n = 60',
+      published: '2025-02-20',
+      sources: ['metformin-pd-pilot-2025'],
+      cites: ['L5'],
+    },
+    {
+      id: 'o2',
+      consequence_rank: 2,
+      claim: 'The epidemiological signal is confounded by diabetes.',
+      evidence: 'Risk reduction was measured in diabetic patients relative to other diabetic patients; diabetes itself raises Parkinson’s risk.',
+      published: '2012-07-01',
+      sources: ['wahlqvist-2012'],
+      cites: ['L6'],
+    },
+    {
+      id: 'o3',
+      consequence_rank: 3,
+      claim: 'Brain target engagement is not shown.',
+      evidence: 'AMPK activation in the human brain at metformin doses is assumed from rodent work.',
+      published: '2014-09-05',
+      sources: ['patil-2014'],
+      cites: ['L7'],
+    },
+  ],
+  chain: {
+    drug: 'metformin',
+    condition: 'Parkinson’s disease',
+    claims: [
+      { id: 'c1', node: 'AMPK neuroprotection', short: 'protects dopamine neurons in mice', text: 'Metformin protects dopamine neurons via AMPK.', scope: 'in mouse models', evidence: [{ source: 'patil-2014', direction: 'supports' }] },
+      { id: 'c2', node: 'lower PD risk', short: 'metformin use, lower risk', text: 'Metformin use is associated with lower Parkinson’s risk.', evidence: [{ source: 'wahlqvist-2012', direction: 'supports' }] },
+      { id: 'c3', node: 'brain AMPK activation', short: 'activates AMPK in the human brain', text: 'Metformin activates AMPK in the human brain at clinical doses.', evidence: [] },
+      { id: 'c4', node: 'benefit in patients', short: 'slows progression in patients', text: 'Metformin slows Parkinson’s progression.', evidence: [{ source: 'metformin-pd-pilot-2025', direction: 'contradicts' }] },
+    ],
+  },
+  prerequisites: [
+    { id: 'p1', condition: 'Target engagement shown in the human brain', status: [{ from: '2014-09-05', value: { resolution: 'unmet', word: 'not shown', note: 'Assumed from rodents.', sources: ['patil-2014'] } }] },
+    { id: 'p2', condition: 'Effect observed under blinding', status: [{ from: '2025-02-20', value: { resolution: 'unmet', word: 'no', note: 'Unblinded pilot, no difference.', sources: ['metformin-pd-pilot-2025'] } }] },
+    { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2025-02-20', value: { resolution: 'unmet', word: 'none', note: 'No human signal.', sources: ['metformin-pd-pilot-2025'] } }] },
+    { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2025-02-20', value: { resolution: 'unmet', word: 'not tested', note: 'No biomarker.', sources: ['metformin-pd-pilot-2025'] } }] },
+    { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2012-07-01', value: { resolution: 'met', word: 'acceptable', note: 'Decades of use; renal function must be monitored in older patients.', sources: ['wahlqvist-2012'] } }] },
+  ],
+  safety: [
+    {
+      from: '1994-12-29',
+      value: {
+        severity: 'boxed',
+        flag: 'lactic acidosis',
+        kind: 'boxed warning',
+        reason: 'rare, but fatal in half of cases; renal impairment is the main risk',
+        population: 'An older trial population has lower renal function and more contrast imaging and dehydration. eGFR thresholds, dose caps, and sick-day rules would be part of any protocol.',
+        sources: ['fda-metformin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 0, exposure: 0, safety: 2 },
+  best_evidence: [{ from: '2025-02-20', value: { design: 'randomised pilot', controlled: true, outcome: 'negative', n: 60, source: 'metformin-pd-pilot-2025', stage: 'phase-2', label: 'randomised pilot 2025' } }],
+  weakest_link: [{ from: '2014-09-05', value: { claim: 'c3', why: 'No one has shown metformin does in a human brain what it does in a mouse brain.', sources: ['patil-2014'] } }],
+})
+
+// ---- Metformin, drug-first: two more conditions ---------------------------------
+
+export const metforminAd = draft({
+  slug: 'metformin--alzheimers-disease',
+  name: 'Alzheimer’s disease',
+  drug_class: 'biguanide',
+  approved_indication: 'type 2 diabetes',
+  condition: 'Alzheimer’s disease',
+  condition_slug: 'alzheimers-disease',
+  drug_slug: 'metformin',
+  mechanism: 'metformin → AMPK → tau / insulin signalling',
+  sources: [
+    src({
+      id: 'koenig-2017',
+      first_author: 'Koenig AM',
+      journal: 'Alzheimer Dis Assoc Disord',
+      year: 2017,
+      published: '2017-04-01',
+      title: 'Effects of the insulin sensitizer metformin in Alzheimer disease: pilot data from a randomized placebo-controlled crossover study',
+      design: 'rct',
+      controlled: true,
+      blinded: true,
+      n: 20,
+      outcome: 'mixed',
+      group: 'Koenig (Penn)',
+      url: pm('Koenig 2017 metformin Alzheimer crossover pilot'),
+      ledger: 'L5',
+    }),
+    src({
+      id: 'luchsinger-2016',
+      first_author: 'Luchsinger JA',
+      journal: 'J Alzheimers Dis',
+      year: 2016,
+      published: '2016-01-01',
+      title: 'Metformin in amnestic mild cognitive impairment: results of a pilot randomized placebo controlled clinical trial',
+      design: 'rct',
+      controlled: true,
+      blinded: true,
+      n: 80,
+      outcome: 'mixed',
+      group: 'Luchsinger (Columbia)',
+      url: pm('Luchsinger 2016 metformin amnestic mild cognitive impairment pilot'),
+      ledger: 'L5',
+    }),
+    label('fda-metformin', 'metformin', 1994, '1994-12-29'),
+  ],
+  trials: 2,
+  objections: [
+    { id: 'o1', consequence_rank: 1, claim: 'Both trials were small pilots with mixed results.', evidence: 'n = 20 and n = 80; improvements on one cognitive measure each, none on the primary.', figure: 'n = 80', published: '2017-04-01', sources: ['koenig-2017', 'luchsinger-2016'], cites: ['L5'] },
+    { id: 'o2', consequence_rank: 2, claim: 'The proposed mechanism is not specific to Alzheimer’s.', evidence: 'AMPK and insulin signalling are cited for nearly every metformin repurposing candidate.', published: '2016-01-01', sources: ['luchsinger-2016'], cites: ['L4'] },
+  ],
+  chain: {
+    drug: 'metformin',
+    condition: 'Alzheimer’s disease',
+    claims: [
+      { id: 'c1', node: 'insulin signalling', short: 'improves central insulin signalling', text: 'Improving central insulin signalling slows Alzheimer’s pathology.', evidence: [] },
+      { id: 'c2', node: 'cognition', short: 'improves cognition in AD or MCI', text: 'Metformin improves cognition in Alzheimer’s disease or MCI.', evidence: [{ source: 'koenig-2017', direction: 'supports' }, { source: 'luchsinger-2016', direction: 'supports' }] },
+    ],
+  },
+  prerequisites: [
+    { id: 'p1', condition: 'Target engagement shown in the human brain', status: [{ from: '2016-01-01', value: { resolution: 'unmet', word: 'not shown', note: 'No CNS measure.', sources: ['luchsinger-2016'] } }] },
+    { id: 'p2', condition: 'Effect observed under blinding', status: [{ from: '2017-04-01', value: { resolution: 'conditional', word: 'secondary only', note: 'Blinded pilots improved one secondary measure each.', sources: ['koenig-2017'] } }] },
+    { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2017-04-01', value: { resolution: 'unmet', word: 'inconsistent', note: 'Different measures improved in each pilot.', sources: ['koenig-2017', 'luchsinger-2016'] } }] },
+    { id: 'p4', condition: 'Biomarker validated against an alternative explanation', status: [{ from: '2017-04-01', value: { resolution: 'unmet', word: 'not tested', note: 'No pathology biomarker.', sources: ['koenig-2017'] } }] },
+    { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2016-01-01', value: { resolution: 'met', word: 'acceptable', note: 'Renal monitoring in older adults.', sources: ['luchsinger-2016'] } }] },
+  ],
+  safety: [
+    {
+      from: '1994-12-29',
+      value: {
+        severity: 'boxed',
+        flag: 'lactic acidosis',
+        kind: 'boxed warning',
+        reason: 'rare, but fatal in half of cases; renal impairment is the main risk',
+        population: 'An older trial population has lower renal function and more contrast imaging and dehydration. eGFR thresholds, dose caps, and sick-day rules would be part of any protocol.',
+        sources: ['fda-metformin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 1, exposure: 0, safety: 2 },
+  best_evidence: [{ from: '2017-04-01', value: { design: 'RCT pilot', controlled: true, outcome: 'mixed', n: 80, source: 'luchsinger-2016', stage: 'phase-2', label: 'Luchsinger 2016 · Koenig 2017' } }],
+  weakest_link: [{ from: '2016-01-01', value: { claim: 'c1', why: 'The mechanism is asserted, not shown; nothing links insulin signalling to slowed pathology in people.', sources: ['luchsinger-2016'] } }],
+})
+
+export const metforminCrc = draft({
+  slug: 'metformin--colorectal-adenoma',
+  name: 'Colorectal adenoma',
+  drug_class: 'biguanide',
+  approved_indication: 'type 2 diabetes',
+  condition: 'Colorectal adenoma (chemoprevention)',
+  condition_slug: 'colorectal-adenoma',
+  drug_slug: 'metformin',
+  mechanism: 'metformin → AMPK / mTOR → reduced epithelial proliferation',
+  sources: [
+    src({
+      id: 'higurashi-2016',
+      first_author: 'Higurashi T',
+      journal: 'Lancet Oncol',
+      year: 2016,
+      published: '2016-04-01',
+      title: 'Metformin for chemoprevention of metachronous colorectal adenoma or polyps in post-polypectomy patients without diabetes',
+      design: 'rct',
+      controlled: true,
+      blinded: true,
+      n: 151,
+      outcome: 'positive',
+      group: 'Higurashi (Yokohama)',
+      url: pm('Higurashi 2016 metformin chemoprevention colorectal adenoma Lancet Oncology'),
+      ledger: 'L5',
+    }),
+    label('fda-metformin', 'metformin', 1994, '1994-12-29'),
+  ],
+  trials: 1,
+  objections: [
+    { id: 'o1', consequence_rank: 1, claim: 'A single positive trial at a low dose, one country, not replicated.', evidence: 'n = 151, 250 mg/day, adenoma recurrence 38 % vs 57 %; no confirmatory trial has reported.', figure: 'n = 151', published: '2016-04-01', sources: ['higurashi-2016'], cites: ['L5'] },
+    { id: 'o2', consequence_rank: 2, claim: 'Adenoma recurrence is a surrogate.', evidence: 'Fewer polyps at one year is not fewer cancers; the endpoint that matters has not been tested.', published: '2016-04-01', sources: ['higurashi-2016'], cites: ['L5'] },
+  ],
+  chain: {
+    drug: 'metformin',
+    condition: 'Colorectal adenoma',
+    claims: [
+      { id: 'c1', node: 'AMPK / mTOR', short: 'reduces epithelial proliferation', text: 'Metformin reduces colonic epithelial proliferation via AMPK/mTOR at clinical doses.', evidence: [] },
+      { id: 'c2', node: 'fewer adenomas', short: 'reduces adenoma recurrence', text: 'Metformin reduces adenoma recurrence after polypectomy.', evidence: [{ source: 'higurashi-2016', direction: 'supports' }] },
+    ],
+  },
+  prerequisites: [
+    { id: 'p1', condition: 'Target engagement shown in the target tissue', status: [{ from: '2016-04-01', value: { resolution: 'unmet', word: 'not shown', note: 'No mucosal pharmacodynamic measure.', sources: ['higurashi-2016'] } }] },
+    { id: 'p2', condition: 'Effect observed under blinding', status: [{ from: '2016-04-01', value: { resolution: 'met', word: 'yes', note: 'Double-blind, placebo-controlled.', sources: ['higurashi-2016'] } }] },
+    { id: 'p3', condition: 'Independent replication of the human signal', status: [{ from: '2016-04-01', value: { resolution: 'unmet', word: 'none', note: 'One trial, one group.', sources: ['higurashi-2016'] } }] },
+    { id: 'p4', condition: 'Surrogate validated against the outcome that matters', status: [{ from: '2016-04-01', value: { resolution: 'unmet', word: 'no', note: 'Adenoma recurrence, not cancer incidence.', sources: ['higurashi-2016'] } }] },
+    { id: 'p5', condition: 'Safety acceptable in the intended population', status: [{ from: '2016-04-01', value: { resolution: 'met', word: 'acceptable', note: 'Low dose, non-diabetic adults.', sources: ['higurashi-2016'] } }] },
+  ],
+  safety: [
+    {
+      from: '1994-12-29',
+      value: {
+        severity: 'boxed',
+        flag: 'lactic acidosis',
+        kind: 'boxed warning',
+        reason: 'rare, but fatal in half of cases; renal impairment is the main risk',
+        population: 'A post-polypectomy population is younger and non-diabetic; at 250 mg/day the risk is remote, but renal function still gates eligibility. eGFR thresholds, dose caps, and sick-day rules would be part of any protocol.',
+        sources: ['fda-metformin'],
+      },
+    },
+  ],
+  drivers: { mechanism: 1, clinical: 2, exposure: 1, safety: 3 },
+  best_evidence: [{ from: '2016-04-01', value: { design: 'RCT', controlled: true, outcome: 'positive', n: 151, source: 'higurashi-2016', stage: 'phase-3', label: 'Higurashi 2016' } }],
+  weakest_link: [{ from: '2016-04-01', value: { claim: 'c2', why: 'One trial from one group on a surrogate endpoint carries the whole case.', sources: ['higurashi-2016'] } }],
+})

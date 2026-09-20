@@ -1,6 +1,7 @@
 /* elute — typography tokens
  *
- * Aujournuit at the Airy width (175%) with −2% tracking: big titles only.
+ * Aujournuit at the Regular width (100%) with −2% tracking: big titles only.
+ * The wordmark alone is set at the Airy width (175%).
  * Supreme with −4% tracking, Regular weight for almost everything else.
  */
 
@@ -9,7 +10,8 @@
   --font-text:    "Supreme", "Supreme Fallback", system-ui, sans-serif;
   --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* the agent's-work panel only */
 
-  --display-width:    175%;     /* Aujournuit "Airy" named instance */
+  --display-width:    100%;     /* Aujournuit "Regular" named instance: titles, names */
+  --wordmark-width:   175%;     /* Aujournuit "Airy" named instance: the wordmark only */
   --tracking-display: -0.02em;
   --tracking-text:    -0.04em;
 
@@ -53,13 +55,15 @@ body {
   background: var(--color-surface);
 }
 
-/* Display: the wordmark, page titles, a drug or condition name as a heading */
+/* Display: the wordmark, page titles, a drug or condition name as a heading.
+ * Aujournuit titles are always lowercase; Supreme text keeps its casing. */
 .display {
   font-family: var(--font-display);
   font-stretch: var(--display-width);
   font-weight: 400;
   letter-spacing: var(--tracking-display);
   line-height: var(--leading-display);
+  text-transform: lowercase;
 }
 .display-lg { font-size: var(--display-lg); }
 .display-md { font-size: var(--display-md); }
@@ -80,6 +84,6 @@ body {
  * numbers must be right-aligned rather than relying on equal digit widths. */
 .figure { text-align: right; font-variant-numeric: lining-nums; }
 
-/* Raw tool calls and sources behind the "Show the agent's work" toggle.
+/* The provenance block inside an expanded ledger row: tool, query, records.
  * No brand mono; the system's is honest enough. Tracking resets to 0. */
 .raw { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--line-3); letter-spacing: 0; }

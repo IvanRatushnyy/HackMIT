@@ -29,13 +29,19 @@
   --gutter:        16px;     /* phone */
   --gutter-wide:   32px;     /* tablet and up */
   --panel-index:   320px;    /* results list column */
-  --panel-detail:  384px;    /* detail rail: sources, confidence drivers */
-  --header-height: 56px;
+  --panel-detail:  384px;    /* detail rail: ledger, citations, claim evidence */
+  --header-height: 120px;    /* inner pages: one row of wordmark and field, shard band beside */
+  --band-entry:    256px;    /* entry: the white band above the shard hero */
+  --page-max:      1920px;
 
   /* ---- Shape ------------------------------------------------------------- */
   --radius:       0;         /* sharp by default, matching the shard geometry */
   --radius-sm:    4px;       /* half unit: small controls only */
   --radius-round: 999px;     /* pills, glass circle buttons */
+  --radius-sheet: 32px;      /* the one rounded sheet per page; nothing inside it is rounded */
+
+  /* ---- Shadow (the sheet only) ------------------------------------------- */
+  --shadow-sheet: 0 4px 10px oklch(13.1% 0.016 276 / 0.18);
 
   /* ---- Lines ------------------------------------------------------------- */
   --line-width: 1px;
