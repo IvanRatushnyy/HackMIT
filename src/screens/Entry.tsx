@@ -59,7 +59,7 @@ export function Entry() {
             </button>
           </div>
           <div className="land__examples" aria-label="Examples">
-            <span className="faint">try</span>
+            <span className="faint">try:</span>
             {EXAMPLES.map((word) => (
               <button key={word} type="button" className="land__example" onClick={() => t.go(word)} disabled={t.launching}>
                 {word}

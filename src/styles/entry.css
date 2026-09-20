@@ -37,7 +37,7 @@
   font-stretch: var(--display-width);
   font-weight: 400;
   font-size: clamp(88px, 9vw, 128px);
-  line-height: 1;
+  line-height: 0.86;
   letter-spacing: var(--tracking-display);
   text-transform: lowercase;
   color: var(--color-ink);
@@ -70,8 +70,8 @@
   border: 0;
   background: none;
   padding: 0;
-  font-size: var(--text-xl);
-  line-height: var(--line-6);
+  font-size: var(--text-md);
+  line-height: var(--line-3);
   letter-spacing: var(--tracking-display);
   color: var(--color-ink);
 }
@@ -89,6 +89,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: var(--space-xs) var(--space-md);
   font-size: var(--text-sm);
   line-height: var(--line-3);
