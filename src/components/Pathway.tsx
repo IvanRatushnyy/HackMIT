@@ -20,7 +20,6 @@ import {
   edgeCuration,
   fetchDrugContext,
   orderPathways,
-  pathwaysMentioning,
   primaryTargets,
   reactomeBrowserUrl,
   reactomeDiagramUrl,
@@ -35,8 +34,6 @@ import { Kicker } from './frame'
 
 type Status = 'loading' | 'live' | 'offline' | 'none'
 type Plate = { kind: 'reactome'; i: number } | { kind: 'string' } | { kind: 'none' }
-
-const HYPOTHESIS_TERMS = ['parkinson', 'synuclein', 'parkin', 'dopamin']
 
 function cssVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
@@ -100,7 +97,6 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
   const targets = ctx ? primaryTargets(ctx) : []
   const target = targets[0]
   const pathways: OTPathway[] = target ? orderPathways(target.pathways) : []
-  const mentions = target ? pathwaysMentioning(target.pathways, HYPOTHESIS_TERMS) : []
   const genes = chainGenes(claims)
   const srcById = new Map(candidate.sources.map((s) => [s.id, s]))
   const current = selected ? claims.find((k) => k.id === selected) : undefined
@@ -397,7 +393,6 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
           {status === 'none' && 'hypothesis only'}
         </span>
       </div>
-      {drawing && <p className="section__lede">Ink is the hypothesis, weighted by its evidence; grey is biology nobody disputes. Select an action to see who says so.</p>}
 
       <div
         ref={graphRef}
@@ -434,15 +429,6 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
 
       <div className="pathway__grid">
         <div className="pathway__left">
-          <p className="pathway__claim">
-            {status === 'live' && symbol && (
-              <>
-                {symbol} appears in {target.pathways.length} curated Reactome pathways.{' '}
-                {mentions.length === 0 ? 'None is this hypothesis.' : `${mentions.length} mention it: ${mentions.map((p) => p.pathway).join('; ')}.`}
-              </>
-            )}
-            {status !== 'live' && <>Every action from the target onward stands on the papers cited under it, not on a curated pathway.</>}
-          </p>
           <dl className="pathway__fine">
             <dt>target</dt>
             <dd>

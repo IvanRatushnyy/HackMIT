@@ -1,4 +1,4 @@
-# Counterpoint — PRD
+# Counterpoint — PRD (superseded by `PRD Elute.md`, kept for the decision history)
 
 **Working name:** Counterpoint (a repurposing tool that always shows you the counterpoint)
 **Track:** HackMIT 2026 · Regeneron Challenge ("Help Patients: Make Clinical Trials and Biostatistics Better")
