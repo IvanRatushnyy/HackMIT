@@ -26,6 +26,7 @@ import {
   reactomeBrowserUrl,
   reactomeDiagramUrl,
   stringNetworkUrl,
+  validateDrawing,
   tractabilitySummary,
   type DrugContext,
   type OTPathway,
@@ -344,7 +345,14 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
   const [selected, setSelected] = useState<string | null>(null)
 
   const claims = candidate.chain.claims
-  const drawing = useMemo(() => candidate.drawing ?? chainDrawing(candidate), [candidate])
+  const drawing = useMemo(() => {
+    if (candidate.drawing) {
+      const problems = validateDrawing(candidate.drawing, candidate.chain.claims)
+      if (!problems.length) return candidate.drawing
+      console.warn(`[elute] ${candidate.slug}: the authored drawing is set aside and the chain drawn instead:\n  ${problems.join('\n  ')}`)
+    }
+    return chainDrawing(candidate)
+  }, [candidate])
   const labels = useMemo(() => {
     const m = new Map<string, LabelResult>()
     for (const k of claims) m.set(k.id, deriveLabel(k, candidate.sources, cutoff.date))

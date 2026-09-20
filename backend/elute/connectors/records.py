@@ -135,6 +135,30 @@ def _first_author(h: dict[str, Any]) -> str:
     return (a.get("name") if isinstance(a, dict) else str(a)) or "Unknown"
 
 
+# ---- L2 safety: the FDA label ---------------------------------------------
+
+def label_records(task: Task, transport: Transport, tool: str, payload: Any) -> list[RawRecord]:
+    """openFDA label rows via `FDA_get_boxed_warning_info_by_drug_name`: one record per product label (brand, generic,
+    the boxed warning and, when there is none, the related warnings section the tool adds). Undated here: the label's
+    `effective_time`, set id and warning sections come from the recorded `openfda.label` supplement (enrich.py)."""
+    rows = (payload or {}).get("results") or []
+    out = []
+    for i, row in enumerate(rows):
+        brand = (row.get("openfda.brand_name") or [None])[0]
+        generic = (row.get("openfda.generic_name") or [None])[0]
+        if not brand and not generic:
+            continue  # a product without openfda names cannot be matched to a dated label
+        first = lambda k: ((row.get(k) or [None])[0] if isinstance(row.get(k), list) else row.get(k))  # noqa: E731
+        boxed = first("boxed_warning")
+        payload_row = {"brand_name": brand, "generic_name": generic, "boxed_warning": boxed, "warnings_and_cautions": first("warnings_and_cautions"),
+                       "warnings": first("warnings"), "precautions": first("precautions")}
+        out.append(_rec(task, transport, tool, f"{(brand or generic).lower()}#{i}", kind="label", source_name=f"FDA label ({brand or generic})",
+                        url=f"https://api.fda.gov/drug/label.json?search=openfda.generic_name:%22{(generic or brand).lower()}%22",
+                        published=None, date_basis="undated until the openFDA label supplement dates it",
+                        text=f"{brand or ''} {generic or ''} {(boxed or '')[:300]}", payload=payload_row))
+    return out
+
+
 MAPPERS = {
     "OpenTargets_get_drug_chembId_by_generic_name": entity_records,
     "OpenTargets_get_disease_id_description_by_name": entity_records,
@@ -144,6 +168,7 @@ MAPPERS = {
     "ClinicalTrials_search_studies": trial_records,
     "PubMed_search_articles": article_records,
     "PubMed_get_article": article_records,
+    "FDA_get_boxed_warning_info_by_drug_name": label_records,
 }
 
 

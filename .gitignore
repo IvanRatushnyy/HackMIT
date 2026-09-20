@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+*.tsbuildinfo
 .env
 .env.*
 *.log
@@ -9,3 +10,7 @@ backend/.venv/
 backend/.cache/
 __pycache__/
 .pytest_cache/
+
+# recorded live runs for the browser replay (local demo, never committed)
+public/demo/
+!.env.example

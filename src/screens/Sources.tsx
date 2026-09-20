@@ -216,7 +216,10 @@ export function Sources() {
                 </tbody>
               </table>
               <p className="panel__row muted text-sm" style={{ minHeight: 48 }}>
-                Fixture mode makes no network requests and needs no keys. In production the ledger steps would call the sources listed under Status rules.
+                {source.mode === 'fixture'
+                  ? 'Fixture mode needs no keys and no backend: the ledger is a scripted sequence over bundled records.'
+                  : 'Live mode: the ledger steps call the sources listed under Status rules through the backend.'}{' '}
+                The pathway drawing still asks Open Targets, Reactome and STRING from the browser for the curated neighbourhood.
               </p>
             </div>
           </div>

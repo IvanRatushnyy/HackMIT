@@ -11,8 +11,8 @@ from typing import Any, Literal
 
 Transport = Literal["tooluniverse", "direct", "fixture"]
 Outcome = Literal["ok", "error", "timeout", "empty", "insufficient"]
-TaskKind = Literal["resolve", "biology", "trials", "literature"]
-RecordKind = Literal["entity", "mechanism", "association", "trial-registration", "trial-results", "article"]
+TaskKind = Literal["resolve", "biology", "trials", "literature", "safety"]
+RecordKind = Literal["entity", "mechanism", "association", "trial-registration", "trial-results", "article", "label"]
 
 
 @dataclass

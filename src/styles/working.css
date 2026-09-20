@@ -204,3 +204,228 @@
 .pipe__record--more {
   color: var(--color-ink-faint);
 }
+
+/* ---- Time: the estimate under the title, the clock and what remains at the right ------------------------ */
+
+.working-title__basis {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+  max-width: 64ch;
+  min-height: var(--line-3);
+}
+.working-title__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex: none;
+}
+.working-title__time {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.working-title__clock {
+  color: var(--color-ink);
+  font-weight: var(--weight-medium);
+}
+.working-title__over {
+  color: var(--color-ink);
+}
+.working-title__handover {
+  color: var(--color-ink-faint);
+}
+
+/* The last line the current step said, under its question in the box */
+.pipe__note {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pipe__time {
+  color: var(--color-ink-muted);
+  font-weight: var(--weight-regular);
+}
+/* A step past its expected length: the bar stays full and breathes */
+.pipe__box--over .pipe__bar {
+  animation: pipe-fill linear both, pipe-breathe 1.6s ease-in-out infinite;
+  animation-duration: var(--dur, 2400ms), 1.6s;
+}
+@keyframes pipe-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pipe__box--over .pipe__bar { animation: none; opacity: 1; }
+}
+
+/* ---- The step panel: the thought process on the left, what it said and what came back on the right ------ */
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.step__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+.step__n {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-faint);
+}
+.step__q {
+  font-weight: var(--weight-medium);
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+  color: var(--color-ink);
+}
+.step__src {
+  font-size: var(--text-sm);
+  color: var(--color-ink-muted);
+}
+.step__status {
+  margin-left: auto;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+.step__status--now::after {
+  content: '\2026';
+}
+.step__status--failed {
+  color: var(--color-critical);
+}
+.step__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+.step__think {
+  display: flex;
+  flex-direction: column;
+}
+.step__row {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  border-top: var(--line-width) solid var(--color-line-soft);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink);
+}
+.step__row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.step__row--muted .step__v {
+  color: var(--color-ink-faint);
+}
+.step__k {
+  font-size: var(--text-xs);
+  line-height: var(--line-3);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink-muted);
+}
+.step__v {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.step__change {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0;
+}
+.step__why {
+  color: var(--color-ink-muted);
+}
+.step__who {
+  margin-top: var(--space-sm);
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+.step__log {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+.step__log .kicker + .pipe__records {
+  margin-bottom: var(--space-sm);
+}
+.step__lines {
+  display: flex;
+  flex-direction: column;
+  max-height: 264px;
+  overflow-y: auto;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-surface-sunken);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--line-3);
+  letter-spacing: 0;
+  color: var(--color-ink);
+  margin-bottom: var(--space-sm);
+}
+.step__line {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--space-xs);
+  overflow-wrap: anywhere;
+}
+.step__line--none {
+  color: var(--color-ink-faint);
+}
+.step__at {
+  color: var(--color-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.step--now .step__lines {
+  border-left: 2px solid var(--color-accent);
+}
+
+/* After a revisit: the way on to the appraisal */
+.working-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: var(--line-width) solid var(--color-line);
+}
+.working-foot__note {
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+  color: var(--color-ink-muted);
+}
+
+/* A step with no reasoning of its own (the scripted fixture): the records alone, at the feed's width */
+.step__body--feed {
+  grid-template-columns: minmax(0, 1fr);
+}
+.step__body--feed .pipe__records {
+  max-width: 720px;
+}
+.step__waiting {
+  font-size: var(--text-sm);
+  color: var(--color-ink-faint);
+}
+.step__waiting::after {
+  content: '\2026';
+}

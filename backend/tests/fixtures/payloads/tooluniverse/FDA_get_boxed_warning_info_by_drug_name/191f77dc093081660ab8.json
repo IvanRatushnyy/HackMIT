@@ -1,0 +1,184 @@
+{
+ "transport": "tooluniverse",
+ "tool": "FDA_get_boxed_warning_info_by_drug_name",
+ "arguments": {
+  "drug_name": "nilotinib",
+  "limit": 25
+ },
+ "fetched_at": "2026-09-20T13:54:09+00:00",
+ "payload": {
+  "meta": {
+   "skip": 0,
+   "limit": 25,
+   "total": 12
+  },
+  "results": [
+   {
+    "openfda.brand_name": [
+     "nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "nilotinib nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN, UNSPECIFIED FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC light yellow opaque colour body and red opaque colour cap MN5 nilotinib nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN, UNSPECIFIED FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC red opaque colour body and cap MN4 nilotinib nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN, UNSPECIFIED FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC light yellow opaque colour body and cap MN3"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [ see Warnings and Precautions (5.2) ] . Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [ see Warnings and Precautions (5.2 , 5.3 , 5.7 , 5.12) ] . Sudden deaths have been reported in patients receiving nilotinib [ see Warnings and Precautions (5.3) ] . Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome [ see Contraindications (4) , Warnings and Precautions (5.2) ] . Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [ see Drug Interactions (7.1 , 7.2) ] . Avoid food 2 hours before and 1 hour after taking the dose [ see Dosage and Administration (2.1) ]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib. ( 5.3 ) Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "Nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "Nilotinib Nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE FERRIC OXIDE RED AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC red opaque cap and white opaque body Cipla;03050mg Nilotinib Nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE FERRIC OXIDE RED AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC Cipla;031150mg Nilotinib Nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC Cipla;032200mg"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to Nilotinib Capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.2 )]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.2 , 5.3 , 5.7 , 5.12 )]. Sudden deaths have been reported in patients receiving nilotinib [see Warnings and Precautions ( 5.3 )]. Do not administer Nilotinib Capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications ( 4 ), Warnings and Precautions ( 5.2 )]. Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )]. Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration ( 2.1 )]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to Nilotinib Capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib. ( 5.3 ) Do not administer Nilotinib Capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "nilotinib nilotinib SILICON DIOXIDE CROSPOVIDONE, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN, UNSPECIFIED FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC NILOTINIB NILOTINIB red opaque colour body and cap MN4 nilotinib nilotinib SILICON DIOXIDE CROSPOVIDONE, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN, UNSPECIFIED FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC NILOTINIB NILOTINIB light yellow opaque colour body and cap MN3"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [ see Warnings and Precautions (5.2) ] . Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [ see Warnings and Precautions (5.2 , 5.3 , 5.7 , 5.12) ] . Sudden deaths have been reported in patients receiving nilotinib [ see Warnings and Precautions (5.3) ] . Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome [ see Contraindications (4) , Warnings and Precautions (5.2) ] . Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [ see Drug Interactions (7.1 , 7.2) ] . Avoid food 2 hours before and 1 hour after taking the dose [ see Dosage and Administration (2.1) ]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib. ( 5.3 ) Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "Tasigna"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "Tasigna nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE light yellow opaque NVR;TKI Tasigna nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE NVR;BCR Tasigna nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN FERRIC OXIDE RED FERRIC OXIDE YELLOW TITANIUM DIOXIDE red opaque cap and light yellow opaque body NVR;ABL"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Tasigna prolongs the QT interval. Prior to Tasigna administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions (5.2)] . Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions (5.2, 5.3, 5.7, 5.12)] . Sudden deaths have been reported in patients receiving Tasigna [see Warnings and Precautions (5.3)] . Do not administer Tasigna to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications (4), Warnings and Precautions (5.2)] . Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions (7.1, 7.2)] . Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration (2.1)] . WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Tasigna prolongs the QT interval. Prior to Tasigna administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12) Sudden deaths have been reported in patients receiving Tasigna. ( 5.3) Do not administer Tasigna to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "Nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "Nilotinib Nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN FERRIC OXIDE RED FERRIC OXIDE YELLOW SODIUM LAURYL SULFATE TITANIUM DIOXIDE FERROSOFERRIC OXIDE PROPYLENE GLYCOL SHELLAC AMMONIA POTASSIUM HYDROXIDE RDY;50 red opaque color cap and light yellow opaque color body Nilotinib Nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN FERRIC OXIDE RED FERRIC OXIDE YELLOW SODIUM LAURYL SULFATE TITANIUM DIOXIDE FERROSOFERRIC OXIDE POTASSIUM HYDROXIDE PROPYLENE GLYCOL SHELLAC AMMONIA RDY;150 red opaque color cap and body Nilotinib Nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 GELATIN FERRIC OXIDE YELLOW SODIUM LAURYL SULFATE TITANIUM DIOXIDE FERROSOFERRIC OXIDE POTASSIUM HYDROXIDE PROPYLENE GLYCOL SHELLAC AMMONIA RDY;200 light yellow opaque color cap and body container1 container2 container3 carton1 carton2 carton3 structure figure1 figure2 carton4 carton5 carton6"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to nilotinib capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.2 )] . Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.2 , 5.3 , 5.7 , 5.12 )] . Sudden deaths have been reported in patients receiving nilotinib capsules [see Warnings and Precautions ( 5.3 )] . Do not administer nilotinib capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications (4), Warnings and Precautions ( 5.2 )] . Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )] . Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration ( 2.1 )] . WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to nilotinib capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12) Sudden deaths have been reported in patients receiving nilotinib capsules. ( 5.3) Do not administer nilotinib capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "Nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "Nilotinib nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE (120 .MU.M) GELATIN, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE FERRIC OXIDE RED TITANIUM DIOXIDE FERRIC OXIDE YELLOW POLOXAMER 188 AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL SHELLAC APO;N150 red, opaque Nilotinib nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE (120 .MU.M) GELATIN, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE TITANIUM DIOXIDE FERRIC OXIDE YELLOW POLOXAMER 188 AMMONIA D&C RED NO. 7 FD&C BLUE NO. 2 FD&C RED NO. 40 ALUMINUM OXIDE PROPYLENE GLYCOL SHELLAC APO;N200 yellow, opaque Nilotinib nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE (120 .MU.M) GELATIN, UNSPECIFIED LACTOSE MONOHYDRATE MAGNESIUM STEARATE FERRIC OXIDE RED TITANIUM DIOXIDE FERRIC OXIDE YELLOW POLOXAMER 188 AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL SHELLAC yellow, opaque APO;N50 light orange opaque cap btl-lbl-150mg-500s btl-lbl-200mg-500s out-ctn-150mg-112s out-ctn-200mg-112s fig-14-1 fig-14-2 btl-lbl-50mg-120s"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.2 )]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.2 , 5.3 , 5.7 , 5.12 )]. Sudden deaths have been reported in patients receiving nilotinib [see Warnings and Precautions ( 5.3 )]. Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications ( 4 ) , Warnings and Precautions ( 5.2 )]. Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )]. Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration ( 2.1 )]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib. ( 5.3 ) Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "Nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "Nilotinib Nilotinib SILICON DIOXIDE GELATIN MAGNESIUM STEARATE POVIDONE K90 SODIUM LAURYL SULFATE TITANIUM DIOXIDE FERRIC OXIDE RED ANHYDROUS DIBASIC CALCIUM PHOSPHATE SHELLAC PROPYLENE GLYCOL AMMONIA POTASSIUM HYDROXIDE FERROSOFERRIC OXIDE NILOTINIB NILOTINIB opaque cap and body H;23 Nilotinib Nilotinib SILICON DIOXIDE GELATIN MAGNESIUM STEARATE SODIUM LAURYL SULFATE TITANIUM DIOXIDE ANHYDROUS DIBASIC CALCIUM PHOSPHATE SHELLAC PROPYLENE GLYCOL AMMONIA FERRIC OXIDE RED POVIDONE K90 NILOTINIB NILOTINIB opaque cap and body H;24"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS \u2022 Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions (5.2) ]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions (5.2 , 5.3, 5.7, 5.12 )]. \u2022 Sudden deaths have been reported in patients receiving nilotinib [see Warnings and Precautions (5.3) ]. Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications (4) , Warnings and Precautions (5.2) ]. \u2022 Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions (7.1, 7.2) ]. \u2022 Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration (2.1) ]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. \u2022 Nilotinib prolongs the QT interval. Prior to nilotinib administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies ( 5.2 ). Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) \u2022 Sudden deaths have been reported in patients receiving nilotinib. ( 5.3 ) Do not administer nilotinib to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) \u2022 Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) \u2022 Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "CAVHANZA"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "CAVHANZA Nilotinib NILOTINIB NILOTINIB HYPROMELLOSE ACETATE SUCCINATE, UNSPECIFIED BUTYLATED HYDROXYTOLUENE Microcrystalline Cellulose MANNITOL 1-ACETATE CROSPOVIDONE Magnesium Stearate SILICON DIOXIDE STARCH, CORN 15;5 CAVHANZA Nilotinib NILOTINIB NILOTINIB HYPROMELLOSE ACETATE SUCCINATE, UNSPECIFIED BUTYLATED HYDROXYTOLUENE Microcrystalline Cellulose MANNITOL 1-ACETATE CROSPOVIDONE Magnesium Stearate SILICON DIOXIDE STARCH, CORN 15;7"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to CAVHANZA administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.3 )] . Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.3 , 5.4 , 5.8 , 5.12 )] . Sudden deaths have been reported in patients receiving nilotinib [see Warnings and Precautions ( 5.4 )] . Do not administer CAVHANZA to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications ( 4 ), Warnings and Precautions ( 5.3 )] . Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )] . WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to CAVHANZA administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.3 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.3 , 5.4 , 5.8 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib. ( 5.4 ) Do not administer CAVHANZA to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.3 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "nilotinib nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB CROSPOVIDONE FERRIC OXIDE RED FERRIC OXIDE YELLOW FERROSOFERRIC OXIDE GELATIN LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 POTASSIUM HYDROXIDE PROPYLENE GLYCOL SHELLAC SILICON DIOXIDE TITANIUM DIOXIDE Red opaque cap and Red opaque body N12 nilotinib nilotinib NILOTINIB HYDROCHLORIDE MONOHYDRATE NILOTINIB CROSPOVIDONE FD&C RED NO. 40 ALUMINUM LAKE FERRIC OXIDE YELLOW GELATIN LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLOXAMER 188 POVIDONE PROPYLENE GLYCOL SHELLAC SILICON DIOXIDE SODIUM HYDROXIDE TITANIUM DIOXIDE light yellow opaque cap and Light yellow opaque body N11"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib capsules prolongs the QT interval. Prior to nilotinib capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.2 )]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.2 , 5.3 , 5.7 , 5.12 )] . Sudden deaths have been reported in patients receiving nilotinib capsules [see Warnings and Precautions ( 5.3 )]. Do not administer nilotinib capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications ( 4 ), Warnings and Precautions ( 5.2 )]. Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )]. Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration ( 2.1 )]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib c apsules prolongs the QT interval. Prior to nilotinib capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib c apsules. (5.3) Do not administer nilotinib capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": null,
+    "openfda.generic_name": null,
+    "spl_product_data_elements": [
+     "NILCEYA nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE FERRIC OXIDE RED AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC red opaque cap and white opaque body Cipla;03050mg NILCEYA nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE FERRIC OXIDE RED AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC Cipla;031150mg NILCEYA nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC Cipla;032200mg"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilceya prolongs the QT interval. Prior to Nilceya administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.2 )]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.2 , 5.3 , 5.7 , 5.12 )]. Sudden deaths have been reported in patients receiving Nilceya [see Warnings and Precautions ( 5.3 )]. Do not administer Nilceya to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications ( 4 ), Warnings and Precautions ( 5.2 )]. Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )]. Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration ( 2.1 )]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilceya prolongs the QT interval. Prior to Nilceya administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving Nilceya. ( 5.3 ) Do not administer Nilceya to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "DANZITEN"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "DANZITEN nilotinib NILOTINIB NILOTINIB CROSCARMELLOSE SODIUM HYPROMELLOSE ACETATE SUCCINATE 12070923 (3 MPA.S) CELLULOSE, MICROCRYSTALLINE SILICON DIOXIDE MAGNESIUM STEARATE POLYVINYL ALCOHOL POLYETHYLENE GLYCOL 3350 TITANIUM DIOXIDE DANZITEN nilotinib NILOTINIB NILOTINIB CROSCARMELLOSE SODIUM HYPROMELLOSE ACETATE SUCCINATE 12070923 (3 MPA.S) CELLULOSE, MICROCRYSTALLINE SILICON DIOXIDE MAGNESIUM STEARATE POLYVINYL ALCOHOL POLYETHYLENE GLYCOL 3350 TITANIUM DIOXIDE"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS \u2022 Nilotinib prolongs the QT interval. Prior to DANZITEN administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [ see Warnings and Precautions ( 5.3 ) ]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [ see Warnings and Precautions ( 5.3 , 5.4 , 5.8 , 5.12 ) ]. \u2022 Sudden deaths have been reported in patients receiving nilotinib [ see Warnings and Precautions ( 5.4 ) ]. Do not administer DANZITEN tablets to patients with hypokalemia, hypomagnesemia, or long QT syndrome [ see Contraindications (4), Warnings and Precautions ( 5.3 ) ]. \u2022 Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [ see Drug Interactions ( 7.1 , 7.2 ) ]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. \u2022 Nilotinib prolongs the QT interval. Prior to DANZITEN administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.3 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.3 , 5.4 , 5.8 , 5.12 ) \u2022 Sudden deaths have been reported in patients receiving nilotinib. ( 5.4 ) Do not administer DANZITEN to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.3 ) \u2022 Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 )"
+    ]
+   },
+   {
+    "openfda.brand_name": [
+     "Nilotinib"
+    ],
+    "openfda.generic_name": [
+     "NILOTINIB"
+    ],
+    "spl_product_data_elements": [
+     "Nilotinib Nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE FERRIC OXIDE RED AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC red opaque cap and white opaque body Cipla;03050mg Nilotinib Nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE FERRIC OXIDE RED AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC Cipla;031150mg Nilotinib Nilotinib NILOTINIB NILOTINIB SILICON DIOXIDE CROSPOVIDONE LACTOSE MONOHYDRATE MAGNESIUM STEARATE POLYSORBATE 80 MAGNESIUM ALUMINOMETASILICATE GELATIN TITANIUM DIOXIDE AMMONIA FERROSOFERRIC OXIDE PROPYLENE GLYCOL POTASSIUM HYDROXIDE SHELLAC Cipla;032200mg"
+    ],
+    "boxed_warning": [
+     "WARNING: QT PROLONGATION and SUDDEN DEATHS Nilotinib prolongs the QT interval. Prior to Nilotinib Capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies [see Warnings and Precautions ( 5.2 )]. Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments [see Warnings and Precautions ( 5.2 , 5.3 , 5.7 , 5.12 )]. Sudden deaths have been reported in patients receiving nilotinib [see Warnings and Precautions ( 5.3 )]. Do not administer Nilotinib Capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome [see Contraindications ( 4 ), Warnings and Precautions ( 5.2 )]. Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors [see Drug Interactions ( 7.1 , 7.2 )]. Avoid food 2 hours before and 1 hour after taking the dose [see Dosage and Administration ( 2.1 )]. WARNING: QT PROLONGATION and SUDDEN DEATHS See full prescribing information for complete boxed warning. Nilotinib prolongs the QT interval. Prior to Nilotinib Capsules administration and periodically, monitor for hypokalemia or hypomagnesemia and correct deficiencies. ( 5.2 ) Obtain ECGs to monitor the QTc at baseline, seven days after initiation, and periodically thereafter, and following any dose adjustments. ( 5.2 , 5.3 , 5.7 , 5.12 ) Sudden deaths have been reported in patients receiving nilotinib. ( 5.3 ) Do not administer Nilotinib Capsules to patients with hypokalemia, hypomagnesemia, or long QT syndrome. ( 4 , 5.2 ) Avoid use of concomitant drugs known to prolong the QT interval and strong CYP3A4 inhibitors. ( 7.1 , 7.2 ) Avoid food 2 hours before and 1 hour after taking the dose. ( 2.1 )"
+    ]
+   }
+  ],
+  "result_count": 12,
+  "duplicates_removed": 0
+ }
+}

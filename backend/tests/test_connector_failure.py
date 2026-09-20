@@ -2,6 +2,8 @@
 `failed`, its Evidence is absent, the dependent gates are `unknown`, and the engine still derives a stance."""
 from __future__ import annotations
 
+import pytest
+
 from elute.connectors.base import ToolError
 from elute.engine.labels import derive_status
 from elute.fixtures import load_bundle
@@ -32,3 +34,14 @@ def test_literature_down_leaves_other_evidence_and_dependent_gates_unknown(tu, d
     assert s["C_EXPOSURE"] == "unknown" and s["C_ENGAGEMENT"] == "unknown" and s["C_MECHANISM"] == "established"
     assert d.stance in ("no_clear_prioritization", "insufficient_evidence")
     assert derive_status("C_CLINICAL", ev).status == "unknown"  # registrations alone link nothing
+
+
+def test_a_direct_response_of_the_wrong_shape_is_a_tool_error_never_a_failed_run(monkeypatch):
+    """An HTML error page or a list where a dict was due fails the call the same way a transport error does."""
+    from elute.connectors.direct import DirectConnector
+
+    d = DirectConnector(None)
+    monkeypatch.setattr(d, "_openfda_label", lambda drug_name: (_ for _ in ()).throw(ValueError("Expecting value: line 1 column 1")))
+    with pytest.raises(ToolError) as caught:
+        d.call("openfda.label", {"drug_name": "nilotinib"})
+    assert "unreadable response" in str(caught.value) and caught.value.retriable

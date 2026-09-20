@@ -17,12 +17,24 @@ def resolve(drug: str, disease: str, ids: dict[str, str | None]) -> AgentReasoni
         next_action="Ask what the drug does and whether its target is tied to the disease.", next_action_reason="The mechanism is the first link every later claim depends on.")
 
 
+WHY: dict[str, str] = {
+    "L2": "The mechanism is the first link every later claim depends on: which target the drug acts on, in which direction, and whether that "
+          "target is tied to the disease by genetics, expression or the literature. Without it there is no hypothesis to test. The drug's label "
+          "is read here too: its boxed warning and its warnings name what any trial in the likely population would have to monitor.",
+    "L3": "Registered trials say whether anyone has tested this in people, with what design, how many patients, and whether the readout was "
+          "blinded. Clinical evidence is what candidates die of first, and a controlled result changes what the literature search must look for.",
+    "L4": "The papers hold the evidence the trials only point at: whether the drug reaches the target compartment at a tolerated dose, whether it "
+          "engages the target in patients, what the biomarkers showed, and the criticism that names the alternative explanations. Only records "
+          "dated on or before the requested date are read; nothing published later can inform the appraisal.",
+}
+
+
 def retrieval(step: str, question: str, tool: str, tool_reason: str, evidence_needed: str, counts: RetrievalCounts,
               key_finding: str | None, status_changes: list[str], next_action: str, next_reason: str, attempts_note: str | None = None) -> AgentReasoning:
     interp = key_finding or f"{counts.results_after_temporal_filter} visible record(s) after deduplication and the date gate."
     if attempts_note:
         interp += f" {attempts_note}"
-    return AgentReasoning(question=question, reasoning=f"This step asks: {question}", evidence_needed=evidence_needed, selected_tool=tool,
+    return AgentReasoning(question=question, reasoning=WHY.get(step, f"This step asks: {question}"), evidence_needed=evidence_needed, selected_tool=tool,
                           tool_selection_reason=tool_reason, interpretation=interp,
                           what_this_changes="; ".join(status_changes) if status_changes else "No claim status changed at this step.",
                           next_action=next_action, next_action_reason=next_reason)

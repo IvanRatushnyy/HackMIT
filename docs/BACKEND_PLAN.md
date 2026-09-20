@@ -48,7 +48,7 @@ Claims + mechanism chain       seven fixed claims (C_MECHANISM … C_SAFETY); ev
           ↓
 deterministic engine           claim status, weakest link, contradictions, unknowns, next question, recommendation stance — pure functions
           ↓
-OpenAI, bounded                extraction from visible abstracts; L4 query refinement and interpretation; L9 synthesis; optional L10 wording — cited, schema-validated
+OpenAI, bounded                extraction from visible abstracts; L4 interpretation; L9 synthesis; optional L10 wording — cited, schema-validated
           ↓
 validation gate                uncited sentence, unmatched number, ignored contradiction, stance mismatch → reject, re-ask once, deterministic fallback
           ↓
@@ -81,7 +81,7 @@ The appraisal answers, in order:
 | Elute's current opinion? | `recommendation`, always downstream of the above |
 | How did the agent get here? | `ledger[].reasoning` per step |
 
-**In Phase 1:** the three tasks via ToolUniverse with direct fallbacks; OpenAI extraction, L4 refinement/interpretation, L9 synthesis; deterministic engine; three-date backtest; fixture/live parity; graceful degradation; bounded in-step self-correction; the frontend adapter. **Safety** is `C_SAFETY = unknown` in Phase 1 — a visible gap, not a connector.
+**In Phase 1:** the three tasks via ToolUniverse with direct fallbacks; OpenAI extraction, L4 interpretation, L9 synthesis (L4 query refinement stays the deterministic synonym table); deterministic engine; three-date backtest; fixture/live parity; graceful degradation; bounded in-step self-correction; the frontend adapter. **Safety** is read at L2 (added Sept 20): the FDA label through `FDA_get_boxed_warning_info_by_drug_name` (openFDA behind it as the direct fallback), dated by the label version's `effective_time` via the recorded `openfda.label` supplement, with Open Targets' black-box classes and FAERS signals as undated enrichments; a boxed warning or a withdrawal `contradicts` `C_SAFETY`, warnings without a box `qualify` it, a clean label `supports` it. The adapter derives the Safety block and the fifth prerequisite (boxed → `conditional`, *with monitoring*) from that one record. At a cutoff before the label version's date the label is withheld and the page says the label read is dated later, never that nothing was read.
 
 **Not in Phase 1:** §17 and §18.
 
@@ -141,7 +141,7 @@ Responses API with structured outputs (`client.responses.parse`, Pydantic `text_
 | Where | Task | Input the model receives | Output schema | Validation |
 |---|---|---|---|---|
 | L4 | **Extraction**, one call per selected abstract | title + abstract (fetched only for selected visible records) + the seven claim ids with one-line definitions | `study_type`, `controlled`, `blinded`, `placebo`, `population`, `sample_size?`, `outcome?`, `pk_facts[]` `{value, unit, verbatim_sentence}`, `caveats[]` (closed vocabulary), `relevance[]` `{claim_id, direction, statement, verbatim_sentence?}`, `display_statement` | every number, caveat and relevance must carry a verbatim sentence found in the abstract (normalized whitespace); a relevance item without one is dropped; unknown fields stay null |
-| L4 | **Query refinement**, when a facet's result is insufficient (§11) | the facet, the previous query, the insufficiency reason, the resolved entity names/ids | `query`, `reason` | ≤ 200 chars; entity name must appear |
+| L4 | Query refinement — **not built in Phase 1**: an insufficient facet is reformulated by the deterministic synonym table (§11) | — | — | — |
 | L4 | **Interpretation** for the step's reasoning | the step's question, the retrieval counts, the visible Evidence summaries (id, statement, date, design, n) and the engine's derived status changes | `AgentReasoning` (§7) | cites resolve; `what_this_changes` may only name statuses the engine derived |
 | L9 | **Synthesis** | Claims with statuses, visible Evidence (id, statement, date, design, n, caveats), weakest link, contradictions, unknowns, the deterministic `stance` | `strongest_case_for[]`, `strongest_case_against[]` (`{text, cites[]}`), `opinion`, `what_would_change_my_mind` | §6 gate |
 | L10 | **Wording** (optional) | the deterministic next-question block | `why_this_question_matters` | cites resolve; falls back to the template |
@@ -379,7 +379,7 @@ attempt 1: preferred tool, initial query (templated from resolved names/ids)
                    records but none mention the resolved drug name/id AND disease name/id → "insufficient"; else "ok"
 attempt 2 (if not ok): same transport, refined query
   refinement: biology/clinical_trials → deterministic synonym table (canonical name → EFO/MeSH label → ChEMBL preferred name)
-              literature → OpenAI query refinement (§4) when configured, else the synonym table
+              literature → the synonym table (a model-worded refinement is not built)
 attempt 3 (if not ok): direct fallback with attempt 2's query
 stop. Max 3 attempts. Every attempt appended to LedgerEntry.attempts[].
 ```
@@ -572,7 +572,7 @@ Optional order after OpenAlex: safety gate (openFDA, Open Targets liabilities); 
 
 **Spike deliverable — `docs/tooluniverse-spike.md`** (written at M0B from the findings below; the implementation contract). For the install: package/repo, exact version, install method, exact initialization code, settings/environment requirements (mirrored in `settings.py` and `.env.example`). For **each verified tool**: task/category · exact tool name · ToolUniverse description · exact Python initialization · exact call syntax · required arguments · optional arguments · result shape · example nilotinib/Parkinson's query · a representative successful response (the cassette path) · timeout/error behaviour · the provider the data represents (`source_provider`) · the Elute normalizer (`connectors/records.py` mapper). No placeholder may remain in it or in the table below before full implementation begins.
 
-**Verified ToolUniverse tools.** Names read from `src/tooluniverse/data/*.json` on `mims-harvard/ToolUniverse` `main`, then each run live for nilotinib `CHEMBL255863` / Parkinson disease `MONDO_0005180` on 2026-09-20; payloads recorded under `backend/tests/fixtures/payloads/` and replayed by `backend/tests/test_tooluniverse_tools.py`. `backend/elute/connectors/tooluniverse.py` (`TOOL_NAMES`) loads exactly these eleven and nothing else. Install: `tooluniverse==1.5.0` (PyPI 2026-09-16), Python ≥ 3.10, no key required (`NCBI_API_KEY` optional).
+**Verified ToolUniverse tools.** Names read from `src/tooluniverse/data/*.json` on `mims-harvard/ToolUniverse` `main`, then each run live for nilotinib `CHEMBL255863` / Parkinson disease `MONDO_0005180` on 2026-09-20; payloads recorded under `backend/tests/fixtures/payloads/` and replayed by `backend/tests/test_tooluniverse_tools.py`. `backend/elute/connectors/tooluniverse.py` (`TOOL_NAMES`) loads exactly these fourteen and nothing else. Install: `tooluniverse==1.5.0` (PyPI 2026-09-16), Python ≥ 3.10, no key required (`NCBI_API_KEY` optional).
 
 | # | Category | Exact tool name (bold = the sponsor-compliance three) | `source_provider` | Call signature | Cassette | Verified |
 |---|---|---|---|---|---|---|
@@ -580,8 +580,9 @@ Optional order after OpenAlex: safety gate (openFDA, Open Targets liabilities); 
 | 1 | biology / target | **`OpenTargets_get_drug_mechanisms_of_action_by_chemblId`** · `OpenTargets_get_evidence_by_datasource` | open_targets | `{chemblId}` → `data.drug.mechanismsOfAction.rows[]{mechanismOfAction, actionType, targetName, targets[]{id, approvedSymbol}, references[]{source, urls[]}}` · `{efoId, ensemblId, datasourceIds?, size}` → `data.disease.evidences{count, rows[]{datasourceId, datatypeId, score, resourceScore, literature[] (PMIDs), target, disease, urls[]}}` | `payloads/tooluniverse/OpenTargets_get_drug_mechanisms_of_action_by_chemblId/`, `…/OpenTargets_get_evidence_by_datasource/` | 2026-09-20 |
 | 2 | clinical trials | **`ClinicalTrials_search_studies`** · `get_clinical_trial_status_and_dates` · `get_clinical_trial_conditions_and_interventions` · `extract_clinical_trial_outcomes` | clinicaltrials_gov | `{query_cond, query_intr, query_term?, filter_status?, filter_phase?, page_size ≤ 1000}` (multi-word terms in parentheses sent verbatim) → `data.studies[]{nct_id, brief_title, status, study_type, phases[], enrollment, conditions[], interventions[], sponsor, start_date, completion_date}` · `{nct_ids[]}` → per-NCT `overall_status, start_date, primary_completion_date, completion_date` / `arm_groups[]{label, type}` / `outcomes[]` | `payloads/tooluniverse/ClinicalTrials_search_studies/` | 2026-09-20 |
 | 3 | literature | **`PubMed_search_articles`** · `PubMed_get_article` | pubmed | `{query, limit ≤ 200, include_abstract}` → `data[]{pmid, title, abstract?, authors[], journal, pub_date (prose: "2016 Jul 11" / "2014"), pub_year, doi, pmcid, url}` · `{pmid: "a,b,c"}` → the same plus `mesh_terms[]`, `publication_types[]` | `payloads/tooluniverse/PubMed_search_articles/` | 2026-09-20 |
+| 4 | safety (label) | **`FDA_get_boxed_warning_info_by_drug_name`** · `OpenTargets_get_drug_warnings_by_chemblId` · `OpenTargets_get_drug_adverse_events_by_chemblId` | openfda · open_targets | `{drug_name, limit}` → `results[]{openfda.brand_name[], openfda.generic_name[], boxed_warning[] (+ warnings_and_cautions[] / warnings[] when there is no box)}` (no dates: the `openfda.label` supplement adds `set_id`, `version`, `effective_time`, `application_number` and the sections) · `{chemblId}` → `data.drug.drugWarnings[]{warningType, toxicityClass, country, year, references[]}` · `{chemblId, page}` → `data.drug.adverseEvents{count, rows[]{name, count, logLR}}` | `payloads/tooluniverse/FDA_get_boxed_warning_info_by_drug_name/`, `…/OpenTargets_get_drug_warnings_by_chemblId/`, `…/OpenTargets_get_drug_adverse_events_by_chemblId/` | 2026-09-20 |
 
-Recorded direct supplements (transport `direct`, not ToolUniverse, never counted toward the three): `ctgov.study_design` (ClinicalTrials.gov v2 per NCT: masking, allocation, `studyFirstPostDate`, `hasResults`, `resultsFirstPostDate`) and `europepmc.dates` (batched `firstPublicationDate` by PMID). Cassettes under `payloads/direct/`.
+Recorded direct supplements (transport `direct`, not ToolUniverse, never counted toward the three): `openfda.label` (every product label for the name, trimmed: set id, version, `effective_time`, application number, boxed warning, warnings and precautions, contraindications, indications; the originator's label — the oldest NDA/BLA — is the one Evidence), `ctgov.study_design` (ClinicalTrials.gov v2 per NCT: masking, allocation, `studyFirstPostDate`, `hasResults`, `resultsFirstPostDate`) and `europepmc.dates` (batched `firstPublicationDate` by PMID). Cassettes under `payloads/direct/`.
 
 Facts the spike established, now encoded in `backend/elute/connectors/`:
 
@@ -633,7 +634,7 @@ Each has a typed interface, a docstring with purpose and data needs, and can wri
 
 ## 24. Explicitly deferred (unless already trivial and working)
 
-PrimeKG · STRING visualisations · complex Reactome UI · PowerPoint backend export (the deck is a frontend concern) · full genetic analysis · Mendelian randomisation · real-world patient data · a surveillance worker · arbitrary paper upload (paste-a-paper stays fixture-only) · the ALS second query · broad drug-first search · dozens of candidates · automatic diagram generation · any trained ML model · any composite score · multiple LLM providers · massive knowledge-graph downloads · patient-facing recommendations · ChEMBL, openFDA, Reactome, STRING and OpenAlex as Phase 1 dependencies · `PathwayDrawing` / `Delivery` (optional fields already in `types.ts`; the adapter leaves them unset; the curated frontend fixture carries them; nothing in Phase 1 depends on them) · `/manifest`, `/tools`.
+PrimeKG · STRING visualisations · complex Reactome UI · PowerPoint backend export (the deck is a frontend concern) · full genetic analysis · Mendelian randomisation · real-world patient data · a surveillance worker · arbitrary paper upload (paste-a-paper stays fixture-only) · the ALS second query · broad drug-first search · dozens of candidates · automatic diagram generation · any trained ML model · any composite score · multiple LLM providers · massive knowledge-graph downloads · patient-facing recommendations · ChEMBL, Reactome, STRING and OpenAlex as Phase 1 dependencies (openFDA joined Phase 1 on Sept 20 as the label behind the safety read) · `PathwayDrawing` / `Delivery` (optional fields already in `types.ts`; the adapter leaves them unset; the curated frontend fixture carries them; nothing in Phase 1 depends on them) · `/manifest`, `/tools`.
 
 ## 25. Henry / Regeneron alignment
 
@@ -646,7 +647,7 @@ PrimeKG · STRING visualisations · complex Reactome UI · PowerPoint backend ex
 | **Exposure** | `C_EXPOSURE`; the next question defaults here | structured PK; route |
 | **Target engagement** | `C_ENGAGEMENT`, separate; `unknown` shown as such | human engagement extraction |
 | **Downstream biology / biomarker** | `C_DOWNSTREAM`; the MAO-B alternative is a contradicting link on it | biomarker extraction |
-| **Safety** | `C_SAFETY = unknown`, visible | openFDA + liabilities + expression breadth |
+| **Safety** | the FDA label as dated evidence on `C_SAFETY` (boxed warning, warnings by body system, contraindications), Open Targets black-box classes and FAERS signals; the Safety block and the fifth prerequisite derived from it | target liabilities + expression breadth; historical label versions |
 | **Pathway redundancy** | parking spot on the trace | `pathway_redundancy` |
 | **Genetic validation** | Open Targets datatype as a labelled *proxy*, or omitted | `genetics_validation` |
 | **Know the next question** | one `next_question` with why, experiment/data, and the result that would change the appraisal | a ranked research agenda |

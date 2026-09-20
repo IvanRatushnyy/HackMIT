@@ -91,7 +91,11 @@ def cap(records: list[CanonRecord], drug: str = "", disease_terms: list[str] | N
     return out
 
 
-def fetch_abstracts(selected: list[CanonRecord], tu: ToolUniverseConnector, direct: DirectConnector, attempts: list[Attempt], n0: int) -> dict[str, AbstractRecord]:
+Progress = Callable[[str], None]  # one line for the Working page while the step runs
+
+
+def fetch_abstracts(selected: list[CanonRecord], tu: ToolUniverseConnector, direct: DirectConnector, attempts: list[Attempt], n0: int,
+                    progress: Progress | None = None) -> dict[str, AbstractRecord]:
     """PubMed_get_article for the selected, visible PMIDs only; direct fallback on error. Never called before the gate."""
     out: dict[str, AbstractRecord] = {}
     by_pmid = {r.pmid: r for r in selected if r.pmid}
@@ -99,6 +103,8 @@ def fetch_abstracts(selected: list[CanonRecord], tu: ToolUniverseConnector, dire
     n = n0
     for i in range(0, len(pmids), ABSTRACT_BATCH):
         batch = pmids[i:i + ABSTRACT_BATCH]
+        if progress:
+            progress(f"reading abstracts {i + 1}–{min(i + ABSTRACT_BATCH, len(pmids))} of {len(pmids)}")
         args = {"pmid": ",".join(batch)}
         payload = None
         for transport, conn in (("tooluniverse", tu), ("direct", direct)):
@@ -128,22 +134,28 @@ def fetch_abstracts(selected: list[CanonRecord], tu: ToolUniverseConnector, dire
 
 def retrieve_literature(base: Task, as_of: str, tu: ToolUniverseConnector, direct: DirectConnector, *, facet_order: list[str] | None = None,
                         selector: tools.Selector | None = None, extra_queries: list[str] | None = None,
-                        disabled: Callable[[str], bool] | None = None) -> LiteratureResult:
-    facet_order = facet_order or DEFAULT_FACET_ORDER
+                        disabled: Callable[[str], bool] | None = None, progress: Progress | None = None) -> LiteratureResult:
+    facet_order = DEFAULT_FACET_ORDER if facet_order is None else list(facet_order)  # [] means only the extra queries
+    note = progress or (lambda s: None)
     attempts: list[Attempt] = []
     episodes: list[tools.Episode] = []
     raw: list[tuple[str, RawRecord]] = []
     n = 1
-    for facet in list(facet_order) + list(extra_queries or [])[:MAX_EXTRA_QUERIES]:
+    facets = list(facet_order) + list(extra_queries or [])[:MAX_EXTRA_QUERIES]
+    for k, facet in enumerate(facets, 1):
         task = replace(base, facet=facet, id=base.id)
+        note(f"searching PubMed, facet {k} of {len(facets)}: {facet}")
         ep = tools.run_task(task, tu, direct, selector=selector, supplements=False, disabled=disabled)
         episodes.append(ep)
         for a in ep.attempts:
             attempts.append(replace(a, n=n))
             n += 1
         raw.extend((facet, r) for r in ep.records)
+        how = f"{len(ep.records)} record(s)" + (f" via {ep.transport}" if ep.transport else "") + (", after a retry" if len(ep.attempts) > 1 else "") if ep.status == "ok" else "nothing usable after every attempt"
+        note(f"{facet}: {how}")
     retrieved = [canonicalize(r, facet) for facet, r in raw]
     combined = dedup(retrieved)
+    note(f"{len(retrieved)} records → {len(combined)} after deduplication; dating them via Europe PMC")
     # authoritative dates on the deduplicated set: one batched supplement (§9.2)
     dated_raw, a = enrich.literature_dates(base, [_as_raw(c) for c in combined], direct, n)
     if a:
@@ -157,8 +169,10 @@ def retrieve_literature(base: Task, as_of: str, tu: ToolUniverseConnector, direc
                 c.cited_by_count = cbc
     vis = visible(combined, as_of)
     hidden = withheld(combined, as_of)
+    note(f"{len(vis)} visible on {as_of}; {len(hidden)} later record(s) withheld before anything is read")
     selected = cap(vis, base.drug, [base.disease] + list(base.disease_aliases))
-    abstracts = fetch_abstracts(selected, tu, direct, attempts, n) if selected else {}
+    note(f"{len(selected)} selected for reading, by facet priority and title relevance")
+    abstracts = fetch_abstracts(selected, tu, direct, attempts, n, progress) if selected else {}
     counts = RetrievalCounts(results_retrieved=len(retrieved), results_after_dedup=len(combined), results_after_temporal_filter=len(vis),
                              records_withheld=len(hidden), results_selected_for_extraction=len(selected))
     ok = [e for e in episodes if e.status == "ok"]

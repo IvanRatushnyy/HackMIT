@@ -67,6 +67,7 @@ def apply_gate(synth: Synthesis | None, d: Derived, ev: list[Evidence], as_of: s
 def assemble(*, run_id: str, drug: str, disease: str, as_of: str, resolved, evidence_all: list[Evidence], d: Derived,
              synth: Synthesis, llm: str, data_mode: str, ledger: list[LedgerEntry]) -> CandidateAppraisal:
     ev = visible(evidence_all, as_of)
+    label_read = max((e.publication_date for e in evidence_all if e.safety is not None), default=None)
     problems = validate_structure(ev, d.claims, d.edges)
     if problems:
         raise ValidationError(problems)
@@ -79,7 +80,7 @@ def assemble(*, run_id: str, drug: str, disease: str, as_of: str, resolved, evid
                               evidence=ev, claims=d.claims, mechanism_edges=d.edges, supporting_evidence_ids=d.supporting_evidence_ids,
                               counter_evidence_ids=d.counter_evidence_ids, strongest_case_for=synth.strongest_case_for,
                               strongest_case_against=synth.strongest_case_against, weakest_link=d.weakest_link, next_question=d.next_question,
-                              recommendation=rec, ledger=ledger)
+                              recommendation=rec, ledger=ledger, label_read=label_read)
 
 
 # ---- fixture mode ----------------------------------------------------------------------------------
@@ -90,7 +91,6 @@ def run_fixture(bundle: FixtureBundle, as_of: str, run_id: str | None = None) ->
     hidden = withheld(bundle.evidence, as_of)
     d = derive(bundle.drug, bundle.disease, bundle.resolved, ev)
     synth, llm, _ = apply_gate(pick_curated(bundle, as_of), d, ev, as_of)
-    llm = "openai" if llm == "openai" else llm  # curated prose that passes the gate is reported as curated below
     per_step: dict[str, RetrievalCounts] = {}
     ledger: list[LedgerEntry] = []
     for step in [f"L{i}" for i in range(1, 11)]:
@@ -110,5 +110,7 @@ def run_fixture(bundle: FixtureBundle, as_of: str, run_id: str | None = None) ->
         ledger.append(LedgerEntry(step=step, question=STEP_QUESTIONS[step], task=STEP_TASK.get(step), transport="fixture" if step in STEP_TASK else "none",
                                   tool_name=None, query="", counts=counts, status="ok", timestamp=_now(), elapsed_ms=0,
                                   key_finding=reasoning.interpretation, record_ids=[e.id for e in step_ev], reasoning=reasoning, reasoning_source="template"))
+    # The bundle's prose is hand-curated, not model output: when it passes the gate `apply_gate` says "openai", which is
+    # reported as "unavailable" (no model ran); `data_mode: fixture` says where the prose came from.
     return assemble(run_id=run_id, drug=bundle.drug, disease=bundle.disease, as_of=as_of, resolved=bundle.resolved, evidence_all=bundle.evidence,
                     d=d, synth=synth, llm=("unavailable" if llm == "openai" else llm), data_mode="fixture", ledger=ledger)

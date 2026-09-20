@@ -1,6 +1,6 @@
 /* elute — evidence primitives: label, outcome chip, driver bar, source line, dates. */
 
-import type { BestEvidence, CandidateDetail, Label, Source } from '../data/types'
+import type { BestEvidence, Label, Source } from '../data/types'
 
 /** Record strings use a middle dot as a structured separator; on screen it is a comma. */
 export function plain(s: string): string {
@@ -26,29 +26,6 @@ export function OutcomeChip({ be }: { be: BestEvidence }) {
 export function bestEvidenceText(be: BestEvidence): string {
   if (be.outcome === 'none') return 'no human test'
   return `${be.design}${be.n !== undefined ? `, n = ${be.n}` : ''}`
-}
-
-const SEGMENTS = ['mechanism', 'clinical', 'exposure', 'safety'] as const
-
-export function DriverBar({ drivers, refutedClinical }: { drivers: CandidateDetail['drivers']; refutedClinical: boolean }) {
-  const words = SEGMENTS.map((s) => `${s} ${drivers[s]} of 3${s === 'clinical' && refutedClinical ? ' (controlled negative)' : ''}`).join(', ')
-  return (
-    <div className="drivers" role="img" aria-label={words} title={words}>
-      {SEGMENTS.map((s) => (
-        <div className="drivers__seg" key={s}>
-          <span className="drivers__word">{s}</span>
-          <span className="drivers__pips">
-            {[0, 1, 2].map((i) => (
-              <span
-                key={i}
-                className={`drivers__pip${i < drivers[s] ? ' drivers__pip--on' : ''}${s === 'clinical' && refutedClinical ? ' drivers__pip--refuted' : ''}`}
-              />
-            ))}
-          </span>
-        </div>
-      ))}
-    </div>
-  )
 }
 
 export function designWord(s: Source): string {
@@ -118,9 +95,4 @@ export function formatDate(iso: string): string {
   const [y, m, d] = iso.split('-').map(Number)
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   return `${d} ${months[m - 1]} ${y}`
-}
-
-export function formatClock(ms: number): string {
-  const s = Math.floor(ms / 1000)
-  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 }

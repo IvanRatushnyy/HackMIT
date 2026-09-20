@@ -6,8 +6,6 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { Header, StartupDone } from '../components/frame'
 import { useAsk } from '../components/useAsk'
 
-const EXAMPLES = ['nilotinib for Parkinson’s']
-
 /* wait: under the startup screen · go: arriving after it · settled: an ordinary page reveal */
 type Arrival = 'wait' | 'go' | 'settled'
 
@@ -60,11 +58,12 @@ export function Entry() {
               <ArrowRight size={16} weight="bold" aria-hidden="true" />
             </button>
           </div>
+          {/* The hard-coded example always; recorded runs beside it, worded as they were asked (src/components/useAsk.ts). */}
           <div className="land__examples" aria-label="Examples">
             <span className="faint">try:</span>
-            {EXAMPLES.map((word) => (
-              <button key={word} type="button" className="land__example" onClick={() => t.go(word)} disabled={t.launching}>
-                {word}
+            {t.examples.map((ex) => (
+              <button key={ex.key} type="button" className="land__example" onClick={ex.pick} disabled={t.launching} title={ex.title}>
+                {ex.text}
               </button>
             ))}
           </div>

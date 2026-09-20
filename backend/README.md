@@ -9,7 +9,7 @@ cd backend
 uv sync --extra dev                                   # Python 3.12; installs tooluniverse==1.5.0 and everything else from uv.lock
 cp .env.example .env                                  # then set OPENAI_API_KEY and OPENAI_MODEL (optional; fixture mode needs neither)
 uv run uvicorn elute.main:app --reload --port 8000    # ELUTE_MODE=fixture by default; ELUTE_MODE=live for the real pipeline
-uv run pytest                                         # 90+ tests, all offline on recorded cassettes
+uv run pytest                                         # 119 tests, all offline on recorded cassettes
 ```
 
 Frontend against the backend: `VITE_ELUTE_API=http://localhost:8000/api npm run dev` from the repo root.

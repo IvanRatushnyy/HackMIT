@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Minus, Plus } from '@phosphor-icons/react'
 import type { CandidateDetail, Cutoff, Source } from '../data/types'
-import { resolvePrerequisite, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
+import { resolvePrerequisite, resolveTimeline, unresolvedCount, visibleObjections, type LabelResult } from '../lib/evidence'
 import { EASE_OUT } from '../lib/motion'
 import { formatDate, shortCite, SourceLine } from './evidence'
 import { Kicker } from './frame'
@@ -159,7 +159,7 @@ export function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref:
 // ---- Safety ------------------------------------------------------------------------------
 
 export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail; cutoff: Cutoff }) {
-  const s = resolvePrerequisiteSafety(candidate, cutoff)
+  const s = resolveTimeline(candidate.safety, cutoff.date)
   const srcById = new Map(candidate.sources.map((x) => [x.id, x]))
   return (
     <section className="section" aria-labelledby="safety">
@@ -179,6 +179,26 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
             </p>
             <p className="safety__reason">{s.reason.charAt(0).toUpperCase() + s.reason.slice(1)}.</p>
             <p className="safety__population">{s.population}</p>
+            {s.systems && s.systems.length > 0 && (
+              <dl className="safety__systems" aria-label="What the label warns of">
+                {s.systems.map((x) => (
+                  <div className="safety__system" key={x.heading}>
+                    <dt>
+                      {x.system && <span className="safety__organ">{x.system} · </span>}
+                      {x.heading}
+                    </dt>
+                    <dd>{x.detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {s.contraindications && <p className="safety__contra">Contraindicated: {s.contraindications}</p>}
+            {s.signals && s.signals.length > 0 && (
+              <p className="safety__signals">
+                <span className="safety__signals-note">{s.signals_note ?? 'FAERS signals, report counts.'}</span>{' '}
+                {s.signals.map((g) => `${g.name} (${g.reports})`).join(' · ')}
+              </p>
+            )}
             <p className="safety__src">
               {s.sources.map((id) => {
                 const src = srcById.get(id)
@@ -192,8 +212,11 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
           </>
         ) : candidate.safety ? (
           <>
-            <p className="safety__flag safety__flag--none">not yet on the label</p>
-            <p className="safety__population">The label review in this record is dated after the selected evidence date.</p>
+            <p className="safety__flag safety__flag--none">label read is dated later</p>
+            <p className="safety__population">
+              The label version this record read is dated after the selected evidence date. Earlier versions were not read, so a warning may already have
+              applied; nothing here is reassurance.
+            </p>
           </>
         ) : (
           <>
@@ -205,14 +228,6 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
     </section>
   )
 }
-function resolvePrerequisiteSafety(candidate: CandidateDetail, cutoff: Cutoff) {
-  const t = candidate.safety
-  if (!t) return undefined
-  let hit: (typeof t)[number]['value'] | undefined
-  for (const e of t) if (e.from <= cutoff.date) hit = e.value
-  return hit
-}
-
 // ---- Before a trial: five numbered boxes, a walkthrough ------------------------------------
 
 export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: CandidateDetail; cutoff: Cutoff; isToday: boolean }) {

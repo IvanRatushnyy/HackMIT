@@ -44,6 +44,20 @@ export type AgentReasoning = {
   next_action_reason: string
 }
 
+/** One line the step said while it ran ("searching PubMed, facet 3 of 8: exposure"), with its offset from the run's start. */
+export type LedgerNote = { at_ms: number; note: string }
+
+export type LedgerAttempt = {
+  n: number
+  transport: string
+  tool_name?: string | null
+  query?: Record<string, unknown>
+  outcome: 'ok' | 'error' | 'timeout' | 'empty' | 'insufficient'
+  reason?: string | null
+  records_returned?: number
+  elapsed_ms?: number
+}
+
 export type LedgerRow = {
   id: LedgerRowId // "L1".."L10"
   step: string
@@ -51,6 +65,12 @@ export type LedgerRow = {
   unit: string // "targets", "trials", "records": the noun for the derived count
   elapsed_ms?: number // only when the ledger is recorded
   reasoning?: AgentReasoning // the agent's thought process for this step (backend v4.4 §7); absent on scripted fixtures
+  reasoning_source?: 'template' | 'openai' // who worded the reasoning: the deterministic template or the model
+  status?: 'ok' | 'retried' | 'failed' | 'skipped'
+  transport?: string
+  counts?: { results_retrieved: number; results_after_dedup: number; results_after_temporal_filter: number; records_withheld: number; results_selected_for_extraction: number }
+  attempts?: LedgerAttempt[]
+  notes?: LedgerNote[] // what the step said while it ran, in order; recorded and live runs only
   execution: {
     tool: string
     query: string
@@ -61,13 +81,29 @@ export type LedgerRow = {
   records: LedgerRecord[] // dated claims, filtered by cutoff. There is no stored count.
 }
 
+/** How long the run is expected to take, per step, and where that expectation comes from. Never a promise. */
+export type RunEstimate = { total_ms: number; steps: Record<LedgerRowId, number>; basis: string }
+
 export type Ledger = {
   kind: 'recorded' | 'scripted'
   recorded_total_ms?: number
+  estimate?: RunEstimate
+  /** For a replayed recording: the real run's length and when it was made, so the page can say it is sped up. */
+  replay_of?: { recorded_at: string; elapsed_ms: number; run_id: string; llm: string; llm_client?: string }
   rows: LedgerRow[]
 }
 
-export type LedgerEvent = { row: LedgerRow; done: boolean }
+/** One event of a run, in order. `question`: the step is starting, with what it is about to do. `progress`: one line of
+ * what it is doing now. `settled`: the finished row. Every source yields the same shape; only the pace differs. */
+export type LedgerEvent = {
+  phase: 'question' | 'progress' | 'settled'
+  step: LedgerRowId
+  row?: LedgerRow
+  reasoning?: AgentReasoning
+  note?: string
+  at_ms?: number
+  done: boolean
+}
 
 // ---- Sources ----------------------------------------------------------------
 
@@ -153,13 +189,22 @@ export type Delivery = {
   sources: SourceId[]
 }
 
+export type SafetySystem = { system?: string; heading: string; detail: string } // one label warning: its heading, one line, the body system it maps to
+export type SafetySignal = { name: string; reports: number } // one FAERS disproportionality signal: a report count, never an incidence
+
 export type Safety = {
   severity: 'boxed' | 'warning' | 'none' // none: the label was reviewed and nothing is flagged
   flag: string // "QT prolongation", or "no boxed warning" when severity is none
-  kind: string // "boxed warning", "label warning", "label reviewed"
+  kind: string // "boxed warning", "label warning", "label reviewed", "withdrawn"
   reason: string // one line beside the word
   population: string // two sentences on the likely trial population
   sources: SourceId[]
+  label?: { brand?: string; effective?: ISODate; version?: string } // which label version the block speaks from
+  classes?: string[] // Open Targets black-box toxicity classes ("cardiotoxicity")
+  systems?: SafetySystem[] // what the label warns of, in label order
+  contraindications?: string
+  signals?: SafetySignal[] // only at the run date: FAERS is cumulative and undated
+  signals_note?: string // the rule the counts are read by
 }
 
 export type PrerequisiteStatus = {
