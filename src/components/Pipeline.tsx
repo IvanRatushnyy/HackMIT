@@ -6,7 +6,7 @@
  * so the person sees the work as it happens without reading a log. Click a finished box to see its records. */
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { BookOpenText, Brain, ChartBar, Check, ClipboardText, Crosshair, Dna, Flask, Graph, MagnifyingGlass, Pill, ShieldCheck, Target, WarningCircle, type Icon } from '@phosphor-icons/react'
+import { BookOpenText, Brain, CalendarBlank, ChartBar, Check, ClipboardText, Crosshair, Dna, Flask, Graph, MagnifyingGlass, Pill, Question, Scales, ShieldCheck, Target, WarningCircle, type Icon } from '@phosphor-icons/react'
 import type { EntityKind, ISODate, LedgerRow } from '../data/types'
 import { ledgerResult } from '../lib/evidence'
 import { EASE_OUT } from '../lib/motion'
@@ -27,6 +27,14 @@ const ICON: Record<string, Icon> = {
   'Safety in the likely population': ShieldCheck,
   'Objections — each must cite a ledger line': WarningCircle,
   'Confidence drivers': ChartBar,
+  // the backend's ten steps (src/data/api.ts)
+  'Target and disease biology': Dna,
+  'Normalize to evidence': Scales,
+  'Historical visibility audit': CalendarBlank,
+  'Claims and mechanism': Graph,
+  'Statuses, weakest link, stance': ChartBar,
+  'Case for, case against, opinion': WarningCircle,
+  'Next question': Question,
 }
 
 function StepIcon({ step }: { step: string }) {

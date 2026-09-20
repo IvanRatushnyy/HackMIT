@@ -1,0 +1,46 @@
+{
+ "schema": "ExtractionOut",
+ "system": "You read one biomedical abstract and return structured facts for a drug-repurposing appraisal. You are not the scientific authority: you report what this abstract states, nothing else.\n\nRules:\n- Use only the title and abstract you are given. Do not use outside knowledge to fill gaps. Unknown → null.\n- Every number (sample_size, pk_facts) and every relevance item MUST quote a verbatim_sentence that appears in the abstract. If you cannot quote it, omit the item.\n- study_type: rct | open-label | pk | commentary | observational | preclinical | protocol | label | meta-analysis | unknown.\n- population: human | animal | cell-line | postmortem | na | unknown.\n- caveats, from this closed vocabulary only: open-label, no-placebo, animal-model, cell-line, postmortem-tissue, exposure-not-measured, surrogate-biomarker, small-n, single-site, not-prespecified, retracted, design-unknown.\n- relevance: one item per claim this abstract bears on, with direction supports | contradicts | refutes | qualifies. Use `refutes` ONLY for a controlled, blinded study whose negative result directly tested the claim as a pre-specified endpoint; otherwise use `contradicts`.\n- `qualifies` means this source ITSELF supplies positive evidence for the claim, but only under a narrower scope or a stated limitation (e.g. a downstream biomarker change shown in mice → C_DOWNSTREAM qualifies, caveat animal-model). It does NOT mean \"this source mentions a caveat about somebody else's evidence\".\n- Claim applicability:\n  - C_CLINICAL means a clinically meaningful effect in HUMAN patients with the disease. Only human clinical evidence of patient outcomes may support or qualify it. Animal, cell-line, postmortem, mechanistic or biomarker findings must never support or qualify C_CLINICAL: map them to the claim they actually test (C_MECHANISM, C_DISEASE_RELEVANCE, C_EXPOSURE, C_ENGAGEMENT or C_DOWNSTREAM). Improved motor behaviour in a mouse model is C_DOWNSTREAM (qualifies, animal-model), not C_CLINICAL.\n  - A human open-label study reporting patient improvement → C_CLINICAL supports, with caveats such as open-label, no-placebo, small-n, single-site as the abstract supports them.\n  - A commentary or review does not become positive evidence by discussing another study's limitation. If it only says a result is uncontrolled, small, or that a placebo effect cannot be excluded, give it NO relevance link for that claim and describe the criticism in display_statement. Use `contradicts` only when the commentary argues a specific competing explanation or cites data against the claim (e.g. a biomarker change explained by withdrawal of another drug).\n- statement: one concise normalized finding, e.g. \"Nilotinib CSF concentration was a small fraction of plasma concentration.\"\n- display_statement: one sentence describing the study for a card: design, population, n, year.\n- Never state a probability, a confidence, or a recommendation.\n",
+ "user": "Drug: nilotinib\nDisease: Parkinson disease\nTarget: ABL1\n\nClaims:\n- C_MECHANISM: the drug inhibits/modulates its target at clinical doses\n- C_DISEASE_RELEVANCE: the target is altered in, or causally tied to, the disease biology\n- C_EXPOSURE: the drug reaches the target compartment (e.g. the brain/CSF) at a tolerated dose in an inhibiting concentration\n- C_ENGAGEMENT: the drug engages its target in patients (a human target-engagement readout)\n- C_DOWNSTREAM: engaging the target produces the expected downstream biology (biomarker or pharmacology) in the disease\n- C_CLINICAL: the drug improves clinical outcomes in the disease\n- C_SAFETY: the drug's safety is acceptable in the likely trial population\n\nTitle: Plasma and cerebrospinal fluid pharmacokinetics of vodobatinib, a neuroprotective c-Abl tyrosine kinase inhibitor for the treatment of Parkinson's disease.\n\nAbstract:\nBACKGROUND: Preclinical evidence suggests that c-Abl is critical in the pathogenesis of Parkinson's Disease (PD). Vodobatinib (K0706) is a potent, specific Abl kinase inhibitor currently being developed for the treatment of PD. In previously reported studies, nilotinib, a multikinase c-Abl inhibitor, did not show clinical activity as evidenced by no improvement of symptoms or the rate of decline after one to six months of treatment at the maximum permissible dose, presumably because of insufficient CNS penetration. Here we report clinical PK and safety data for vodobatinib. OBJECTIVES: To determine safety, plasma PK, and CSF penetration of vodobatinib in healthy volunteers and PD subjects following oral administration, and compare CSF levels to in vitro concentrations required for c-Abl inhibition relative to data reported for nilotinib. METHODS: Inhibition of c-Abl kinase activity and c-Abl binding affinity were first assessed in vitro. Healthy human volunteers and PD patients received various oral doses of vodobatinib once-daily for seven and fourteen days respectively, to assess safety, and plasma and CSF PK. RESULTS: In in vitro assays, vodobatinib was more potent (kinase IC50 = 0.9 nM) than nilotinib (kinase IC50 = 15-45 nM). Administration of vodobatinib 48, 192 and 384 mg to healthy subjects for 7 days yielded mean Cmax, CSF values of 1.8, 11.6, and 12.2 nM respectively, with the two highest doses exceeding the IC50 over the entire dosing interval. Cavg, CSF values were 6-8 times greater than the IC50. Comparable CSF levels were observed in PD patients. All doses were well tolerated in both cohorts. CONCLUSION: Based on achieved CSF concentrations, the potential for c-Abl inhibition in the brain is substantially higher with vodobatinib than with nilotinib. The CSF PK profile of vodobatinib is suitable for determining if c-Abl inhibition will be neuroprotective in PD patients.",
+ "output": {
+  "study_type": "pk",
+  "controlled": null,
+  "blinded": null,
+  "placebo": null,
+  "population": "human",
+  "sample_size": null,
+  "outcome": "negative",
+  "pk_facts": [],
+  "caveats": [
+   "exposure-not-measured",
+   "design-unknown"
+  ],
+  "relevance": [
+   {
+    "claim_id": "C_MECHANISM",
+    "direction": "qualifies",
+    "statement": "Nilotinib inhibited c-Abl in vitro with a kinase IC50 of 15–45 nM, but inhibition at clinical doses was not demonstrated.",
+    "verbatim_sentence": "In in vitro assays, vodobatinib was more potent (kinase IC50 = 0.9 nM) than nilotinib (kinase IC50 = 15-45 nM)."
+   },
+   {
+    "claim_id": "C_DISEASE_RELEVANCE",
+    "direction": "qualifies",
+    "statement": "Preclinical evidence suggests that c-Abl is important in Parkinson disease pathogenesis.",
+    "verbatim_sentence": "Preclinical evidence suggests that c-Abl is critical in the pathogenesis of Parkinson's Disease (PD)."
+   },
+   {
+    "claim_id": "C_EXPOSURE",
+    "direction": "contradicts",
+    "statement": "The abstract attributes nilotinib's lack of clinical activity to presumed insufficient CNS penetration.",
+    "verbatim_sentence": "In previously reported studies, nilotinib, a multikinase c-Abl inhibitor, did not show clinical activity as evidenced by no improvement of symptoms or the rate of decline after one to six months of treatment at the maximum permissible dose, presumably because of insufficient CNS penetration."
+   },
+   {
+    "claim_id": "C_CLINICAL",
+    "direction": "contradicts",
+    "statement": "Previously reported nilotinib studies showed no improvement in symptoms or rate of decline after one to six months at the maximum permissible dose.",
+    "verbatim_sentence": "In previously reported studies, nilotinib, a multikinase c-Abl inhibitor, did not show clinical activity as evidenced by no improvement of symptoms or the rate of decline after one to six months of treatment at the maximum permissible dose, presumably because of insufficient CNS penetration."
+   }
+  ],
+  "display_statement": "This pharmacokinetic and safety study evaluated healthy volunteers and Parkinson disease patients, with nilotinib included as an in vitro and historical comparator; sample size and year were not reported in the abstract."
+ }
+}

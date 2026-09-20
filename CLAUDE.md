@@ -1,0 +1,76 @@
+# elute — project context for Claude
+
+Read this first in every session. It is the map; the detail lives in the files it points to. **`PRD Elute.md` (v2.2, Sept 20) is the truth.** Where any other document differs, the PRD wins.
+
+| Read | For |
+|---|---|
+| `PRD Elute.md` | The product, v2.2: problem, the one user, what the literature says scientists check (§4b), the pipeline direction (§5), the two-minute demo story (§6), the six moments with the results-card, pathway-drawing and deck rules (§7). §8–§13 and Sources are not yet pasted in; a marked slot and a v1 appendix hold their place. |
+| `docs/sponsor-conversations.md` | What the sponsor judge (Henry Wei, MD, Regeneron) actually asked for, with verbatim quotes; the four Regeneron starter kits. |
+| `docs/BACKEND_PLAN.md` | The backend, v4.1 (approved): one vertical slice — nilotinib for Parkinson's — appraised from three scientific tasks run through three verified ToolUniverse tools (Open Targets, ClinicalTrials.gov, Europe PMC as direct fallbacks); the ten-step pipeline with the agent's reasoning trace per step; deterministic claim statuses, weakest link, next question and recommendation stance; OpenAI only, bounded and cited; `as_of` backtest; fixture/live parity; Phase 2 = OpenAlex citation independence (Voloridge). |
+| `docs/superpowers/specs/2026-09-19-elute-frontend-design.md` | The frontend spec (v4) that the current `main` build follows: the fixture contract (§7), label rules (§7.3), publishability (§7.5). **Predates PRD v2.2**; its results grouping, prerequisites and export are superseded. |
+| `DESIGN.md`, `design/` | Design system: users, personality, type, color, evidence-label tokens, 8px grid, the shard. |
+| `README.md` | How to run it, the flow by route, what is curated vs draft, what v2.2 surfaces are not yet built. |
+
+## What this is
+
+**elute** is a drug-repurposing *decision* tool for the Regeneron challenge at HackMIT 2026 (submission Sunday, Sept 20, 2026). Given a drug, a condition, or a drug–condition pair, it shows candidates where every one arrives with the **strongest case against it first** (*Critical appraisal*), the hypothesis **drawn as a pathway** with an epistemic label setting the weight of every action, **safety as a reason**, the **five prerequisites a trial would have to assume** with a status each, the **scientist's own call** in their words, and the **agent's thought process** as a ledger naming what every step reasoned, why, and on what evidence. It may state a **grounded opinion** (a stance with the claims for, the claims against, the unknowns, and what would change it) and may decline to prioritise; it never states a bare verdict, never prescribes, and never overrides the scientist's call, which stays separate and attributed. The scientist decides.
+
+Positioning: *They optimize the ranking. We optimize the decision.* The pipeline is a simplified, skeptical co-scientist: generate candidates the way an idea engine would, then audit every proposal as a claim to be checked (PRD §5).
+
+The hero case is the **nilotinib / Parkinson's backtest.** Every counter-argument to the 2016 open-label pilot (n = 12; CSF/plasma 0.53 %; MAO-B withdrawal explaining the biomarker) was public before the negative 76-patient NILO-PD trial enrolled on 20 Nov 2017. *Evidence as of* (a demo mode reached from Provenance, not a main-surface control) recomputes the page from evidence dated ≤ the cutoff. The moment we design for: a judge looks at the drawing, says *"that's the c-Abl story, and the exposure step is the one that's dashed,"* and asks for the deck.
+
+## Who it is for
+
+**One user: the accountable expert** — translational scientist / physician-scientist in pharma; time-poor, skeptical of AI, on the hook for being wrong, not a command-line user; knows more biology than the model. *The judge is this person.* The agent's thought process is a primary feature for this user, not a transparency add-on for IT. Investors, diligence teams, biotechs, grant applicants, educators and patients are pitch context (`pitch.md`), not users; the tool must never read as advice.
+
+The Design exam (PRD §11): a domain expert who has never seen the tool, shown Detail for one candidate, can within two minutes state the strongest argument against it and name its weakest evidentiary link; 2 of 3 naive testers; result in the README pass or fail. Plus the recognition exam on the drawing: *"that's a known pathway"* or *"that's novel"* without being told. **Neither has been run.**
+
+## Non-negotiable principles
+
+1. **The counter-case is the headline.** Critical appraisal is the first, most polished block on Detail.
+2. **Known vs. believed, labeled on every claim.** `established` · `contested` · `single-source` · `refuted` · `unknown`, each with its word, its *why this label*, and its sources. `unknown` is a valid, valuable output.
+3. **Assumptions are flagged, not inherited.** A study's design and stated assumptions (open-label, animal model, exposure not measured, surrogate biomarker) travel as caveats onto every claim that stands on it.
+4. **Never a bare number.** No scalar confidence anywhere. Registers print their rule; ties are broken by named drivers with a source each.
+5. **A grounded opinion, never a bare verdict.** Elute may state a stance (`deprioritize · no_clear_prioritization · pursue_conditionally · insufficient_evidence`) only downstream of visible evidence, always with supporting and opposing claim ids, unknowns, the weakest link, and what would change it; it may decline to prioritise; it never prescribes, never promotes, never fabricates a number, and never overrides the scientist's call. Not a medical device, not a clinical decision tool, not a prescribing aid. (PRD v2.2 amended Sept 20; `docs/BACKEND_PLAN.md` §6.)
+6. **Say what is draft.** A data note on every screen; `curated` vs `draft` on every candidate; the ledger says `scripted` or `recorded`.
+7. **Every label and ordering is derivable from the record.** No conclusion the user cannot trace to a ledger line. Provenance is a citation system, not a debug pane.
+8. **Err toward doubt.** The tool will underrate some good candidates; that is the chosen failure direction.
+9. **Readiness over breadth.** Everything visible works. A candidate that is not fully curated is absent, never thin. Features not built are cut, not stubbed; parked threats to validity get a visible slot.
+10. **Nilotinib end to end before anything else.**
+
+## The surfaces, per PRD v2.2 §7
+
+- **Entry:** one field, three modes by example, paste-a-paper with an extraction preview (design and assumptions shown before anything runs), recent appraisals. No sentence on screen.
+- **Working:** the evidence ledger as an animated build-up — per step, three beats: the question (≤ 6 words), the source chip, one count and one concrete record. No spinner, no progress bar.
+- **Results:** two registers with printed rules. *Tested in placebo-controlled trials* (≥ 1 randomised, blinded, placebo-controlled study in this indication has reported; order: outcome → phase → n) and *Not yet tested against placebo* (everything else; order: unresolved prerequisites, ties by genetic tier → pathway precedent → independent paths → compartment reach). Drug class leads every row (≤ 1.3× the name); one muted line of fine print (modality · compartment · route · CNS reach). Each row is a four-question stepper: *Does it work in people? · Could it work? · What could go wrong? · What would it take?* Page header: standard of care and whether a DMT exists. Board by trial stage is the alternate; the scatter is cut.
+- **Detail:** Critical appraisal → the pathway drawing (authored layout; SBGN-like glyphs; label sets stroke; grey = agreed biology, ink = the hypothesis; *ChEMBL mechanism* / *not curated* tags; Reactome plate as the curated neighbourhood) → safety as a reason for the likely trial population → *Before a trial* as a five-box stepper with the unresolved count as the hero number → *Your call*.
+- **Provenance** (the Sources page): ledger rows expand to what was consulted, the query, records, timestamp, extracted value, verification; the status rules beside them; tool calls and packages on a secondary tab; *Evidence as of* demo mode lives here.
+- **Exit:** a PowerPoint deck generated in the browser. ≤ 15 slides; title, agenda (five questions with a one-word status), one slide per question with for/against columns and the resolving question at the foot, the drawing full-bleed, the call slide attributed and optional. The deck presents; it does not argue.
+
+## State of the build (as of Sept 20)
+
+- **Frontend on `main`: the v4 build, fixture mode, static bundle.** Vite + React 19 + TypeScript, React Router, plain CSS with `design/tokens`. `npm install && npm run dev` (5173); `npm run build`; `npm test` (vitest, includes the nilotinib backtest). Routes: `/` Entry · `/q/:query` Working → Results · `/q/:query/:candidate?asof=` Detail · `/q/:query/sources` · `…/export` · paste-a-paper on Entry.
+- **Not yet on `main` from v2.2:** the two registers and the four-question stepper row; the renamed prerequisites; the ledger build-up; the pathway drawing (`PathwayDrawing` in `types.ts` and the nilotinib drawing are a teammate's unpushed work — **on hold, integrate later**); the PowerPoint deck (the export is Markdown/JSON/print today); *Evidence as of* moved to Provenance.
+- **Data seam:** screens talk only to `DataSource` (`src/data/source.ts`). `FixtureSource` replays bundled fixtures; an `ApiSource` implementing the same interface over HTTP/SSE is the backend's integration point. Contract: `src/data/types.ts`. Label rules, ordering, cutoff filtering and the publishability validator: `src/lib/evidence.ts` (tests in `evidence.test.ts`).
+- **Fixtures** (`src/fixtures/`): nilotinib for Parkinson's is *curated* from dated primary sources with three cutoffs; ambroxol, exenatide, isradipine, simvastatin, and metformin (PD, Alzheimer's, colorectal adenoma) are *drafts*. Ledgers are `scripted` with real source names. `TODAY = 2026-09-19`.
+- **Backend: Phase 1 implemented (M0A–M7), `docs/BACKEND_PLAN.md` v4.4 FINAL.** `cd backend && uv sync --extra dev && uv run uvicorn elute.main:app --port 8000`; `uv run pytest` (91 tests, offline on cassettes). Fixture mode needs no key; live mode runs the three ToolUniverse tools with direct fallbacks and degrades honestly without `OPENAI_API_KEY` (`llm: unavailable`). OpenAI cassettes are recorded with `scripts/record_llm.py` once a key is in `backend/.env`. The frontend switches to the backend with `VITE_ELUTE_API=http://localhost:8000/api`; the adapter's output passes the frontend's own `validateCandidate`. Phase 2 (OpenAlex) has not started.
+- **Deliverables still open:** the Design and recognition exams, demo video (≤3 min), the rubric deck, public deploy link, verifying the draft candidates, pasting PRD §8–§13 into the repo.
+
+## Domain rules the code encodes (keep backend and frontend identical)
+
+- **Label rule** (`deriveLabel`, six ordered rules over evidence with `published ≤ cutoff`): 1 `override` (curated, must carry a *why*) → 2 `unknown` (nothing visible) → 3 `refuted` (any `refutes` edge; a `refutes` source must be controlled, blinded, negative) → 4 `contested` (any `contradicts`, with or without support) → 5 `established` (≥ 2 distinct `group`s supporting, or a `regulatory`/`label` source) → 6 `single-source` (qualifier: n · blinding · not replicated). Severity for "weakest": established 0 < unknown 1 < contested 2 < single-source 3 < refuted 4.
+- **Caveats** never change a label; they change what is shown beside it (BACKEND_PLAN §3.4).
+- **Every evidence-bearing value carries a date.** `Source.published`, `Objection.published`, `LedgerRecord.published`; `Timeline<T>` = `[{from, value}]` resolved as the last entry with `from ≤ cutoff`. This is what makes *Evidence as of* a computation.
+- **Exactly five prerequisites** per candidate, the v2.2 five: brain (or tissue) exposure at tolerated doses · target engagement measured in patients · benefit under blinding · biomarker validated against an alternative · safety acceptable in the likely population (boxed warning → `conditional`, "with monitoring"). Unresolved = `unmet`. **The fixtures and frontend still carry the v1 five (replication instead of exposure); the rename is one joint PR.**
+- **Registers** are derived, never stored (BACKEND_PLAN §3.2). The v4 grouping (*not yet refuted* / *refuted*) is a subset of the tested/untested rule and stays correct until the rename lands.
+- **Publishability** (`validateCandidate`): ≥1 cutoff, ≥1 claim, 5 prerequisites, ≥1 objection; every source has `published`, `group`, `url`, `ledger`; every reference resolves; every Timeline resolves at every cutoff; `best_evidence: none` is uncontrolled. Fail → the candidate is not shown.
+- **Parking spots** with a visible slot, never a fake record: genetic validation (Open Targets tier as the proxy; MR later), tissue expression and off-target, biologics coverage, surveillance, vertex expansion of the drawing.
+
+## Conventions
+
+- **The product is Elute** (code: `elute`). The earlier working name *Counterpoint* is never used in UI copy, docs, or code symbols; it survives only in `PRD.md`, the superseded historical copy kept for the decision history.
+- The PRD wins over every other document. The frontend spec's sixteen decisions stand where v2.2 does not overrule them.
+- Assessments live in `localStorage`, one per cutoff (`assessment:<query>/<candidate>@<cutoff>`); the deck is built in the browser from the same cutoff-filtered data the page shows.
+- Never let the demo depend on the LLM or a remote API being up. Fixture mode is the spine; live is shown second and only if it works on venue Wi-Fi. A failed live step degrades to zero records → `unknown`, never aborts.
+- Match the code's voice: quiet, exact, skeptical. No sparkle, no chat bubbles, no red/amber/green, no pitch-deck language in UI copy or exports. Nothing from `pitch.md` appears in the product.
+- Team: Vrinda Inani (backend/product), Ivan Ratushnyy (design system, frontend), plus teammates.

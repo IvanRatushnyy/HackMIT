@@ -1,0 +1,465 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "28035939,29408302,30867588,31841588,31841599,32468646,32597929,32597985,33315105,39952103"
+ },
+ "fetched_at": "2026-09-20T09:06:38+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "28035939",
+    "title": "Could MAO-B Inhibitor Withdrawal Rather than Nilotinib Benefit Explain the Dopamine Metabolite Increase in Parkinsonian Study Subjects?",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Schwarzschild Michael A"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2017",
+    "pub_year": "2017",
+    "doi": "10.3233/JPD-160975",
+    "doi_url": "https://doi.org/10.3233/JPD-160975",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28035939/",
+    "mesh_terms": null,
+    "publication_types": [
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "29408302",
+    "title": "The role of small molecule platelet-derived growth factor receptor (PDGFR) inhibitors in the treatment of neoplastic disorders.",
+    "abstract": "Platelet-derived growth factor (PDGF) was discovered as a serum-derived component necessary for the growth of smooth muscle cells, fibroblasts, and glial cells. The PDGF family is a product of four gene products and consists of five dimeric isoforms: PDGF-AA, PDGF-BB, PDGF-CC, PDGF-DD, and the PDGF-AB heterodimer. This growth factor family plays an essential role in embryonic development and in wound healing in the adult. These growth factors mediate their effects by binding to and activating their receptor protein-tyrosine kinases, which are encoded by two genes: PDGFRA and PDGFRB. The functional receptors consist of the PDGFR\u03b1/\u03b1 and PDGFR\u03b2/\u03b2 homodimers and the PDGFR\u03b1/\u03b2 heterodimer. Although PDGF signaling is most closely associated with mesenchymal cells, PDGFs and PDGF receptors are widely expressed in the mammalian central nervous system. The PDGF receptors contain an extracellular domain that is made up of five immunoglobulin-like domains (Ig-d1/2/3/4/5), a transmembrane segment, a juxtamembrane segment, a protein-tyrosine kinase domain that contains an insert of about 100 amino acid residues, and a carboxyterminal tail. Although uncommon, activating mutations in the genes for PDGF or PDGF receptors have been documented in various neoplasms including dermatofibrosarcoma protuberans (DFSP) and gastrointestinal stromal tumors (GIST). In most neoplastic diseases, PDGF expression and action appear to involve the tumor stroma. Moreover, this family is pro-angiogenic. More than ten PDGFR\u03b1/\u03b2 multikinase antagonists have been approved by the FDA for the treatment of several neoplastic disorders and interstitial pulmonary fibrosis (www.brimr.org/PKI/PKIs.htm). Type I protein kinase inhibitors interact with the active enzyme form with DFG-D of the proximal activation segment directed inward toward the active site (DFG-Din). In contrast, type II inhibitors bind to their target with the DFG-D pointing away from the active site (DFG-Dout). We used the Schr\u00f6dinger induced-fit docking protocol to model the interaction of several antagonists with PDGFR\u03b1 including imatinib, sorafenib, and sunitinib. The results indicate that these antagonists are able to bind to the DFG-Dout conformation of the receptor and are thus classified as type II inhibitors. Owing to the multiplicity of less active protein kinase conformations when compared with the canonical more active conformation, it was hypothesized that type II drugs would be less promiscuous than type I drugs which bind to the typical active conformation. Although type II inhibitors may be more selective, most - if not all - inhibit more than one target protein kinase and the differences are a matter of degree only.",
+    "authors": [
+     {
+      "name": "Roskoski Robert",
+      "affiliation": "Blue Ridge Institute for Medical Research, 3754 Brevard Road, Suite 116, Box 19, Horse Shoe, NC, 28742-8814, United States. Electronic address: rrj@brimr.org."
+     }
+    ],
+    "journal": "Pharmacological research",
+    "pub_date": "2018 Mar",
+    "pub_year": "2018",
+    "doi": "10.1016/j.phrs.2018.01.021",
+    "doi_url": "https://doi.org/10.1016/j.phrs.2018.01.021",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/29408302/",
+    "mesh_terms": [
+     "Animals",
+     "Humans",
+     "Ligands",
+     "Neoplasms",
+     "Platelet-Derived Growth Factor",
+     "Protein Kinase Inhibitors",
+     "Receptors, Platelet-Derived Growth Factor"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "30867588",
+    "title": "Emerging therapies in Parkinson disease - repurposed drugs and new approaches.",
+    "abstract": "Parkinson disease (PD) treatment options have conventionally focused on dopamine replacement and provision of symptomatic relief. Current treatments cause undesirable adverse effects, and a large unmet clinical need remains for treatments that offer disease modification and that address symptoms resistant to levodopa. Advances in high-throughput drug screening methods for small molecules, developments in disease modelling and improvements in analytical technologies have collectively contributed to the emergence of novel compounds, repurposed drugs and new technologies. In this Review, we focus on disease-modifying and symptomatic therapies under development for PD. We review cellular therapies and repurposed drugs, such as nilotinib, inosine, isradipine, iron chelators and anti-inflammatories, and discuss how their success in preclinical models has paved the way for clinical trials. We provide an update on immunotherapies and vaccines. In addition, we review non-pharmacological interventions targeting motor symptoms, including gene therapy, adaptive deep brain stimulation (DBS) and optogenetically inspired DBS. Given the many clinical phenotypes of PD, individualization of therapy and precision of treatment are likely to become important in the future.",
+    "authors": [
+     {
+      "name": "Elkouzi Ahmad",
+      "affiliation": "Department of Neurology, Fixel Institute for Neurological Diseases, University of Florida, Gainesville, FL, USA. ahmad.elkouzi@neurology.ufl.edu."
+     },
+     {
+      "name": "Vedam-Mai Vinata",
+      "affiliation": "Department of Neurology, Fixel Institute for Neurological Diseases, University of Florida, Gainesville, FL, USA."
+     },
+     {
+      "name": "Eisinger Robert S",
+      "affiliation": "Department of Neurology, Fixel Institute for Neurological Diseases, University of Florida, Gainesville, FL, USA."
+     },
+     {
+      "name": "Okun Michael S",
+      "affiliation": "Department of Neurology, Fixel Institute for Neurological Diseases, University of Florida, Gainesville, FL, USA."
+     }
+    ],
+    "journal": "Nature reviews. Neurology",
+    "pub_date": "2019 Apr",
+    "pub_year": "2019",
+    "doi": "10.1038/s41582-019-0155-7",
+    "doi_url": "https://doi.org/10.1038/s41582-019-0155-7",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/30867588/",
+    "mesh_terms": [
+     "Antiparkinson Agents",
+     "Deep Brain Stimulation",
+     "Genetic Therapy",
+     "Humans",
+     "Parkinson Disease"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, N.I.H., Extramural",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "31841588",
+    "title": "The Narrowing Path for Nilotinib and Other Potential Disease-Modifying Therapies for Parkinson Disease.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Espay Alberto J",
+      "affiliation": "James J. and Joan A. Gardner Family Center for Parkinson's Disease and Movement Disorders, Department of Neurology, University of Cincinnati, Cincinnati, Ohio."
+     },
+     {
+      "name": "Hauser Robert A",
+      "affiliation": "Department of Neurology, University of South Florida, Tampa."
+     },
+     {
+      "name": "Armstrong Melissa J",
+      "affiliation": "Department of Neurology, University of Florida College of Medicine, Gainesville."
+     }
+    ],
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Mar 01",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2019.3983",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2019.3983",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/31841588/",
+    "mesh_terms": [
+     "Biomarkers",
+     "Humans",
+     "Parkinson Disease",
+     "Pyrimidines"
+    ],
+    "publication_types": [
+     "Editorial",
+     "Comment"
+    ]
+   },
+   {
+    "pmid": "31841599",
+    "title": "Nilotinib Effects on Safety, Tolerability, and Potential Biomarkers in Parkinson Disease: A Phase 2 Randomized Clinical Trial.",
+    "abstract": "IMPORTANCE: This study evaluated nilotinib safety and its effects on biomarkers as a potential disease-modifying drug in Parkinson disease. OBJECTIVES: To assess nilotinib effects on safety and pharmacokinetics and measure the change in exploratory biomarkers in patients with moderately severe Parkinson disease. DESIGN, SETTING, AND PARTICIPANTS: This was a single-center, phase 2, randomized, double-blind, placebo-controlled trial with 300 patients approached in clinic; of these, 200 declined to participate, 100 were screened, 25 were excluded, and 75 were randomized 1:1:1 into placebo; nilotinib, 150-mg; or nilotinib, 300-mg groups. Recruitment started on May 17, 2017, and ended April 28, 2018, and follow-up ended August 10, 2019. Parkinson disease was confirmed according to the UK Brain Bank diagnostic criteria and symptoms were stabilized with use of optimal levodopa and/or dopamine agonists and other medications used in Parkinson disease. INTERVENTIONS: Nilotinib vs placebo, administered orally once daily for 12 months followed by a 3-month washout period. MAIN OUTCOMES AND MEASURES: It was hypothesized that nilotinib is safe and can be detected in the cerebrospinal fluid, where it alters exploratory biomarkers via inhibition of Abelson tyrosine kinase and potentially improves clinical outcomes. RESULTS: Of the 75 patients included in the study, 55 were men (73.3%); mean (SD) age was 68.4 (8.2) years. Doses of 150 or 300 mg of nilotinib were reasonably safe, although more serious adverse events were detected in the nilotinib (150 mg: 6 [24%]; 300 mg: 12 [48%]) vs placebo (4 [16%]) groups. The 150-mg nilotinib group showed an increase in cerebrospinal fluid levels of the dopamine metabolites homovanillic acid (159.80nM; 90% CI, 7.04-312.60nM; P\u2009=\u2009.04) and 3,4-dihydroxyphenylacetic acid (4.87nM; 90% CI, 1.51-8.23nM; P\u2009=\u2009.01), and the 300-mg nilotinib group showed an increase in 3,4-dihydroxyphenylacetic acid (7.52nM; 90% CI, 2.35-12.69nM; P\u2009=\u2009.01). The nilotinib 150-mg but not the nilotinib 300-mg group demonstrated a reduction of \u03b1-synuclein oligomers (-0.04 pg/mL; 90% CI, -0.08 to 0.01 pg/mL; P\u2009=\u2009.03). A significant reduction of hyperphosphorylated tau levels was seen in the nilotinib 150-mg (-10.04 pg/mL; 90% CI, -17.41 to -2.67 pg/mL; P\u2009=\u2009.01) and nilotinib 300-mg (-12.05 pg/mL; 90% CI, -19.21 to -4.90 pg/mL; P\u2009=\u2009.01) groups. CONCLUSIONS AND RELEVANCE: In this study, nilotinib appeared to be reasonably safe and detectable in the cerebrospinal fluid. Exploratory biomarkers were altered in response to nilotinib. Taken together, these data will guide the development of a phase 3 study to investigate the effects of nilotinib therapy in patients with Parkinson disease. TRIAL REGISTRATION: ClinicalTrials.gov identifier: NCT02954978.",
+    "authors": [
+     {
+      "name": "Pagan Fernando L",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Hebron Michaeline L",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Wilmarth Barbara",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Torres-Yaghi Yasar",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Lawler Abigail",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Mundel Elizabeth E",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Yusuf Nadia",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Starr Nathan J",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Anjum Muhammad",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     },
+     {
+      "name": "Arellano Joy",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC."
+     }
+    ],
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Mar 01",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2019.4200",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2019.4200",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/31841599/",
+    "mesh_terms": [
+     "Aged",
+     "Biomarkers",
+     "Dopamine",
+     "Double-Blind Method",
+     "Female",
+     "Humans",
+     "Male",
+     "Middle Aged",
+     "Parkinson Disease",
+     "Pyrimidines",
+     "tau Proteins"
+    ],
+    "publication_types": [
+     "Clinical Trial, Phase II",
+     "Journal Article",
+     "Randomized Controlled Trial",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "32468646",
+    "title": "Nilotinib Effects on Safety, Tolerability, and Biomarkers in Alzheimer's Disease.",
+    "abstract": "OBJECTIVE: Preclinical evidence with nilotinib, a US Food and Drug Administration (FDA)-approved drug for leukemia, indicates improvement in Alzheimer's disease phenotypes. We investigated whether nilotinib is safe, and detectable in cerebrospinal fluid, and alters biomarkers and clinical decline in Alzheimer's disease. METHODS: This single-center, phase 2, randomized, double-blind, placebo-controlled study investigated the safety, tolerability, and pharmacokinetics of nilotinib, and measured biomarkers in participants with mild to moderate dementia due to Alzheimer's disease. The diagnosis was supported by cerebrospinal fluid or amyloid positron emission tomography biomarkers. Nilotinib 150 mg versus matching placebo was taken orally once daily for 26\u2009weeks followed by nilotinib 300 mg versus placebo for another 26\u2009weeks. RESULTS: Of the 37 individuals enrolled, 27 were women and the mean (SD) age was 70.7 (6.48) years. Nilotinib was well-tolerated, although more adverse events, particularly mood swings, were noted with the 300 mg dose. In the nilotinib group, central nervous system (CNS) amyloid burden was significantly reduced in the frontal lobe compared to the placebo group. Cerebrospinal fluid A\u03b240 was reduced at 6 months and A\u03b242 was reduced at 12 months in the nilotinib group compared to the placebo. Hippocampal volume loss was attenuated (-27%) at 12 months and phospho-tau-181 was reduced at 6 months and 12 months in the nilotinib group. INTERPRETATION: Nilotinib is safe and achieves pharmacologically relevant cerebrospinal fluid concentrations. Biomarkers of disease were altered in response to nilotinib treatment. These data support a larger, longer, multicenter study to determine the safety and efficacy of nilotinib in Alzheimer's disease. ANN NEUROL 2020 ANN NEUROL 2020;88:183-194.",
+    "authors": [
+     {
+      "name": "Turner Raymond S",
+      "affiliation": "Memory Disorders Program, Department of Neurology, Georgetown University Medical Center, Washington, DC, USA."
+     },
+     {
+      "name": "Hebron Michaeline L",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC, USA."
+     },
+     {
+      "name": "Lawler Abigail",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Mundel Elizabeth E",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Yusuf Nadia",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Starr J Nathan",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Anjum Muhammad",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Pagan Fernando",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Torres-Yaghi Yasar",
+      "affiliation": "Movement Disorders Clinic, Department of Neurology, MedStar Georgetown University Hospital, Washington, DC, USA."
+     },
+     {
+      "name": "Shi Wangke",
+      "affiliation": "Translational Neurotherapeutics Program, Laboratory for Dementia and Parkinsonism, Department of Neurology, Georgetown University Medical Center, Washington, DC, USA."
+     }
+    ],
+    "journal": "Annals of neurology",
+    "pub_date": "2020 Jul",
+    "pub_year": "2020",
+    "doi": "10.1002/ana.25775",
+    "doi_url": "https://doi.org/10.1002/ana.25775",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32468646/",
+    "mesh_terms": [
+     "Aged",
+     "Alzheimer Disease",
+     "Amyloid beta-Peptides",
+     "Biomarkers",
+     "Brain",
+     "Double-Blind Method",
+     "Female",
+     "Humans",
+     "Male",
+     "Middle Aged",
+     "Peptide Fragments",
+     "Positron-Emission Tomography",
+     "Protein-Tyrosine Kinases",
+     "Pyrimidines",
+     "Treatment Outcome",
+     "tau Proteins"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, N.I.H., Extramural",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "32597929",
+    "title": "Dopamine Metabolite Biomarkers and Testing for Disease Modification in Parkinson Disease.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "LeWitt Peter A",
+      "affiliation": "Department of Neurology, Wayne State University School of Medicine, Detroit, Michigan."
+     }
+    ],
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Aug 01",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2020.1928",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2020.1928",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32597929/",
+    "mesh_terms": [
+     "Biomarkers",
+     "Dopamine",
+     "Humans",
+     "Parkinson Disease",
+     "Pyrimidines"
+    ],
+    "publication_types": [
+     "Letter",
+     "Comment"
+    ]
+   },
+   {
+    "pmid": "32597985",
+    "title": "Dopamine Metabolite Biomarkers and Testing for Disease Modification in Parkinson Disease-Reply.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Moussa Charbel",
+      "affiliation": "Department of Neurology, Georgetown University Medical Center, Washington, DC."
+     }
+    ],
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Aug 01",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2020.1931",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2020.1931",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32597985/",
+    "mesh_terms": [
+     "Biomarkers",
+     "Dopamine",
+     "Humans",
+     "Parkinson Disease",
+     "Pyrimidines"
+    ],
+    "publication_types": [
+     "Letter",
+     "Comment"
+    ]
+   },
+   {
+    "pmid": "33315105",
+    "title": "Efficacy of Nilotinib in Patients With Moderately Advanced Parkinson Disease: A Randomized Clinical Trial.",
+    "abstract": "IMPORTANCE: There is a critical need for careful and independent validation of reported symptomatic efficacy and dopaminergic biomarker changes induced by nilotinib in Parkinson disease (PD). OBJECTIVES: To assess safety and tolerability of nilotinib in participants with moderately advanced PD. Secondary and exploratory objectives were to assess its affect on PD disability, pharmacokinetics, cerebrospinal fluid (CSF) penetration, and biomarkers. DESIGN, SETTING, AND PARTICIPANTS: This was a 6-month, multicenter, randomized parallel-group, double-blind, placebo-controlled trial. Recruitment was from November 20, 2017, to December 28, 2018, and follow-up ended on September 9, 2019. The study was conducted at 25 US sites. The study approached 173 patients, of whom 48 declined, 125 were screened, and 76 who received a stable regimen of PD medications were enrolled (39% screen failure). INTERVENTIONS: Participants were randomized 1:1:1 to placebo, 150-mg nilotinib, or 300-mg nilotinib once daily orally for 6 months, followed by 2-month off-drug evaluation. MAIN OUTCOMES AND MEASURES: The primary outcomes were safety and tolerability. The tolerability end point was defined as the ability to complete the study while receiving the assigned dose. An active arm was considered tolerable if the percentage of participants meeting the tolerability end point for that group was not significantly lower than the percentage observed in the placebo group. Secondary outcomes included change in PD disability (Movement Disorder Society Unified Parkinson's Disease Rating Scale [MDS-UPDRS], Part II OFF/ON). Exploratory outcomes included serum and CSF pharmacokinetic profile, and CSF dopaminergic biomarkers. RESULTS: At baseline, mean (SD) participants' age was 64.6 (7.5) years, 52 were male (68%), mean (SD) disease duration was 9.9 years (4.7), MDS-UPDRS Part 1-3 OFF score was 66.4 (19.3), ON score was 48.4 (16.2), and Montreal Cognitive Assessment score was 27.1 (2.2). The number of participants who completed the study receiving the assigned dose were 21 (84%), 19 (76%), and 20 (77%) in the placebo, 150-mg, and 300-mg arms, respectively. Both active doses had acceptable safety profile. The most common reasons for drug suspension were asymptomatic, dose-dependent elevations of amylase, and/or lipase. Nilotinib, 150 mg and 300 mg, exhibited worse MDS-UPDRS-3 ON scores compared with placebo, achieving significance for nilotinib, 300 mg, at month 1 (P\u2009<\u2009.01). There was no difference in the change of MDS-UPDRS-3 OFF from baseline to 6 months between groups (P\u2009=\u2009.17). Cerebrospinal fluid/serum ratio of nilotinib concentration was 0.2% to 0.3%. There was no evidence of treatment-related alteration of dopamine metabolites in the CSF. CONCLUSIONS AND RELEVANCE: While we demonstrated acceptable safety and tolerability of nilotinib in our cohort, the low CSF exposure and lack of biomarkers effect combined with the efficacy data trending in the negative direction indicate that nilotinib should not be further tested in PD. TRIAL REGISTRATION: ClinicalTrials.gov Identifier: NCT03205488.",
+    "authors": [
+     {
+      "name": "Simuni Tanya",
+      "affiliation": "Department of Neurology, Northwestern University Feinberg School of Medicine, Chicago, Illinois."
+     },
+     {
+      "name": "Fiske Brian",
+      "affiliation": "Research Programs, Michael J. Fox Foundation for Parkinson's Research, New York, New York."
+     },
+     {
+      "name": "Merchant Kalpana",
+      "affiliation": "Department of Neurology, Northwestern University, Chicago, Illinois."
+     },
+     {
+      "name": "Coffey Christopher S",
+      "affiliation": "Department of Biostatistics, College of Public Health, University of Iowa, Iowa City."
+     },
+     {
+      "name": "Klingner Elizabeth",
+      "affiliation": "Department of Biostatistics, College of Public Health, University of Iowa, Iowa City."
+     },
+     {
+      "name": "Caspell-Garcia Chelsea",
+      "affiliation": "Department of Biostatistics, College of Public Health, University of Iowa, Iowa City."
+     },
+     {
+      "name": "Lafontant David-Erick",
+      "affiliation": "Department of Biostatistics, College of Public Health, University of Iowa, Iowa City."
+     },
+     {
+      "name": "Matthews Helen",
+      "affiliation": "The Cure Parkinson's Trust, London, England."
+     },
+     {
+      "name": "Wyse Richard K",
+      "affiliation": "Research and Development, The Cure Parkinson's Trust, London, England."
+     },
+     {
+      "name": "Brundin Patrik",
+      "affiliation": "Van Andel Institute, Center for Neurodegenerative Science, Grand Rapids, Michigan."
+     }
+    ],
+    "journal": "JAMA neurology",
+    "pub_date": "2021 Mar 01",
+    "pub_year": "2021",
+    "doi": "10.1001/jamaneurol.2020.4725",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2020.4725",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/33315105/",
+    "mesh_terms": [
+     "Aged",
+     "Disease Progression",
+     "Double-Blind Method",
+     "Female",
+     "Humans",
+     "Male",
+     "Middle Aged",
+     "Parkinson Disease",
+     "Protein-Tyrosine Kinases",
+     "Pyrimidines",
+     "Treatment Outcome"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Multicenter Study",
+     "Randomized Controlled Trial",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "39952103",
+    "title": "Computational phytochemical screening for Parkinson's disease therapeutics: c-Abl and beyond.",
+    "abstract": "Parkinson's disease (PD), a rapidly growing neurodegenerative disorder, is characterized by intracellular \u03b1-synuclein aggregates. The tyrosine kinase c-Abl plays a critical role in PD pathogenesis. This study aimed to identify novel c-Abl inhibitors from natural products using molecular docking and dynamics simulations. We explored phytochemicals from Indian Medicinal Plants, Phytochemistry and Therapeutics (IMPPAT) database and employed molecular docking and molecular dynamics to discover c-Abl inhibitors. Three potential hits: IMPHY008934, IMPHY009589, and IMPHY006310 were identified. These compounds demonstrated comparable binding affinity to Nilotinib, a comparison drug. Toxicity predictions revealed IMPHY008934 and IMPHY009589 exhibited lower toxicity than Nilotinib. Molecular dynamics simulations confirmed the stability of IMPHY009589 and IMPHY008934 with c-Abl. Density functional theory (DFT) analysis showed that IMPHY006310 and IMPHY008934 displayed enhanced reactivity and polarizability. Our findings suggest these natural compounds may target c-Abl in PD pathogenesis and possibly downregulate the overexpressed \u03b1-synuclein and may serve as promising leads for PD therapy.",
+    "authors": [
+     {
+      "name": "Yasmine Jesmina",
+      "affiliation": "Department of Pharmacology, NETES Institute of Pharmaceutical Science, NEMCARE Group of Institutions, Mirza, Assam 781125, India."
+     },
+     {
+      "name": "Sola Piyong",
+      "affiliation": "Department of Pharmacology, NETES Institute of Pharmaceutical Science, NEMCARE Group of Institutions, Mirza, Assam 781125, India. Electronic address: piyongsola@yahool.com."
+     },
+     {
+      "name": "Rymbai Emdormi",
+      "affiliation": "Department of Pharmacology, JSS College of Pharmacy, (A constituent College of JSS Academy of Higher Education & Research), Ooty, India."
+     },
+     {
+      "name": "Dutta Bhaskar Jyoti",
+      "affiliation": "Department of Pharmacology, NETES Institute of Pharmaceutical Science, NEMCARE Group of Institutions, Mirza, Assam 781125, India."
+     },
+     {
+      "name": "Buragohain Sankarkishor",
+      "affiliation": "Department of Pharmacology, NETES Institute of Pharmaceutical Science, NEMCARE Group of Institutions, Mirza, Assam 781125, India."
+     }
+    ],
+    "journal": "Computational biology and chemistry",
+    "pub_date": "2025 Jun",
+    "pub_year": "2025",
+    "doi": "10.1016/j.compbiolchem.2025.108370",
+    "doi_url": "https://doi.org/10.1016/j.compbiolchem.2025.108370",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39952103/",
+    "mesh_terms": [
+     "Parkinson Disease",
+     "Humans",
+     "Proto-Oncogene Proteins c-abl",
+     "Phytochemicals",
+     "Molecular Docking Simulation",
+     "Molecular Dynamics Simulation",
+     "Density Functional Theory",
+     "Protein Kinase Inhibitors",
+     "Drug Evaluation, Preclinical",
+     "Molecular Structure"
+    ],
+    "publication_types": [
+     "Journal Article"
+    ]
+   }
+  ],
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=28035939%2C29408302%2C30867588%2C31841588%2C31841599%2C32468646%2C32597929%2C32597985%2C33315105%2C39952103",
+  "count": 10
+ }
+}

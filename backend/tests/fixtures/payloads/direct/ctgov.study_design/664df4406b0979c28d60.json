@@ -1,0 +1,30 @@
+{
+ "transport": "direct",
+ "tool": "ctgov.study_design",
+ "arguments": {
+  "nct_id": "NCT02954978"
+ },
+ "fetched_at": "2026-09-20T08:24:03+00:00",
+ "payload": {
+  "nct_id": "NCT02954978",
+  "has_results": true,
+  "official_title": "A Randomized, Double Blind, Placebo-controlled Study to Evaluate the Impact of Low Doses of Nilotinib Treatment on Safety, Tolerability, Pharmacokinetics and Biomarkers in Parkinson's Disease",
+  "allocation": "RANDOMIZED",
+  "masking": "QUADRUPLE",
+  "who_masked": [
+   "PARTICIPANT",
+   "CARE_PROVIDER",
+   "INVESTIGATOR",
+   "OUTCOMES_ASSESSOR"
+  ],
+  "enrollment": 75,
+  "phases": [
+   "PHASE2"
+  ],
+  "study_first_post_date": "2016-11-04",
+  "start_date": "2017-01",
+  "primary_completion_date": "2020-05",
+  "results_first_post_date": "2026-06-12",
+  "overall_status": "COMPLETED"
+ }
+}

@@ -18,7 +18,24 @@ export function ProvenanceBlock({ row, cutoff, isToday }: { row: LedgerRow; cuto
     ['extracted', visible.length ? visible.map((r) => `${plain(r.value)}    ${r.published}`).join('\n            ') : 'none'],
     ['verified', verified],
   ]
-  return <pre className="raw raw-block">{lines.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n')}</pre>
+  const r = row.reasoning
+  const reasoning = r
+    ? [
+        ['question', r.question],
+        ['reasoning', r.reasoning],
+        ['needed', r.evidence_needed],
+        ['tool', `${r.selected_tool} — ${r.tool_selection_reason}`],
+        ['found', r.interpretation],
+        ['changes', r.what_this_changes],
+        ['next', `${r.next_action} — ${r.next_action_reason}`],
+      ]
+    : []
+  return (
+    <pre className="raw raw-block">
+      {lines.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n')}
+      {reasoning.length ? '\n\n— the agent’s thought process —\n' + reasoning.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n') : ''}
+    </pre>
+  )
 }
 
 /** The question each step asks, in six words or fewer; the step's own name is the fallback. */
@@ -35,6 +52,14 @@ const QUESTIONS: Record<string, string> = {
   'Safety in the likely population': 'What does the label mean here?',
   'Objections — each must cite a ledger line': 'What argues against it?',
   'Confidence drivers': 'In what order, and why?',
+  // the backend's ten steps (src/data/api.ts)
+  'Target and disease biology': 'What does the drug act on?',
+  'Normalize to evidence': 'What counts as evidence here?',
+  'Historical visibility audit': 'What was visible, and when?',
+  'Claims and mechanism': 'How does it reach the disease?',
+  'Statuses, weakest link, stance': 'Which link is weakest?',
+  'Case for, case against, opinion': 'What argues against it?',
+  'Next question': 'What should be asked next?',
 }
 export function question(row: LedgerRow, kind: EntityKind): string {
   if (row.step === 'Resolve the query' && kind !== 'condition') return 'Which drug is this?'

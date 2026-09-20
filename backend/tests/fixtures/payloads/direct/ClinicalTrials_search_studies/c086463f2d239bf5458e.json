@@ -1,0 +1,87 @@
+{
+ "transport": "direct",
+ "tool": "ClinicalTrials_search_studies",
+ "arguments": {
+  "query_cond": "(Parkinson disease)",
+  "query_intr": "(nilotinib)",
+  "page_size": 100
+ },
+ "fetched_at": "2026-09-20T08:24:03+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "studies": [
+    {
+     "nct_id": "NCT02954978",
+     "brief_title": "Impact of Nilotinib on Safety, Tolerability, Pharmacokinetics and Biomarkers in Parkinson's Disease",
+     "status": "COMPLETED",
+     "study_type": "INTERVENTIONAL",
+     "phases": [
+      "PHASE2"
+     ],
+     "enrollment": 75,
+     "conditions": [
+      "Parkinson Disease",
+      "Parkinsons Disease With Dementia"
+     ],
+     "interventions": [
+      "Placebo Oral Capsule",
+      "Nilotinib 150mg oral capsule [Tasigna]",
+      "Nilotinib 300mg oral capsule [Tasigna]"
+     ],
+     "sponsor": "Georgetown University",
+     "start_date": "2017-01",
+     "completion_date": "2020-07"
+    },
+    {
+     "nct_id": "NCT03205488",
+     "brief_title": "Nilotinib in Parkinson's Disease",
+     "status": "COMPLETED",
+     "study_type": "INTERVENTIONAL",
+     "phases": [
+      "PHASE2"
+     ],
+     "enrollment": 76,
+     "conditions": [
+      "Parkinson Disease"
+     ],
+     "interventions": [
+      "Cohort 1:Nilotinib Oral Capsules (150mg or 300mg)",
+      "Cohort 2: Nilotinib Oral Capsules (dose to be determined from Cohort 1)",
+      "Placebo"
+     ],
+     "sponsor": "Northwestern University",
+     "start_date": "2017-10-16",
+     "completion_date": "2019-09-28"
+    },
+    {
+     "nct_id": "NCT02281474",
+     "brief_title": "Nilotinib in Cognitively Impaired Parkinson Disease Patients 001",
+     "status": "COMPLETED",
+     "study_type": "INTERVENTIONAL",
+     "phases": [
+      "PHASE1"
+     ],
+     "enrollment": 12,
+     "conditions": [
+      "Parkinson's Disease",
+      "Parkinson's Disease Dementia",
+      "Diffuse Lewy Body Disease"
+     ],
+     "interventions": [
+      "Nilotinib"
+     ],
+     "sponsor": "Georgetown University",
+     "start_date": "2014-11",
+     "completion_date": null
+    }
+   ],
+   "total_count": null,
+   "next_page_token": null,
+   "executed_query": {
+    "query.cond": "(Parkinson disease)",
+    "query.intr": "(nilotinib)"
+   }
+  }
+ }
+}

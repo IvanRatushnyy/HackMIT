@@ -6,10 +6,11 @@ import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import { Header } from '../components/frame'
-import { AsOfControl, BeforeTrial, Objections, SafetyPanel, YourCall } from '../components/detail'
+import { AsOfControl, BeforeTrial, EluteOpinion, Objections, SafetyPanel, YourCall } from '../components/detail'
 import { Pathway } from '../components/Pathway'
 import { bestEvidenceText, OutcomeChip, plain } from '../components/evidence'
 import { source } from '../data/source'
+import { Missing } from './Query'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
 import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff, resolveTimeline, unresolvedCount, visibleObjections } from '../lib/evidence'
 import { arrive } from '../lib/motion'
@@ -27,6 +28,9 @@ export function Detail() {
       if (cancelled) return
       setQ(rec)
       setC(cand ?? null)
+    }).catch((e: unknown) => {
+      console.warn('[elute] detail failed', e)
+      if (!cancelled) setC(null)
     })
     return () => {
       cancelled = true
@@ -60,6 +64,7 @@ export function Detail() {
     { id: 'objections', word: 'the case against', count: `${nObj}` },
     { id: 'pathway', word: 'the pathway', count: weakClaim ? 'weakest link marked' : '' },
     { id: 'prereqs', word: 'before a trial', count: `${nPre} of ${c.prerequisites.length} unresolved` },
+    ...(c.recommendation ? [{ id: 'opinion', word: 'elute’s opinion', count: '' }] : []),
     { id: 'call', word: 'your call', count: '' },
   ]
 
@@ -139,8 +144,13 @@ export function Detail() {
             <SafetyPanel candidate={c} cutoff={cutoff} />
             <BeforeTrial candidate={c} cutoff={cutoff} isToday={isToday} />
           </motion.div>
-          <motion.div {...arrive(reduce, 0.32)}>
-            <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
+          {c.recommendation && (
+            <motion.div {...arrive(reduce, 0.32)}>
+              <EluteOpinion candidate={c} />
+            </motion.div>
+          )}
+          <motion.div {...arrive(reduce, c.recommendation ? 0.4 : 0.32)}>
+            <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} n={c.recommendation ? 5 : 4} />
           </motion.div>
         </div>
       </div>
@@ -153,15 +163,7 @@ function Frame({ missing = false }: { missing?: boolean }) {
     <main className="page">
       <Header stage="appraisal" />
       <div className="col">
-        {missing && (
-          <div className="empty">
-            <h1 className="display-sm">no curated appraisal at this address</h1>
-            <p>
-              Fixture mode covers <Link to="/q/parkinsons-disease">Parkinson’s disease</Link>, <Link to="/q/metformin">metformin</Link>, and{' '}
-              <Link to="/q/nilotinib--parkinsons-disease">nilotinib for Parkinson’s</Link>.
-            </p>
-          </div>
-        )}
+        {missing && <Missing />}
       </div>
     </main>
   )

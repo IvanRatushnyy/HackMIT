@@ -8,10 +8,15 @@ To elute is to wash a mixture through a column so that its compounds come out on
 
 ```
 HackMIT/
+├── CLAUDE.md                 project context for Claude: what elute is, principles, stack, domain rules
 ├── DESIGN.md                 this document
 ├── .impeccable.md            design context for AI design tooling
-├── docs/redesign/            the 20 Sep notes, screenshots (shots/restore is the current state), shot scripts
-├── docs/superpowers/specs/   the design specs and their review history
+├── PRD Elute.md              product requirements: problem, person, demo story, six moments, the cut
+├── docs/
+│   ├── sponsor-conversations.md  distilled Henry Wei (Regeneron) conversations and starter kits
+│   ├── BACKEND_PLAN.md       backend: fills the frontend's DataSource seam; pipeline, API, work split
+│   ├── redesign/             the 20 Sep notes, screenshots (shots/restore is the current state), shot scripts
+│   └── superpowers/specs/    the design specs and their review history
 ├── src/
 │   ├── styles/base.css       reset, type roles, page frame, header, shard and flow, the paper material, controls, labels, motion
 │   ├── styles/<screen>.css   splash, entry, working, results, detail, pathway, sources, export

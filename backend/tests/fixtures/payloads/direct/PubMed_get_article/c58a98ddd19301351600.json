@@ -1,0 +1,302 @@
+{
+ "transport": "direct",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "19373652,20008223,20105089,20386534,21669561,23666528,23787811,23831022,24412932,24600352"
+ },
+ "fetched_at": "2026-09-20T09:04:29+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "24600352",
+    "title": "A novel tyrosine kinase inhibitor AMN107 (nilotinib) normalizes striatal motor behaviors in a mouse model of Parkinson's disease.",
+    "abstract": "Abnormal motor behaviors in Parkinson's disease (PD) result from striatal dysfunction due to an imbalance between dopamine and glutamate transmissions that are integrated by dopamine- and cAMP-regulated phosphoprotein of 32 kDa (DARPP-32). c-Abelson tyrosine kinase (c-Abl) phosphorylates cyclin-dependent kinase 5 (Cdk5) at Tyr15 to increase the activity of Cdk5, which reduces the efficacy of dopaminergic signaling by phosphorylating DARPP-32 at Thr75 in the striatum. Here, we report that in the mouse striatum, a novel c-Abl inhibitor, nilotinib (AMN107), inhibits phosphorylation of both Cdk5 at Tyr15 and DARPP-32 at Thr75, which is negatively regulated by dopamine receptor activation through a D2 receptor-mediated mechanism. Like a D2-agonist, nilotinib synergizes with a D1-agonist for inducing striatal c-Fos expression. Moreover, systemic administration of nilotinib normalizes striatal motor behaviors in a mouse model of PD induced by 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine. These findings suggest that nilotinib could possibly serve as a new and alternative agent for treating PD motor symptoms.",
+    "authors": [
+     {
+      "name": "Tanabe A"
+     },
+     {
+      "name": "Yamamura Y"
+     },
+     {
+      "name": "Kasahara J"
+     },
+     {
+      "name": "Morigaki R"
+     },
+     {
+      "name": "Kaji R"
+     }
+    ],
+    "journal": "Frontiers in cellular neuroscience",
+    "pub_date": "2014-02-20",
+    "pub_year": "2014",
+    "doi": "10.3389/fncel.2014.00050",
+    "pmcid": "PMC3929858",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24600352/",
+    "europepmc_id": "24600352",
+    "europepmc_source": "MED",
+    "cited_by_count": 38
+   },
+   {
+    "pmid": "24412932",
+    "title": "c-Abl phosphorylates \u03b1-synuclein and regulates its degradation: implication for \u03b1-synuclein clearance and contribution to the pathogenesis of Parkinson's disease.",
+    "abstract": "Increasing evidence suggests that the c-Abl protein tyrosine kinase could play a role in the pathogenesis of Parkinson's disease (PD) and other neurodegenerative disorders. c-Abl has been shown to regulate the degradation of two proteins implicated in the pathogenesis of PD, parkin and \u03b1-synuclein (\u03b1-syn). The inhibition of parkin's neuroprotective functions is regulated by c-Abl-mediated phosphorylation of parkin. However, the molecular mechanisms by which c-Abl activity regulates \u03b1-syn toxicity and clearance remain unknown. Herein, using NMR spectroscopy, mass spectrometry, in vitro enzymatic assays and cell-based studies, we established that \u03b1-syn is a bona fide substrate for c-Abl. In vitro studies demonstrate that c-Abl directly interacts with \u03b1-syn and catalyzes its phosphorylation mainly at tyrosine 39 (pY39) and to a lesser extent at tyrosine 125 (pY125). Analysis of human brain tissues showed that pY39 \u03b1-syn is detected in the brains of healthy individuals and those with PD. However, only c-Abl protein levels were found to be upregulated in PD brains. Interestingly, nilotinib, a specific inhibitor of c-Abl kinase activity, induces \u03b1-syn protein degradation via the autophagy and proteasome pathways, whereas the overexpression of \u03b1-syn in the rat midbrains enhances c-Abl expression. Together, these data suggest that changes in c-Abl expression, activation and/or c-Abl-mediated phosphorylation of Y39 play a role in regulating \u03b1-syn clearance and contribute to the pathogenesis of PD.",
+    "authors": [
+     {
+      "name": "Mahul-Mellier AL"
+     },
+     {
+      "name": "Fauvet B"
+     },
+     {
+      "name": "Gysbers A"
+     },
+     {
+      "name": "Dikiy I"
+     },
+     {
+      "name": "Oueslati A"
+     }
+    ],
+    "journal": "Human molecular genetics",
+    "pub_date": "2014-01-09",
+    "pub_year": "2014",
+    "doi": "10.1093/hmg/ddt674",
+    "pmcid": "PMC4014189",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24412932/",
+    "europepmc_id": "24412932",
+    "europepmc_source": "MED",
+    "cited_by_count": 200
+   },
+   {
+    "pmid": "23831022",
+    "title": "Identification of the recognition sequence and target proteins for DJ-1 protease.",
+    "abstract": "DJ-1, the product of familial Parkinson's disease gene and an oncogene, is a cysteine protease which plays a role in anti-oxidative stress reaction. In this study, we identified the recognition sequence for DJ-1 protease by using recombinant DJ-1 and a peptide library. Protease activity of DJ-1 lacking C-terminal \u03b1-helix (DJ-1\u0394H9) was stronger than that of full-sized DJ-1, and the most susceptible sequence digested by DJ-1\u0394H9 was valine-lysine-valine-alanine (VKVA) under the optimal conditions of pH 5.5 and 0 mM NaCl. Divalent ions, especially Cu\u00b2\u207a, were inhibitory to DJ-1's protease activity. c-abl oncogene 1 product (ABL1) and kinesin family member 1B (KIF1B) containing VKVA were digested by DJ-1\u0394H9.",
+    "authors": [
+     {
+      "name": "Mitsugi H"
+     },
+     {
+      "name": "Niki T"
+     },
+     {
+      "name": "Takahashi-Niki K"
+     },
+     {
+      "name": "Tanimura K"
+     },
+     {
+      "name": "Yoshizawa-Kumagaye K"
+     }
+    ],
+    "journal": "FEBS letters",
+    "pub_date": "2013-07-02",
+    "pub_year": "2013",
+    "doi": "10.1016/j.febslet.2013.06.032",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23831022/",
+    "europepmc_id": "23831022",
+    "europepmc_source": "MED",
+    "cited_by_count": 16
+   },
+   {
+    "pmid": "23787811",
+    "title": "Tyrosine kinase inhibition facilitates autophagic SNCA/\u03b1-synuclein clearance.",
+    "abstract": "The effects of ABL1/ABL inhibition on clearance of SNCA/\u03b1-synuclein were evaluated in animal models of \u03b1-synucleinopathies. Parkinson disease (PD) is a movement disorder characterized by death of dopaminergic substantia nigra (SN) neurons and brain accumulation of SNCA. The tyrosine kinase ABL1 is activated in several neurodegenerative diseases. An increase in ABL1 activity is detected in human postmortem PD brains. Lentiviral expression of SNCA in the mouse SN activates ABL1 via phosphorylation, while lentiviral Abl expression increases SNCA levels. Administration of the brain-penetrant tyrosine kinase inhibitor Nilotinib decreases Abl activity and facilitates autophagic clearance of SNCA in transgenic and lentiviral gene transfer models. Subcellular fractionation demonstrates accumulation of SNCA and hyperphosphorylated MAPT/Tau (p-MAPT) in autophagic vacuoles in SNCA-expressing brains, while Nilotinib treatment leads to protein deposition into the lysosomes, suggesting enhanced autophagic clearance. These data suggest that Nilotinib may be a therapeutic strategy to degrade SNCA in PD and other \u03b1-synucleinopathies.",
+    "authors": [
+     {
+      "name": "Hebron ML"
+     },
+     {
+      "name": "Lonskaya I"
+     },
+     {
+      "name": "Moussa CE"
+     }
+    ],
+    "journal": "Autophagy",
+    "pub_date": "2013-06-19",
+    "pub_year": "2013",
+    "doi": "10.4161/auto.25368",
+    "pmcid": "PMC3748197",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23787811/",
+    "europepmc_id": "23787811",
+    "europepmc_source": "MED",
+    "cited_by_count": 50
+   },
+   {
+    "pmid": "23666528",
+    "title": "Nilotinib reverses loss of dopamine neurons and improves motor behavior via autophagic degradation of \u03b1-synuclein in Parkinson's disease models.",
+    "abstract": "Parkinson's disease is a movement disorder characterized by death of dopaminergic substantia nigra (SN) neurons and brain accumulation of \u03b1-synuclein. The tyrosine kinase Abl is activated in neurodegeneration. Here, we show that lentiviral expression of \u03b1-synuclein in the mouse SN leads to Abl activation (phosphorylation) and lentiviral Abl expression increases \u03b1-synuclein levels, in agreement with Abl activation in PD brains. Administration of the tyrosine kinase inhibitor nilotinib decreases Abl activity and ameliorates autophagic clearance of \u03b1-synuclein in transgenic and lentiviral gene transfer models. Subcellular fractionation shows accumulation of \u03b1-synuclein and hyper-phosphorylated Tau (p-Tau) in autophagic vacuoles in \u03b1-synuclein expressing brains, but nilotinib enhances protein deposition into the lysosomes. Nilotinib is used for adult leukemia treatment and it enters the brain within US Food and Drug Administration approved doses, leading to autophagic degradation of \u03b1-synuclein, protection of SN neurons and amelioration of motor performance. These data suggest that nilotinib may be a therapeutic strategy to degrade \u03b1-synuclein in PD and other \u03b1-synucleinopathies.",
+    "authors": [
+     {
+      "name": "Hebron ML"
+     },
+     {
+      "name": "Lonskaya I"
+     },
+     {
+      "name": "Moussa CE"
+     }
+    ],
+    "journal": "Human molecular genetics",
+    "pub_date": "2013-05-10",
+    "pub_year": "2013",
+    "doi": "10.1093/hmg/ddt192",
+    "pmcid": "PMC3723316",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23666528/",
+    "europepmc_id": "23666528",
+    "europepmc_source": "MED",
+    "cited_by_count": 271
+   },
+   {
+    "pmid": "21669561",
+    "title": "[KIT and KIT: from biology to clinical use].",
+    "abstract": "Scientific knowledge on gastrointestinal stromal tumors (GIST) has highly progressed over the last 10\u00a0years. The molecular bases of oncogenic transformation, KIT activating mutations, were identified in 1998 by Hirota et al. The product of KIT proto-oncogene, KIT protein, is a transmembrane receptor with tyrosine kinase activity. Tyrosine kinase inhibitors targeting these mutated activated kinases, namely imatinib and more recently sunitinib, nilotinib, masitinib or sorafenib, have deeply modified GIST prognosis. Molecular biology in GIST is now becoming a routine tool for treatment selection. In patients with advanced GIST, imatinib should be given until progression, and then, other tyrosine kinase inhibitors targeting KIT should be used. In the adjuvant setting, the optimal duration of imatinib treatment remains unknown.",
+    "authors": [
+     {
+      "name": "Curtit E"
+     },
+     {
+      "name": "Mansi L"
+     },
+     {
+      "name": "Viel E"
+     },
+     {
+      "name": "Dobi E"
+     },
+     {
+      "name": "Chaigneau L"
+     }
+    ],
+    "journal": "Bulletin du cancer",
+    "pub_date": "2012-02-01",
+    "pub_year": "2012",
+    "doi": "10.1684/bdc.2011.1386",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/21669561/",
+    "europepmc_id": "21669561",
+    "europepmc_source": "MED",
+    "cited_by_count": 1
+   },
+   {
+    "pmid": "20105089",
+    "title": "Safety and efficacy of nilotinib in chronic phase chronic myeloid leukemia in a patient with Wolf-Parkinson-White disease and hematological resistance after suboptimal response to imatinib at six months.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Cannella L"
+     },
+     {
+      "name": "Breccia M"
+     },
+     {
+      "name": "Loglisci G"
+     },
+     {
+      "name": "Federico V"
+     },
+     {
+      "name": "Santopietro M"
+     }
+    ],
+    "journal": "Acta oncologica (Stockholm, Sweden)",
+    "pub_date": "2010-04-01",
+    "pub_year": "2010",
+    "doi": "10.3109/02841860903521129",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/20105089/",
+    "europepmc_id": "20105089",
+    "europepmc_source": "MED",
+    "cited_by_count": 0
+   },
+   {
+    "pmid": "20386534",
+    "title": "Reversible cardiotoxicity with tyrosine kinase inhibitors.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Francis J"
+     },
+     {
+      "name": "Ahluwalia MS"
+     },
+     {
+      "name": "Wetzler M"
+     },
+     {
+      "name": "Wang E"
+     },
+     {
+      "name": "Paplham P"
+     }
+    ],
+    "journal": "Clinical advances in hematology & oncology : H&O",
+    "pub_date": "2010-02-01",
+    "pub_year": "2010",
+    "doi": null,
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/20386534/",
+    "europepmc_id": "20386534",
+    "europepmc_source": "MED",
+    "cited_by_count": 6
+   },
+   {
+    "pmid": "19373652",
+    "title": "Characterisation of extramedullary relapse in patients with chronic myeloid leukemia in advanced disease after allogeneic stem cell transplantation.",
+    "abstract": "Recently, higher extramedullary relapse rates following allogeneic stem cell transplantation (SCT) in myeloid malignancies were reported e.g. because of selection of poor-risk patients. We analysed five consecutive patients with post-transplant extramedullary relapse of chronic myeloid leukemia (CML) out of a total of 24 patients (21%) undergoing allo-SCT. All five patients with extramedullary relapse had clonal evolution and a history of blast phase (BP). In particular, 56% of the patients in BP had extramedullary relapse with no extramedullary relapse in patients with chronic/accelerated phase. Most frequent manifestation sites were the skeletal system, the muscles/subcutaneous tissue and the central nervous system. In one case chloroma was mimicking myositis of the lower limbs. Combined approaches were performed including irradiation (n = 4), chemotherapy (n = 2), IM (n = 2), dasatinib (n = 4), nilotinib (n = 1), a novel aurora-kinase-inhibitor (n = 1), donor lymphocytes (n = 2) or a second allo-SCT (n = 2). Transient response was achieved in one case, stable partial remissions in two cases, whereas two cases were refractory. Research should focus on prospective studies aiming to improve treatment of extramedullary relapse in stem cell recipients with CML with a special focus on the role of second generation tyrosine kinase inhibitors.",
+    "authors": [
+     {
+      "name": "Ocheni S"
+     },
+     {
+      "name": "Iwanski GB"
+     },
+     {
+      "name": "Schafhausen P"
+     },
+     {
+      "name": "Zander AR"
+     },
+     {
+      "name": "Ayuk F"
+     }
+    ],
+    "journal": "Leukemia & lymphoma",
+    "pub_date": "2009-04-01",
+    "pub_year": "2009",
+    "doi": "10.1080/10428190902755513",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/19373652/",
+    "europepmc_id": "19373652",
+    "europepmc_source": "MED",
+    "cited_by_count": 13
+   },
+   {
+    "pmid": "20008223",
+    "title": "Management of Philadelphia chromosome-positive acute lymphoblastic leukemia (Ph+ ALL).",
+    "abstract": "The tyrosine kinase inhibitor (TKI) imatinib has become an integral part of front-line therapy for Ph(+) ALL, with remission rates exceeding 90% irrespective of whether imatinib is given alone or combined with chemotherapy. Treatment outcome with imatinib-based regimens has improved compared with historic controls, but most patients who do not undergo allogeneic stem cell transplantation (SCT) eventually relapse. Acquired resistance on TKI treatment is associated with mutations in the bcr-abl tyrosine kinase domain in the majority of patients, and may be detected at low frequency prior to TKI treatment in a subset of patients. Second generation TKIs, eg, dasatinib and nilotinib, show activity against most of the bcr-abl tyrosine kinase domain (TKD) mutations involved in acquired imatinib resistance, but clinical benefit is generally short-lived. Accordingly, SCT in first complete remission (CR) is considered to be the best curative option. Molecular monitoring of minimal residual disease levels appears to have prognostic relevance and should be used to guide treatment. International standardization and quality control efforts are ongoing to ensure comparability of results. Mutation analysis during treatment relies increasingly on highly sensitive PCR techniques or denaturing HPLC and may assist in treatment decisions, eg, in case of molecular relapse. Results from current studies of second-generation TKI as front-line treatment for Ph(+) ALL are promising and show high molecular response rates, but follow-up is still too short to determine their impact on remission duration and long-term survival. Strategies to improve outcome after SCT include the pre-emptive use of imatinib, which appears to reduce the relapse rate. In patients ineligible for transplantation, novel concepts for maintenance therapy are needed. These could involve novel immunotherapeutic interventions and combinations of TKI.",
+    "authors": [
+     {
+      "name": "Ottmann OG"
+     },
+     {
+      "name": "Pfeifer H"
+     }
+    ],
+    "journal": "Hematology. American Society of Hematology. Education Program",
+    "pub_date": "2009-01-01",
+    "pub_year": "2009",
+    "doi": "10.1182/asheducation-2009.1.371",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/20008223/",
+    "europepmc_id": "20008223",
+    "europepmc_source": "MED",
+    "cited_by_count": 62
+   }
+  ]
+ }
+}

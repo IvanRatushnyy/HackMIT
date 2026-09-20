@@ -1,0 +1,25 @@
+{
+ "transport": "direct",
+ "tool": "ctgov.study_design",
+ "arguments": {
+  "nct_id": "NCT02281474"
+ },
+ "fetched_at": "2026-09-20T08:24:03+00:00",
+ "payload": {
+  "nct_id": "NCT02281474",
+  "has_results": false,
+  "official_title": "Open Label Dose Escalation of Nilotinib in Cognitively Impaired Parkinson Disease Patients With Elevated Cerebrospinal Fluid and Blood \u03b1-Synuclein",
+  "allocation": "RANDOMIZED",
+  "masking": "NONE",
+  "who_masked": [],
+  "enrollment": 12,
+  "phases": [
+   "PHASE1"
+  ],
+  "study_first_post_date": "2014-11-03",
+  "start_date": "2014-11",
+  "primary_completion_date": "2015-05",
+  "results_first_post_date": null,
+  "overall_status": "COMPLETED"
+ }
+}

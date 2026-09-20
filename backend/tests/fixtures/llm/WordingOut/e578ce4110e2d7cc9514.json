@@ -1,0 +1,11 @@
+{
+ "schema": "WordingOut",
+ "system": "Reword, for a scientist, why the given next question matters. You are handed the question, the gate and its status, the suggested experiment, and the result that would change the appraisal. One paragraph; cite the claim id; add no new facts or numbers.\n",
+ "user": "Question: Does nilotinib reach the central nervous system at a therapeutically meaningful concentration at a tolerated dose?\nGate: C_EXPOSURE [contested]\nExperiment: Measure the CSF/plasma concentration of nilotinib at tolerated dosing in Parkinson disease patients, against the concentration needed to inhibit ABL1.\nResult that would change the appraisal: Reproducible exposure in the central nervous system compatible with ABL1 inhibition at a tolerated dose.",
+ "output": {
+  "why_this_question_matters": "This question is pivotal because the proposed therapeutic mechanism depends on nilotinib achieving central nervous system exposure sufficient to inhibit ABL1 without exceeding tolerated dosing. Measuring CSF and plasma concentrations in patients with Parkinson disease and comparing them with the concentration required for ABL1 inhibition would resolve the contested exposure gate; reproducible, compatible central nervous system exposure at a tolerated dose would support a more favorable appraisal [C_EXPOSURE].",
+  "cites": [
+   "C_EXPOSURE"
+  ]
+ }
+}

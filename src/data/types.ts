@@ -31,12 +31,26 @@ export type EntityIndex = { entities: Entity[] }
 
 export type LedgerRecord = { value: string; published: ISODate; source?: SourceId }
 
+/** Structured, user-facing reasoning for one step — an explicit output the backend generates for the scientist. */
+export type AgentReasoning = {
+  question: string
+  reasoning: string
+  evidence_needed: string
+  selected_tool: string
+  tool_selection_reason: string
+  interpretation: string
+  what_this_changes: string
+  next_action: string
+  next_action_reason: string
+}
+
 export type LedgerRow = {
   id: LedgerRowId // "L1".."L10"
   step: string
   source: string
   unit: string // "targets", "trials", "records": the noun for the derived count
   elapsed_ms?: number // only when the ledger is recorded
+  reasoning?: AgentReasoning // the agent's thought process for this step (backend v4.4 §7); absent on scripted fixtures
   execution: {
     tool: string
     query: string
@@ -191,6 +205,28 @@ export type CandidateDetail = {
   best_evidence: Timeline<BestEvidence>
   weakest_link: Timeline<{ claim: ClaimId; why: string; sources: SourceId[] }>
   counts: { sources: number; trials: number }
+  /** Elute's grounded opinion (backend v4.4 §6): a stance downstream of the visible evidence, never a bare verdict. Absent on curated fixtures. */
+  recommendation?: Recommendation
+  /** The one question to answer next (backend v4.4 §5). */
+  next_question?: NextQuestion
+}
+
+export type Stance = 'deprioritize' | 'no_clear_prioritization' | 'pursue_conditionally' | 'insufficient_evidence'
+export type Recommendation = {
+  stance: Stance
+  opinion: string
+  rationale_claim_ids: string[]
+  supporting_claim_ids: string[]
+  opposing_claim_ids: string[]
+  key_unknowns: string[]
+  what_would_change_my_mind: string
+}
+export type NextQuestion = {
+  next_question: string
+  why_this_question_matters: string
+  suggested_experiment_or_data: string
+  result_that_would_change_appraisal: string
+  gate: string
 }
 
 // ---- Query and results ------------------------------------------------------

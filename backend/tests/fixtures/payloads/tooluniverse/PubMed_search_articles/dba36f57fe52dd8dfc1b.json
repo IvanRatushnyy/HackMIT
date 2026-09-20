@@ -1,0 +1,20 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_search_articles",
+ "arguments": {
+  "query": "nilotinib AND (Parkinson disease) AND (\"MAO-B\" OR \"monoamine oxidase\" OR withdrawal OR confound OR \"alternative explanation\")",
+  "limit": 100,
+  "include_abstract": false
+ },
+ "fetched_at": "2026-09-20T09:04:13+00:00",
+ "payload": {
+  "status": "success",
+  "data": [],
+  "metadata": {
+   "count": 0,
+   "total": 0,
+   "query": "nilotinib AND (Parkinson disease) AND (\"MAO-B\" OR \"monoamine oxidase\" OR withdrawal OR confound OR \"alternative explanation\")",
+   "source": "PubMed"
+  }
+ }
+}

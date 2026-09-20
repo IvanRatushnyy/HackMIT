@@ -1,0 +1,32 @@
+{
+ "transport": "direct",
+ "tool": "OpenTargets_get_drug_chembId_by_generic_name",
+ "arguments": {
+  "drugName": "nilotinib"
+ },
+ "fetched_at": "2026-09-20T08:24:01+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "search": {
+    "hits": [
+     {
+      "id": "CHEMBL255863",
+      "name": "NILOTINIB",
+      "description": "Small molecule drug with a maximum clinical stage of Approval (across all indications), with 3 approved and 46 investigational indications."
+     },
+     {
+      "id": "CHEMBL1201740",
+      "name": "NILOTINIB HYDROCHLORIDE MONOHYDRATE",
+      "description": "Small molecule drug with a maximum clinical stage of Approval (across all indications), with an approval for chronic myelogenous leukemia, bcr-abl1 positive and blast phase chronic myelogenous leukemia, bcr-abl1 positive and 5 investigational indications."
+     },
+     {
+      "id": "CHEMBL6068409",
+      "name": "NILOTINIB LAURYLSULFATE",
+      "description": "Small molecule drug with a maximum clinical stage of Unknown, with 1 investigational indication."
+     }
+    ]
+   }
+  }
+ }
+}

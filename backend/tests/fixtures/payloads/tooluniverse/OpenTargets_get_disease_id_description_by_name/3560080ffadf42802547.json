@@ -1,0 +1,136 @@
+{
+ "transport": "tooluniverse",
+ "tool": "OpenTargets_get_disease_id_description_by_name",
+ "arguments": {
+  "diseaseName": "Parkinson disease"
+ },
+ "fetched_at": "2026-09-20T08:24:01+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "search": {
+    "hits": [
+     {
+      "id": "MONDO_0005180",
+      "name": "Parkinson disease",
+      "description": "A progressive degenerative disorder of the central nervous system characterized by loss of dopamine producing neurons in the substantia nigra and the presence of Lewy bodies in the substantia nigra and locus coeruleus. Signs and symptoms include tremor which is most pronounced during rest, muscle rigidity, slowing of the voluntary movements, a tendency to fall back, and a mask-like facial expression."
+     },
+     {
+      "id": "MONDO_0021095",
+      "name": "parkinsonian disorder",
+      "description": "A group of disorders which feature impaired motor control characterized by bradykinesia, MUSCLE RIGIDITY; TREMOR; and postural instability. Parkinsonian diseases are generally divided into primary parkinsonism (see PARKINSON DISEASE), secondary parkinsonism (see PARKINSON DISEASE, SECONDARY) and inherited forms. These conditions are associated with dysfunction of dopaminergic or closely related motor integration neuronal pathways in the BASAL GANGLIA."
+     },
+     {
+      "id": "MONDO_0017279",
+      "name": "young-onset Parkinson disease",
+      "description": "A form of Parkinson disease (PD) characterized by an age of onset between 21-45 years, rigidity, painful cramps followed by tremor, bradykinesia, dystonia, gait complaints and falls, and other non-motor symptoms. A slow disease progression and a more pronounced response to dopaminergic therapy are also observed in most YOPD forms."
+     },
+     {
+      "id": "Orphanet_2828",
+      "name": "Young adult-onset Parkinsonism",
+      "description": "Young-onset Parkinson disease (YOPD) is a form of Parkinson disease (PD), characterized by an age of onset between 21-45 years, rigidity, painful cramps followed by tremor, bradykinesia, dystonia, gait complaints and falls, and other non-motor symptoms. A slow disease progression and a more pronounced response to dopaminergic therapy are also observed in most YOPD forms."
+     },
+     {
+      "id": "OBA_2001009",
+      "name": "age of onset of Parkinson disease",
+      "description": "The age at which Parkinson disease manifestations first appear."
+     },
+     {
+      "id": "Orphanet_307055",
+      "name": "Rare parkinsonian syndrome due to genetic neurodegenerative disease"
+     },
+     {
+      "id": "Orphanet_411602",
+      "name": "Hereditary late-onset Parkinson disease",
+      "description": "Hereditary late-onset Parkinson disease (LOPD) is a form of Parkinson disease (PD), characterized by an age of onset of more than 50 years, tremor at rest, gait complaints and falls, bradykinesia, rigidity and painful cramps. Patients usually present a low risk of developing non motor symptoms, dystonia, dyskinesia and levodopa-induced dyskinesia (LID)."
+     },
+     {
+      "id": "MONDO_0008199",
+      "name": "late-onset Parkinson disease",
+      "description": "A Parkinson disease that begins after around the age of 50."
+     },
+     {
+      "id": "MONDO_0010360",
+      "name": "Parkinson disease 12"
+     },
+     {
+      "id": "MONDO_0000828",
+      "name": "juvenile-onset Parkinson disease"
+     },
+     {
+      "id": "Orphanet_307052",
+      "name": "Rare genetic parkinsonian disorder"
+     },
+     {
+      "id": "MONDO_0006966",
+      "name": "secondary Parkinson disease",
+      "description": "A condition with a clinical picture similar to that of Parkinson disease, but which is caused by external factors, including medication."
+     },
+     {
+      "id": "MONDO_0013060",
+      "name": "autosomal recessive Parkinson disease 14",
+      "description": "A rare neurodegenerative disease usually presenting before the age of 30 and which is characterized by dystonia, L-dopa-responsive parkinsonism, pyramidal signs and rapid cognitive decline."
+     },
+     {
+      "id": "MONDO_0014742",
+      "name": "Parkinson disease 22, autosomal dominant",
+      "description": "Any Parkinson disease in which the cause of the disease is a mutation in the CHCHD2 gene."
+     },
+     {
+      "id": "MONDO_0001945",
+      "name": "postencephalitic Parkinson disease",
+      "description": "A disease believed to be caused by a viral illness that triggers degeneration of the nerve cells in the substantia nigra. Overall, this degeneration leads to clinical parkinsonism."
+     },
+     {
+      "id": "EFO_0022609",
+      "name": "Parkinson disease, dominant",
+      "description": "Autosomal dominant inherited Parkinson disease. Currently, sixteen PARK loci have been identified with autosomal dominant genes such as SNCA, and LRRK2."
+     },
+     {
+      "id": "MONDO_0800369",
+      "name": "Parkinson disease 19B, early-onset"
+     },
+     {
+      "id": "EFO_0600011",
+      "name": "Parkinson's disease symptom measurement",
+      "description": "Quantification of some aspect of Parkinson's disease symptoms such as their frequency, severity or ratio."
+     },
+     {
+      "id": "MONDO_0009830",
+      "name": "parkinsonian-pyramidal syndrome",
+      "description": "A Parkinson's disease that has material basis in mutation in the FBXO7 gene on chromosome 22q12.3."
+     },
+     {
+      "id": "MONDO_0003996",
+      "name": "basal ganglia disorder",
+      "description": "A disease involving the basal ganglia."
+     },
+     {
+      "id": "EFO_0022988",
+      "name": "Parkinson disease 6",
+      "description": "A neurodegenerative disorder characterized by parkinsonian signs such as rigidity, resting tremor and bradykinesia. A subset of patients manifest additional symptoms including hyperreflexia, autonomic instability, dementia and psychiatric disturbances. Symptoms show diurnal fluctuation and can improve after sleep."
+     },
+     {
+      "id": "MONDO_0010796",
+      "name": "Parkinson disease, mitochondrial"
+     },
+     {
+      "id": "MONDO_0018321",
+      "name": "atypical juvenile parkinsonism",
+      "description": "Atypical juvenile parkinsonism (AJP) is a complex form of young-onset Parkinson disease (YOPD) that manifests with pyramidal signs, eye movement abnormalities, psychiatric manifestations (depression, anxiety, drug-induced psychosis, and impulse control disorders), intellectual disability, and other neurological symptoms (such as ataxia and epilepsy) along with classical parkinsonian symptoms."
+     },
+     {
+      "id": "MONDO_0010709",
+      "name": "early-onset parkinsonism-intellectual disability syndrome",
+      "description": "A basal ganglia disorder characterized by Parkinsonian-type symptoms (postural changes, tremor, rigidity), megalencephaly and variable intellectual deficit. Other signs are frontal bossing, persistent frontal lobe reflexes, strabismus and seizures. It has been described in three generations of one family. Transmission is X-linked, and the gene is located on chromosomal region Xq27.3-qter."
+     },
+     {
+      "id": "MONDO_0010482",
+      "name": "X-linked parkinsonism-spasticity syndrome",
+      "description": "X-linked parkinsonism-spasticity syndrome is a rare genetic neurological disorder characterized by parkinsonian features (including resting or action tremor, cogwheel rigidity, hypomimia and bradykinesia) associated with variably penetrant spasticity, hyperactive deep tendon reflexes and Babinski sign."
+     }
+    ]
+   }
+  }
+ }
+}
