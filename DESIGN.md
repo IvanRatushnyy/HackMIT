@@ -67,7 +67,7 @@ A data note sits at the foot of every page: one italic 12px line in faint ink sa
 
 | Role | Face | Setting | Use |
 |---|---|---|---|
-| Display | Aujournuit | Airy width (`font-stretch: 175%`), tracking −2%, weight 400, **always lowercase** | Wordmark (48px), page titles (40px), section titles and row names (28px) |
+| Display | Aujournuit | Regular width (`font-stretch: 100%`), tracking −2%, weight 400, **always lowercase**; the wordmark alone is Airy (`175%`) | Wordmark (48px), page titles (40px), section titles and row names (28px) |
 | Kicker | Supreme | 12px Medium, uppercase, tracking +8% | The small label above a title or a panel: *appraise*, *recent*, *claim*, *evidence*, table headers |
 | Text | Supreme | Tracking −4%, Regular 400 | Body, labels, tables, controls, the chain: everything that is not a big title |
 | Emphasis | Supreme | Medium 500 | Interactive labels, the current item, a candidate's name in the results, the evidence-label word |
@@ -90,7 +90,7 @@ Aujournuit is set in lowercase everywhere it appears; Supreme keeps normal casin
 
 Notes from the font files:
 
-- Aujournuit has one weight and five named widths: Condensed 50, Densed 75, Regular 100, Airy 175, Wide 200. Only Airy is used.
+- Aujournuit has one weight and five named widths: Condensed 50, Densed 75, Regular 100, Airy 175, Wide 200. Regular is used everywhere except the wordmark, which is Airy.
 - Aujournuit supports `ss01`, `dlig`, `frac`, `ordn` and `sups`. Supreme supports `salt`, `frac`, `ordn` and `sups`.
 - Neither face has tabular figures. Columns of numbers are right-aligned with the `.figure` class rather than relying on equal digit widths.
 - Fallback faces in `fonts.css` carry the real fonts' ascent and descent so text does not jump on load.

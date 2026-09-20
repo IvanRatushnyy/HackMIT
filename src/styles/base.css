@@ -134,14 +134,18 @@ em {
 }
 
 /* One content column on every page */
+.page {
+  --col-pad: 80px;       /* the column's side padding: text starts here */
+  --col-narrow: 1184px;  /* 1024 content + gutters: entry and export */
+}
 .col {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: var(--space-xl) 80px var(--space-2xl);
+  padding: var(--space-xl) var(--col-pad) var(--space-2xl);
 }
 .col--narrow {
-  max-width: 1184px; /* 1024 content + gutters: entry and export */
+  max-width: var(--col-narrow);
 }
 
 /* Title block: kicker, title, sub line; an optional right-hand control */
@@ -180,13 +184,16 @@ em {
   border-bottom: var(--line-width) solid var(--color-line);
 }
 .header--entry {
-  grid-template-columns: 400px 1fr;
+  /* The band's left edge sits on the narrow column's text edge: the centring
+   * offset plus the column padding. Never narrower than the wordmark needs. */
+  grid-template-columns: minmax(max-content, calc(max(0px, (100% - var(--col-narrow)) / 2) + var(--col-pad))) 1fr;
 }
 .header__block {
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  padding: 0 var(--space-lg) 0 80px;
+  /* 40px left: optically the same as the ~40px above and below the wordmark's ink in the 120px header */
+  padding: 0 var(--space-lg) 0 40px;
 }
 .header__shard {
   position: relative;
@@ -201,7 +208,7 @@ em {
 
 .wordmark {
   font-family: var(--font-display);
-  font-stretch: var(--display-width);
+  font-stretch: var(--wordmark-width); /* the one Airy setting; every other title is Regular */
   font-weight: 400;
   letter-spacing: var(--tracking-display);
   line-height: 1;
@@ -218,7 +225,7 @@ em {
 
 .datanote {
   margin-top: auto;
-  padding: var(--space-md) 80px var(--space-lg);
+  padding: var(--space-md) var(--col-pad) var(--space-lg);
   color: var(--color-ink-faint);
   font-style: italic;
   font-size: var(--text-xs);

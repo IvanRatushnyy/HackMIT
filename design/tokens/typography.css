@@ -1,6 +1,7 @@
 /* elute — typography tokens
  *
- * Aujournuit at the Airy width (175%) with −2% tracking: big titles only.
+ * Aujournuit at the Regular width (100%) with −2% tracking: big titles only.
+ * The wordmark alone is set at the Airy width (175%).
  * Supreme with −4% tracking, Regular weight for almost everything else.
  */
 
@@ -9,7 +10,8 @@
   --font-text:    "Supreme", "Supreme Fallback", system-ui, sans-serif;
   --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace; /* the agent's-work panel only */
 
-  --display-width:    175%;     /* Aujournuit "Airy" named instance */
+  --display-width:    100%;     /* Aujournuit "Regular" named instance: titles, names */
+  --wordmark-width:   175%;     /* Aujournuit "Airy" named instance: the wordmark only */
   --tracking-display: -0.02em;
   --tracking-text:    -0.04em;
 
