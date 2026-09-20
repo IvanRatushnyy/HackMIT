@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { DataNote, Header, Kicker } from '../components/frame'
+import { Header, Kicker } from '../components/frame'
 import { WorkingRow, type RowState } from '../components/Ledger'
 import { bestEvidenceText, formatClock, formatDate, OutcomeChip } from '../components/evidence'
 import { rowDurations, source } from '../data/source'
@@ -16,7 +16,7 @@ type Phase = 'loading' | 'working' | 'results' | 'missing'
 
 const KIND_WORD = { condition: 'condition → candidates', drug: 'drug → indications', pair: 'pair → appraisal' } as const
 
-export function Query({ banner }: { banner: string }) {
+export function Query() {
   const { query = '' } = useParams()
   const navigate = useNavigate()
   const [q, setQ] = useState<QueryRecord | undefined>()
@@ -96,7 +96,6 @@ export function Query({ banner }: { banner: string }) {
         <div className="col">
           <Missing />
         </div>
-        <DataNote text={banner} />
       </main>
     )
   }
@@ -191,7 +190,6 @@ export function Query({ banner }: { banner: string }) {
           {phase === 'results' && page && (view === 'list' ? <ResultsList page={page} /> : <Board page={page} />)}
         </div>
       )}
-      <DataNote text={q && phase !== 'results' ? banner : banner} />
     </main>
   )
 }

@@ -10,7 +10,7 @@ To elute is to wash a mixture through a column so that its compounds come out on
 HackMIT/
 ├── DESIGN.md                 this document
 ├── .impeccable.md            design context for AI design tooling
-├── package.json              the app (Vite + React + TypeScript) and the glass layer's html2canvas
+├── package.json              the app (Vite + React + TypeScript) and html2canvas-pro for the vendored glass layer
 ├── src/                      the app; src/styles/base.css and screens.css are the only stylesheets
 └── design/
     ├── palette.md            the four colors, roles, contrast, rules
@@ -54,21 +54,21 @@ Every screen is one of these, and each has a fixed treatment.
 
 | Moment | The person should feel | Treatment |
 |---|---|---|
-| Appraise | "I understand what this does in five seconds." | A kicker, one 64px field with the *Appraise* button inside it, three outlined mode examples (*condition → candidates · drug → indications · pair → appraisal*), and *paste a paper*, which shows what was read — design, blinding, n — before anything runs. Below, a *recent* list in a panel, names in Aujournuit. |
+| Appraise | "I understand what this does in five seconds." | One glass box, a chat composer, alone in the middle of the space under the header: the field, a **+** circle that opens *paste a paper* beneath the box (it shows what was read — design, blinding, n — before anything runs), and the ink send circle. The box's left edge is the header band's left edge. Nothing else on the page. |
 | Working | "It's doing real work, not stalling." | The evidence ledger in a panel: numbered rows with a ✓ / ! / ● glyph, the step, what came back with its real source, and the elapsed time when a run was recorded. The running row sits on the sunken surface with a 2px bar; pending rows are faint. A finished step's records open in a panel beside it. A status line says *step 6 of 10 · 0:31 · scripted, about 12 s · results open when done*. No spinner. |
 | Results | "I can triage this in fifteen seconds." | A table in a panel, grouped *not yet refuted* / *refuted in controlled studies*, ordered by fewest unresolved trial prerequisites — never by a score, and the sub line says so. Each row: rank, the candidate in Aujournuit with its mechanism under it, the best evidence as an outlined outcome chip with design and n, the weakest link in a sentence, safety as a raspberry word with its reason or *none flagged*, the unresolved count. A *board* view lays the same candidates out by trial stage. |
 | Detail | "I can defend or kill this myself." | One column. *Critical appraisal* first: numbered objections in a panel, each expanding to its evidence sentence and dated sources. Then *mechanism*: a horizontal chain, nodes as boxes, each link carrying its label square and word, a caption, and *weakest link* on one of them; selecting a link opens its claim and evidence below. Then *safety* and *before a trial* side by side. Then *your call* with reasoning and *Export appraisal*. *Evidence as of* sits top right and freezes the whole page at a date. |
 | Sources | "I can see exactly what it did." | The run's ledger with every record numbered (1.1, 2.2 …), the tool calls in system mono, the packages, and the status rules that assign each label. Citations on Detail land here. |
 | Export | "I can take this with me." | Format (Markdown, JSON, print), what to include, and a live preview built from the same dated model the page shows. The evidence date and the data note travel with the document. |
 
-A data note sits at the foot of every page: one italic 12px line in faint ink saying which parts are curated or draft and what real data the tool would run on. Not raspberry, not a banner, not dismissible.
+The pages carry no data note. The curated-data statement lives on the Sources page (what is curated, what is draft, what real data this would run on, what the tool is not) and travels with every exported document.
 
 ## Typography
 
 | Role | Face | Setting | Use |
 |---|---|---|---|
 | Display | Aujournuit | Regular width (`font-stretch: 100%`), tracking −2%, weight 400, **always lowercase**; the wordmark alone is Airy (`175%`) | Wordmark (48px), page titles (40px), section titles and row names (28px) |
-| Kicker | Supreme | 12px Medium, uppercase, tracking +8% | The small label above a title or a panel: *appraise*, *recent*, *claim*, *evidence*, table headers |
+| Kicker | Supreme | 12px Medium, lowercase, tracking −4% | The small label above a title or a panel: *paste a paper*, *claim*, *evidence*, table headers |
 | Text | Supreme | Tracking −4%, Regular 400 | Body, labels, tables, controls, the chain: everything that is not a big title |
 | Emphasis | Supreme | Medium 500 | Interactive labels, the current item, a candidate's name in the results, the evidence-label word |
 | Headline figure | Supreme | Bold 700 | Only the one figure that carries an argument, such as *n = 12* or *0.53%* |
@@ -86,7 +86,7 @@ Scale for product UI is fixed in rem, ratio about 1.25, and every size pairs wit
 | `--text-xl` | 28px | 32px | Key figures, the confidence figure |
 | `--text-2xl` | 40px | 48px | The headline figure |
 
-Aujournuit is set in lowercase everywhere it appears; Supreme keeps normal casing (MONDO ids, *NILO-PD*, drug classes). Body measure caps at 65ch.
+Aujournuit is set in lowercase everywhere it appears; Supreme keeps normal casing (MONDO ids, *NILO-PD*, drug classes). Nothing is set in all caps: no uppercase kickers, tags, or table headers, ever. The only capitals are the ones a name already carries (MONDO and NCT ids, *NILO-PD*, an abbreviation). Body measure caps at 65ch.
 
 Notes from the font files:
 
@@ -103,9 +103,9 @@ Read `design/palette.md` for the full table. In short:
 2. **Black** `#06070e` is the ink, primary buttons, the dominant shard, and the *established* label.
 3. **Slate** `#47667d` is the main highlight and the only recurring color: selection, links, active controls, the *contested* label.
 4. **Dust grey** `#d3d3d3` is a secondary accent for dividers, inactive shards, and disabled states.
-5. **Raspberry** `#82204a` is a secondary accent that stays rare: the *single-source* and *refuted* labels, the safety flag, the *negative* outcome chip, and destructive actions.
+5. **Raspberry** `#82204a` is a secondary accent that stays rare: the *single-source* and *refuted* labels, the safety flag, the *negative* outcome chip, destructive actions, and the ask box's shadow while its field has focus.
 
-The page is the sunken neutral (`--color-surface-sunken`); reading surfaces are white panels with one 1px dust line. Nothing is rounded.
+The page is the sunken neutral (`--color-surface-sunken`); reading surfaces are white panels with one 1px dust line. Nothing is rounded except the floating controls: the ask box and its two circles.
 
 All neutrals are tinted toward hue 276, the black's hue, at chroma 0.003 to 0.016. Contrast is verified against the white surface: black 19.6:1, raspberry 9.1:1, slate 5.9:1, muted text 5.4:1.
 
@@ -117,9 +117,11 @@ The one unforgettable element is the composition from the mood board: large inte
 
 ## Glass
 
-Glass is reserved for one situation: a control that floats over something being read must not hide it. The v1 flow has no such control — nothing floats over the chain or the shard — so no glass is loaded. The layer stays vendored for the moment one is needed. The effect comes from [liquid-glass-js](https://github.com/dashersw/liquid-glass-js), a WebGL refraction library vendored in `design/glass/vendor`, with the elute preset in `design/glass/glass.config.js` and brand overrides in `design/glass/glass-theme.css`. Wiring and constraints are in `design/glass/README.md`.
+Glass appears in one place in v1: the ask box on Entry, the control the person types into. It is the stylesheet's own glass (`.ask` in `src/styles/base.css`): a translucent white surface with a backdrop blur, a hairline of light along its inside edge, and a soft shadow that sits behind it as a sibling, inset from the top and let out below, so it shows through the lower part of the box and spills out beneath. While the field has focus a raspberry glow spreads from the shadow's edge and gathers along the box's rim, inside and out, over 640ms. `prefers-reduced-transparency` makes the surface solid white. Nothing is suggested while typing; Enter resolves the best match through the entity index, and an unmatched string gets a note instead of a dead end.
 
-Where glass may appear, when a floating control returns: a pill container of pill buttons over the shard or over the chain.
+Glass is otherwise reserved for a control that floats over something being read and must not hide it. For that case the layer stays vendored: [liquid-glass-js](https://github.com/dashersw/liquid-glass-js), a WebGL refraction library in `design/glass/vendor`, with the elute preset in `design/glass/glass.config.js` and brand overrides in `design/glass/glass-theme.css`. Wiring and constraints are in `design/glass/README.md`. It was tried for the ask box and set aside: it refracts a one-time html2canvas snapshot of the page, so it can only appear once the box's arrival has finished, cannot show a change such as the focus glow, and draws at 1×, soft on a 2× display. Over a flat page it added nothing the stylesheet could not.
+
+Where the library may appear, when a floating control returns: a pill container of pill buttons over the shard or over the chain.
 
 Where glass never appears: the counter-case, the results, claim and source detail, the data note, the tool calls, the export, or any surface whose job is reading. Glass is a control material, not a panel material. At most two glass containers on screen at once, never nested.
 
@@ -129,7 +131,7 @@ Rules:
 - **Quiet optics.** Low ripple, low centre distortion, soft blur. The refraction should be noticed on the second look, not the first. The preset in `glass.config.js` is the starting point; tune it over the real shard and chain.
 - **Grid holds.** Glass containers use 8px padding and gap; buttons are 40 or 48px tall. Pills and circles are the one place corners are round: solid surfaces are sharp like the shard, floating controls are soft.
 - **Same states as everything else.** Hover lifts by 1px, press scales to 0.98, focus shows the slate ring. Transform and opacity only.
-- **Degrade honestly.** No WebGL or `prefers-reduced-transparency` gives a solid white surface with a 1px line and a light backdrop blur, same markup, same size.
+- **Degrade honestly.** No WebGL or `prefers-reduced-transparency` gives a solid white surface with a 1px line and a light backdrop blur, same markup, same size. The ask box goes solid white under `prefers-reduced-transparency`.
 - **Know the cost.** The library snapshots the page once. If the chain is drawn on a canvas it must be created with `preserveDrawingBuffer`, and the snapshot refreshed after the chain settles (pan, zoom, a link expanding). An SVG or DOM chain is captured directly. Few, small glass elements.
 
 ## Principles
@@ -138,7 +140,7 @@ Rules:
 2. **Known vs. believed, labeled on every claim.** Established, contested, single-source, or unknown, on every link, always with its word and its source. *Unknown* is a valid and valuable label. Never a bare number: confidence is always one click from its drivers.
 3. **Doubt reads as rigor.** Emphasis by weight and placement; the rare use of raspberry marks the weakest link and the safety flag. No alarm styling, no disclaimer boxes.
 4. **Show the work, never force it.** Sources one click away; every citation lands on the Sources page, where the ledger, the tool calls, the packages, and the label rules live.
-5. **Say what is synthetic.** The data note is at the foot of every page and says what real data this would run on.
+5. **Say what is synthetic.** The Sources page says what is curated, what is draft, and what real data this would run on, and the statement travels with every export.
 6. **Never a recommendation.** The tool organizes and challenges; the scientist decides. No language that reads as promotion of pursuing or prescribing anything.
 7. **The shard is the brand.** Geometry from the mood board, used with restraint.
 
@@ -163,6 +165,7 @@ Everything is built on an 8px grid, and consistency matters more than any single
 - Motion only for state changes, on opacity and transform, 120 to 400 ms, ease-out curves. Nothing slides. A page arrives as one reveal: blocks fade in, staggered 40ms. Ledger rows fade in as they complete and stay; the running row's bar fills over the step's duration. A row expanding is a height change on the grid (`grid-template-rows`), never a slide. Changing the evidence date re-mounts the body as one reveal. Hover settles colour over 240ms; press scales to 0.98. Reduced motion collapses every duration through the tokens.
 - The shard composes and decomposes plane by plane, 40ms apart, 240ms each: in from the topmost plane down to the ground, out from the ground up to the topmost. The ground is two pieces that sit a further 80ms apart, so it settles in two beats. Every instance of the mark arrives this way (`Shard` in `src/components/frame.tsx`; `--shard-fade`, `--shard-stagger`, `--shard-ground-gap`).
 - Startup: the page opens on the hero from the mockup, the wordmark at 128px over a 280px white band with the shard below. The planes compose, the wordmark fades in, the hero holds for a second, the planes come apart, and the wordmark scales into its place in the header while the page fades in beneath; then the header band composes. About three seconds, once per page load; reduced motion skips it (`src/components/Splash.tsx`).
+- Entry's arrival: under the startup screen the ask box waits. Once the screen has lifted and the header band has composed (its cascade, about 800ms), the box comes in the way a Spotlight window does: already there at 105% and soft (a 10px blur), fading in and settling to size with one small undershoot over 640ms, sharp by the time it stops (`ask-arrive` in `src/styles/screens.css`). Its shadow arrives with it on its own keyframes and keeps its blur. A later visit to Entry is the ordinary page reveal.
 
 ## Not this
 

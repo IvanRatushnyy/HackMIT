@@ -1,4 +1,4 @@
-/* elute — page frame: shard, wordmark, header, data note, kicker. */
+/* elute — page frame: shard, wordmark, header, kicker, and the startup context. */
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -41,7 +41,8 @@ export function Shard({
   )
 }
 
-/** True once the startup screen has lifted, or was skipped. The header band waits for it. */
+/** True once the startup screen has lifted, or was skipped. The header band composes then, and Entry's
+ * ask box arrives once the band has. */
 export const StartupDone = createContext(true)
 
 let bandComposed = false
@@ -60,15 +61,6 @@ export function Wordmark() {
     <Link to="/" className="wordmark" aria-label="elute, home">
       elute
     </Link>
-  )
-}
-
-/** The curated-data statement: one quiet line at the foot of every page (PRD §9 Must). */
-export function DataNote({ text }: { text: string }) {
-  return (
-    <footer className="datanote" role="contentinfo">
-      {text}
-    </footer>
   )
 }
 

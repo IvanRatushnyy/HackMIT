@@ -38,7 +38,7 @@ declare class Button extends Container {
 }
 
 interface Window {
-  html2canvas: typeof import('html2canvas').default
+  html2canvas: typeof import('html2canvas-pro').default
   glassControls?: {
     blurRadius?: number
     tintOpacity?: number

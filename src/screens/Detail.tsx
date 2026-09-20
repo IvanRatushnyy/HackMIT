@@ -3,14 +3,14 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { DataNote, Header } from '../components/frame'
+import { Header } from '../components/frame'
 import { AsOfControl, BeforeTrial, Mechanism, Objections, SafetyPanel, YourCall } from '../components/detail'
 import { bestEvidenceText, DriverBar, OutcomeChip } from '../components/evidence'
 import { source } from '../data/source'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
 import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
 
-export function Detail({ banner }: { banner: string }) {
+export function Detail() {
   const { query = '', candidate: candidateParam = '' } = useParams()
   const [params, setParams] = useSearchParams()
   const [q, setQ] = useState<QueryRecord | undefined>()
@@ -28,8 +28,8 @@ export function Detail({ banner }: { banner: string }) {
     }
   }, [query, candidateParam])
 
-  if (c === undefined) return <Frame banner={banner} />
-  if (c === null || !q) return <Frame banner={banner} missing />
+  if (c === undefined) return <Frame />
+  if (c === null || !q) return <Frame missing />
 
   const cutoff = findCutoff(c, params.get('asof'))
   const isToday = isTodayCutoff(c, cutoff)
@@ -98,12 +98,11 @@ export function Detail({ banner }: { banner: string }) {
           </div>
         </div>
       </div>
-      <DataNote text={banner} />
     </main>
   )
 }
 
-function Frame({ banner, missing = false }: { banner: string; missing?: boolean }) {
+function Frame({ missing = false }: { missing?: boolean }) {
   return (
     <main className="page">
       <Header />
@@ -118,7 +117,6 @@ function Frame({ banner, missing = false }: { banner: string; missing?: boolean 
           </div>
         )}
       </div>
-      <DataNote text={banner} />
     </main>
   )
 }

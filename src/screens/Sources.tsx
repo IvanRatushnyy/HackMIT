@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
-import { DataNote, Header, Kicker } from '../components/frame'
+import { Header, Kicker } from '../components/frame'
 import { ProvenanceBlock } from '../components/Ledger'
 import { source } from '../data/source'
 import type { CandidateDetail, Cutoff, Provenance, QueryRecord } from '../data/types'
@@ -21,7 +21,7 @@ const RULES = [
 
 type Tab = 'ledger' | 'tools' | 'packages' | 'rules'
 
-export function Sources({ banner }: { banner: string }) {
+export function Sources() {
   const { query = 'parkinsons-disease' } = useParams()
   const location = useLocation()
   const [params] = useSearchParams()
@@ -255,7 +255,6 @@ export function Sources({ banner }: { banner: string }) {
           </div>
         )}
       </div>
-      <DataNote text={banner} />
     </main>
   )
 }
@@ -264,7 +263,7 @@ const ROLE: Record<string, string> = {
   react: 'UI',
   'react-dom': 'UI',
   'react-router-dom': 'routes',
-  html2canvas: 'glass snapshot (unused in v1)',
+  'html2canvas-pro': 'glass snapshot (unused in v1)',
 }
 
 function SourceOpen({ q, id }: { q: QueryRecord; id: string }) {

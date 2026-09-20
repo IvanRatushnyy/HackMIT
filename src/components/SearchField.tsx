@@ -1,6 +1,7 @@
 /* elute — the one field. Accepts a drug, a condition, or a pair; resolves through the
  * entity index so an open field never dead-ends. Enter on an unmatched string does not navigate.
- * `big` is the Entry page's 64px box with the Appraise button inside; `compact` lives in the header. */
+ * `useTypeahead` is the behaviour; `SearchField` is the compact field in the header, and the
+ * ask box on Entry (components/Ask.tsx) is the same typeahead in a bigger surface. */
 
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -19,7 +20,11 @@ function matches(entities: Entity[], text: string): Entity[] {
   return [...exact, ...partial].slice(0, 6)
 }
 
-export function SearchField({ compact = false, big = false, autoFocus = false }: { compact?: boolean; big?: boolean; autoFocus?: boolean }) {
+export type Typeahead = ReturnType<typeof useTypeahead>
+
+/** The entity index, the hits for the text, keyboard selection, and the note for an unmatched submit.
+ * With `menu: false` nothing is shown while typing; Enter still submits the best match. */
+export function useTypeahead({ menu = true }: { menu?: boolean } = {}) {
   const navigate = useNavigate()
   const [entities, setEntities] = useState<Entity[]>([])
   const [text, setText] = useState('')
@@ -55,15 +60,25 @@ export function SearchField({ compact = false, big = false, autoFocus = false }:
     else if (text.trim()) setNote(COVERED)
   }
 
-  const onKey = (ev: React.KeyboardEvent<HTMLInputElement>) => {
-    if (ev.key === 'ArrowDown') {
+  const onChange = (value: string) => {
+    setText(value)
+    setOpen(true)
+    setActive(0)
+    setNote(null)
+  }
+
+  /* Arrows walk the hits when there are any (otherwise a textarea keeps them for its caret);
+   * Enter submits, Shift+Enter is left to the field. */
+  const onKey = (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!menu && (ev.key === 'ArrowDown' || ev.key === 'ArrowUp')) return
+    if (ev.key === 'ArrowDown' && hits.length) {
       ev.preventDefault()
       setOpen(true)
-      setActive((a) => Math.min(a + 1, Math.max(hits.length - 1, 0)))
-    } else if (ev.key === 'ArrowUp') {
+      setActive((a) => Math.min(a + 1, hits.length - 1))
+    } else if (ev.key === 'ArrowUp' && hits.length) {
       ev.preventDefault()
       setActive((a) => Math.max(a - 1, 0))
-    } else if (ev.key === 'Enter') {
+    } else if (ev.key === 'Enter' && !ev.shiftKey) {
       ev.preventDefault()
       submit()
     } else if (ev.key === 'Escape') {
@@ -71,54 +86,47 @@ export function SearchField({ compact = false, big = false, autoFocus = false }:
     }
   }
 
-  const input = (
-    <input
-      className={big ? 'ask__input' : 'field'}
-      type="text"
-      role="combobox"
-      aria-expanded={open && hits.length > 0}
-      aria-controls={listId}
-      aria-autocomplete="list"
-      aria-label="Drug, condition, or drug for condition"
-      placeholder={big ? 'Drug, condition, or drug for condition' : 'drug, condition, or drug for condition'}
-      autoFocus={autoFocus}
-      value={text}
-      onChange={(e) => {
-        setText(e.target.value)
-        setOpen(true)
-        setActive(0)
-        setNote(null)
-      }}
-      onFocus={() => setOpen(true)}
-      onKeyDown={onKey}
-    />
-  )
+  const expanded = menu && open && hits.length > 0
+  return { text, hits, active, note, listId, wrap, expanded, onChange, onKey, submit, go, setActive, focus: () => setOpen(true) }
+}
 
+export function TypeaheadMenu({ t }: { t: Typeahead }) {
+  if (!t.expanded) return null
   return (
-    <div className="typeahead" ref={wrap} style={compact ? { width: 384 } : undefined}>
-      {big ? (
-        <div className="ask">
-          {input}
-          <button type="button" className="btn btn--primary btn--lg" onClick={submit}>
-            Appraise
+    <ul className="typeahead__menu" role="listbox" id={t.listId}>
+      {t.hits.map((e, i) => (
+        <li key={e.slug} role="option" aria-selected={i === t.active}>
+          <button type="button" className="typeahead__item" aria-selected={i === t.active} onMouseEnter={() => t.setActive(i)} onClick={() => t.go(e)}>
+            <span>{e.name}</span>
+            <span className="muted">{e.kind}</span>
           </button>
-        </div>
-      ) : (
-        input
-      )}
-      {open && hits.length > 0 && (
-        <ul className="typeahead__menu" role="listbox" id={listId}>
-          {hits.map((e, i) => (
-            <li key={e.slug} role="option" aria-selected={i === active}>
-              <button type="button" className="typeahead__item" aria-selected={i === active} onMouseEnter={() => setActive(i)} onClick={() => go(e)}>
-                <span>{e.name}</span>
-                <span className="muted">{e.kind}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {note && !compact && <p className="typeahead__note annotation">{note}</p>}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** The compact field in the header. */
+export function SearchField({ compact = false }: { compact?: boolean }) {
+  const t = useTypeahead()
+  return (
+    <div className="typeahead" ref={t.wrap} style={compact ? { width: 384 } : undefined}>
+      <input
+        className="field"
+        type="text"
+        role="combobox"
+        aria-expanded={t.expanded}
+        aria-controls={t.listId}
+        aria-autocomplete="list"
+        aria-label="Drug, condition, or drug for condition"
+        placeholder="drug, condition, or drug for condition"
+        value={t.text}
+        onChange={(e) => t.onChange(e.target.value)}
+        onFocus={t.focus}
+        onKeyDown={t.onKey}
+      />
+      <TypeaheadMenu t={t} />
+      {t.note && !compact && <p className="typeahead__note annotation">{t.note}</p>}
     </div>
   )
 }

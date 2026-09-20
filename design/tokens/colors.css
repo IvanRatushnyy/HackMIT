@@ -55,6 +55,7 @@
 
   /* ---- Semantic: critical (raspberry is rare by design) ---------------- */
   --color-critical: var(--raspberry);      /* the safety flag, destructive actions */
+  --color-glow:     var(--raspberry);      /* the ask box's shadow while the field has focus */
 
   /* ---- Evidence labels (never color alone: the word is always shown) --- */
   --evidence-established:   var(--black);

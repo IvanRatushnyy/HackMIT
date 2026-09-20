@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Kicker } from './frame'
 import { readPaper, type Paper } from '../fixtures/papers'
 
-export function PastePaper({ onClose }: { onClose: () => void }) {
+export function PastePaper({ id, onClose }: { id?: string; onClose: () => void }) {
   const navigate = useNavigate()
   const [params] = useSearchParams()
   // ?paste=1&text=… pre-fills and reads, so the moment is deep-linkable for the demo.
@@ -17,7 +17,7 @@ export function PastePaper({ onClose }: { onClose: () => void }) {
   const read = () => setPaper(readPaper(text) ?? null)
 
   return (
-    <div className="panel panel--pad paste fade" role="region" aria-label="Paste a paper">
+    <div id={id} className="panel panel--pad paste fade" role="region" aria-label="Paste a paper">
       <div className="paste__head">
         <Kicker>paste a paper</Kicker>
         <button type="button" className="cite" onClick={onClose}>

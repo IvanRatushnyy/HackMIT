@@ -1,5 +1,6 @@
-/* elute — routes, in the order of the flow. The data note text is composed once from the source.
- * The startup screen sits over the first page until its wordmark has landed in the header. */
+/* elute — routes, in the order of the flow. The data note text is composed once from the source and
+ * travels with the exported document. The startup screen sits over the first page until its wordmark
+ * has landed in the header. */
 
 import { useCallback, useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
@@ -29,13 +30,13 @@ export function App() {
     <StartupDone.Provider value={started}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Entry banner={banner} />} />
-          <Route path="/q/:query" element={<Query banner={banner} />} />
-          <Route path="/q/:query/sources" element={<Sources banner={banner} />} />
-          <Route path="/q/:query/:candidate" element={<Detail banner={banner} />} />
+          <Route path="/" element={<Entry />} />
+          <Route path="/q/:query" element={<Query />} />
+          <Route path="/q/:query/sources" element={<Sources />} />
+          <Route path="/q/:query/:candidate" element={<Detail />} />
           <Route path="/q/:query/:candidate/export" element={<Export banner={banner} />} />
           <Route path="/methods" element={<Navigate to="/q/parkinsons-disease/sources" replace />} />
-          <Route path="*" element={<Query banner={banner} />} />
+          <Route path="*" element={<Query />} />
         </Routes>
         {!started && <Splash onDone={start} />}
       </BrowserRouter>

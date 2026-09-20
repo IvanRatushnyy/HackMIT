@@ -3,7 +3,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { DataNote, Header, Kicker } from '../components/frame'
+import { Header, Kicker } from '../components/frame'
 import { source } from '../data/source'
 import type { CandidateDetail } from '../data/types'
 import { findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
@@ -39,10 +39,10 @@ export function Export({ banner }: { banner: string }) {
     return buildExport(c, cutoff, a, banner, include)
   }, [c, cutoff, include, query, banner])
 
-  if (c === undefined) return <Shell banner={banner} />
+  if (c === undefined) return <Shell />
   if (c === null || !cutoff || !doc) {
     return (
-      <Shell banner={banner}>
+      <Shell>
         <p>
           No appraisal at this address. <Link to="/">Start again</Link>.
         </p>
@@ -78,7 +78,7 @@ export function Export({ banner }: { banner: string }) {
   }
 
   return (
-    <Shell banner={banner}>
+    <Shell>
       <div className="export">
         <aside className="export__side no-print fade">
           <div className="title__main">
@@ -165,12 +165,11 @@ export function Export({ banner }: { banner: string }) {
   )
 }
 
-function Shell({ banner, children }: { banner: string; children?: React.ReactNode }) {
+function Shell({ children }: { children?: React.ReactNode }) {
   return (
     <main className="page">
       <Header />
       <div className="col">{children}</div>
-      <DataNote text={banner} />
     </main>
   )
 }

@@ -88,13 +88,12 @@ em {
 
 /* ---- Type roles beyond the tokens ---------------------------------------------- */
 
-/* A kicker: the small uppercase label above a title or a panel ("appraise", "recent", "claim") */
+/* A kicker: the small lowercase label above a title or a panel ("recent", "claim", "evidence").
+ * Nothing in elute is set in all caps; weight and colour do the labelling. */
 .kicker {
   font-size: var(--text-xs);
   line-height: var(--line-2);
   font-weight: var(--weight-medium);
-  letter-spacing: 0.08em; /* caps need positive tracking; Supreme's default is −4% */
-  text-transform: uppercase;
   color: var(--color-ink-muted);
 }
 
@@ -180,8 +179,7 @@ em {
   height: var(--header-height);
   display: grid;
   grid-template-columns: 720px 1fr;
-  background: var(--color-surface);
-  border-bottom: var(--line-width) solid var(--color-line);
+  background: var(--color-surface); /* no line beneath: the white block meets the sunken page directly */
 }
 .header--entry {
   /* The band's left edge sits on the narrow column's text edge: the centring
@@ -247,18 +245,6 @@ html[data-splash] .header .wordmark {
   opacity: 0;
 }
 
-/* ---- Data note: one quiet line at the foot of every page --------------------------- */
-
-.datanote {
-  margin-top: auto;
-  padding: var(--space-md) var(--col-pad) var(--space-lg);
-  color: var(--color-ink-faint);
-  font-style: italic;
-  font-size: var(--text-xs);
-  line-height: var(--line-2);
-  max-width: 120ch;
-}
-
 /* ---- Panel: a white reading surface with one line ---------------------------------- */
 
 .panel {
@@ -309,34 +295,127 @@ html[data-splash] .header .wordmark {
   border-color: var(--color-accent);
 }
 
-/* The one big field on Entry: input and the Appraise button inside one 64px box */
+/* The ask box on Entry: a chat composer, and the one glass surface. Glass here is the stylesheet's own:
+ * a translucent white surface with a backdrop blur, a hairline of light along its inside edge, and a soft
+ * shadow that sits behind it as a sibling, inset from the top and let out below, so it shows through the
+ * lower part of the box and spills out beneath. While the field has focus a raspberry glow spreads from the
+ * shadow's edge, so it gathers along the box's rim, inside and out, with only a faint tint across the middle.
+ * No line; round, like every floating control. */
 .ask {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  height: 64px;
-  padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
-  border: var(--line-width) solid var(--color-ink);
-  background: var(--color-surface);
-  transition: box-shadow var(--duration-base) var(--ease-out);
+  --ask-radius: 24px;
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: start;
+  gap: var(--space-md);
+  width: 100%;
+  min-height: 288px;
+  padding: var(--space-lg);
+  border-radius: var(--ask-radius);
+  background: oklch(99% 0.003 276 / 0.58);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0 0 / 0.7),
+    inset 0 0 0 1px oklch(100% 0 0 / 0.35);
 }
-.ask:focus-within {
-  box-shadow: 0 0 0 1px var(--color-ink);
+.ask__shadow {
+  --glow-fade: calc(var(--duration-slow) + var(--duration-base)); /* 640ms, unhurried */
+  position: absolute;
+  inset: var(--space-md) var(--space-md) calc(-1 * var(--space-xs));
+  border-radius: var(--ask-radius);
+  background: oklch(13.1% 0.016 276 / 0.24);
+  box-shadow: 0 0 40px 8px oklch(from var(--color-glow) l c h / 0);
+  filter: blur(24px);
+  pointer-events: none;
+  transition:
+    background-color var(--glow-fade) var(--ease-out),
+    box-shadow var(--glow-fade) var(--ease-out);
+}
+.typeahead:focus-within .ask__shadow {
+  background: oklch(from var(--color-glow) l c h / 0.14);
+  box-shadow: 0 0 40px 8px oklch(from var(--color-glow) l c h / 0.3);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .ask {
+    background: var(--color-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 .ask__input {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: 100%;
+  display: block;
+  width: 100%;
+  min-height: calc(var(--line-3) * 2);
+  max-height: calc(var(--line-3) * 6);
+  padding: 0;
   border: 0;
   background: none;
-  font-size: var(--text-lg);
-  padding: 0;
+  resize: none;
+  overflow-y: auto;
+  font-size: var(--text-md);
+  line-height: var(--line-3);
 }
 .ask__input:focus {
   outline: none;
 }
 .ask__input::placeholder {
   color: var(--color-ink-faint);
+}
+.ask__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* The paste button: an outlined circle of the same glass */
+.ask__plus {
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-muted);
+  background: oklch(100% 0 0 / 0.4);
+  box-shadow: inset 0 0 0 var(--line-width) var(--color-line-strong);
+  transition:
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.ask__plus:hover,
+.ask__plus[aria-expanded='true'] {
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 var(--line-width) var(--color-ink);
+}
+.ask__plus:active {
+  transform: scale(0.98);
+}
+/* The send button: ink, like every primary action */
+.ask__send {
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-inverse);
+  color: var(--color-ink-inverse);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+.ask__send:hover {
+  background: var(--neutral-700);
+}
+.ask__send:active {
+  transform: scale(0.98);
+}
+.ask__send:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
 }
 
 .typeahead {
@@ -669,7 +748,6 @@ html[data-splash] .header .wordmark {
     background: var(--color-surface);
   }
   .header,
-  .datanote,
   .no-print {
     display: none !important;
   }

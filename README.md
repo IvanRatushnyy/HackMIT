@@ -19,7 +19,7 @@ No keys, no server, no network: v1 runs entirely on curated fixtures. `npm run b
 
 | Screen | Route | What it does |
 |---|---|---|
-| Appraise | `/` | One field for a drug, a condition, or a pair; three mode examples; paste a paper (PMID, DOI, abstract) and see what was read before anything runs; recent appraisals |
+| Appraise | `/` | One glass box for a drug, a condition, or a pair; its **+** opens paste a paper (PMID, DOI, abstract) and shows what was read before anything runs |
 | Working | `/q/parkinsons-disease` | The evidence ledger builds step by step, each naming its source and what came back; finished steps open beside it; one step shows a retry |
 | Results | same route | Candidates grouped into *not yet refuted* and *refuted in controlled studies*, ordered by fewest unresolved trial prerequisites — never by a score. List or board (by trial stage). |
 | Detail | `/q/parkinsons-disease/nilotinib` | Critical appraisal, the mechanism chain with a label on every link and the weakest link marked, safety in the likely trial population, the five prerequisites a trial would assume, your call |
@@ -37,7 +37,7 @@ Every claim in a chain carries dated evidence. At a chosen date, only evidence p
 - **The other candidates** (ambroxol, exenatide, isradipine, simvastatin; metformin for Parkinson's, Alzheimer's and colorectal adenoma) are **drafts**: structurally complete, entered from memory of the literature, not yet verified against the papers. They are marked *draft* in the interface and listed on the Sources page. Where a citation is uncertain the link is a PubMed search rather than an identifier.
 - **The ledger** is a scripted sequence with real source names, not a recorded live run; the interface says so.
 
-Every screen carries a data note. This is not a medical device, not a clinical decision tool, and not a prescribing aid.
+The Sources page and every export carry the data note. This is not a medical device, not a clinical decision tool, and not a prescribing aid.
 
 ## The test we hold ourselves to
 
