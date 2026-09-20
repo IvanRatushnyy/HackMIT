@@ -281,3 +281,43 @@
   line-height: var(--line-3);
   color: var(--color-ink-muted);
 }
+
+/* ---- Results, paper and ink (20 Sep): one row, three answers --------------------------------- */
+
+.results { gap: 8px; }
+.results__head,
+.results__row {
+  grid-template-columns: 40px 1.6fr 1.15fr 1.25fr 1fr 32px;
+  gap: 24px;
+}
+.results__head { padding: 0 24px 8px; }
+.results__head .kicker { color: var(--ink-faint); }
+.register { padding-top: 40px; gap: 8px; }
+.register:first-child { padding-top: 8px; }
+.register__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.register__word { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.register__n { font-size: 13px; color: var(--ink-faint); }
+.register__rule { display: none; }
+.results__row {
+  min-height: 104px;
+  padding: 22px 24px;
+  align-items: start;
+  cursor: pointer;
+  border-top: 1px solid var(--hair);
+}
+.panel > .results__row:first-child { border-top: 0; }
+.results__row:hover { background: var(--paper-raised); }
+.results__rank { color: var(--ink-faint); font-size: 13px; line-height: 24px; }
+.cell__name { font-size: 24px; line-height: 28px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.cell__class { font-size: 13px; line-height: 18px; color: var(--ink-muted); margin-top: 2px; }
+.cell__mech { font-size: 13px; line-height: 18px; color: var(--ink-faint); }
+.cell__strong { font-size: 15px; line-height: 22px; font-weight: 500; color: var(--ink); }
+.cell__sub { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+.critical.cell__strong { color: var(--color-critical); }
+.results__open { width: 32px; height: 32px; margin-top: -4px; color: var(--ink-faint); }
+.results__row:hover .results__open { color: var(--ink); }

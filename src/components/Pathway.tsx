@@ -372,9 +372,12 @@ export function Pathway({ candidate, cutoff, sourcesHref }: { candidate: Candida
   return (
     <section className="section" aria-labelledby="pathway">
       <div className="section__head">
-        <h2 className="display-xs" id="pathway">
-          pathway
-        </h2>
+        <div>
+          <h2 className="display-xs" id="pathway">
+            <span className="section__n">2</span>the pathway
+          </h2>
+          <p className="section__purpose">The hypothesis drawn as biology. Line weight is the evidence; grey is what nobody disputes. Select an arrow for its sources.</p>
+        </div>
         <span className="section__status">
           {status === 'live' && `live from Open Targets and Reactome, ${fetched}`}
           {status === 'loading' && 'asking Open Targets'}

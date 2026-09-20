@@ -241,3 +241,160 @@
 .paste__facts dt {
   color: var(--color-ink-faint);
 }
+
+/* ---- The landing (20 Sep, paper and ink) --------------------------------------------------------- */
+
+.land {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 80px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.land__top {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  align-items: end;
+  gap: 40px;
+  min-height: 300px;
+}
+.land__lead {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.land__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(88px, 9vw, 152px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  color: var(--ink);
+}
+.land__body {
+  margin: 0;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+.land__art {
+  width: 100%;
+  height: 320px;
+  justify-self: end;
+}
+
+/* The field: the pivot of the page */
+.land__ask {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.land__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+.land__field {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 12px;
+}
+.land__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.land__input::placeholder { color: var(--ink-faint); font-weight: 400; }
+.land__input:focus { outline: none; }
+.land__go {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  transition: opacity 200ms ease-out, background-color 200ms ease-out;
+}
+.land__go svg { width: 18px; height: 18px; }
+.land__go:hover { background: #222; }
+.land__go:disabled { opacity: 0.3; cursor: default; }
+.land__examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  font-size: 14px;
+}
+.land__try { color: var(--ink-faint); }
+.land__example {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--hair);
+  cursor: pointer;
+}
+.land__example:hover { color: var(--ink); text-decoration-color: currentColor; }
+.land__note { margin: 0; font-size: 13px; color: var(--ink-muted); }
+
+/* What happens next: the four stages after this one, as a row of boxes */
+.land__next {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--hair);
+}
+.land__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  row-gap: 8px;
+  align-items: center;
+  padding: 20px 24px 22px;
+  border-left: 1px solid var(--hair);
+}
+.land__step:first-child { border-left: 0; }
+.land__step-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--ink-2);
+  color: var(--ink-2);
+}
+.land__step-icon svg { width: 16px; height: 16px; }
+.land__step-n { font-size: 13px; font-weight: 500; color: var(--ink-faint); }
+.land__step-word { font-size: 16px; font-weight: 600; color: var(--ink); }
+.land__step-line {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ink-muted);
+}

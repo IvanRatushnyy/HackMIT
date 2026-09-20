@@ -68,20 +68,25 @@ export function Objections({ candidate, cutoff, sourcesHref }: { candidate: Cand
   const reduce = useReducedMotion()
   const [open, setOpen] = useState<string | null>(null)
   const srcById = new Map(candidate.sources.map((s) => [s.id, s]))
-  const objections = visibleObjections(candidate, cutoff.date)
+  const all = visibleObjections(candidate, cutoff.date)
+  const [more, setMore] = useState(false)
+  const objections = more ? all : all.slice(0, 3)
   return (
     <section className="section" aria-labelledby="objections">
       <div className="section__head">
-        <h2 className="display-xs" id="objections">
-          critical appraisal
-        </h2>
+        <div>
+          <h2 className="display-xs" id="objections">
+            <span className="section__n">1</span>the case against
+          </h2>
+          <p className="section__purpose">The strongest objections, in order of consequence, each dated and cited. Open one for the evidence.</p>
+        </div>
         <span className="section__count">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span key={objections.length} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.24 }}>
-              {objections.length}
+              {all.length}
             </motion.span>
           </AnimatePresence>{' '}
-          {objections.length === 1 ? 'objection' : 'objections'}
+          {all.length === 1 ? 'objection' : 'objections'}
         </span>
       </div>
       <motion.div className="panel objections" layout={!reduce}>
@@ -129,6 +134,11 @@ export function Objections({ candidate, cutoff, sourcesHref }: { candidate: Cand
             )
           })}
         </AnimatePresence>
+        {all.length > 3 && (
+          <button type="button" className="objections__more" onClick={() => setMore((m) => !m)}>
+            {more ? 'show the first three only' : `and ${all.length - 3} more`}
+          </button>
+        )}
       </motion.div>
     </section>
   )
@@ -159,9 +169,12 @@ export function SafetyPanel({ candidate, cutoff }: { candidate: CandidateDetail;
   return (
     <section className="section" aria-labelledby="safety">
       <div className="section__head">
-        <h2 className="display-xs" id="safety">
-          safety
-        </h2>
+        <div>
+          <h2 className="display-xs" id="safety">
+            safety
+          </h2>
+          <p className="section__purpose">What the label means for the people who would be in this trial.</p>
+        </div>
       </div>
       <div className="panel panel--pad safety">
         {s ? (
@@ -228,9 +241,12 @@ export function BeforeTrial({ candidate, cutoff, isToday }: { candidate: Candida
   return (
     <section className="section" aria-labelledby="prereqs">
       <div className="section__head section__head--count">
-        <h2 className="display-xs" id="prereqs">
-          before a trial
-        </h2>
+        <div>
+          <h2 className="display-xs" id="prereqs">
+            <span className="section__n">3</span>before a trial
+          </h2>
+          <p className="section__purpose">Five things that would have to be true first. Select one for its status and evidence.</p>
+        </div>
         <span className="section__hero">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span key={n} className="section__hero-n" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.28 }}>
@@ -324,9 +340,12 @@ export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: 
   return (
     <section className="section" aria-labelledby="call">
       <div className="section__head">
-        <h2 className="display-xs" id="call">
-          your call
-        </h2>
+        <div>
+          <h2 className="display-xs" id="call">
+            <span className="section__n">4</span>your call
+          </h2>
+          <p className="section__purpose">Recorded in your words and attributed to you. It goes on the last slide of the deck, or not at all.</p>
+        </div>
       </div>
       <div className="panel panel--pad call">
         <div className="call__choices" role="radiogroup" aria-label="Your call">
@@ -340,7 +359,7 @@ export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: 
           <textarea className="textarea" aria-label="Your reasoning" placeholder="In your words." value={a.line ?? ''} onChange={(e) => update({ ...a, line: e.target.value })} />
           <div className="call__actions">
             <Link className="btn btn--primary btn--lg" to={exportHref}>
-              Export appraisal
+              5 share · export the deck
             </Link>
           </div>
         </div>

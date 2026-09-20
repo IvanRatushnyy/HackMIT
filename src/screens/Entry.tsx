@@ -1,65 +1,97 @@
-/* elute — Entry: the ask box centred in the space under the header, the shard composition rippling
- * behind it, paste a paper behind the + button. Submitting sends one ripple out from the box and the
- * next page arrives on its wake. */
+/* elute — Entry: stage 1 of 5. The headline says what the tool does; the field is the pivot of the page;
+ * under it, the four stages that follow, so the person knows what pressing Enter starts and where it ends. */
 
-import { useContext, useId, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { useReducedMotion } from 'motion/react'
-import { Header, StartupDone } from '../components/frame'
-import { Ask } from '../components/Ask'
-import { PastePaper } from '../components/PastePaper'
+import { Header } from '../components/frame'
+import { Molecule } from '../components/Molecule'
+import { StageIcon } from '../components/Stages'
 import { useAsk } from '../components/useAsk'
 
-const RIPPLE_MS = 640
+const EXAMPLES = ['Parkinson’s disease', 'metformin', 'nilotinib for Parkinson’s']
 
-/* wait: under the startup screen · go: arriving after it · settled: an ordinary page reveal */
-type Arrival = 'wait' | 'go' | 'settled'
-
-function useArrival(): Arrival {
-  const done = useContext(StartupDone)
-  const [underSplash] = useState(() => !done)
-  return !underSplash ? 'settled' : done ? 'go' : 'wait'
-}
+const NEXT = [
+  { id: 'research', word: 'research', line: 'ten checks against public sources, about half a minute' },
+  { id: 'candidates', word: 'candidates', line: 'every drug with human data, ranked, weakest link shown' },
+  { id: 'appraisal', word: 'appraisal', line: 'the case against, the pathway, what a trial would need' },
+  { id: 'share', word: 'share', line: 'a discussion deck for the meeting, with your call' },
+] as const
 
 export function Entry() {
-  const [params] = useSearchParams()
-  const [paste, setPaste] = useState(params.get('paste') === '1')
-  const pasteId = useId()
-  const arrival = useArrival()
-  const reduce = useReducedMotion()
-  /* A generated loop could replace the mesh ground on this page: drop `public/entry-loop.mp4` and a poster in,
-   * render <video className="entry__loop" muted loop playsInline autoPlay poster="/entry-loop.jpg" src="/entry-loop.mp4" />
-   * inside .entry before the block, hidden under reduced motion by entry.css. Kling 3.0 prompt, 5 s, 16:9, 1080p:
-   * "Four thin curved planes of glass in ink black, slate blue-grey, dust grey and deep raspberry, stacked and
-   * intersecting like the layers of a crystal, slowly sliding apart into four separate bands, drifting on a plain
-   * warm-white paper background, soft studio light, macro product render, no text, no people, no molecules, the
-   * last frame matching the first for a seamless loop." Generate three, keep the one whose seam does not show. */
-  const ripple = useRef<HTMLDivElement>(null)
-
-  // One ripple from the box outward, then the navigation; the wait is the ripple's length
-  const launch = () => {
-    const el = ripple.current
-    if (!el || reduce) return 0
-    el.animate(
-      [
-        { transform: 'scale(0.2)', opacity: 0.9 },
-        { transform: 'scale(1)', opacity: 0 },
-      ],
-      { duration: RIPPLE_MS, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' },
-    )
-    return RIPPLE_MS - 200
-  }
-  const t = useAsk(launch)
-
+  const t = useAsk()
   return (
     <main className="page">
-      <Header />
-      <div className={`entry entry--${arrival}`}>
-        <div className="entry__block">
-          <Ask t={t} pasteOpen={paste} pasteId={pasteId} onPaste={() => setPaste((p) => !p)} />
-          {paste && <PastePaper id={pasteId} onClose={() => setPaste(false)} />}
+      <Header stage="ask" />
+      <div className="land">
+        <div className="land__top">
+          <div className="land__lead">
+            <h1 className="land__title">
+              prove it
+              <br />
+              to me
+            </h1>
+            <p className="land__body">
+              Name a condition, an approved drug, or a candidate pair. Elute checks it against the public record and puts
+              the strongest argument against it on the page first, dated and sourced. It organises evidence for a scientist
+              who is qualified to weigh it. It never recommends.
+            </p>
+          </div>
+          <Molecule className="land__art" />
         </div>
-        <div ref={ripple} className="entry__ripple" aria-hidden="true" />
+
+        <form
+          className="land__ask"
+          onSubmit={(e) => {
+            e.preventDefault()
+            t.submit()
+          }}
+        >
+          <label className="land__label" htmlFor="ask">
+            1 ask
+          </label>
+          <div className="land__field">
+            <input
+              id="ask"
+              className="land__input"
+              type="text"
+              placeholder="a condition, a drug, or a drug for a condition"
+              value={t.text}
+              onChange={(e) => t.onChange(e.target.value)}
+              autoComplete="off"
+              autoFocus
+            />
+            <button type="submit" className="land__go" disabled={!t.text.trim() || t.launching}>
+              appraise
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+          <div className="land__examples" aria-label="Examples">
+            <span className="land__try">try</span>
+            {EXAMPLES.map((word) => (
+              <button key={word} type="button" className="land__example" onClick={() => t.go(word)} disabled={t.launching}>
+                {word}
+              </button>
+            ))}
+          </div>
+          {t.note && (
+            <p className="land__note" role="status">
+              {t.note}
+            </p>
+          )}
+        </form>
+
+        <ol className="land__next" aria-label="What happens next">
+          {NEXT.map((s, i) => (
+            <li key={s.id} className="land__step">
+              <span className="land__step-icon">
+                <StageIcon id={s.id} />
+              </span>
+              <span className="land__step-n">{i + 2}</span>
+              <span className="land__step-word">{s.word}</span>
+              <span className="land__step-line">{s.line}</span>
+            </li>
+          ))}
+        </ol>
       </div>
     </main>
   )

@@ -2,11 +2,11 @@
  * Working: the ledger builds row by row beside a panel showing the latest finished step.
  * Results: a grouped list (not yet refuted / refuted in controlled studies) or a board by trial stage. */
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Header, Kicker } from '../components/frame'
-import { WorkingLedger } from '../components/Ledger'
-import { formatClock, formatDate, plain } from '../components/evidence'
+import { Pipeline } from '../components/Pipeline'
+import { formatDate } from '../components/evidence'
 import { rowDurations, source } from '../data/source'
 import type { QueryRecord, ResultsPage } from '../data/types'
 import { Results } from './Results'
@@ -14,7 +14,6 @@ import { touchRecent } from '../lib/recent'
 
 type Phase = 'loading' | 'working' | 'results' | 'missing'
 
-const KIND_WORD = { condition: 'condition → candidates', drug: 'drug → indications', pair: 'pair → appraisal' } as const
 
 export function Query() {
   const { query = '' } = useParams()
@@ -23,17 +22,9 @@ export function Query() {
   const [phase, setPhase] = useState<Phase>('loading')
   const [done, setDone] = useState(0) // rows completed
   const [page, setPage] = useState<ResultsPage | undefined>()
-  const [params, setParams] = useSearchParams()
+  const [params] = useSearchParams()
   const view: 'list' | 'board' = params.get('view') === 'board' ? 'board' : 'list'
-  const setView = (v: 'list' | 'board') => {
-    const p = new URLSearchParams(params)
-    if (v === 'board') p.set('view', 'board')
-    else p.delete('view')
-    setParams(p, { replace: true })
-  }
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
-  const [elapsed, setElapsed] = useState(0)
-  const started = useRef(0)
 
   useEffect(() => {
     let cancelled = false
@@ -65,13 +56,14 @@ export function Query() {
         return
       }
       setPhase('working')
-      started.current = performance.now()
       let i = 0
       for await (const _ev of source.run(query)) {
         if (cancelled) return
         i++
         setDone(i)
       }
+      await new Promise((r) => setTimeout(r, 1100))
+      if (cancelled) return
       await finish()
     })
     return () => {
@@ -79,19 +71,13 @@ export function Query() {
     }
   }, [query, navigate])
 
-  // The status line's clock
-  useEffect(() => {
-    if (phase !== 'working') return
-    const t = setInterval(() => setElapsed(performance.now() - started.current), 250)
-    return () => clearInterval(t)
-  }, [phase])
 
   const today = page?.today ?? '2026-09-19'
 
   if (phase === 'missing' || (q && !q)) {
     return (
       <main className="page">
-        <Header />
+        <Header stage="research" />
         <div className="col">
           <Missing />
         </div>
@@ -100,58 +86,42 @@ export function Query() {
   }
 
   const durations = q ? rowDurations(q.ledger) : []
-  const totalMs = durations.reduce((a, b) => a + b, 0)
   const recorded = q?.ledger.kind === 'recorded'
 
+  const total = q?.ledger.rows.length ?? 0
   return (
     <main className="page">
-      <Header />
+      <Header stage={phase === 'results' ? 'candidates' : 'research'} links={{ research: `/q/${query}` }} />
       {q && (
         <div className="col">
-          <div className="title arrive">
-            <div className="title__main">
-              <Kicker>{phase === 'working' ? KIND_WORD[q.kind] : q.kind === 'drug' ? 'drug' : 'condition'}</Kicker>
-              <h1 className="display-sm">{q.heading}</h1>
-              {phase === 'results' && page && (
-                <p className="title__sub">
-                  {page.candidates.length} candidates with human data as of {formatDate(today)}.{' '}
-                  <Link to={`/q/${q.slug}/sources`}>sources</Link>
-                </p>
-              )}
-              {phase === 'working' && <p className="title__sub">{plain(q.resolved)}</p>}
-            </div>
-            {phase === 'working' && (
-              <p className="status" aria-live="polite">
-                step {Math.min(done + 1, q.ledger.rows.length)} of {q.ledger.rows.length}, {formatClock(elapsed)},{' '}
-                {recorded ? `accelerated replay, about ${Math.round(totalMs / 1000)} s` : `scripted, about ${Math.round(totalMs / 1000)} s`}, results open when done
-              </p>
-            )}
-            {phase === 'results' && (
-              <div className="title__aside">
-                <div className="seg" role="tablist" aria-label="View">
-                  <button type="button" role="tab" className="seg__item" aria-selected={view === 'list'} onClick={() => setView('list')}>
-                    List
-                  </button>
-                  <button type="button" role="tab" className="seg__item" aria-selected={view === 'board'} onClick={() => setView('board')}>
-                    Board
-                  </button>
-                </div>
+          {phase === 'working' && (
+            <div className="working-title arrive">
+              <div className="title__main">
+                <Kicker>2 research</Kicker>
+                <h1 className="display-sm">checking {q.heading}</h1>
+                <p className="purpose">Ten questions, each asked of a public database. What comes back is the evidence every later page cites.</p>
               </div>
-            )}
-          </div>
+              <p className="working-title__count" aria-live="polite">
+                <b>{Math.min(done, total)}</b> of {total} done{recorded ? '' : ', scripted replay'}
+              </p>
+            </div>
+          )}
+          {phase === 'results' && page && (
+            <div className="title arrive">
+              <div className="title__main">
+                <Kicker>3 candidates</Kicker>
+                <h1 className="display-sm">{q.heading}</h1>
+                <p className="purpose">
+                  {page.candidates.length} approved drugs with human data in this indication as of {formatDate(today)}. Open one to read the case against it.{' '}
+                  <Link to={`/q/${q.slug}/sources`}>what was checked</Link>
+                </p>
+              </div>
+            </div>
+          )}
 
           {phase === 'working' && (
             <div className="working arrive" style={{ '--i': 1 } as React.CSSProperties}>
-              <WorkingLedger
-                rows={q.ledger.rows}
-                done={done}
-                kind={q.kind}
-                cutoff={today}
-                selected={selectedStep}
-                onSelect={setSelectedStep}
-                durations={durations}
-                recorded={!!recorded}
-              />
+              <Pipeline rows={q.ledger.rows} done={done} kind={q.kind} cutoff={today} selected={selectedStep} onSelect={setSelectedStep} durations={durations} />
             </div>
           )}
 

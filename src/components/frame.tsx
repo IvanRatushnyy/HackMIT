@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import shardSvg from '../../design/shard/shard.svg?raw'
 import { GROUND_PLANES, parseShard } from '../lib/shard'
+import { Stages, type StageId } from './Stages'
 
 export const SHARD = parseShard(shardSvg)
 
@@ -65,12 +66,13 @@ export function Wordmark() {
 
 /** The same header on every page: the wordmark (the way home; there is no search up here) centred in its
  * white block, then the shard band from the block's edge. */
-export function Header() {
+export function Header({ stage, links }: { stage?: StageId; links?: Partial<Record<StageId, string>> }) {
   useBandPhase()
   return (
     <header className="header">
       <div className="header__block">
         <Wordmark />
+        {stage && <Stages current={stage} links={{ ask: '/', ...links }} />}
       </div>
     </header>
   )

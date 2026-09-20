@@ -74,7 +74,7 @@ export function Sources() {
 
   return (
     <main className="page">
-      <Header />
+      <Header stage="research" links={{ research: `/q/${query}` }} />
       <div className="col">
         <div className="title arrive">
           <div className="title__main">

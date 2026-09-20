@@ -10,6 +10,7 @@ import './styles/detail.css'
 import './styles/pathway.css'
 import './styles/sources.css'
 import './styles/export.css'
+import './styles/ink.css'
 import { App } from './app/App'
 
 createRoot(document.getElementById('root')!).render(

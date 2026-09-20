@@ -482,3 +482,62 @@
   gap: var(--space-sm);
   max-width: var(--measure);
 }
+
+/* ---- Detail, paper and ink (20 Sep): the three answers, a page map, numbered sections ------------ */
+
+.detail__title { margin-bottom: 24px; align-items: flex-start; }
+.detail__name { margin-top: 6px; }
+.detail__class { font-size: 15px; color: var(--ink-muted); margin-top: 8px; }
+.detail__mechanism, .detail__evidence { display: none; }
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.4fr;
+  border: 1px solid var(--hair);
+  margin-bottom: 56px;
+}
+.fact, .pagemap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 24px 20px;
+  border-left: 1px solid var(--hair);
+  min-width: 0;
+}
+.fact:first-child { border-left: 0; }
+.fact__k { font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: var(--ink-faint); }
+.fact__v { display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 26px; font-weight: 500; color: var(--ink); }
+.fact__v.critical { color: var(--color-critical); }
+.fact__s { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+.pagemap ol { display: flex; flex-direction: column; gap: 4px; }
+.pagemap a {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.pagemap a:hover .pagemap__w { text-decoration: underline; text-underline-offset: 3px; }
+.pagemap__n { font-size: 12px; color: var(--ink-faint); }
+.pagemap__w { font-weight: 500; }
+.pagemap__c { font-size: 12px; color: var(--ink-muted); }
+
+.section__head { align-items: flex-start; }
+.section__n { display: inline-block; width: 36px; color: var(--ink-faint); font-weight: 500; font-size: 16px; letter-spacing: 0; }
+.section__purpose { margin-top: 6px; font-size: 14px; line-height: 20px; color: var(--ink-muted); max-width: 64ch; }
+.objections__more {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  border-top: 1px solid var(--hair);
+  text-align: left;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+.objections__more:hover { color: var(--ink); background: var(--paper-raised); }
+.detail__body { gap: 64px; }
+.detail { gap: 40px; }
+.detail__title { padding-bottom: 0; margin-bottom: 0; }
+.facts { margin-bottom: 8px; }
