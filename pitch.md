@@ -42,6 +42,14 @@ Second conversation, HackMIT, 19 Sep 2026. Verbatim or near-verbatim. Each quote
 
 **Critique like a seasoned expert.** *"Take on the persona of a very seasoned drug discovery research expert. What would they do to critique the output of this, and then iteratively kind of round off those."* → our review loop: every screen is put in front of a fresh reviewer playing that expert before we call it done.
 
+## The number for the stage
+
+AstraZeneca applied a five-question framework to every project: right target, right patient, right tissue, right safety, right commercial potential. Their candidate-to-phase-III completion rate went from 4 % in 2005–2010 to 19 % in 2012–2016 (Morgan et al., *Nat Rev Drug Discov* 2018, https://pubmed.ncbi.nlm.nih.gov/29348681/). A checklist a scientist actually runs, per candidate, more than quadrupled the rate. Elute puts that checklist on the card.
+
+## The second track: OpenAlex
+
+For the sponsor track that provides the OpenAlex dataset (name as heard: Volar Ridge; confirm before the deck), the framing is: OpenAlex is the main literature context of the appraisal, and the other sources are supporting context. Concretely, the literature step of the ledger pulls works and their citation graph from OpenAlex, and every paper cited in the exported discussion document carries its OpenAlex work id. It is a backend-stage addition, not a last-minute drop-in, and the PRD records it that way (§8).
+
 ## Audiences he named that we are not building for this weekend
 
 We build for one user: the translational scientist who has to decide whether a candidate goes into preclinical or clinical testing. Henry named others; they are pitch context, not product scope.
