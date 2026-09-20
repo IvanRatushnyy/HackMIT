@@ -1,0 +1,477 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "24745685,24786396,24936253,25025064,25134459,26207888,27434297,27434298"
+ },
+ "fetched_at": "2026-09-20T09:06:36+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "24745685",
+    "title": "Treatment strategies in mastocytosis.",
+    "abstract": "Treatment recommendations for mastocytosis are based mostly on expert opinion rather than evidence obtained from controlled clinical trials. In this article, treatment options for mastocytosis are presented, with a focus on the control of mediator-related symptoms in patients with indolent disease.",
+    "authors": [
+     {
+      "name": "Siebenhaar Frank",
+      "affiliation": "Department of Dermatology and Allergy, Interdisciplinary Mastocytosis Center Charit\u00e9, Charit\u00e9-Universit\u00e4tsmedizin Berlin, Charit\u00e9platz 1, Berlin 10117, Germany. Electronic address: frank.siebenhaar@charite.de."
+     },
+     {
+      "name": "Akin Cem",
+      "affiliation": "Division of Rheumatology, Allergy, Immunology, Mastocytosis Center, Harvard Medical School, Brigham and Women's Hospital, 1 Jimmy Fund Way, Room 626B, Boston, MA 02115, USA."
+     },
+     {
+      "name": "Bindslev-Jensen Carsten",
+      "affiliation": "Department of Dermatology, Allergy Centre, Mastocytosis Centre Odense University Hospital, MastOUH, Odense University Hospital, Sdr. Boulevard 29, Entrance 142, 5000 Odense C, Denmark."
+     },
+     {
+      "name": "Maurer Marcus",
+      "affiliation": "Department of Dermatology and Allergy, Interdisciplinary Mastocytosis Center Charit\u00e9, Charit\u00e9-Universit\u00e4tsmedizin Berlin, Charit\u00e9platz 1, Berlin 10117, Germany."
+     },
+     {
+      "name": "Broesby-Olsen Sigurd",
+      "affiliation": "Department of Dermatology, Allergy Centre, Mastocytosis Centre Odense University Hospital, MastOUH, Odense University Hospital, Sdr. Boulevard 29, Entrance 142, 5000 Odense C, Denmark."
+     }
+    ],
+    "journal": "Immunology and allergy clinics of North America",
+    "pub_date": "2014 May",
+    "pub_year": "2014",
+    "doi": "10.1016/j.iac.2014.01.012",
+    "doi_url": "https://doi.org/10.1016/j.iac.2014.01.012",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24745685/",
+    "mesh_terms": [
+     "1-Alkyl-2-acetylglycerophosphocholine Esterase",
+     "Antibodies, Anti-Idiotypic",
+     "Antibodies, Monoclonal, Humanized",
+     "Bone and Bones",
+     "Central Nervous System",
+     "Dasatinib",
+     "Gastrointestinal Tract",
+     "Gene Expression",
+     "Histamine Antagonists",
+     "Humans",
+     "Mast Cells",
+     "Mastocytosis",
+     "Omalizumab",
+     "Protein Kinase Inhibitors",
+     "Proto-Oncogene Proteins c-kit",
+     "Pyrimidines",
+     "Skin",
+     "Thiazoles"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, Non-U.S. Gov't",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "24786396",
+    "title": "The c-Abl inhibitor, nilotinib, protects dopaminergic neurons in a preclinical animal model of Parkinson's disease.",
+    "abstract": "c-Abl is activated in the brain of Parkinson's disease (PD) patients and in 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine (MPTP)-intoxicated mice where it inhibits parkin through tyrosine phosphorylation leading to the accumulation of parkin substrates, and neuronal cell death. In the present study, we evaluated the in vivo efficacy of nilotinib, a brain penetrant c-Abl inhibitor, in the acute MPTP-induced model of PD. Our results show that administration of nilotinib reduces c-Abl activation and the levels of the parkin substrate, PARIS, resulting in prevention of dopamine (DA) neuron loss and behavioral deficits following MPTP intoxication. On the other hand, we observe no reduction in the tyrosine phosphorylation of parkin and the parkin substrate, AIMP2 suggesting that the protective effect of nilotinib may, in part, be parkin-independent or to the pharmacodynamics properties of nilotinib. This study provides a strong rationale for testing other brain permeable c-Abl inhibitors as potential therapeutic agents for the treatment of PD.",
+    "authors": [
+     {
+      "name": "Karuppagounder Senthilkumar S",
+      "affiliation": "1] Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [2] Department of Neurology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [3] Adrienne Helis Malvin Medical Research Foundation, New Orleans, LA 70130-2685, USA."
+     },
+     {
+      "name": "Brahmachari Saurav",
+      "affiliation": "1] Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [2] Department of Neurology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [3] Adrienne Helis Malvin Medical Research Foundation, New Orleans, LA 70130-2685, USA."
+     },
+     {
+      "name": "Lee Yunjong",
+      "affiliation": "1] Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [2] Department of Neurology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [3] Department of Physiology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [4] Adrienne Helis Malvin Medical Research Foundation, New Orleans, LA 70130-2685, USA."
+     },
+     {
+      "name": "Dawson Valina L",
+      "affiliation": "1] Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [2] Department of Neurology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [3] Department of Physiology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [4] Solomon H. Snyder Department of Neuroscience, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [5] Adrienne Helis Malvin Medical Research Foundation, New Orleans, LA 70130-2685, USA."
+     },
+     {
+      "name": "Dawson Ted M",
+      "affiliation": "1] Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [2] Department of Neurology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [3] Department of Pharmacology and Molecular Sciences, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [4] Solomon H. Snyder Department of Neuroscience, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [5] Adrienne Helis Malvin Medical Research Foundation, New Orleans, LA 70130-2685, USA [6]."
+     },
+     {
+      "name": "Ko Han Seok",
+      "affiliation": "1] Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [2] Department of Neurology, The Johns Hopkins University School of Medicine, Baltimore, MD 21205. USA [3] Diana Helis Henry Medical Research Foundation, New Orleans, LA 70130-2685, USA [4]."
+     }
+    ],
+    "journal": "Scientific reports",
+    "pub_date": "2014 May 02",
+    "pub_year": "2014",
+    "doi": "10.1038/srep04874",
+    "doi_url": "https://doi.org/10.1038/srep04874",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24786396/",
+    "mesh_terms": [
+     "1-Methyl-4-phenyl-1,2,3,6-tetrahydropyridine",
+     "Animals",
+     "Behavior, Animal",
+     "Blood-Brain Barrier",
+     "Brain",
+     "Disease Models, Animal",
+     "Dopaminergic Neurons",
+     "Enzyme Activation",
+     "Male",
+     "Mice",
+     "Neuroprotective Agents",
+     "Parkinson Disease",
+     "Phosphorylation",
+     "Proto-Oncogene Proteins c-abl",
+     "Pyrimidines",
+     "Ubiquitin-Protein Ligases"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, N.I.H., Extramural",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "24936253",
+    "title": "12q24 locus association with type 1 diabetes: SH2B3 or ATXN2?",
+    "abstract": "Genetic linkage analyses, genome-wide association studies of single nucleotide polymorphisms, copy number variation surveys, and mutation screenings found the human chromosomal 12q24 locus, with the genes SH2B3 and ATXN2 in its core, to be associated with an exceptionally wide spectrum of disease susceptibilities. Hematopoietic traits of red and white blood cells (like erythrocytosis and myeloproliferative disease), autoimmune disorders (like type 1 diabetes, coeliac disease, juvenile idiopathic arthritis, rheumatoid arthritis, thrombotic antiphospholipid syndrome, lupus erythematosus, multiple sclerosis, hypothyroidism and vitiligo), also vascular pathology (like kidney glomerular filtration rate deficits, serum urate levels, plasma beta-2-microglobulin levels, retinal microcirculation problems, diastolic and systolic blood pressure and hypertension, cardiovascular infarction), furthermore obesity, neurodegenerative conditions (like the polyglutamine-expansion disorder spinocerebellar ataxia type 2, Parkinson's disease, the motor-neuron disease amyotrophic lateral sclerosis, and progressive supranuclear palsy), and finally longevity were reported. Now it is important to clarify, in which ways the loss or gain of function of the locally encoded proteins SH2B3/LNK and ataxin-2, respectively, contribute to these polygenic health problems. SH2B3/LNK is known to repress the JAK2/ABL1 dependent proliferation of white blood cells. Its null mutations in human and mouse are triggers of autoimmune traits and leukemia (acute lymphoblastic leukemia or chronic myeloid leukemia-like), while missense mutations were found in erythrocytosis-1 patients. Ataxin-2 is known to act on RNA-processing and trophic receptor internalization. While its polyglutamine-expansion mediated gain-of-function causes neuronal atrophy in human and mouse, its deletion leads to obesity and insulin resistance in mice. Thus, it is conceivable that the polygenic pathogenesis of type 1 diabetes is enhanced by an SH2B3-dysregulation-mediated predisposition to autoimmune diseases that conspires with an ATXN2-deficiency-mediated predisposition to lipid and glucose metabolism pathology.",
+    "authors": [
+     {
+      "name": "Auburger Georg",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Gispert Suzana",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Lahut Suna",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Om\u00fcr Ozg\u00fcr",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Damrath Ewa",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Heck Melanie",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Ba\u015fak Nazl\u0131",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     }
+    ],
+    "journal": "World journal of diabetes",
+    "pub_date": "2014 Jun 15",
+    "pub_year": "2014",
+    "doi": "10.4239/wjd.v5.i3.316",
+    "doi_url": "https://doi.org/10.4239/wjd.v5.i3.316",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24936253/",
+    "mesh_terms": null,
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "25025064",
+    "title": "Efficacy and pharmacologic data of second-generation tyrosine kinase inhibitor nilotinib in BCR-ABL-positive leukemia patients with central nervous system relapse after allogeneic stem cell transplantation.",
+    "abstract": "Central nervous system (CNS) involvement is a severe complication of BCR-ABL-positive leukemia after allogenic stem cell transplantation (alloSCT) associated with fatal outcome. Although second-generation tyrosine-kinase inhibitors (TKI) such as nilotinib have shown activity in systemic BCR-ABL(+) disease, little data exists on their penetration and efficacy within the CNS. Four patients (3 male, 1 female; age 15-49) with meningeal relapse after alloSCT and subsequent treatment with nilotinib were identified. A total of 17 cerebrospinal fluid (csf) and serum samples were assessed for nilotinib concentration and patient outcome was recorded. Nilotinib concentrations showed a low median csf/plasma ratio of 0.53% (range 0.23-1.5%), yet pronounced clinical efficacy was observed with long-lasting responses (>1 year) in three patients. Comparison with historical data showed a trend towards superior efficacy of nilotinib versus imatinib. Despite poor csf penetration, nilotinib showed significant clinical activity in CNS relapse of BCR-ABL(+) leukemias. As nilotinib has a high protein-binding affinity, the low-protein concentration in csf could translate into a relatively higher amount of free and therefore active nilotinib in csf as compared to blood, possibly explaining the observed efficacy. Thus, treatment with a 2nd generation TKI warrants further investigation and should be considered in cases of CNS relapse of BCR-ABL-positive leukemia after alloSCT.",
+    "authors": [
+     {
+      "name": "Reinwald Mark",
+      "affiliation": "Department of Hematology and Oncology, University Hospital Mannheim, Theodor-Kutzer-Ufer 1-3, 68167 Mannheim, Germany."
+     },
+     {
+      "name": "Schleyer Eberhard",
+      "affiliation": "Department of Hematology and Oncology, Medical Faculty Carl Gustav Carus, Technische Universit\u00e4t Dresden, Fetscherstra\u00dfe 74, 01307 Dresden, Germany ; Department of Internal Medicine, Klinikum Merseburg, Wei\u00dfe Mauer 52, 06217 Merseburg, Germany."
+     },
+     {
+      "name": "Kiewe Philipp",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Blau Igor Wolfgang",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Burmeister Thomas",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Pursche Stefan",
+      "affiliation": "Department of Hematology and Oncology, Medical Faculty Carl Gustav Carus, Technische Universit\u00e4t Dresden, Fetscherstra\u00dfe 74, 01307 Dresden, Germany."
+     },
+     {
+      "name": "Neumann Martin",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Notter Michael",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Thiel Eckhard",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Hofmann Wolf-Karsten",
+      "affiliation": "Department of Hematology and Oncology, University Hospital Mannheim, Theodor-Kutzer-Ufer 1-3, 68167 Mannheim, Germany."
+     }
+    ],
+    "journal": "BioMed research international",
+    "pub_date": "2014",
+    "pub_year": "2014",
+    "doi": "10.1155/2014/637059",
+    "doi_url": "https://doi.org/10.1155/2014/637059",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25025064/",
+    "mesh_terms": [
+     "Adolescent",
+     "Adult",
+     "Benzamides",
+     "Central Nervous System",
+     "Female",
+     "Fusion Proteins, bcr-abl",
+     "Humans",
+     "Imatinib Mesylate",
+     "Kaplan-Meier Estimate",
+     "Leukemia, Myelogenous, Chronic, BCR-ABL Positive",
+     "Male",
+     "Middle Aged",
+     "Neoplasm Recurrence, Local",
+     "Piperazines",
+     "Pyrimidines",
+     "Stem Cell Transplantation",
+     "Transplantation, Homologous"
+    ],
+    "publication_types": [
+     "Clinical Trial",
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "25134459",
+    "title": "Combined STAT3 and BCR-ABL1 inhibition induces synthetic lethality in therapy-resistant chronic myeloid leukemia.",
+    "abstract": "Mutations in the BCR-ABL1 kinase domain are an established mechanism of tyrosine kinase inhibitor (TKI) resistance in Philadelphia chromosome-positive leukemia, but fail to explain many cases of clinical TKI failure. In contrast, it is largely unknown why some patients fail TKI therapy despite continued suppression of BCR-ABL1 kinase activity, a situation termed BCR-ABL1 kinase-independent TKI resistance. Here, we identified activation of signal transducer and activator of transcription 3 (STAT3) by extrinsic or intrinsic mechanisms as an essential feature of BCR-ABL1 kinase-independent TKI resistance. By combining synthetic chemistry, in vitro reporter assays, and molecular dynamics-guided rational inhibitor design and high-throughput screening, we discovered BP-5-087, a potent and selective STAT3 SH2 domain inhibitor that reduces STAT3 phosphorylation and nuclear transactivation. Computational simulations, fluorescence polarization assays and hydrogen-deuterium exchange assays establish direct engagement of STAT3 by BP-5-087 and provide a high-resolution view of the STAT3 SH2 domain/BP-5-087 interface. In primary cells from chronic myeloid leukemia (CML) patients with BCR-ABL1 kinase-independent TKI resistance, BP-5-087 (1.0\u2009\u03bcM) restored TKI sensitivity to therapy-resistant CML progenitor cells, including leukemic stem cells. Our findings implicate STAT3 as a critical signaling node in BCR-ABL1 kinase-independent TKI resistance, and suggest that BP-5-087 has clinical utility for treating malignancies characterized by STAT3 activation.",
+    "authors": [
+     {
+      "name": "Eiring Anna M",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Page Brent D G",
+      "affiliation": "Department of Chemical and Physical Sciences, University of Toronto Mississauga, Mississauga, Ontario, Canada."
+     },
+     {
+      "name": "Kraft Ira L",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Mason Clinton C",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Vellore Nadeem A",
+      "affiliation": "Department of Medicinal Chemistry, College of Pharmacy, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Resetca Diana",
+      "affiliation": "York University Chemistry Department, Toronto, Ontario, Canada."
+     },
+     {
+      "name": "Zabriskie Matthew S",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Zhang Tian Y",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Khorashad Jamshid S",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     },
+     {
+      "name": "Engar Alexander J",
+      "affiliation": "Huntsman Cancer Institute, The University of Utah, Salt Lake City, Utah, USA."
+     }
+    ],
+    "journal": "Leukemia",
+    "pub_date": "2015 Mar",
+    "pub_year": "2015",
+    "doi": "10.1038/leu.2014.245",
+    "doi_url": "https://doi.org/10.1038/leu.2014.245",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25134459/",
+    "mesh_terms": [
+     "Aminosalicylic Acids",
+     "Antineoplastic Agents",
+     "Apoptosis",
+     "Benzamides",
+     "Cell Line, Tumor",
+     "Dasatinib",
+     "Drug Discovery",
+     "Drug Resistance, Neoplasm",
+     "Fusion Proteins, bcr-abl",
+     "Gene Expression Regulation, Leukemic",
+     "Genes, Reporter",
+     "Humans",
+     "Imatinib Mesylate",
+     "Leukemia, Myelogenous, Chronic, BCR-ABL Positive",
+     "Leukocytes, Mononuclear",
+     "Luciferases",
+     "Molecular Docking Simulation",
+     "Neoplastic Stem Cells",
+     "Phosphorylation",
+     "Piperazines",
+     "Protein Kinase Inhibitors",
+     "Protein Structure, Tertiary",
+     "Pyrimidines",
+     "STAT3 Transcription Factor",
+     "Signal Transduction",
+     "Small Molecule Libraries",
+     "Sulfonamides",
+     "Thiazoles"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, N.I.H., Extramural",
+     "Research Support, Non-U.S. Gov't",
+     "Research Support, U.S. Gov't, Non-P.H.S."
+    ]
+   },
+   {
+    "pmid": "26207888",
+    "title": "A historical overview of protein kinases and their targeted small molecule inhibitors.",
+    "abstract": "Protein kinases play a predominant regulatory role in nearly every aspect of cell biology and they can modify the function of a protein in almost every conceivable way. Protein phosphorylation can increase or decrease enzyme activity and it can alter other biological activities such as transcription and translation. Moreover, some phosphorylation sites on a given protein are stimulatory while others are inhibitory. The human protein kinase gene family consists of 518 members along with 106 pseudogenes. Furthermore, about 50 of the 518 gene products lack important catalytic residues and are called protein pseudokinases. The non-catalytic allosteric interaction of protein kinases and pseudokinases with other proteins has added an important regulatory feature to the biochemistry and cell biology of the protein kinase superfamily. With rare exceptions, a divalent cation such as Mg2+ is required for the reaction. All protein kinases exist in a basal state and are activated only as necessary by divergent regulatory stimuli. The mechanisms for switching between dormant and active protein kinases can be intricate. Phosphorylase kinase was the first protein kinase to be characterized biochemically and the mechanism of its regulation led to the discovery of cAMP-dependent protein kinase (protein kinase A, or PKA), which catalyzes the phosphorylation and activation of phosphorylase kinase. This was the first protein kinase cascade or signaling module to be elucidated. The epidermal growth factor receptor-Ras-Raf-MEK-ERK signaling module contains protein-tyrosine, protein-serine/threonine, and dual specificity protein kinases. PKA has served as a prototype of this enzyme family and more is known about this enzyme than any other protein kinase. The inactive PKA holoenzyme consists of two regulatory and two catalytic subunits. After binding four molecules of cAMP, the holoenzyme dissociates into a regulatory subunit dimer (each monomer binds two cAMP) and two free and active catalytic subunits. PKA and all other protein kinase domains have a small amino-terminal lobe and large carboxyterminal lobe as determined by X-ray crystallography. The N-lobe and C-lobe form a cleft that serves as a docking site for MgATP. Nearly all active protein kinases contain a K/E/D/D signature sequence that plays important structural and catalytic roles. Protein kinases contain hydrophobic catalytic and regulatory spines and collateral shell residues that are required to assemble the active enzyme. There are two general kinds of conformational changes associated with most protein kinases. The first conformational change involves the formation of an intact regulatory spine to form an active enzyme. The second conformational change occurs in active kinases as they toggle between open and closed conformations during their catalytic cycles. Because mutations and dysregulation of protein kinases play causal roles in human disease, this family of enzymes has become one of the most important drug targets over the past two decades. Imatinib was approved by the United States FDA for the treatment of chronic myelogenous leukemia in 2001; this small molecule inhibits the BCR-Abl protein kinase oncoprotein that results from the formation of the Philadelphia chromosome. More than two dozen other orally effective mechanism-based small molecule protein kinase inhibitors have been subsequently approved by the FDA. These drugs bind to the ATP-binding site of their target enzymes and extend into nearby hydrophobic pockets. Most of these protein kinase inhibitors prolong survival in cancer patients only weeks or months longer than standard cytotoxic therapies. In contrast, the clinical effectiveness of imatinib against chronic myelogenous leukemia is vastly superior to that of any other targeted protein kinase inhibitor with overall survival lasting a decade or more. However, the near universal and expected development of drug resistance in the treatment of neoplastic disorders requires new approaches to solve this therapeutic challenge. Cancer is the predominant indication for these drugs, but disease targets are increasing. For example, we can expect the approval of new drugs inhibiting other protein kinases in the treatment of illnesses such as hypertension, Parkinson's disease, and autoimmune diseases.",
+    "authors": [
+     {
+      "name": "Roskoski Robert",
+      "affiliation": "Blue Ridge Institute for Medical Research, 3754 Brevard Road, Suite 116, Box 19, Horse Shoe, NC 28742-8814, United States. Electronic address: rrj@brimr.org."
+     }
+    ],
+    "journal": "Pharmacological research",
+    "pub_date": "2015 Oct",
+    "pub_year": "2015",
+    "doi": "10.1016/j.phrs.2015.07.010",
+    "doi_url": "https://doi.org/10.1016/j.phrs.2015.07.010",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/26207888/",
+    "mesh_terms": [
+     "Animals",
+     "Antineoplastic Agents",
+     "Cyclic AMP-Dependent Protein Kinases",
+     "Humans",
+     "Neoplasms",
+     "Protein Kinase Inhibitors",
+     "Signal Transduction",
+     "Small Molecule Libraries"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "27434297",
+    "title": "Nilotinib Effects in Parkinson's disease and Dementia with Lewy bodies.",
+    "abstract": "BACKGROUND: We evaluated the effects of low doses of the tyrosine kinase Abelson (Abl) inhibitor Nilotinib, on safety and pharmacokinetics in Parkinson's disease dementia or dementia with Lewy bodies. OBJECTIVES: The primary outcomes of this study were safety and tolerability; pharmacokinetics and target engagement were secondary, while clinical outcomes were exploratory. METHODS: Twelve subjects were randomized into 150\u200amg (n\u200a=\u200a5) or 300\u200amg (n\u200a=\u200a7) groups and received Nilotinib orally every day for 24 weeks. RESULTS: This study shows that 150\u200amg and 300\u200amg doses of Nilotinib appear to be safe and tolerated in subjects with advanced Parkinson's disease. Nilotinib is detectable in the cerebrospinal fluid (CSF) and seems to engage the target Abl. Motor and cognitive outcomes suggest a possible beneficial effect on clinical outcomes. The CSF levels of homovanillic acid are significantly increased between baseline and 24 weeks of treatment. Exploratory CSF biomarkers were measured. CONCLUSIONS: This small proof-of-concept study lacks a placebo group and participants were not homogenous, resulting in baseline differences between and within groups. This limits the interpretations of the biomarker and clinical data, and any conclusions should be drawn cautiously. Nonetheless, the collective observations suggest that it is warranted to evaluate the safety and efficacy of Nilotinib in larger randomized, double-blind, placebo-controlled trials.",
+    "authors": [
+     {
+      "name": "Pagan Fernando",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Hebron Michaeline",
+      "affiliation": "Department of Neurology, Laboratory for Dementia and Parkinsonism, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Georgetown University Medical Center, Washington, DC, USA."
+     },
+     {
+      "name": "Valadez Ellen H",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Torres-Yaghi Yasar",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Huang Xu",
+      "affiliation": "Department of Neurology, Laboratory for Dementia and Parkinsonism, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Georgetown University Medical Center, Washington, DC, USA."
+     },
+     {
+      "name": "Mills Reversa R",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Wilmarth Barbara M",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Howard Hellen",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Dunn Connell",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Carlson Alexis",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016 Jul 11",
+    "pub_year": "2016",
+    "doi": "10.3233/JPD-160867",
+    "doi_url": "https://doi.org/10.3233/JPD-160867",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434297/",
+    "mesh_terms": [
+     "Dementia",
+     "Follow-Up Studies",
+     "Humans",
+     "Lewy Body Disease",
+     "Outcome Assessment, Health Care",
+     "Parkinson Disease",
+     "Pyrimidines"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Randomized Controlled Trial"
+    ]
+   },
+   {
+    "pmid": "27434298",
+    "title": "Nilotinib - Differentiating the Hope from\u00a0the\u00a0Hype.",
+    "abstract": "We discuss a report in the current issue on clinical and biochemical findings from a safety trial using the cAbl tyrosine kinase inhibitor Nilotinib (150\u200amg or 300\u200amg given daily for 24 weeks) in a small group of patients with either advanced Parkinson's disease or Dementia with Lewy Bodies. Despite some side effects (one serious), the authors claim that Nilotinib, which is normally used at much higher doses for treating leukemia, is safe and tolerated. Furthermore, they report a possible benefit on motor and cognitive outcomes. We debate the safety of Nilotinib and the reported efficacy signals. We emphasize that due to the small sample size, and lack of a control group, it is impossible to rule out a placebo effect. We briefly discuss a range of aspects surrounding the current and possible future use of this cAbl inhibitor in patients with alpha-synucleinopathy, and what must now be done to obtain definitive information about its safety and efficacy in this population of patients.",
+    "authors": [
+     {
+      "name": "Wyse Richard K",
+      "affiliation": "The Cure Parkinson's Trust, London, UK."
+     },
+     {
+      "name": "Brundin Patrik",
+      "affiliation": "Translational Parkinson's Disease Research, Center for Neurodegenerative Science, Van Andel Research Institute, Grand Rapids, MI, USA."
+     },
+     {
+      "name": "Sherer Todd B",
+      "affiliation": "Michael J Fox Foundation for Parkinson's Research, New York, USA."
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016 Jul 12",
+    "pub_year": "2016",
+    "doi": "10.3233/JPD-160904",
+    "doi_url": "https://doi.org/10.3233/JPD-160904",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434298/",
+    "mesh_terms": [
+     "Dementia",
+     "Humans",
+     "Lewy Body Disease",
+     "Parkinson Disease",
+     "Pyrimidines"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Comment"
+    ]
+   }
+  ],
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=24745685%2C24786396%2C24936253%2C25025064%2C25134459%2C26207888%2C27434297%2C27434298",
+  "count": 8
+ }
+}

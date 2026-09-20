@@ -4,10 +4,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Header } from '../components/frame'
-import { AsOfControl, BeforeTrial, Mechanism, Objections, SafetyPanel, YourCall } from '../components/detail'
+import { AsOfControl, BeforeTrial, EluteOpinion, Mechanism, Objections, SafetyPanel, YourCall } from '../components/detail'
 import { Pathway } from '../components/Pathway'
 import { bestEvidenceText, DriverBar, OutcomeChip } from '../components/evidence'
 import { source } from '../data/source'
+import { Missing } from './Query'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
 import { bestEvidenceAt, findCutoff, isToday as isTodayCutoff } from '../lib/evidence'
 
@@ -23,6 +24,9 @@ export function Detail() {
       if (cancelled) return
       setQ(rec)
       setC(cand ?? null)
+    }).catch((e: unknown) => {
+      console.warn('[elute] detail failed', e)
+      if (!cancelled) setC(null)
     })
     return () => {
       cancelled = true
@@ -97,7 +101,12 @@ export function Detail() {
             <SafetyPanel candidate={c} cutoff={cutoff} />
             <BeforeTrial candidate={c} cutoff={cutoff} isToday={isToday} />
           </div>
-          <div className="arrive" style={{ '--i': 5 } as React.CSSProperties}>
+          {c.recommendation && (
+            <div className="arrive" style={{ '--i': 5 } as React.CSSProperties}>
+              <EluteOpinion candidate={c} />
+            </div>
+          )}
+          <div className="arrive" style={{ '--i': 6 } as React.CSSProperties}>
             <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
           </div>
         </div>
@@ -111,15 +120,7 @@ function Frame({ missing = false }: { missing?: boolean }) {
     <main className="page">
       <Header />
       <div className="col">
-        {missing && (
-          <div className="empty">
-            <h1 className="display-sm">no curated appraisal at this address</h1>
-            <p>
-              Fixture mode covers <Link to="/q/parkinsons-disease">Parkinson’s disease</Link>, <Link to="/q/metformin">metformin</Link>, and{' '}
-              <Link to="/q/nilotinib--parkinsons-disease">nilotinib for Parkinson’s</Link>.
-            </p>
-          </div>
-        )}
+        {missing && <Missing />}
       </div>
     </main>
   )

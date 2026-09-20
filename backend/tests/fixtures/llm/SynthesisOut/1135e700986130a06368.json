@@ -1,0 +1,105 @@
+{
+ "schema": "SynthesisOut",
+ "system": "You write the case for, the case against, and Elute's opinion on a drug-repurposing hypothesis, for a skeptical translational scientist. You are handed the structured record — claims with derived statuses, the visible evidence with ids, the weakest link, the contradictions, the unknowns, and the stance the deterministic engine already derived. You may only use what you are handed.\n\nRules:\n- Every item in strongest_case_for and strongest_case_against must cite ids from the record (evidence ids like EV_… and/or claim ids like C_EXPOSURE). A sentence without a resolving citation will be rejected.\n- Every number you write must appear in the cited evidence (same value; formatting may differ). Never invent a probability, percentage, effect size, risk figure, score or p-value.\n- For every claim whose status is contested or refuted, cite at least one of its contradicting evidence ids in the case against.\n- The opinion must begin \"Based on the evidence visible as of 2016-07-11, Elute would make no clear prioritization\" and then give reasons that are claim ids present in the record. Do not soften, strengthen or reverse the stance; it was derived from the statuses.\n- Do not recommend prescribing. Do not address patients. The scientist decides.\n- what_would_change_my_mind: the evidence that would change the appraisal, tied to the unresolved gates.\n- Plain, exact, quiet prose. No marketing language.\n",
+ "user": "as_of: 2016-07-11\nstance (derived): no_clear_prioritization — phrase: \"make no clear prioritization\"\nweakest link: C_EXPOSURE — Evidence on both sides: 3 sources support it and 1 argues against it. The mechanism cannot act on a compartment the drug does not reach at an inhibiting concentration.\ncontradictions: C_EXPOSURE\nunknowns: none\n\nClaims:\n- C_MECHANISM [established]: nilotinib inhibits ABL1 at clinical doses. — Accepted by a regulator (FDA, 2010) and reported by 7 independent groups. (caveats: animal-model, cell-line, exposure-not-measured, surrogate-biomarker)\n- C_DISEASE_RELEVANCE [established]: ABL1 activity is altered in Parkinson disease and relevant to its pathology. — Reported by 4 independent groups (Open Targets, 2014; Open Targets, 2013; Open Targets, 2014; Open Targets, 2016; Open Targets, 2011; Open Targets, 2016; Open Targets, 2014; Karuppagounder SS, 2014; Tanabe A, 2014; Hebron ML, 2013; Mitsugi H, 2013), none contradicting, animal-model, exposure-not-measured, surrogate-biomarker. (caveats: animal-model, exposure-not-measured, surrogate-biomarker)\n- C_EXPOSURE [contested]: nilotinib reaches the central nervous system at a tolerated dose in a concentration that can inhibit ABL1. — Evidence on both sides: 3 sources support it and 1 argues against it. (caveats: animal-model, no-placebo, small-n, surrogate-biomarker)\n- C_ENGAGEMENT [single-source]: nilotinib engages ABL1 in patients. — One group reports this (Pagan F, 2016, randomised trial); nothing visible on or before this date replicates or contradicts it. (caveats: no-placebo, small-n, surrogate-biomarker)\n- C_DOWNSTREAM [established]: Engaging ABL1 produces the expected downstream biology in Parkinson disease. — Reported by 4 independent groups (Karuppagounder SS, 2014; Pagan F, 2016; Tanabe A, 2014; Hebron ML, 2013), none contradicting, animal-model, exposure-not-measured, no-placebo, small-n, surrogate-biomarker. (caveats: animal-model, exposure-not-measured, no-placebo, small-n, surrogate-biomarker)\n- C_CLINICAL [single-source]: nilotinib improves clinical outcomes in Parkinson disease. — One group reports this (Pagan F, 2016, randomised trial); nothing visible on or before this date replicates or contradicts it. (caveats: no-placebo, small-n, surrogate-biomarker)\n- C_SAFETY [single-source]: The safety of nilotinib is acceptable in the likely Parkinson disease trial population. — One group reports this (Pagan F, 2016, randomised trial); nothing visible on or before this date replicates or contradicts it. (caveats: no-placebo, small-n, surrogate-biomarker)\n\nVisible evidence:\nEV_6eb7254e79c2 · Open Targets · ChEMBL mechanism (FDA label) · 2010-12-31 · label, human, outcome na\n    Open Targets (ChEMBL-curated) mechanism: NILOTINIB is a inhibitor of Tyrosine-protein kinase ABL1.\n    C_MECHANISM supports: NILOTINIB is a curated inhibitor of ABL1.\nEV_cec7a2880002 · Open Targets · ChEMBL mechanism (FDA label) · 2010-12-31 · label, human, outcome na\n    Open Targets (ChEMBL-curated) mechanism: NILOTINIB is a inhibitor of Bcr/Abl fusion protein.\n    C_MECHANISM supports: NILOTINIB is a curated inhibitor of ABL1.\nEV_70437f03132d · Open Targets · europepmc (literature) · 2014-05-02 · unknown, unknown\n    Open Targets association row (europepmc, literature): PMID 24786396 links ABL1 with Parkinson disease, score 0.48.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (europepmc) associates ABL1 with Parkinson disease.\nEV_df2d1aa44b59 · Open Targets · europepmc (literature) · 2013-05-31 · unknown, unknown\n    Open Targets association row (europepmc, literature): PMID 23741470 links ABL1 with Parkinson disease, score 0.40.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (europepmc) associates ABL1 with Parkinson disease.\nEV_15878dcbeb3f · Open Targets · europepmc (literature) · 2014-01-09 · unknown, unknown\n    Open Targets association row (europepmc, literature): PMID 24412932 links ABL1 with Parkinson disease, score 0.28.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (europepmc) associates ABL1 with Parkinson disease.\nEV_b2236d687d94 · Open Targets · clinical_precedence (clinical) · 2016-07-01 · unknown, unknown\n    Open Targets association row (clinical_precedence, clinical): PMID 27434297 links ABL1 with Parkinson disease, score 0.20.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (clinical_precedence) associates ABL1 with Parkinson disease.\nEV_edead58e7aac · Open Targets · europepmc (literature) · 2011-01-01 · unknown, unknown\n    Open Targets association row (europepmc, literature): PMID 21209200 links ABL1 with Parkinson disease, score 0.19.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (europepmc) associates ABL1 with Parkinson disease.\nEV_f27ddc6075db · Open Targets · europepmc (literature) · 2016-06-08 · unknown, unknown\n    Open Targets association row (europepmc, literature): PMID 27338353 links ABL1 with Parkinson disease, score 0.12.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (europepmc) associates ABL1 with Parkinson disease.\nEV_090b259c8d5a · Open Targets · europepmc (literature) · 2014-01-09 · unknown, unknown\n    Open Targets association row (europepmc, literature): PMID 24416311 links ABL1 with Parkinson disease, score 0.10.\n    C_DISEASE_RELEVANCE supports: A publication indexed by Open Targets (europepmc) associates ABL1 with Parkinson disease.\nEV_da6c527377e0 · ClinicalTrials.gov NCT02281474 · 2014-11-03 · protocol, human, n = 12, outcome na\n    NCT02281474 registration: Nilotinib in Cognitively Impaired Parkinson Disease Patients 001; PHASE1; randomised, masking none, n = 12; first posted 2014-11-03.\n    no claim-level finding\nEV_ca1bd4291b7c · Karuppagounder SS 2014, Scientific reports · 2014-05-02 · preclinical, animal, outcome mixed caveats: animal-model, exposure-not-measured\n    Preclinical in vivo study in an acute MPTP-induced mouse model of Parkinson disease; sample size and year were not reported in the abstract.\n    C_MECHANISM qualifies: Nilotinib reduced c-Abl activation in MPTP-intoxicated mice.; C_DISEASE_RELEVANCE supports: c-Abl was activated in PD patient brain and MPTP-intoxicated mice and was linked to parkin inhibition and neuronal death.; C_DOWNSTREAM qualifies: In MPTP-intoxicated mice, nilotinib reduced PARIS levels and prevented dopamine-neuron loss and behavioral deficits.\nEV_471e396fb0a0 · Pagan F 2016, Journal of Parkinson's disease · 2016-07-01 · rct, human, outcome mixed caveats: no-placebo, surrogate-biomarker, small-n\n    A 24-week randomized, two-dose, no-placebo proof-of-concept study in 12 subjects with Parkinson's disease dementia or dementia with Lewy bodies (year not stated) assessed safety, pharmacokinetics, target engagement, biomarkers, and exploratory clinical outcomes.\n    C_EXPOSURE qualifies: Nilotinib reached the CSF, but the abstract does not report whether its concentration was sufficient for inhibition.; C_ENGAGEMENT supports: Nilotinib appeared to engage Abl in patients.; C_DOWNSTREAM qualifies: CSF homovanillic acid increased from baseline after treatment, an uncontrolled biomarker finding.; C_CLINICAL supports: Exploratory motor and cognitive outcomes suggested possible clinical benefit.; C_SAFETY supports: Nilotinib at 150 mg and 300 mg appeared safe and tolerated in subjects with advanced Parkinson's disease.\nEV_bea75c826841 · Tanabe A 2014, Frontiers in cellular neuroscience · 2014-02-20 · preclinical, animal, outcome positive caveats: animal-model, surrogate-biomarker\n    Preclinical study in a mouse model of Parkinson disease; sample size and year were not reported in the abstract.\n    C_MECHANISM qualifies: Nilotinib inhibited c-Abl-associated phosphorylation of Cdk5 and DARPP-32 in mouse striatum.; C_DISEASE_RELEVANCE qualifies: c-Abl was linked to reduced dopaminergic signaling through Cdk5 and DARPP-32 phosphorylation in the striatum.; C_DOWNSTREAM qualifies: Systemic nilotinib normalized striatal motor behavior in a mouse model of Parkinson disease.\nEV_d97da5326193 · Cannella L 2010, Acta oncologica (Stockholm, Sweden) · 2010-04-01 · unknown, unknown\n    Cannella L 2010, Acta oncologica (Stockholm, Sweden): Safety and efficacy of nilotinib in chronic phase chronic myeloid leukemia in a patient with Wolf-Parkinson-White disease and hematological resistance after suboptimal response to imatinib at six months.\n    no claim-level finding\nEV_d515e2efe7ea · Wyse RK 2016, Journal of Parkinson's disease · 2016-07-01 · commentary, na, outcome na caveats: no-placebo, small-n\n    Commentary on a 24-week uncontrolled safety trial of daily nilotinib in a small group of patients with advanced Parkinson’s disease or dementia with Lewy bodies; the numerical sample size and publication year were not stated, and the commentary emphasizes that placebo effects and definitive safety or efficacy conclusions cannot be resolved.\n    no claim-level finding\nEV_ffd61b847f71 · Reinwald M 2014, BioMed research international · 2014-06-15 · pk, human, n = 4, outcome positive caveats: no-placebo, small-n\n    Pharmacokinetic case series of four human patients with CNS relapse of BCR-ABL-positive leukemia after stem cell transplantation; publication year was not stated.\n    C_EXPOSURE qualifies: Nilotinib reached CSF in patients with CNS leukemia, but the median CSF/plasma ratio was low and an inhibiting concentration was not established.\nEV_4fae0cdd461c · Di Gion P 2011, Clinical pharmacokinetics · 2011-09-01 · commentary, human, outcome na caveats: exposure-not-measured\n    Narrative review of human clinical pharmacokinetic data for tyrosine kinase inhibitors, with no overall sample size or publication year stated.\n    no claim-level finding\nEV_b073a6eedfae · Bakhsheshian J 2013, Proceedings of the National Academy of Sciences of the United States of America · 2013-12-02 · preclinical, animal, outcome positive caveats: animal-model, exposure-not-measured\n    Preclinical study in transgenic mice (sample size and year not reported in the abstract) evaluating nilotinib as an inhibitor of ABCG2 function at the blood-brain barrier.\n    no claim-level finding\nEV_99c2948b3898 · Gaur S 2014, In vivo (Athens, Greece) · 2014-11-01 · observational, human, outcome negative caveats: no-placebo, exposure-not-measured, small-n\n    Observational report of two patients with BCR-ABL-positive acute leukemia and isolated CNS relapse while receiving tyrosine kinase inhibitors; one received nilotinib, and the publication year was not stated.\n    C_EXPOSURE contradicts: A patient experienced isolated CNS relapse while receiving nilotinib despite maintaining molecular remission in the bone marrow; CNS drug exposure was not measured.\nEV_91b3be378a4f · Au K 2015, Journal of neuro-oncology · 2015-03-04 · preclinical, cell-line, outcome positive caveats: cell-line\n    Preclinical in vitro study using two pediatric high-grade glioma cell lines; sample size and year were not reported in the abstract.\n    no claim-level finding\nEV_33ef5a2b9dd7 · Hebron ML 2013, Human molecular genetics · 2013-05-10 · preclinical, animal, outcome positive caveats: animal-model\n    A preclinical study in mouse Parkinson disease models evaluated nilotinib; sample size and publication year were not stated in the abstract.\n    C_MECHANISM qualifies: Nilotinib decreased Abl activity in transgenic and lentiviral Parkinson disease models.; C_DISEASE_RELEVANCE qualifies: Abl was activated in an α-synuclein mouse model, consistent with reported Abl activation in Parkinson disease brains.; C_EXPOSURE qualifies: Nilotinib entered the brain at doses described as within US Food and Drug Administration-approved dosing.; C_DOWNSTREAM qualifies: Nilotinib promoted α-synuclein degradation, protected substantia nigra neurons, and improved motor performance in disease models.\nEV_d1484a3a7d20 · Airiau K 2013, Cell death & disease · 2013-10-03 · preclinical, cell-line, outcome positive caveats: cell-line\n    Preclinical study in BCR-ABL cell lines and ex vivo CML patient bone-marrow progenitors; sample size and year were not reported.\n    C_MECHANISM qualifies: Nilotinib was described as specifically designed to inhibit BCR-ABL, but inhibition at clinical doses was not assessed.\nEV_59232794886d · Okabe S 2014, Cancer biology & therapy · 2013-11-08 · preclinical, cell-line, outcome positive caveats: cell-line, animal-model\n    Preclinical study in BCR-ABL-positive leukemia cell systems and a xenograft model; sample size and publication year were not reported in the abstract.\n    C_MECHANISM qualifies: Nilotinib was described as a BCR-ABL kinase inhibitor and enhanced antileukemic effects in combination with NVP-BEZ235, but activity at clinical doses was not assessed.\nEV_9500a1ef71ea · Shukla S 2014, Molecular pharmaceutics · 2014-06-05 · preclinical, cell-line, n = 25, outcome positive caveats: cell-line\n    A preclinical in vitro pharmacophore and QSAR study tested 25 nilotinib derivatives in kinase and cell-based assays; publication year was not stated.\n    C_MECHANISM qualifies: In vitro kinase and cell-based assays evaluated structural features contributing to nilotinib inhibition of BCR-ABL kinase, without testing inhibition of ABL1 at clinical doses.\nEV_2f3679f983ac · Sako H 2014, PloS one · 2014-09-15 · preclinical, cell-line, outcome positive caveats: animal-model, cell-line\n    Preclinical study of GIST and imatinib-resistant GIST cell lines and xenograft models; sample size and year were not stated.\n    no claim-level finding\nEV_51e22b194a53 · Lonskaya I 2013, PloS one · 2013-12-26 · preclinical, unknown, outcome positive caveats: design-unknown\n    Preclinical study in an unspecified experimental population; sample size and year were not reported in the abstract.\n    no claim-level finding\nEV_c3983df32b3d · Auburger G 2014, World journal of diabetes · 2014-06-01 · commentary, na, outcome na\n    Commentary discussing human and mouse evidence on the 12q24 locus and disease susceptibility; no sample size or publication year is reported.\n    no claim-level finding\nEV_5e69e8648ae3 · Mitsugi H 2013, FEBS letters · 2013-07-02 · preclinical, na, outcome positive\n    A preclinical recombinant-protein study identified ABL1 as a digestion target of DJ-1 protease; sample size and year were not reported in the abstract.\n    C_DISEASE_RELEVANCE qualifies: ABL1 was identified as a protein substrate of DJ-1, a familial Parkinson disease gene product, in a recombinant-protein assay.",
+ "output": {
+  "strongest_case_for": [
+   {
+    "text": "Nilotinib is a regulator-recognized inhibitor of ABL1, with supporting inhibition findings across Parkinson disease models and other experimental systems.",
+    "cites": [
+     "C_MECHANISM",
+     "EV_6eb7254e79c2",
+     "EV_ca1bd4291b7c",
+     "EV_bea75c826841",
+     "EV_33ef5a2b9dd7"
+    ]
+   },
+   {
+    "text": "ABL1 is linked to Parkinson disease pathology through human-brain observations, disease-model activation, dopaminergic signaling, neuronal death, and a connection to DJ-1 biology.",
+    "cites": [
+     "C_DISEASE_RELEVANCE",
+     "EV_ca1bd4291b7c",
+     "EV_bea75c826841",
+     "EV_33ef5a2b9dd7",
+     "EV_5e69e8648ae3"
+    ]
+   },
+   {
+    "text": "There is evidence that nilotinib can enter the relevant compartment: it was detected in cerebrospinal fluid in human studies and entered the brain in Parkinson disease models. These observations support central exposure but do not establish an ABL1-inhibiting concentration in patients with Parkinson disease.",
+    "cites": [
+     "C_EXPOSURE",
+     "EV_471e396fb0a0",
+     "EV_ffd61b847f71",
+     "EV_33ef5a2b9dd7"
+    ]
+   },
+   {
+    "text": "The human proof-of-concept study reported apparent ABL engagement, a downstream cerebrospinal-fluid biomarker change, possible motor and cognitive benefit, and acceptable tolerability. The direction of these findings is consistent with the proposed mechanism.",
+    "cites": [
+     "C_ENGAGEMENT",
+     "C_DOWNSTREAM",
+     "C_CLINICAL",
+     "C_SAFETY",
+     "EV_471e396fb0a0"
+    ]
+   },
+   {
+    "text": "Multiple Parkinson disease models showed downstream effects consistent with ABL1 inhibition, including changes in PARIS, α-synuclein degradation, neuronal protection, dopaminergic signaling, motor behavior, and behavioral deficits.",
+    "cites": [
+     "C_DOWNSTREAM",
+     "EV_ca1bd4291b7c",
+     "EV_bea75c826841",
+     "EV_33ef5a2b9dd7"
+    ]
+   }
+  ],
+  "strongest_case_against": [
+   {
+    "text": "Central exposure is the weakest link. Human studies established cerebrospinal-fluid entry but not an ABL1-inhibiting concentration, while an isolated central nervous system relapse during nilotinib treatment argues against dependable compartmental activity, although exposure was not measured in that case.",
+    "cites": [
+     "C_EXPOSURE",
+     "EV_471e396fb0a0",
+     "EV_ffd61b847f71",
+     "EV_99c2948b3898"
+    ]
+   },
+   {
+    "text": "The evidence for brain entry at approved dosing comes from mouse Parkinson disease models and therefore does not resolve whether tolerated human dosing produces adequate central target inhibition.",
+    "cites": [
+     "C_EXPOSURE",
+     "EV_33ef5a2b9dd7"
+    ]
+   },
+   {
+    "text": "Human target engagement, downstream biology, clinical benefit, and safety all depend on one small, no-placebo proof-of-concept study. Its biomarker and clinical findings are not independently replicated in the visible record.",
+    "cites": [
+     "C_ENGAGEMENT",
+     "C_DOWNSTREAM",
+     "C_CLINICAL",
+     "C_SAFETY",
+     "EV_471e396fb0a0"
+    ]
+   },
+   {
+    "text": "Commentary on the human study emphasizes that placebo effects and definitive safety or efficacy conclusions cannot be resolved by its uncontrolled design and limited size.",
+    "cites": [
+     "EV_d515e2efe7ea",
+     "EV_471e396fb0a0"
+    ]
+   },
+   {
+    "text": "Much of the mechanistic and downstream support comes from animal models, with some studies lacking measured exposure or relying on surrogate biomarkers. This limits direct translation to human Parkinson disease.",
+    "cites": [
+     "C_MECHANISM",
+     "C_DISEASE_RELEVANCE",
+     "C_DOWNSTREAM",
+     "EV_ca1bd4291b7c",
+     "EV_bea75c826841",
+     "EV_33ef5a2b9dd7"
+    ]
+   }
+  ],
+  "opinion": "Based on the evidence visible as of 2016-07-11, Elute would make no clear prioritization. C_MECHANISM, C_DISEASE_RELEVANCE, and C_DOWNSTREAM provide a coherent biological rationale, but C_EXPOSURE is contested and remains the weakest link. C_ENGAGEMENT, C_CLINICAL, and C_SAFETY are single-source findings from a small, no-placebo human study, so they do not resolve the translational uncertainty.",
+  "what_would_change_my_mind": "The key change would be replicated human pharmacokinetic evidence showing that tolerated dosing produces central nervous system exposure sufficient to inhibit ABL1, directly resolving C_EXPOSURE and its contradictory evidence. Confidence would increase further with independently replicated, placebo-controlled evidence of ABL1 target engagement and expected downstream biology, followed by credible clinical-outcome and safety data addressing C_ENGAGEMENT, C_DOWNSTREAM, C_CLINICAL, and C_SAFETY."
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "transport": "direct",
+ "tool": "OpenTargets_get_target_id_description_by_name",
+ "arguments": {
+  "targetName": "ABL1"
+ },
+ "fetched_at": "2026-09-20T08:24:01+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "search": {
+    "hits": [
+     {
+      "id": "ENSG00000097007",
+      "name": "ABL1",
+      "description": "ABL proto-oncogene 1, non-receptor tyrosine kinase"
+     },
+     {
+      "id": "ENSG00000134508",
+      "name": "CABLES1",
+      "description": "Cdk5 and Abl enzyme substrate 1"
+     },
+     {
+      "id": "ENSG00000149679",
+      "name": "CABLES2",
+      "description": "Cdk5 and Abl enzyme substrate 2"
+     },
+     {
+      "id": "ENSG00000309617",
+      "name": "ENSG00000309617",
+      "description": "novel transcript, antisense to ABL1"
+     },
+     {
+      "id": "ENSG00000306514",
+      "name": "ENSG00000306514",
+      "description": "novel transcript, antisense to ABL1 and EXOSC2"
+     }
+    ]
+   }
+  }
+ }
+}

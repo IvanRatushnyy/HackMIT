@@ -1,0 +1,290 @@
+{
+ "transport": "direct",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "24786396,24936253,25134459,26207888,27434297,27434298,27833551,27960086,28035939,28328536"
+ },
+ "fetched_at": "2026-09-20T09:06:38+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "28328536",
+    "title": "Neurotransmission systems in Parkinson's disease.",
+    "abstract": "Parkinson's disease (PD) is histologically characterized by the accumulation of \u03b1-synuclein particles, known as Lewy bodies. The second most common neurodegenerative disorder, PD is widely known because of the typical motor manifestations of active tremor, rigidity, and postural instability, while several prodromal non-motor symptoms including REM sleep behavior disorders, depression, autonomic disturbances, and cognitive decline are being more extensively recognized. Motor symptoms most commonly arise from synucleinopathy of nigrostriatal pathway. Glutamatergic, \u03b3-aminobutyric acid (GABA)ergic, cholinergic, serotoninergic, and endocannabinoid neurotransmission systems are not spared from the global cerebral neurodegenerative assault. Wide intrabasal and extrabasal of the basal ganglia provide enough justification to evaluate network circuits disturbance of these neurotransmission systems in PD. In this comprehensive review, English literature in PubMed, Science direct, EMBASE, and Web of Science databases were perused. Characteristics of dopaminergic and non-dopaminergic systems, disturbance of these neurotransmitter systems in the pathophysiology of PD, and their treatment applications are discussed.",
+    "authors": [
+     {
+      "name": "Sanjari Moghaddam H"
+     },
+     {
+      "name": "Zare-Shahabadi A"
+     },
+     {
+      "name": "Rahmani F"
+     },
+     {
+      "name": "Rezaei N"
+     }
+    ],
+    "journal": "Reviews in the neurosciences",
+    "pub_date": "2017-07-01",
+    "pub_year": "2017",
+    "doi": "10.1515/revneuro-2016-0068",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28328536/",
+    "europepmc_id": "28328536",
+    "europepmc_source": "MED",
+    "cited_by_count": 54
+   },
+   {
+    "pmid": "28035939",
+    "title": "Could MAO-B Inhibitor Withdrawal Rather than Nilotinib Benefit Explain the Dopamine Metabolite Increase in Parkinsonian Study Subjects?",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Schwarzschild MA"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2017-01-01",
+    "pub_year": "2017",
+    "doi": "10.3233/jpd-160975",
+    "pmcid": "PMC5302030",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28035939/",
+    "europepmc_id": "28035939",
+    "europepmc_source": "MED",
+    "cited_by_count": 5
+   },
+   {
+    "pmid": "27960086",
+    "title": "Integrated (epi)-Genomic Analyses Identify Subgroup-Specific Therapeutic Targets in CNS Rhabdoid Tumors.",
+    "abstract": "We recently reported that atypical teratoid rhabdoid tumors (ATRTs) comprise at least two transcriptional subtypes with different clinical outcomes; however, the mechanisms underlying therapeutic heterogeneity remained unclear. In this study, we analyzed 191 primary ATRTs and 10 ATRT cell lines to define the genomic and epigenomic landscape of ATRTs and identify subgroup-specific therapeutic targets. We found ATRTs segregated into three epigenetic subgroups with distinct genomic profiles, SMARCB1 genotypes, and chromatin landscape that correlated with differential cellular responses to a panel of signaling and epigenetic inhibitors. Significantly, we discovered that differential methylation of a PDGFRB-associated enhancer confers specific sensitivity of group 2 ATRT cells to dasatinib and nilotinib, and suggest that these are promising therapies for this highly lethal ATRT subtype.",
+    "authors": [
+     {
+      "name": "Torchia J"
+     },
+     {
+      "name": "Golbourn B"
+     },
+     {
+      "name": "Feng S"
+     },
+     {
+      "name": "Ho KC"
+     },
+     {
+      "name": "Sin-Chan P"
+     }
+    ],
+    "journal": "Cancer cell",
+    "pub_date": "2016-12-01",
+    "pub_year": "2016",
+    "doi": "10.1016/j.ccell.2016.11.003",
+    "pmcid": "PMC5500911",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27960086/",
+    "europepmc_id": "27960086",
+    "europepmc_source": "MED",
+    "cited_by_count": 199
+   },
+   {
+    "pmid": "27833551",
+    "title": "c-Abl Inhibitors Enable Insights into the Pathophysiology and Neuroprotection in Parkinson's Disease.",
+    "abstract": "Parkinson's disease (PD) is a progressive neurodegenerative disorder causing movement disabilities and several non-motor symptoms in afflicted patients. Recent studies in animal models of PD and analyses of brain specimen from PD patients revealed an increase in the level and activity of the non-receptor tyrosine kinase Abelson (c-Abl) in dopaminergic neurons with phosphorylation of protein substrates, such as \u03b1-synuclein and the E3 ubiquitin ligase, Parkin. Most significantly inhibition of c-Abl kinase activity by small molecular compounds used in the clinic to treat human leukemia have shown promising neuroprotective effects in cell and animal models of PD. This has raised hope that similar beneficial outcome may also be observed in the treatment of PD patients by using c-Abl inhibitors. Here we highlight the background for the current optimism, reviewing c-Abl and its relationship to pathophysiological pathways prevailing in PD, as well as discussing issues related to the pharmacology and safety of current c-Abl inhibitors. Clearly more rigorously controlled and well-designed trials are needed before the c-Abl inhibitors can be used in the neuroclinic to possibly benefit an increasing number of PD patients.",
+    "authors": [
+     {
+      "name": "Lindholm D"
+     },
+     {
+      "name": "Pham DD"
+     },
+     {
+      "name": "Cascone A"
+     },
+     {
+      "name": "Eriksson O"
+     },
+     {
+      "name": "Wennerberg K"
+     }
+    ],
+    "journal": "Frontiers in aging neuroscience",
+    "pub_date": "2016-10-26",
+    "pub_year": "2016",
+    "doi": "10.3389/fnagi.2016.00254",
+    "pmcid": "PMC5080529",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27833551/",
+    "europepmc_id": "27833551",
+    "europepmc_source": "MED",
+    "cited_by_count": 35
+   },
+   {
+    "pmid": "27434297",
+    "title": "Nilotinib Effects in Parkinson's disease and Dementia with Lewy bodies.",
+    "abstract": "<h4>Background</h4>We evaluated the effects of low doses of the tyrosine kinase Abelson (Abl) inhibitor Nilotinib, on safety and pharmacokinetics in Parkinson's disease dementia or dementia with Lewy bodies.<h4>Objectives</h4>The primary outcomes of this study were safety and tolerability; pharmacokinetics and target engagement were secondary, while clinical outcomes were exploratory.<h4>Methods</h4>Twelve subjects were randomized into 150\u200amg (n\u200a=\u200a5) or 300\u200amg (n\u200a=\u200a7) groups and received Nilotinib orally every day for 24 weeks.<h4>Results</h4>This study shows that 150\u200amg and 300\u200amg doses of Nilotinib appear to be safe and tolerated in subjects with advanced Parkinson's disease. Nilotinib is detectable in the cerebrospinal fluid (CSF) and seems to engage the target Abl. Motor and cognitive outcomes suggest a possible beneficial effect on clinical outcomes. The CSF levels of homovanillic acid are significantly increased between baseline and 24 weeks of treatment. Exploratory CSF biomarkers were measured.<h4>Conclusions</h4>This small proof-of-concept study lacks a placebo group and participants were not homogenous, resulting in baseline differences between and within groups. This limits the interpretations of the biomarker and clinical data, and any conclusions should be drawn cautiously. Nonetheless, the collective observations suggest that it is warranted to evaluate the safety and efficacy of Nilotinib in larger randomized, double-blind, placebo-controlled trials.",
+    "authors": [
+     {
+      "name": "Pagan F"
+     },
+     {
+      "name": "Hebron M"
+     },
+     {
+      "name": "Valadez EH"
+     },
+     {
+      "name": "Torres-Yaghi Y"
+     },
+     {
+      "name": "Huang X"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016-07-01",
+    "pub_year": "2016",
+    "doi": "10.3233/jpd-160867",
+    "pmcid": "PMC5008228",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434297/",
+    "europepmc_id": "27434297",
+    "europepmc_source": "MED",
+    "cited_by_count": 195
+   },
+   {
+    "pmid": "27434298",
+    "title": "Nilotinib - Differentiating the Hope from\u00a0the\u00a0Hype.",
+    "abstract": "We discuss a report in the current issue on clinical and biochemical findings from a safety trial using the cAbl tyrosine kinase inhibitor Nilotinib (150\u200amg or 300\u200amg given daily for 24 weeks) in a small group of patients with either advanced Parkinson's disease or Dementia with Lewy Bodies. Despite some side effects (one serious), the authors claim that Nilotinib, which is normally used at much higher doses for treating leukemia, is safe and tolerated. Furthermore, they report a possible benefit on motor and cognitive outcomes. We debate the safety of Nilotinib and the reported efficacy signals. We emphasize that due to the small sample size, and lack of a control group, it is impossible to rule out a placebo effect. We briefly discuss a range of aspects surrounding the current and possible future use of this cAbl inhibitor in patients with alpha-synucleinopathy, and what must now be done to obtain definitive information about its safety and efficacy in this population of patients.",
+    "authors": [
+     {
+      "name": "Wyse RK"
+     },
+     {
+      "name": "Brundin P"
+     },
+     {
+      "name": "Sherer TB"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016-07-01",
+    "pub_year": "2016",
+    "doi": "10.3233/jpd-160904",
+    "pmcid": "PMC5044778",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434298/",
+    "europepmc_id": "27434298",
+    "europepmc_source": "MED",
+    "cited_by_count": 28
+   },
+   {
+    "pmid": "26207888",
+    "title": "A historical overview of protein kinases and their targeted small molecule inhibitors.",
+    "abstract": "Protein kinases play a predominant regulatory role in nearly every aspect of cell biology and they can modify the function of a protein in almost every conceivable way. Protein phosphorylation can increase or decrease enzyme activity and it can alter other biological activities such as transcription and translation. Moreover, some phosphorylation sites on a given protein are stimulatory while others are inhibitory. The human protein kinase gene family consists of 518 members along with 106 pseudogenes. Furthermore, about 50 of the 518 gene products lack important catalytic residues and are called protein pseudokinases. The non-catalytic allosteric interaction of protein kinases and pseudokinases with other proteins has added an important regulatory feature to the biochemistry and cell biology of the protein kinase superfamily. With rare exceptions, a divalent cation such as Mg2+ is required for the reaction. All protein kinases exist in a basal state and are activated only as necessary by divergent regulatory stimuli. The mechanisms for switching between dormant and active protein kinases can be intricate. Phosphorylase kinase was the first protein kinase to be characterized biochemically and the mechanism of its regulation led to the discovery of cAMP-dependent protein kinase (protein kinase A, or PKA), which catalyzes the phosphorylation and activation of phosphorylase kinase. This was the first protein kinase cascade or signaling module to be elucidated. The epidermal growth factor receptor-Ras-Raf-MEK-ERK signaling module contains protein-tyrosine, protein-serine/threonine, and dual specificity protein kinases. PKA has served as a prototype of this enzyme family and more is known about this enzyme than any other protein kinase. The inactive PKA holoenzyme consists of two regulatory and two catalytic subunits. After binding four molecules of cAMP, the holoenzyme dissociates into a regulatory subunit dimer (each monomer binds two cAMP) and two free and active catalytic subunits. PKA and all other protein kinase domains have a small amino-terminal lobe and large carboxyterminal lobe as determined by X-ray crystallography. The N-lobe and C-lobe form a cleft that serves as a docking site for MgATP. Nearly all active protein kinases contain a K/E/D/D signature sequence that plays important structural and catalytic roles. Protein kinases contain hydrophobic catalytic and regulatory spines and collateral shell residues that are required to assemble the active enzyme. There are two general kinds of conformational changes associated with most protein kinases. The first conformational change involves the formation of an intact regulatory spine to form an active enzyme. The second conformational change occurs in active kinases as they toggle between open and closed conformations during their catalytic cycles. Because mutations and dysregulation of protein kinases play causal roles in human disease, this family of enzymes has become one of the most important drug targets over the past two decades. Imatinib was approved by the United States FDA for the treatment of chronic myelogenous leukemia in 2001; this small molecule inhibits the BCR-Abl protein kinase oncoprotein that results from the formation of the Philadelphia chromosome. More than two dozen other orally effective mechanism-based small molecule protein kinase inhibitors have been subsequently approved by the FDA. These drugs bind to the ATP-binding site of their target enzymes and extend into nearby hydrophobic pockets. Most of these protein kinase inhibitors prolong survival in cancer patients only weeks or months longer than standard cytotoxic therapies. In contrast, the clinical effectiveness of imatinib against chronic myelogenous leukemia is vastly superior to that of any other targeted protein kinase inhibitor with overall survival lasting a decade or more. However, the near universal and expected development of drug resistance in the treatment of neoplastic disorders requires new approaches to solve this therapeutic challenge. Cancer is the predominant indication for these drugs, but disease targets are increasing. For example, we can expect the approval of new drugs inhibiting other protein kinases in the treatment of illnesses such as hypertension, Parkinson's disease, and autoimmune diseases.",
+    "authors": [
+     {
+      "name": "Roskoski R Jr"
+     }
+    ],
+    "journal": "Pharmacological research",
+    "pub_date": "2015-07-21",
+    "pub_year": "2015",
+    "doi": "10.1016/j.phrs.2015.07.010",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/26207888/",
+    "europepmc_id": "26207888",
+    "europepmc_source": "MED",
+    "cited_by_count": 383
+   },
+   {
+    "pmid": "25134459",
+    "title": "Combined STAT3 and BCR-ABL1 inhibition induces synthetic lethality in therapy-resistant chronic myeloid leukemia.",
+    "abstract": "Mutations in the BCR-ABL1 kinase domain are an established mechanism of tyrosine kinase inhibitor (TKI) resistance in Philadelphia chromosome-positive leukemia, but fail to explain many cases of clinical TKI failure. In contrast, it is largely unknown why some patients fail TKI therapy despite continued suppression of BCR-ABL1 kinase activity, a situation termed BCR-ABL1 kinase-independent TKI resistance. Here, we identified activation of signal transducer and activator of transcription 3 (STAT3) by extrinsic or intrinsic mechanisms as an essential feature of BCR-ABL1 kinase-independent TKI resistance. By combining synthetic chemistry, in vitro reporter assays, and molecular dynamics-guided rational inhibitor design and high-throughput screening, we discovered BP-5-087, a potent and selective STAT3 SH2 domain inhibitor that reduces STAT3 phosphorylation and nuclear transactivation. Computational simulations, fluorescence polarization assays and hydrogen-deuterium exchange assays establish direct engagement of STAT3 by BP-5-087 and provide a high-resolution view of the STAT3 SH2 domain/BP-5-087 interface. In primary cells from chronic myeloid leukemia (CML) patients with BCR-ABL1 kinase-independent TKI resistance, BP-5-087 (1.0\u2009\u03bcM) restored TKI sensitivity to therapy-resistant CML progenitor cells, including leukemic stem cells. Our findings implicate STAT3 as a critical signaling node in BCR-ABL1 kinase-independent TKI resistance, and suggest that BP-5-087 has clinical utility for treating malignancies characterized by STAT3 activation.",
+    "authors": [
+     {
+      "name": "Eiring AM"
+     },
+     {
+      "name": "Page BDG"
+     },
+     {
+      "name": "Kraft IL"
+     },
+     {
+      "name": "Mason CC"
+     },
+     {
+      "name": "Vellore NA"
+     }
+    ],
+    "journal": "Leukemia",
+    "pub_date": "2014-08-19",
+    "pub_year": "2015",
+    "doi": "10.1038/leu.2014.245",
+    "pmcid": "PMC4334758",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25134459/",
+    "europepmc_id": "25134459",
+    "europepmc_source": "MED",
+    "cited_by_count": 97
+   },
+   {
+    "pmid": "24936253",
+    "title": "12q24 locus association with type 1 diabetes: SH2B3 or ATXN2?",
+    "abstract": "Genetic linkage analyses, genome-wide association studies of single nucleotide polymorphisms, copy number variation surveys, and mutation screenings found the human chromosomal 12q24 locus, with the genes SH2B3 and ATXN2 in its core, to be associated with an exceptionally wide spectrum of disease susceptibilities. Hematopoietic traits of red and white blood cells (like erythrocytosis and myeloproliferative disease), autoimmune disorders (like type 1 diabetes, coeliac disease, juvenile idiopathic arthritis, rheumatoid arthritis, thrombotic antiphospholipid syndrome, lupus erythematosus, multiple sclerosis, hypothyroidism and vitiligo), also vascular pathology (like kidney glomerular filtration rate deficits, serum urate levels, plasma beta-2-microglobulin levels, retinal microcirculation problems, diastolic and systolic blood pressure and hypertension, cardiovascular infarction), furthermore obesity, neurodegenerative conditions (like the polyglutamine-expansion disorder spinocerebellar ataxia type 2, Parkinson's disease, the motor-neuron disease amyotrophic lateral sclerosis, and progressive supranuclear palsy), and finally longevity were reported. Now it is important to clarify, in which ways the loss or gain of function of the locally encoded proteins SH2B3/LNK and ataxin-2, respectively, contribute to these polygenic health problems. SH2B3/LNK is known to repress the JAK2/ABL1 dependent proliferation of white blood cells. Its null mutations in human and mouse are triggers of autoimmune traits and leukemia (acute lymphoblastic leukemia or chronic myeloid leukemia-like), while missense mutations were found in erythrocytosis-1 patients. Ataxin-2 is known to act on RNA-processing and trophic receptor internalization. While its polyglutamine-expansion mediated gain-of-function causes neuronal atrophy in human and mouse, its deletion leads to obesity and insulin resistance in mice. Thus, it is conceivable that the polygenic pathogenesis of type 1 diabetes is enhanced by an SH2B3-dysregulation-mediated predisposition to autoimmune diseases that conspires with an ATXN2-deficiency-mediated predisposition to lipid and glucose metabolism pathology.",
+    "authors": [
+     {
+      "name": "Auburger G"
+     },
+     {
+      "name": "Gispert S"
+     },
+     {
+      "name": "Lahut S"
+     },
+     {
+      "name": "Om\u00fcr O"
+     },
+     {
+      "name": "Damrath E"
+     }
+    ],
+    "journal": "World journal of diabetes",
+    "pub_date": "2014-06-01",
+    "pub_year": "2014",
+    "doi": "10.4239/wjd.v5.i3.316",
+    "pmcid": "PMC4058736",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24936253/",
+    "europepmc_id": "24936253",
+    "europepmc_source": "MED",
+    "cited_by_count": 55
+   },
+   {
+    "pmid": "24786396",
+    "title": "The c-Abl inhibitor, nilotinib, protects dopaminergic neurons in a preclinical animal model of Parkinson's disease.",
+    "abstract": "c-Abl is activated in the brain of Parkinson's disease (PD) patients and in 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine (MPTP)-intoxicated mice where it inhibits parkin through tyrosine phosphorylation leading to the accumulation of parkin substrates, and neuronal cell death. In the present study, we evaluated the in vivo efficacy of nilotinib, a brain penetrant c-Abl inhibitor, in the acute MPTP-induced model of PD. Our results show that administration of nilotinib reduces c-Abl activation and the levels of the parkin substrate, PARIS, resulting in prevention of dopamine (DA) neuron loss and behavioral deficits following MPTP intoxication. On the other hand, we observe no reduction in the tyrosine phosphorylation of parkin and the parkin substrate, AIMP2 suggesting that the protective effect of nilotinib may, in part, be parkin-independent or to the pharmacodynamics properties of nilotinib. This study provides a strong rationale for testing other brain permeable c-Abl inhibitors as potential therapeutic agents for the treatment of PD.",
+    "authors": [
+     {
+      "name": "Karuppagounder SS"
+     },
+     {
+      "name": "Brahmachari S"
+     },
+     {
+      "name": "Lee Y"
+     },
+     {
+      "name": "Dawson VL"
+     },
+     {
+      "name": "Dawson TM"
+     }
+    ],
+    "journal": "Scientific reports",
+    "pub_date": "2014-05-02",
+    "pub_year": "2014",
+    "doi": "10.1038/srep04874",
+    "pmcid": "PMC4007078",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24786396/",
+    "europepmc_id": "24786396",
+    "europepmc_source": "MED",
+    "cited_by_count": 198
+   }
+  ]
+ }
+}

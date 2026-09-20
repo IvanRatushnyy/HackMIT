@@ -164,12 +164,14 @@ export function deriveLabel(claim: Claim, sources: Source[], cutoff: ISODate): L
   }
 }
 
-/** Ordering for the chain filter and the "weakest" fallback. Higher = weaker. */
+/** Ordering for the chain filter and the "weakest" fallback. Higher = weaker.
+ * The backend's weakest-link policy (docs/BACKEND_PLAN.md v4.4 §5): refuted < contested < unknown < single-source < established in
+ * strength — no evidence at all is a hole the hypothesis steps over, one paper is a testable claim. */
 export const LABEL_SEVERITY: Record<Label, number> = {
   established: 0,
-  unknown: 1,
-  contested: 2,
-  'single-source': 3,
+  'single-source': 1,
+  unknown: 2,
+  contested: 3,
   refuted: 4,
 }
 

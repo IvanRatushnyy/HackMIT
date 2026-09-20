@@ -1,0 +1,528 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "24936253,25025064,25221952,25398814,25732621,27434297,27833551,28035939,28078567,28328536"
+ },
+ "fetched_at": "2026-09-20T09:47:59+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "24936253",
+    "title": "12q24 locus association with type 1 diabetes: SH2B3 or ATXN2?",
+    "abstract": "Genetic linkage analyses, genome-wide association studies of single nucleotide polymorphisms, copy number variation surveys, and mutation screenings found the human chromosomal 12q24 locus, with the genes SH2B3 and ATXN2 in its core, to be associated with an exceptionally wide spectrum of disease susceptibilities. Hematopoietic traits of red and white blood cells (like erythrocytosis and myeloproliferative disease), autoimmune disorders (like type 1 diabetes, coeliac disease, juvenile idiopathic arthritis, rheumatoid arthritis, thrombotic antiphospholipid syndrome, lupus erythematosus, multiple sclerosis, hypothyroidism and vitiligo), also vascular pathology (like kidney glomerular filtration rate deficits, serum urate levels, plasma beta-2-microglobulin levels, retinal microcirculation problems, diastolic and systolic blood pressure and hypertension, cardiovascular infarction), furthermore obesity, neurodegenerative conditions (like the polyglutamine-expansion disorder spinocerebellar ataxia type 2, Parkinson's disease, the motor-neuron disease amyotrophic lateral sclerosis, and progressive supranuclear palsy), and finally longevity were reported. Now it is important to clarify, in which ways the loss or gain of function of the locally encoded proteins SH2B3/LNK and ataxin-2, respectively, contribute to these polygenic health problems. SH2B3/LNK is known to repress the JAK2/ABL1 dependent proliferation of white blood cells. Its null mutations in human and mouse are triggers of autoimmune traits and leukemia (acute lymphoblastic leukemia or chronic myeloid leukemia-like), while missense mutations were found in erythrocytosis-1 patients. Ataxin-2 is known to act on RNA-processing and trophic receptor internalization. While its polyglutamine-expansion mediated gain-of-function causes neuronal atrophy in human and mouse, its deletion leads to obesity and insulin resistance in mice. Thus, it is conceivable that the polygenic pathogenesis of type 1 diabetes is enhanced by an SH2B3-dysregulation-mediated predisposition to autoimmune diseases that conspires with an ATXN2-deficiency-mediated predisposition to lipid and glucose metabolism pathology.",
+    "authors": [
+     {
+      "name": "Auburger Georg",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Gispert Suzana",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Lahut Suna",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Om\u00fcr Ozg\u00fcr",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Damrath Ewa",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Heck Melanie",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     },
+     {
+      "name": "Ba\u015fak Nazl\u0131",
+      "affiliation": "Georg Auburger, Suzana Gispert, Ewa Damrath, Melanie Heck, Experimental Neurology, Goethe University Medical School, 60590 Frankfurt am Main, Germany."
+     }
+    ],
+    "journal": "World journal of diabetes",
+    "pub_date": "2014 Jun 15",
+    "pub_year": "2014",
+    "doi": "10.4239/wjd.v5.i3.316",
+    "doi_url": "https://doi.org/10.4239/wjd.v5.i3.316",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24936253/",
+    "mesh_terms": null,
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "25025064",
+    "title": "Efficacy and pharmacologic data of second-generation tyrosine kinase inhibitor nilotinib in BCR-ABL-positive leukemia patients with central nervous system relapse after allogeneic stem cell transplantation.",
+    "abstract": "Central nervous system (CNS) involvement is a severe complication of BCR-ABL-positive leukemia after allogenic stem cell transplantation (alloSCT) associated with fatal outcome. Although second-generation tyrosine-kinase inhibitors (TKI) such as nilotinib have shown activity in systemic BCR-ABL(+) disease, little data exists on their penetration and efficacy within the CNS. Four patients (3 male, 1 female; age 15-49) with meningeal relapse after alloSCT and subsequent treatment with nilotinib were identified. A total of 17 cerebrospinal fluid (csf) and serum samples were assessed for nilotinib concentration and patient outcome was recorded. Nilotinib concentrations showed a low median csf/plasma ratio of 0.53% (range 0.23-1.5%), yet pronounced clinical efficacy was observed with long-lasting responses (>1 year) in three patients. Comparison with historical data showed a trend towards superior efficacy of nilotinib versus imatinib. Despite poor csf penetration, nilotinib showed significant clinical activity in CNS relapse of BCR-ABL(+) leukemias. As nilotinib has a high protein-binding affinity, the low-protein concentration in csf could translate into a relatively higher amount of free and therefore active nilotinib in csf as compared to blood, possibly explaining the observed efficacy. Thus, treatment with a 2nd generation TKI warrants further investigation and should be considered in cases of CNS relapse of BCR-ABL-positive leukemia after alloSCT.",
+    "authors": [
+     {
+      "name": "Reinwald Mark",
+      "affiliation": "Department of Hematology and Oncology, University Hospital Mannheim, Theodor-Kutzer-Ufer 1-3, 68167 Mannheim, Germany."
+     },
+     {
+      "name": "Schleyer Eberhard",
+      "affiliation": "Department of Hematology and Oncology, Medical Faculty Carl Gustav Carus, Technische Universit\u00e4t Dresden, Fetscherstra\u00dfe 74, 01307 Dresden, Germany ; Department of Internal Medicine, Klinikum Merseburg, Wei\u00dfe Mauer 52, 06217 Merseburg, Germany."
+     },
+     {
+      "name": "Kiewe Philipp",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Blau Igor Wolfgang",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Burmeister Thomas",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Pursche Stefan",
+      "affiliation": "Department of Hematology and Oncology, Medical Faculty Carl Gustav Carus, Technische Universit\u00e4t Dresden, Fetscherstra\u00dfe 74, 01307 Dresden, Germany."
+     },
+     {
+      "name": "Neumann Martin",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Notter Michael",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Thiel Eckhard",
+      "affiliation": "Department of Hematology, Oncology and Tumor Immunology, Campus Benjamin Franklin, Charit\u00e9 Berlin, Hindenburgdamm 30, 12203 Berlin, Germany."
+     },
+     {
+      "name": "Hofmann Wolf-Karsten",
+      "affiliation": "Department of Hematology and Oncology, University Hospital Mannheim, Theodor-Kutzer-Ufer 1-3, 68167 Mannheim, Germany."
+     }
+    ],
+    "journal": "BioMed research international",
+    "pub_date": "2014",
+    "pub_year": "2014",
+    "doi": "10.1155/2014/637059",
+    "doi_url": "https://doi.org/10.1155/2014/637059",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25025064/",
+    "mesh_terms": [
+     "Adolescent",
+     "Adult",
+     "Benzamides",
+     "Central Nervous System",
+     "Female",
+     "Fusion Proteins, bcr-abl",
+     "Humans",
+     "Imatinib Mesylate",
+     "Kaplan-Meier Estimate",
+     "Leukemia, Myelogenous, Chronic, BCR-ABL Positive",
+     "Male",
+     "Middle Aged",
+     "Neoplasm Recurrence, Local",
+     "Piperazines",
+     "Pyrimidines",
+     "Stem Cell Transplantation",
+     "Transplantation, Homologous"
+    ],
+    "publication_types": [
+     "Clinical Trial",
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "25221952",
+    "title": "Antitumor effect of the tyrosine kinase inhibitor nilotinib on gastrointestinal stromal tumor (GIST) and imatinib-resistant GIST cells.",
+    "abstract": "Despite the benefits of imatinib for treating gastrointestinal stromal tumors (GIST), the prognosis for high risk GIST and imatinib-resistant (IR) GIST remains poor. The mechanisms of imatinib resistance have not yet been fully clarified. The aim of the study was to establish imatinib-resistant cell lines and investigate nilotinib, a second generation tyrosine kinase inhibitor (TKI), in preclinical models of GIST and imatinib-resistant GIST. For a model of imatinib-resistant GIST, we generated resistant cells from GK1C and GK3C cell lines by exposing them to imatinib for 6 months. The parent cell lines GK1C and GK3C showed imatinib sensitivity with IC50 of 4.59\u00b10.97 \u00b5M and 11.15\u00b11.48 \u00b5M, respectively. The imatinib-resistant cell lines GK1C-IR and GK3C-IR showed imatinib resistance with IC50 values of 11.74\u00b10.17 \u00b5M (P<0.001) and 41.37\u00b11.07 \u00b5M (P<0.001), respectively. The phosphorylation status of key cell signaling pathways, receptor tyrosine kinase KIT (CD117), platelet-derived growth factor receptor alpha (PDGFRA) and downstream signaling kinases: serine-threonine kinase Akt (AKT) and extracellular signal-regulated kinase 1/2 (ERK1/2) or the non-receptor tyrosine kinase: proto-oncogene tyrosine-protein kinase Src (SRC), was analyzed in established cell lines and ERK1/2 phosphorylation was found to be increased compared to the parental cells. Nilotinib demonstrated significant antitumor efficacy against GIST xenograft lines and imatinib-resistant GIST cell lines. Thus, nilotinib may have clinical potential for patients with GIST or imatinib-resistant GIST.",
+    "authors": [
+     {
+      "name": "Sako Hiroyuki",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Fukuda Kazumasa",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Saikawa Yoshiro",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Nakamura Rieko",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Takahashi Tsunehiro",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Wada Norihito",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Kawakubo Hirohumi",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Takeuchi Hiroya",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Ohmori Tai",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     },
+     {
+      "name": "Kitagawa Yuko",
+      "affiliation": "Department of Surgery, School of Medicine, Keio University, Shinjuku-ku, Tokyo, Japan."
+     }
+    ],
+    "journal": "PloS one",
+    "pub_date": "2014",
+    "pub_year": "2014",
+    "doi": "10.1371/journal.pone.0107613",
+    "doi_url": "https://doi.org/10.1371/journal.pone.0107613",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25221952/",
+    "mesh_terms": [
+     "Animals",
+     "Cell Line, Tumor",
+     "Cell Proliferation",
+     "Drug Resistance, Neoplasm",
+     "Gastrointestinal Stromal Tumors",
+     "Humans",
+     "Imatinib Mesylate",
+     "Mice",
+     "Neoplasm Proteins",
+     "Phosphorylation",
+     "Protein Kinase Inhibitors",
+     "Proto-Oncogene Mas",
+     "Pyrimidines",
+     "Signal Transduction",
+     "Xenograft Model Antitumor Assays"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "25398814",
+    "title": "Isolated central nervous system relapse in two patients with BCR-ABL-positive acute leukemia while receiving a next-generation tyrosine kinase inhibitor.",
+    "abstract": "We describe two patients with break point cluster region-Abelsen (BCR-ABL)-positive acute leukemia who had an isolated relapse in the central nervous system (CNS) while receiving a next-generation BCR-ABL inhibitor. The first had B-cell acute lymphoblastic leukemia which relapsed in the CNS while maintaining molecular remission in the bone marrow on nilotinib. The second patient had an isolated CNS myeloid blast crisis of chronic myeloid leukemia while maintaining complete cytogenetic remission in the bone marrow on dasatinib. Mutation analysis of the kinase domain revealed 35 base pair insertion (35INT) between exon 8 and 9 in both cases.",
+    "authors": [
+     {
+      "name": "Gaur Sumit",
+      "affiliation": "Department of Internal Medicine, Texas Tech University, Paul L. Foster School of Medicine, El Paso, TX, U.S.A. sumit.gaur@ttuhsc.edu."
+     },
+     {
+      "name": "Torabi Ali-Reza",
+      "affiliation": "Department of Pathology, Texas Tech University, Paul L. Foster School of Medicine, El Paso, TX, U.S.A."
+     },
+     {
+      "name": "Corral Javier",
+      "affiliation": "Department of Internal Medicine, Texas Tech University, Paul L. Foster School of Medicine, El Paso, TX, U.S.A."
+     }
+    ],
+    "journal": "In vivo (Athens, Greece)",
+    "pub_date": "2014",
+    "pub_year": "2014",
+    "doi": null,
+    "doi_url": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25398814/",
+    "mesh_terms": [
+     "Adult",
+     "Antineoplastic Agents",
+     "Bone Marrow",
+     "Brain",
+     "Central Nervous System Neoplasms",
+     "Cerebrospinal Fluid",
+     "Combined Modality Therapy",
+     "Fusion Proteins, bcr-abl",
+     "Gene Expression",
+     "Humans",
+     "Leukemia",
+     "Magnetic Resonance Imaging",
+     "Male",
+     "Mutation",
+     "Protein Kinase Inhibitors",
+     "Protein-Tyrosine Kinases",
+     "Treatment Outcome"
+    ],
+    "publication_types": [
+     "Case Reports",
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "25732621",
+    "title": "A preclinical study demonstrating the efficacy of nilotinib in inhibiting the growth of pediatric high-grade glioma.",
+    "abstract": "Solid tumors arising from malignant transformation of glial cells are one of the leading causes of central nervous system tumor-related death in children. Recurrence in spite of rigorous surgical and chemoradiation therapies remains a major hurdle in management of these tumors. Here, we investigate the efficacy of the second-generation receptor tyrosine kinase inhibitor nilotinib as a therapeutic option for the management of pediatric gliomas. We have utilized two independent pediatric high-grade glioma cell lines with either high platelet-derived growth factor receptor alpha (PDGFR\u03b1) or high PDGFR\u03b2 expression in in vitro assays to investigate the specific downstream effects of nilotinib treatment. Using in vitro cell-based assays we show that nilotinib inhibits PDGF-BB-dependent activation of PDGFR\u03b1. We further show that nilotinib is able to decrease cell proliferation and anchorage-independent growth via suppression of AKT and ERK1/2 signaling pathways. Our results suggest that nilotinib may be effective for management of a PDGFR\u03b1-dependent group of pediatric gliomas.",
+    "authors": [
+     {
+      "name": "Au Karolyn",
+      "affiliation": "The Arthur and Sonia Labatt Brain Tumour Research Centre, Hospital for Sick Children, University of Toronto, Toronto, ON, M5G 1L7, Canada."
+     },
+     {
+      "name": "Singh Sanjay K"
+     },
+     {
+      "name": "Burrell Kelly"
+     },
+     {
+      "name": "Sabha Nesrin"
+     },
+     {
+      "name": "Hawkins Cynthia"
+     },
+     {
+      "name": "Huang Annie"
+     },
+     {
+      "name": "Zadeh Gelareh"
+     }
+    ],
+    "journal": "Journal of neuro-oncology",
+    "pub_date": "2015 May",
+    "pub_year": "2015",
+    "doi": "10.1007/s11060-015-1744-y",
+    "doi_url": "https://doi.org/10.1007/s11060-015-1744-y",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/25732621/",
+    "mesh_terms": [
+     "Animals",
+     "Becaplermin",
+     "Cell Line, Tumor",
+     "Cell Proliferation",
+     "Cell Survival",
+     "Colony-Forming Units Assay",
+     "Dose-Response Relationship, Drug",
+     "Drug Evaluation, Preclinical",
+     "Enzyme Inhibitors",
+     "Gene Expression Regulation, Neoplastic",
+     "Glioma",
+     "Humans",
+     "MAP Kinase Signaling System",
+     "Mice",
+     "Mice, SCID",
+     "Oncogene Protein v-akt",
+     "Proto-Oncogene Proteins c-sis",
+     "Pyrimidines",
+     "Receptor, Platelet-Derived Growth Factor alpha",
+     "Time Factors",
+     "Vinculin",
+     "Xenograft Model Antitumor Assays"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "27434297",
+    "title": "Nilotinib Effects in Parkinson's disease and Dementia with Lewy bodies.",
+    "abstract": "BACKGROUND: We evaluated the effects of low doses of the tyrosine kinase Abelson (Abl) inhibitor Nilotinib, on safety and pharmacokinetics in Parkinson's disease dementia or dementia with Lewy bodies. OBJECTIVES: The primary outcomes of this study were safety and tolerability; pharmacokinetics and target engagement were secondary, while clinical outcomes were exploratory. METHODS: Twelve subjects were randomized into 150\u200amg (n\u200a=\u200a5) or 300\u200amg (n\u200a=\u200a7) groups and received Nilotinib orally every day for 24 weeks. RESULTS: This study shows that 150\u200amg and 300\u200amg doses of Nilotinib appear to be safe and tolerated in subjects with advanced Parkinson's disease. Nilotinib is detectable in the cerebrospinal fluid (CSF) and seems to engage the target Abl. Motor and cognitive outcomes suggest a possible beneficial effect on clinical outcomes. The CSF levels of homovanillic acid are significantly increased between baseline and 24 weeks of treatment. Exploratory CSF biomarkers were measured. CONCLUSIONS: This small proof-of-concept study lacks a placebo group and participants were not homogenous, resulting in baseline differences between and within groups. This limits the interpretations of the biomarker and clinical data, and any conclusions should be drawn cautiously. Nonetheless, the collective observations suggest that it is warranted to evaluate the safety and efficacy of Nilotinib in larger randomized, double-blind, placebo-controlled trials.",
+    "authors": [
+     {
+      "name": "Pagan Fernando",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Hebron Michaeline",
+      "affiliation": "Department of Neurology, Laboratory for Dementia and Parkinsonism, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Georgetown University Medical Center, Washington, DC, USA."
+     },
+     {
+      "name": "Valadez Ellen H",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Torres-Yaghi Yasar",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Huang Xu",
+      "affiliation": "Department of Neurology, Laboratory for Dementia and Parkinsonism, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Georgetown University Medical Center, Washington, DC, USA."
+     },
+     {
+      "name": "Mills Reversa R",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Wilmarth Barbara M",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Howard Hellen",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Dunn Connell",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     },
+     {
+      "name": "Carlson Alexis",
+      "affiliation": "Department of Neurology, National Parkinson's Foundation Center for Excellence, Translational Neurotherapeutics Program. Movement Disorders Program. MedStar Georgetown Hospital Washington, DC, USA."
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016 Jul 11",
+    "pub_year": "2016",
+    "doi": "10.3233/JPD-160867",
+    "doi_url": "https://doi.org/10.3233/JPD-160867",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434297/",
+    "mesh_terms": [
+     "Dementia",
+     "Follow-Up Studies",
+     "Humans",
+     "Lewy Body Disease",
+     "Outcome Assessment, Health Care",
+     "Parkinson Disease",
+     "Pyrimidines"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Randomized Controlled Trial"
+    ]
+   },
+   {
+    "pmid": "27833551",
+    "title": "c-Abl Inhibitors Enable Insights into the Pathophysiology and Neuroprotection in Parkinson's Disease.",
+    "abstract": "Parkinson's disease (PD) is a progressive neurodegenerative disorder causing movement disabilities and several non-motor symptoms in afflicted patients. Recent studies in animal models of PD and analyses of brain specimen from PD patients revealed an increase in the level and activity of the non-receptor tyrosine kinase Abelson (c-Abl) in dopaminergic neurons with phosphorylation of protein substrates, such as \u03b1-synuclein and the E3 ubiquitin ligase, Parkin. Most significantly inhibition of c-Abl kinase activity by small molecular compounds used in the clinic to treat human leukemia have shown promising neuroprotective effects in cell and animal models of PD. This has raised hope that similar beneficial outcome may also be observed in the treatment of PD patients by using c-Abl inhibitors. Here we highlight the background for the current optimism, reviewing c-Abl and its relationship to pathophysiological pathways prevailing in PD, as well as discussing issues related to the pharmacology and safety of current c-Abl inhibitors. Clearly more rigorously controlled and well-designed trials are needed before the c-Abl inhibitors can be used in the neuroclinic to possibly benefit an increasing number of PD patients.",
+    "authors": [
+     {
+      "name": "Lindholm Dan",
+      "affiliation": "Medicum, Department of Biochemistry and Developmental Biology, Faculty of Medicine, University of HelsinkiHelsinki, Finland; Minerva Foundation Institute for Medical Research, Biomedicum Helsinki 2U, HelsinkiFinland."
+     },
+     {
+      "name": "Pham Dan D",
+      "affiliation": "Medicum, Department of Biochemistry and Developmental Biology, Faculty of Medicine, University of HelsinkiHelsinki, Finland; Minerva Foundation Institute for Medical Research, Biomedicum Helsinki 2U, HelsinkiFinland."
+     },
+     {
+      "name": "Cascone Annunziata",
+      "affiliation": "Medicum, Department of Biochemistry and Developmental Biology, Faculty of Medicine, University of Helsinki Helsinki, Finland."
+     },
+     {
+      "name": "Eriksson Ove",
+      "affiliation": "Medicum, Department of Biochemistry and Developmental Biology, Faculty of Medicine, University of Helsinki Helsinki, Finland."
+     },
+     {
+      "name": "Wennerberg Krister",
+      "affiliation": "Institute for Molecular Medicine Finland, University of Helsinki Helsinki, Finland."
+     },
+     {
+      "name": "Saarma Mart",
+      "affiliation": "Institute of Biotechnology, University of Helsinki Helsinki, Finland."
+     }
+    ],
+    "journal": "Frontiers in aging neuroscience",
+    "pub_date": "2016",
+    "pub_year": "2016",
+    "doi": "10.3389/fnagi.2016.00254",
+    "doi_url": "https://doi.org/10.3389/fnagi.2016.00254",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27833551/",
+    "mesh_terms": null,
+    "publication_types": [
+     "Review",
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "28035939",
+    "title": "Could MAO-B Inhibitor Withdrawal Rather than Nilotinib Benefit Explain the Dopamine Metabolite Increase in Parkinsonian Study Subjects?",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Schwarzschild Michael A"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2017",
+    "pub_year": "2017",
+    "doi": "10.3233/JPD-160975",
+    "doi_url": "https://doi.org/10.3233/JPD-160975",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28035939/",
+    "mesh_terms": null,
+    "publication_types": [
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "28078567",
+    "title": "The c-Abl inhibitor in Parkinson disease.",
+    "abstract": "Parkinson's disease (PD) is an insidious onset neurodegenerative disease affecting approximately 1% of the population over the age of 65. So far available therapies for PD have only aimed at improving or alleviating symptoms, but not at slowing, preventing, and reversing the course of PD. Recently, some studies have indicated that the levels and activation of Abelson non-receptor tyrosine kinase (c-Abl, Abl1) were up-regulated in the brain tissue of patients with PD and demonstrated that c-Abl inhibitors could improve motor behavior, prevent the loss of dopamine neurons, inhibit phosphorylation of Cdk5, regulate \u03b1-synuclein phosphorylation and clearance, inhibit the tyrosine phosphorylation of parkin and decrease parkin substrate, for example, PARIS (zinc finger protein 746), AIMP2 (aminoacyl-tRNA synthetase-interacting multifunctional protein type2), FBP1 (fuse-binding protein 1), and synphilin-1. Therefore, we review the mechanism of the c-Abl inhibitor in PD and conclude that c-Abl inhibitors may be a potential treatment in PD and other neurodegenerative disease.",
+    "authors": [
+     {
+      "name": "Zhou Zhi-Hua",
+      "affiliation": "Department of Neurobiology, Southern Medical University, Satainan Road 1023, Guangzhou, Guangdong, China. zhouzh20051103@163.com."
+     },
+     {
+      "name": "Wu Yun-Fan",
+      "affiliation": "Wilson Disease Centre, Hospital Affiliated to Institute of Neurology, Anhui University of Chinese Traditional Medicine, Changjiangzhong Road 357, Hefei, Anhui, China."
+     },
+     {
+      "name": "Wang Xue-Min",
+      "affiliation": "Department of Neurobiology, Southern Medical University, Satainan Road 1023, Guangzhou, Guangdong, China. xmwang@smu.edu.cn."
+     },
+     {
+      "name": "Han Yong-Zhu",
+      "affiliation": "Wilson Disease Centre, Hospital Affiliated to Institute of Neurology, Anhui University of Chinese Traditional Medicine, Changjiangzhong Road 357, Hefei, Anhui, China."
+     }
+    ],
+    "journal": "Neurological sciences : official journal of the Italian Neurological Society and of the Italian Society of Clinical Neurophysiology",
+    "pub_date": "2017 Apr",
+    "pub_year": "2017",
+    "doi": "10.1007/s10072-016-2808-2",
+    "doi_url": "https://doi.org/10.1007/s10072-016-2808-2",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28078567/",
+    "mesh_terms": [
+     "Animals",
+     "Antiparkinson Agents",
+     "Brain",
+     "Humans",
+     "Parkinson Disease",
+     "Protein Kinase Inhibitors",
+     "Proto-Oncogene Proteins c-abl"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "28328536",
+    "title": "Neurotransmission systems in Parkinson's disease.",
+    "abstract": "Parkinson's disease (PD) is histologically characterized by the accumulation of \u03b1-synuclein particles, known as Lewy bodies. The second most common neurodegenerative disorder, PD is widely known because of the typical motor manifestations of active tremor, rigidity, and postural instability, while several prodromal non-motor symptoms including REM sleep behavior disorders, depression, autonomic disturbances, and cognitive decline are being more extensively recognized. Motor symptoms most commonly arise from synucleinopathy of nigrostriatal pathway. Glutamatergic, \u03b3-aminobutyric acid (GABA)ergic, cholinergic, serotoninergic, and endocannabinoid neurotransmission systems are not spared from the global cerebral neurodegenerative assault. Wide intrabasal and extrabasal of the basal ganglia provide enough justification to evaluate network circuits disturbance of these neurotransmission systems in PD. In this comprehensive review, English literature in PubMed, Science direct, EMBASE, and Web of Science databases were perused. Characteristics of dopaminergic and non-dopaminergic systems, disturbance of these neurotransmitter systems in the pathophysiology of PD, and their treatment applications are discussed.",
+    "authors": [
+     {
+      "name": "Sanjari Moghaddam Hossein"
+     },
+     {
+      "name": "Zare-Shahabadi Ameneh"
+     },
+     {
+      "name": "Rahmani Farzaneh"
+     },
+     {
+      "name": "Rezaei Nima"
+     }
+    ],
+    "journal": "Reviews in the neurosciences",
+    "pub_date": "2017 Jul 26",
+    "pub_year": "2017",
+    "doi": "10.1515/revneuro-2016-0068",
+    "doi_url": "https://doi.org/10.1515/revneuro-2016-0068",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28328536/",
+    "mesh_terms": [
+     "Animals",
+     "Humans",
+     "Neurotransmitter Agents",
+     "Parkinson Disease",
+     "Synaptic Transmission"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   }
+  ],
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=24936253%2C25025064%2C25221952%2C25398814%2C25732621%2C27434297%2C27833551%2C28035939%2C28078567%2C28328536",
+  "count": 10
+ }
+}

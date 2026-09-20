@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { nilotinib } from '../fixtures/nilotinib'
 import {
+  LABEL_SEVERITY,
   clinicalLevel,
   deriveLabel,
   ledgerResult,
@@ -165,5 +166,14 @@ describe('scatter mapping is exhaustive', () => {
     }
     expect(clinicalLevel({ design: 'x', controlled: true, outcome: 'negative', stage: 'phase-2' })).toBe(0)
     expect(clinicalLevel({ design: 'x', controlled: false, outcome: 'none', stage: 'preclinical' })).toBe(2)
+  })
+})
+
+describe('weakest-link severity (backend v4.4 §5)', () => {
+  it('orders refuted > contested > unknown > single-source > established', () => {
+    expect(LABEL_SEVERITY.refuted).toBeGreaterThan(LABEL_SEVERITY.contested)
+    expect(LABEL_SEVERITY.contested).toBeGreaterThan(LABEL_SEVERITY.unknown)
+    expect(LABEL_SEVERITY.unknown).toBeGreaterThan(LABEL_SEVERITY['single-source'])
+    expect(LABEL_SEVERITY['single-source']).toBeGreaterThan(LABEL_SEVERITY.established)
   })
 })

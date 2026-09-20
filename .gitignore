@@ -5,3 +5,7 @@ build/
 .env.*
 *.log
 .DS_Store
+backend/.venv/
+backend/.cache/
+__pycache__/
+.pytest_cache/

@@ -6,8 +6,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Entity } from '../data/types'
 import { source } from '../data/source'
+import { pairSlug, parsePair, rememberPair } from '../lib/pair'
 
 const COVERED = 'Not in the curated set. Fixture mode covers Parkinson’s disease, metformin, and nilotinib for Parkinson’s.'
+const PAIR_ONLY = 'Live mode appraises one drug for one condition — write it as “nilotinib for Parkinson’s disease”.'
 
 function bestMatch(entities: Entity[], text: string): Entity | undefined {
   const q = text.trim().toLowerCase().replace(/[’']/g, "'")
@@ -33,11 +35,26 @@ export function useAsk() {
   const hit = useMemo(() => bestMatch(entities, text), [entities, text])
 
   const submit = () => {
+    if (!text.trim()) return
+    if (source.mode === 'live') {
+      // Live: the text is the query. A typed pair goes to the backend as typed; a lone name only if the index knows it as a pair.
+      const pair = parsePair(text)
+      const slug = pair ? pairSlug(pair.drug, pair.disease) : hit?.kind === 'pair' ? hit.slug : undefined
+      if (!slug) {
+        setNote(PAIR_ONLY)
+        return
+      }
+      if (pair) rememberPair(slug, pair.drug, pair.disease)
+      setNote(null)
+      setText('')
+      navigate(`/q/${slug}`)
+      return
+    }
     if (hit) {
       setNote(null)
       setText('')
       navigate(`/q/${hit.slug}`)
-    } else if (text.trim()) setNote(COVERED)
+    } else setNote(COVERED)
   }
 
   const onChange = (value: string) => {

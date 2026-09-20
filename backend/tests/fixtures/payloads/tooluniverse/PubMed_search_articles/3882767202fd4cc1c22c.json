@@ -1,0 +1,39 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_search_articles",
+ "arguments": {
+  "query": "nilotinib AND (\"Parkinson disease\" OR \"Parkinson's disease\" OR \"Parkinsons disease\" OR Parkinsonian OR Parkinson) AND (\"MAO-B\" OR \"monoamine oxidase\" OR withdrawal OR confound OR \"alternative explanation\")",
+  "limit": 100,
+  "include_abstract": false
+ },
+ "fetched_at": "2026-09-20T09:04:14+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "28035939",
+    "title": "Could MAO-B Inhibitor Withdrawal Rather than Nilotinib Benefit Explain the Dopamine Metabolite Increase in Parkinsonian Study Subjects?",
+    "authors": [
+     "Schwarzschild MA"
+    ],
+    "author_count": 1,
+    "authors_truncated": false,
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2017",
+    "pub_year": "2017",
+    "doi": "10.3233/JPD-160975",
+    "pmcid": "PMC5302030",
+    "article_type": "Journal Article",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28035939/",
+    "doi_url": "https://doi.org/10.3233/JPD-160975",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5302030/"
+   }
+  ],
+  "metadata": {
+   "count": 1,
+   "total": 1,
+   "query": "nilotinib AND (\"Parkinson disease\" OR \"Parkinson's disease\" OR \"Parkinsons disease\" OR Parkinsonian OR Parkinson) AND (\"MAO-B\" OR \"monoamine oxidase\" OR withdrawal OR confound OR \"alternative explanation\")",
+   "source": "PubMed"
+  }
+ }
+}

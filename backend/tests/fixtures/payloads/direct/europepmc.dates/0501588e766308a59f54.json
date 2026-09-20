@@ -1,0 +1,1492 @@
+{
+ "transport": "direct",
+ "tool": "europepmc.dates",
+ "arguments": {
+  "pmids": [
+   "19373652",
+   "20008223",
+   "20105089",
+   "20386534",
+   "21575924",
+   "21669561",
+   "21718141",
+   "21730355",
+   "21806844",
+   "21827214",
+   "21892207",
+   "22023787",
+   "22285209",
+   "22659387",
+   "22985168",
+   "23055606",
+   "23154573",
+   "23184338",
+   "23285088",
+   "23459373",
+   "23576291",
+   "23576564",
+   "23666528",
+   "23684619",
+   "23719297",
+   "23787811",
+   "23831022",
+   "24091670",
+   "24100660",
+   "24297888",
+   "24386307",
+   "24412932",
+   "24600352",
+   "24629639",
+   "24745685",
+   "24756786",
+   "24786396",
+   "24789045",
+   "24865254",
+   "24936253",
+   "25025064",
+   "25134459",
+   "25221952",
+   "25398814",
+   "25527332",
+   "25732621",
+   "25785155",
+   "25882987",
+   "26207888",
+   "26910070",
+   "27434297",
+   "27434298",
+   "27465658",
+   "27726309",
+   "27833551",
+   "27960086",
+   "27998488",
+   "28035939",
+   "28078567",
+   "28328536",
+   "28368422",
+   "28377326",
+   "28522574",
+   "28571531",
+   "28601294",
+   "28683103",
+   "28719608",
+   "28801986",
+   "28843487",
+   "28854975",
+   "29265350",
+   "29334667",
+   "29408302",
+   "29438985",
+   "29463296",
+   "29494851",
+   "29689247",
+   "29774130",
+   "29897434",
+   "30179260",
+   "30329047",
+   "30332954",
+   "30425653",
+   "30635765",
+   "30694684",
+   "30755067",
+   "30807982",
+   "30867052",
+   "30867588",
+   "30906562",
+   "30919310",
+   "31129265",
+   "31187953",
+   "31223555",
+   "31235520",
+   "31318870",
+   "31548371",
+   "31683623",
+   "31820037",
+   "31841588",
+   "31841599",
+   "31894532",
+   "32171747",
+   "32219444",
+   "32241082",
+   "32291831",
+   "32292555",
+   "32299471",
+   "32468646",
+   "32582549",
+   "32597929",
+   "32597985",
+   "32776088",
+   "32898857",
+   "33000229",
+   "33155931",
+   "33214938",
+   "33215762",
+   "33315105",
+   "33392972",
+   "33731863",
+   "33748144",
+   "33797387",
+   "34120773",
+   "34146540",
+   "34189904",
+   "34238254",
+   "34262462",
+   "34364303",
+   "34543463",
+   "34581802",
+   "34622801",
+   "34786477",
+   "34816484",
+   "35052580",
+   "35156232",
+   "35257901",
+   "35399514",
+   "35449608",
+   "35551463",
+   "35686657",
+   "35763671",
+   "35841100",
+   "35964686",
+   "36079767",
+   "36109747",
+   "36134605",
+   "36213346",
+   "36248007",
+   "36283251",
+   "36338985",
+   "36370466",
+   "36431240",
+   "36557263",
+   "36717298",
+   "36768374",
+   "36845041",
+   "37194065",
+   "37572228",
+   "37696829",
+   "37721280",
+   "37760918",
+   "37893474",
+   "37916379",
+   "38071343",
+   "38117080",
+   "38220151",
+   "38273156",
+   "38293671",
+   "38333295",
+   "38619743",
+   "38991258",
+   "39008541",
+   "39009935",
+   "39077244",
+   "39156411",
+   "39459541",
+   "39520676",
+   "39647393",
+   "39757940",
+   "39812069",
+   "39952103",
+   "39993234",
+   "40149355",
+   "40165298",
+   "40204896",
+   "40206283",
+   "40273384",
+   "40279170",
+   "40295826",
+   "40309039",
+   "40357629",
+   "40399173",
+   "40411597",
+   "40442861",
+   "40486077",
+   "40500113",
+   "40517974",
+   "40527509",
+   "40545759",
+   "40565990",
+   "40616814",
+   "40631161",
+   "40633905",
+   "40681596",
+   "40694315",
+   "40696584",
+   "40732226",
+   "40777947",
+   "40779457",
+   "40782140",
+   "40807285",
+   "40810715",
+   "40883153",
+   "40916393",
+   "40917154",
+   "40920588",
+   "40937178",
+   "40940227",
+   "40952587",
+   "41008520",
+   "41020758",
+   "41024920",
+   "41122016",
+   "41125871",
+   "41129723",
+   "41148549",
+   "41155542",
+   "41162931",
+   "41177700",
+   "41192859",
+   "41213276",
+   "41234069",
+   "41254114",
+   "41348991",
+   "41376561",
+   "41389544",
+   "41405208",
+   "41431370",
+   "41443045",
+   "41465132",
+   "41469338",
+   "41521026",
+   "41525412",
+   "41555010",
+   "41570740",
+   "41571239",
+   "41573101",
+   "41582224",
+   "41633373",
+   "41641639",
+   "41665597",
+   "41670862",
+   "41674449",
+   "41700861",
+   "41721133",
+   "41763911",
+   "41767599",
+   "41780958",
+   "41780960",
+   "41869197",
+   "41874348",
+   "41874861",
+   "41880688",
+   "41948718",
+   "41956350",
+   "42037644",
+   "42069411",
+   "42074261",
+   "42108129",
+   "42118353",
+   "42270788",
+   "42275565",
+   "42277450",
+   "42297055",
+   "42310855",
+   "42314090",
+   "42321675",
+   "42339511",
+   "42357552",
+   "42442909",
+   "42454992",
+   "42455913",
+   "42478751",
+   "42484162",
+   "42551129",
+   "42552063",
+   "42557142",
+   "42583136",
+   "42584826",
+   "42608256",
+   "42609671",
+   "42645798",
+   "42657079",
+   "42685373",
+   "42738405",
+   "42747624"
+  ]
+ },
+ "fetched_at": "2026-09-20T09:06:35+00:00",
+ "payload": {
+  "26910070": {
+   "first_publication_date": "2016-01-01",
+   "cited_by_count": 1
+  },
+  "26207888": {
+   "first_publication_date": "2015-07-21",
+   "cited_by_count": 383
+  },
+  "25882987": {
+   "first_publication_date": "2015-04-14",
+   "cited_by_count": 87
+  },
+  "25732621": {
+   "first_publication_date": "2015-03-04",
+   "cited_by_count": 6
+  },
+  "25785155": {
+   "first_publication_date": "2015-01-15",
+   "cited_by_count": 4
+  },
+  "25527332": {
+   "first_publication_date": "2014-11-18",
+   "cited_by_count": 67
+  },
+  "25398814": {
+   "first_publication_date": "2014-11-01",
+   "cited_by_count": 12
+  },
+  "25221952": {
+   "first_publication_date": "2014-09-15",
+   "cited_by_count": 9
+  },
+  "25134459": {
+   "first_publication_date": "2014-08-19",
+   "cited_by_count": 97
+  },
+  "25025064": {
+   "first_publication_date": "2014-06-15",
+   "cited_by_count": 22
+  },
+  "24865254": {
+   "first_publication_date": "2014-06-05",
+   "cited_by_count": 20
+  },
+  "24936253": {
+   "first_publication_date": "2014-06-01",
+   "cited_by_count": 55
+  },
+  "24786396": {
+   "first_publication_date": "2014-05-02",
+   "cited_by_count": 198
+  },
+  "24789045": {
+   "first_publication_date": "2014-04-30",
+   "cited_by_count": 25
+  },
+  "24745685": {
+   "first_publication_date": "2014-03-13",
+   "cited_by_count": 47
+  },
+  "24629639": {
+   "first_publication_date": "2014-03-11",
+   "cited_by_count": 36
+  },
+  "24600352": {
+   "first_publication_date": "2014-02-20",
+   "cited_by_count": 38
+  },
+  "24412932": {
+   "first_publication_date": "2014-01-09",
+   "cited_by_count": 200
+  },
+  "24756786": {
+   "first_publication_date": "2014-01-01",
+   "cited_by_count": 15
+  },
+  "24386307": {
+   "first_publication_date": "2013-12-26",
+   "cited_by_count": 71
+  },
+  "24297888": {
+   "first_publication_date": "2013-12-02",
+   "cited_by_count": 40
+  },
+  "24100660": {
+   "first_publication_date": "2013-11-08",
+   "cited_by_count": 34
+  },
+  "24091670": {
+   "first_publication_date": "2013-10-03",
+   "cited_by_count": 59
+  },
+  "23831022": {
+   "first_publication_date": "2013-07-02",
+   "cited_by_count": 16
+  },
+  "23787811": {
+   "first_publication_date": "2013-06-19",
+   "cited_by_count": 50
+  },
+  "23719297": {
+   "first_publication_date": "2013-05-29",
+   "cited_by_count": 102
+  },
+  "23684619": {
+   "first_publication_date": "2013-05-14",
+   "cited_by_count": 13
+  },
+  "23666528": {
+   "first_publication_date": "2013-05-10",
+   "cited_by_count": 271
+  },
+  "23576291": {
+   "first_publication_date": "2013-04-10",
+   "cited_by_count": 7
+  },
+  "23576564": {
+   "first_publication_date": "2013-04-10",
+   "cited_by_count": 25
+  },
+  "23459373": {
+   "first_publication_date": "2013-03-04",
+   "cited_by_count": 2
+  },
+  "23285088": {
+   "first_publication_date": "2012-12-20",
+   "cited_by_count": 6
+  },
+  "23184338": {
+   "first_publication_date": "2012-11-25",
+   "cited_by_count": 6
+  },
+  "23154573": {
+   "first_publication_date": "2012-11-15",
+   "cited_by_count": 6
+  },
+  "22985168": {
+   "first_publication_date": "2012-09-17",
+   "cited_by_count": 15
+  },
+  "23055606": {
+   "first_publication_date": "2012-07-21",
+   "cited_by_count": 3
+  },
+  "22659387": {
+   "first_publication_date": "2012-06-01",
+   "cited_by_count": 10
+  },
+  "21669561": {
+   "first_publication_date": "2012-02-01",
+   "cited_by_count": 1
+  },
+  "22285209": {
+   "first_publication_date": "2012-01-27",
+   "cited_by_count": 12
+  },
+  "22023787": {
+   "first_publication_date": "2011-11-01",
+   "cited_by_count": 3
+  },
+  "21892207": {
+   "first_publication_date": "2011-09-05",
+   "cited_by_count": 59
+  },
+  "21827214": {
+   "first_publication_date": "2011-09-01",
+   "cited_by_count": 160
+  },
+  "21806844": {
+   "first_publication_date": "2011-08-02",
+   "cited_by_count": 17
+  },
+  "21730355": {
+   "first_publication_date": "2011-07-05",
+   "cited_by_count": 80
+  },
+  "21718141": {
+   "first_publication_date": "2011-06-30",
+   "cited_by_count": 49
+  },
+  "21575924": {
+   "first_publication_date": "2011-04-08",
+   "cited_by_count": 16
+  },
+  "20105089": {
+   "first_publication_date": "2010-04-01",
+   "cited_by_count": 0
+  },
+  "20386534": {
+   "first_publication_date": "2010-02-01",
+   "cited_by_count": 6
+  },
+  "19373652": {
+   "first_publication_date": "2009-04-01",
+   "cited_by_count": 13
+  },
+  "20008223": {
+   "first_publication_date": "2009-01-01",
+   "cited_by_count": 62
+  },
+  "31841588": {
+   "first_publication_date": "2020-03-01",
+   "cited_by_count": 9
+  },
+  "31820037": {
+   "first_publication_date": "2019-12-09",
+   "cited_by_count": 12
+  },
+  "31683623": {
+   "first_publication_date": "2019-10-31",
+   "cited_by_count": 15
+  },
+  "31548371": {
+   "first_publication_date": "2019-09-23",
+   "cited_by_count": 95
+  },
+  "31318870": {
+   "first_publication_date": "2019-07-18",
+   "cited_by_count": 15
+  },
+  "31235520": {
+   "first_publication_date": "2019-06-24",
+   "cited_by_count": 28
+  },
+  "31187953": {
+   "first_publication_date": "2019-06-01",
+   "cited_by_count": 6
+  },
+  "30919310": {
+   "first_publication_date": "2019-06-01",
+   "cited_by_count": 52
+  },
+  "31223555": {
+   "first_publication_date": "2019-05-21",
+   "cited_by_count": 3
+  },
+  "31129265": {
+   "first_publication_date": "2019-05-15",
+   "cited_by_count": 28
+  },
+  "30867588": {
+   "first_publication_date": "2019-04-01",
+   "cited_by_count": 237
+  },
+  "30867052": {
+   "first_publication_date": "2019-03-13",
+   "cited_by_count": 9
+  },
+  "30906562": {
+   "first_publication_date": "2019-03-12",
+   "cited_by_count": 92
+  },
+  "30755067": {
+   "first_publication_date": "2019-03-01",
+   "cited_by_count": 33
+  },
+  "30807982": {
+   "first_publication_date": "2019-02-20",
+   "cited_by_count": 6
+  },
+  "30694684": {
+   "first_publication_date": "2019-02-11",
+   "cited_by_count": 21
+  },
+  "30329047": {
+   "first_publication_date": "2019-02-01",
+   "cited_by_count": 65
+  },
+  "30635765": {
+   "first_publication_date": "2019-01-11",
+   "cited_by_count": 16
+  },
+  "30332954": {
+   "first_publication_date": "2019-01-01",
+   "cited_by_count": 18
+  },
+  "30425653": {
+   "first_publication_date": "2018-10-30",
+   "cited_by_count": 15
+  },
+  "30179260": {
+   "first_publication_date": "2018-09-04",
+   "cited_by_count": 55
+  },
+  "29897434": {
+   "first_publication_date": "2018-07-01",
+   "cited_by_count": 74
+  },
+  "29774130": {
+   "first_publication_date": "2018-04-24",
+   "cited_by_count": 35
+  },
+  "29689247": {
+   "first_publication_date": "2018-04-22",
+   "cited_by_count": 17
+  },
+  "29438985": {
+   "first_publication_date": "2018-04-01",
+   "cited_by_count": 94
+  },
+  "28571531": {
+   "first_publication_date": "2018-04-01",
+   "cited_by_count": 28
+  },
+  "29334667": {
+   "first_publication_date": "2018-03-01",
+   "cited_by_count": 3
+  },
+  "29494851": {
+   "first_publication_date": "2018-02-24",
+   "cited_by_count": 8
+  },
+  "29463296": {
+   "first_publication_date": "2018-02-20",
+   "cited_by_count": 40
+  },
+  "29408302": {
+   "first_publication_date": "2018-02-03",
+   "cited_by_count": 139
+  },
+  "29265350": {
+   "first_publication_date": "2017-12-19",
+   "cited_by_count": 0
+  },
+  "28801986": {
+   "first_publication_date": "2017-09-21",
+   "cited_by_count": 16
+  },
+  "28854975": {
+   "first_publication_date": "2017-08-30",
+   "cited_by_count": 10
+  },
+  "28843487": {
+   "first_publication_date": "2017-08-24",
+   "cited_by_count": 50
+  },
+  "28719608": {
+   "first_publication_date": "2017-07-18",
+   "cited_by_count": 46
+  },
+  "28683103": {
+   "first_publication_date": "2017-07-06",
+   "cited_by_count": 8
+  },
+  "28328536": {
+   "first_publication_date": "2017-07-01",
+   "cited_by_count": 54
+  },
+  "28601294": {
+   "first_publication_date": "2017-05-24",
+   "cited_by_count": 3
+  },
+  "28522574": {
+   "first_publication_date": "2017-05-18",
+   "cited_by_count": 24
+  },
+  "28368422": {
+   "first_publication_date": "2017-04-03",
+   "cited_by_count": 22
+  },
+  "28377326": {
+   "first_publication_date": "2017-04-01",
+   "cited_by_count": 6
+  },
+  "28078567": {
+   "first_publication_date": "2017-01-11",
+   "cited_by_count": 13
+  },
+  "28035939": {
+   "first_publication_date": "2017-01-01",
+   "cited_by_count": 5
+  },
+  "27960086": {
+   "first_publication_date": "2016-12-01",
+   "cited_by_count": 199
+  },
+  "27998488": {
+   "first_publication_date": "2016-11-25",
+   "cited_by_count": 10
+  },
+  "27833551": {
+   "first_publication_date": "2016-10-26",
+   "cited_by_count": 35
+  },
+  "27726309": {
+   "first_publication_date": "2016-10-10",
+   "cited_by_count": 15
+  },
+  "27465658": {
+   "first_publication_date": "2016-08-09",
+   "cited_by_count": 33
+  },
+  "27434297": {
+   "first_publication_date": "2016-07-01",
+   "cited_by_count": 195
+  },
+  "27434298": {
+   "first_publication_date": "2016-07-01",
+   "cited_by_count": 28
+  },
+  "36283251": {
+   "first_publication_date": "2022-10-19",
+   "cited_by_count": 4
+  },
+  "36248007": {
+   "first_publication_date": "2022-09-29",
+   "cited_by_count": 15
+  },
+  "36134605": {
+   "first_publication_date": "2022-09-22",
+   "cited_by_count": 13
+  },
+  "36213346": {
+   "first_publication_date": "2022-09-20",
+   "cited_by_count": 8
+  },
+  "36109747": {
+   "first_publication_date": "2022-09-15",
+   "cited_by_count": 16
+  },
+  "36079767": {
+   "first_publication_date": "2022-08-26",
+   "cited_by_count": 31
+  },
+  "35964686": {
+   "first_publication_date": "2022-08-12",
+   "cited_by_count": 9
+  },
+  "35763671": {
+   "first_publication_date": "2022-08-01",
+   "cited_by_count": 14
+  },
+  "35841100": {
+   "first_publication_date": "2022-07-15",
+   "cited_by_count": 60
+  },
+  "35686657": {
+   "first_publication_date": "2022-06-17",
+   "cited_by_count": 1
+  },
+  "35551463": {
+   "first_publication_date": "2022-05-13",
+   "cited_by_count": 5
+  },
+  "35399514": {
+   "first_publication_date": "2022-03-18",
+   "cited_by_count": 15
+  },
+  "35449608": {
+   "first_publication_date": "2022-03-17",
+   "cited_by_count": 2
+  },
+  "35257901": {
+   "first_publication_date": "2022-03-04",
+   "cited_by_count": 47
+  },
+  "35156232": {
+   "first_publication_date": "2022-02-13",
+   "cited_by_count": 8
+  },
+  "33797387": {
+   "first_publication_date": "2022-01-01",
+   "cited_by_count": 15
+  },
+  "35052580": {
+   "first_publication_date": "2021-12-29",
+   "cited_by_count": 10
+  },
+  "34581802": {
+   "first_publication_date": "2021-12-01",
+   "cited_by_count": 23
+  },
+  "34816484": {
+   "first_publication_date": "2021-11-23",
+   "cited_by_count": 47
+  },
+  "34786477": {
+   "first_publication_date": "2021-11-12",
+   "cited_by_count": 21
+  },
+  "34622801": {
+   "first_publication_date": "2021-10-08",
+   "cited_by_count": 11
+  },
+  "34543463": {
+   "first_publication_date": "2021-09-01",
+   "cited_by_count": 0
+  },
+  "34364303": {
+   "first_publication_date": "2021-08-05",
+   "cited_by_count": 32
+  },
+  "34238254": {
+   "first_publication_date": "2021-07-08",
+   "cited_by_count": 12
+  },
+  "34189904": {
+   "first_publication_date": "2021-06-30",
+   "cited_by_count": 6
+  },
+  "34262462": {
+   "first_publication_date": "2021-06-28",
+   "cited_by_count": 28
+  },
+  "34146540": {
+   "first_publication_date": "2021-06-17",
+   "cited_by_count": 12
+  },
+  "34120773": {
+   "first_publication_date": "2021-06-10",
+   "cited_by_count": 23
+  },
+  "33731863": {
+   "first_publication_date": "2021-03-17",
+   "cited_by_count": 1
+  },
+  "33748144": {
+   "first_publication_date": "2021-03-04",
+   "cited_by_count": 10
+  },
+  "33315105": {
+   "first_publication_date": "2021-03-01",
+   "cited_by_count": 117
+  },
+  "32898857": {
+   "first_publication_date": "2021-02-01",
+   "cited_by_count": 28
+  },
+  "33392972": {
+   "first_publication_date": "2021-01-03",
+   "cited_by_count": 13
+  },
+  "33155931": {
+   "first_publication_date": "2021-01-01",
+   "cited_by_count": 0
+  },
+  "33215762": {
+   "first_publication_date": "2020-11-20",
+   "cited_by_count": 51
+  },
+  "33214938": {
+   "first_publication_date": "2020-10-17",
+   "cited_by_count": 1
+  },
+  "32776088": {
+   "first_publication_date": "2020-10-01",
+   "cited_by_count": 33
+  },
+  "33000229": {
+   "first_publication_date": "2020-08-18",
+   "cited_by_count": 7
+  },
+  "32597985": {
+   "first_publication_date": "2020-08-01",
+   "cited_by_count": 3
+  },
+  "32597929": {
+   "first_publication_date": "2020-08-01",
+   "cited_by_count": 3
+  },
+  "32219444": {
+   "first_publication_date": "2020-07-01",
+   "cited_by_count": 46
+  },
+  "32171747": {
+   "first_publication_date": "2020-06-24",
+   "cited_by_count": 32
+  },
+  "32582549": {
+   "first_publication_date": "2020-06-02",
+   "cited_by_count": 21
+  },
+  "32468646": {
+   "first_publication_date": "2020-05-28",
+   "cited_by_count": 105
+  },
+  "32299471": {
+   "first_publication_date": "2020-04-16",
+   "cited_by_count": 61
+  },
+  "32291831": {
+   "first_publication_date": "2020-04-14",
+   "cited_by_count": 13
+  },
+  "32241082": {
+   "first_publication_date": "2020-04-03",
+   "cited_by_count": 10
+  },
+  "32292555": {
+   "first_publication_date": "2020-03-12",
+   "cited_by_count": 9
+  },
+  "31841599": {
+   "first_publication_date": "2020-03-01",
+   "cited_by_count": 142
+  },
+  "31894532": {
+   "first_publication_date": "2020-01-01",
+   "cited_by_count": 4
+  },
+  "40500113": {
+   "first_publication_date": "2026-04-23",
+   "cited_by_count": 0
+  },
+  "40545759": {
+   "first_publication_date": "2025-06-22",
+   "cited_by_count": 3
+  },
+  "40517974": {
+   "first_publication_date": "2025-06-13",
+   "cited_by_count": 4
+  },
+  "40442861": {
+   "first_publication_date": "2025-05-29",
+   "cited_by_count": 4
+  },
+  "40486077": {
+   "first_publication_date": "2025-05-25",
+   "cited_by_count": 1
+  },
+  "40411597": {
+   "first_publication_date": "2025-05-24",
+   "cited_by_count": 0
+  },
+  "40357629": {
+   "first_publication_date": "2025-05-21",
+   "cited_by_count": 1
+  },
+  "39993234": {
+   "first_publication_date": "2025-05-01",
+   "cited_by_count": 3
+  },
+  "40309039": {
+   "first_publication_date": "2025-04-29",
+   "cited_by_count": 1
+  },
+  "40295826": {
+   "first_publication_date": "2025-04-28",
+   "cited_by_count": 1
+  },
+  "40399173": {
+   "first_publication_date": "2025-04-28",
+   "cited_by_count": 0
+  },
+  "40273384": {
+   "first_publication_date": "2025-04-24",
+   "cited_by_count": 5
+  },
+  "40279170": {
+   "first_publication_date": "2025-04-18",
+   "cited_by_count": 2
+  },
+  "40204896": {
+   "first_publication_date": "2025-04-09",
+   "cited_by_count": 13
+  },
+  "40165298": {
+   "first_publication_date": "2025-03-31",
+   "cited_by_count": 6
+  },
+  "40149355": {
+   "first_publication_date": "2025-03-18",
+   "cited_by_count": 0
+  },
+  "40206283": {
+   "first_publication_date": "2025-03-18",
+   "cited_by_count": 0
+  },
+  "39952103": {
+   "first_publication_date": "2025-02-07",
+   "cited_by_count": 2
+  },
+  "40527509": {
+   "first_publication_date": "2025-02-01",
+   "cited_by_count": 0
+  },
+  "39757940": {
+   "first_publication_date": "2025-01-11",
+   "cited_by_count": 10
+  },
+  "39812069": {
+   "first_publication_date": "2025-01-01",
+   "cited_by_count": 1
+  },
+  "39647393": {
+   "first_publication_date": "2024-12-07",
+   "cited_by_count": 1
+  },
+  "39520676": {
+   "first_publication_date": "2024-11-09",
+   "cited_by_count": 4
+  },
+  "39459541": {
+   "first_publication_date": "2024-09-28",
+   "cited_by_count": 5
+  },
+  "39156411": {
+   "first_publication_date": "2024-07-17",
+   "cited_by_count": 3
+  },
+  "39009935": {
+   "first_publication_date": "2024-07-15",
+   "cited_by_count": 4
+  },
+  "38991258": {
+   "first_publication_date": "2024-07-03",
+   "cited_by_count": 2
+  },
+  "39077244": {
+   "first_publication_date": "2024-06-28",
+   "cited_by_count": 0
+  },
+  "39008541": {
+   "first_publication_date": "2024-05-22",
+   "cited_by_count": 3
+  },
+  "38619743": {
+   "first_publication_date": "2024-04-15",
+   "cited_by_count": 9
+  },
+  "37721280": {
+   "first_publication_date": "2024-03-01",
+   "cited_by_count": 31
+  },
+  "38273156": {
+   "first_publication_date": "2024-01-25",
+   "cited_by_count": 4
+  },
+  "38293671": {
+   "first_publication_date": "2024-01-16",
+   "cited_by_count": 9
+  },
+  "38333295": {
+   "first_publication_date": "2024-01-03",
+   "cited_by_count": 8
+  },
+  "38117080": {
+   "first_publication_date": "2023-12-20",
+   "cited_by_count": 3
+  },
+  "38071343": {
+   "first_publication_date": "2023-12-09",
+   "cited_by_count": 5
+  },
+  "37893474": {
+   "first_publication_date": "2023-10-01",
+   "cited_by_count": 34
+  },
+  "37916379": {
+   "first_publication_date": "2023-10-01",
+   "cited_by_count": 0
+  },
+  "37696829": {
+   "first_publication_date": "2023-09-11",
+   "cited_by_count": 2
+  },
+  "37760918": {
+   "first_publication_date": "2023-09-07",
+   "cited_by_count": 3
+  },
+  "37572228": {
+   "first_publication_date": "2023-08-12",
+   "cited_by_count": 7
+  },
+  "37194065": {
+   "first_publication_date": "2023-05-16",
+   "cited_by_count": 19
+  },
+  "36845041": {
+   "first_publication_date": "2023-02-18",
+   "cited_by_count": 5
+  },
+  "36768374": {
+   "first_publication_date": "2023-01-20",
+   "cited_by_count": 0
+  },
+  "36717298": {
+   "first_publication_date": "2023-01-14",
+   "cited_by_count": 22
+  },
+  "38220151": {
+   "first_publication_date": "2023-01-01",
+   "cited_by_count": 0
+  },
+  "36370466": {
+   "first_publication_date": "2023-01-01",
+   "cited_by_count": 2
+  },
+  "36557263": {
+   "first_publication_date": "2022-12-06",
+   "cited_by_count": 12
+  },
+  "36431240": {
+   "first_publication_date": "2022-11-15",
+   "cited_by_count": 6
+  },
+  "36338985": {
+   "first_publication_date": "2022-10-20",
+   "cited_by_count": 1
+  },
+  "41633373": {
+   "first_publication_date": "2026-02-03",
+   "cited_by_count": 0
+  },
+  "41582224": {
+   "first_publication_date": "2026-01-25",
+   "cited_by_count": 0
+  },
+  "41571239": {
+   "first_publication_date": "2026-01-22",
+   "cited_by_count": 0
+  },
+  "41570740": {
+   "first_publication_date": "2026-01-21",
+   "cited_by_count": 1
+  },
+  "41555010": {
+   "first_publication_date": "2026-01-19",
+   "cited_by_count": 0
+  },
+  "41525412": {
+   "first_publication_date": "2026-01-12",
+   "cited_by_count": 1
+  },
+  "41521026": {
+   "first_publication_date": "2026-01-11",
+   "cited_by_count": 0
+  },
+  "41443045": {
+   "first_publication_date": "2025-12-23",
+   "cited_by_count": 0
+  },
+  "41431370": {
+   "first_publication_date": "2025-12-22",
+   "cited_by_count": 0
+  },
+  "41376561": {
+   "first_publication_date": "2025-12-11",
+   "cited_by_count": 3
+  },
+  "41465132": {
+   "first_publication_date": "2025-12-07",
+   "cited_by_count": 0
+  },
+  "41348991": {
+   "first_publication_date": "2025-12-05",
+   "cited_by_count": 1
+  },
+  "41389544": {
+   "first_publication_date": "2025-12-05",
+   "cited_by_count": 0
+  },
+  "41469338": {
+   "first_publication_date": "2025-12-01",
+   "cited_by_count": 0
+  },
+  "41405208": {
+   "first_publication_date": "2025-12-01",
+   "cited_by_count": 0
+  },
+  "41254114": {
+   "first_publication_date": "2025-11-18",
+   "cited_by_count": 2
+  },
+  "41573101": {
+   "first_publication_date": "2025-11-17",
+   "cited_by_count": 0
+  },
+  "41213276": {
+   "first_publication_date": "2025-11-10",
+   "cited_by_count": 0
+  },
+  "41162931": {
+   "first_publication_date": "2025-10-29",
+   "cited_by_count": 0
+  },
+  "41148549": {
+   "first_publication_date": "2025-10-28",
+   "cited_by_count": 1
+  },
+  "41129723": {
+   "first_publication_date": "2025-10-23",
+   "cited_by_count": 1
+  },
+  "41020758": {
+   "first_publication_date": "2025-10-22",
+   "cited_by_count": 1
+  },
+  "41125871": {
+   "first_publication_date": "2025-10-22",
+   "cited_by_count": 2
+  },
+  "41177700": {
+   "first_publication_date": "2025-10-10",
+   "cited_by_count": 0
+  },
+  "41234069": {
+   "first_publication_date": "2025-10-01",
+   "cited_by_count": 0
+  },
+  "41122016": {
+   "first_publication_date": "2025-10-01",
+   "cited_by_count": 4
+  },
+  "41155542": {
+   "first_publication_date": "2025-09-23",
+   "cited_by_count": 0
+  },
+  "40952587": {
+   "first_publication_date": "2025-09-15",
+   "cited_by_count": 0
+  },
+  "40920588": {
+   "first_publication_date": "2025-09-08",
+   "cited_by_count": 0
+  },
+  "40916393": {
+   "first_publication_date": "2025-09-07",
+   "cited_by_count": 0
+  },
+  "40940227": {
+   "first_publication_date": "2025-09-05",
+   "cited_by_count": 2
+  },
+  "41024920": {
+   "first_publication_date": "2025-08-29",
+   "cited_by_count": 0
+  },
+  "40937178": {
+   "first_publication_date": "2025-08-26",
+   "cited_by_count": 0
+  },
+  "41008520": {
+   "first_publication_date": "2025-08-22",
+   "cited_by_count": 2
+  },
+  "40917154": {
+   "first_publication_date": "2025-08-21",
+   "cited_by_count": 0
+  },
+  "40810715": {
+   "first_publication_date": "2025-08-14",
+   "cited_by_count": 4
+  },
+  "40782140": {
+   "first_publication_date": "2025-08-09",
+   "cited_by_count": 0
+  },
+  "40883153": {
+   "first_publication_date": "2025-08-06",
+   "cited_by_count": 5
+  },
+  "40779457": {
+   "first_publication_date": "2025-08-01",
+   "cited_by_count": 0
+  },
+  "40807285": {
+   "first_publication_date": "2025-07-24",
+   "cited_by_count": 2
+  },
+  "40694315": {
+   "first_publication_date": "2025-07-22",
+   "cited_by_count": 0
+  },
+  "40681596": {
+   "first_publication_date": "2025-07-18",
+   "cited_by_count": 1
+  },
+  "40633905": {
+   "first_publication_date": "2025-07-07",
+   "cited_by_count": 1
+  },
+  "40696584": {
+   "first_publication_date": "2025-07-01",
+   "cited_by_count": 0
+  },
+  "40616814": {
+   "first_publication_date": "2025-07-01",
+   "cited_by_count": 34
+  },
+  "40732226": {
+   "first_publication_date": "2025-06-20",
+   "cited_by_count": 1
+  },
+  "40565990": {
+   "first_publication_date": "2025-06-14",
+   "cited_by_count": 4
+  },
+  "41192859": {
+   "first_publication_date": "2025-01-01",
+   "cited_by_count": 0
+  },
+  "40777947": {
+   "first_publication_date": "2024-09-01",
+   "cited_by_count": 0
+  },
+  "42747624": {
+   "first_publication_date": "2026-09-16",
+   "cited_by_count": 0
+  },
+  "42738405": {
+   "first_publication_date": "2026-09-06",
+   "cited_by_count": 0
+  },
+  "42314090": {
+   "first_publication_date": "2026-09-01",
+   "cited_by_count": 0
+  },
+  "42685373": {
+   "first_publication_date": "2026-08-31",
+   "cited_by_count": 0
+  },
+  "42645798": {
+   "first_publication_date": "2026-08-17",
+   "cited_by_count": 0
+  },
+  "42609671": {
+   "first_publication_date": "2026-08-17",
+   "cited_by_count": 0
+  },
+  "42584826": {
+   "first_publication_date": "2026-08-12",
+   "cited_by_count": 0
+  },
+  "42557142": {
+   "first_publication_date": "2026-08-05",
+   "cited_by_count": 0
+  },
+  "42275565": {
+   "first_publication_date": "2026-08-01",
+   "cited_by_count": 0
+  },
+  "42478751": {
+   "first_publication_date": "2026-08-01",
+   "cited_by_count": 0
+  },
+  "42551129": {
+   "first_publication_date": "2026-07-30",
+   "cited_by_count": 0
+  },
+  "42657079": {
+   "first_publication_date": "2026-07-27",
+   "cited_by_count": 0
+  },
+  "42608256": {
+   "first_publication_date": "2026-07-24",
+   "cited_by_count": 0
+  },
+  "42484162": {
+   "first_publication_date": "2026-07-20",
+   "cited_by_count": 0
+  },
+  "42455913": {
+   "first_publication_date": "2026-07-01",
+   "cited_by_count": 0
+  },
+  "42310855": {
+   "first_publication_date": "2026-06-25",
+   "cited_by_count": 0
+  },
+  "42321675": {
+   "first_publication_date": "2026-06-19",
+   "cited_by_count": 0
+  },
+  "42357552": {
+   "first_publication_date": "2026-06-18",
+   "cited_by_count": 0
+  },
+  "42297055": {
+   "first_publication_date": "2026-06-15",
+   "cited_by_count": 0
+  },
+  "42277450": {
+   "first_publication_date": "2026-06-11",
+   "cited_by_count": 0
+  },
+  "42270788": {
+   "first_publication_date": "2026-06-10",
+   "cited_by_count": 0
+  },
+  "42454992": {
+   "first_publication_date": "2026-06-09",
+   "cited_by_count": 0
+  },
+  "42339511": {
+   "first_publication_date": "2026-06-01",
+   "cited_by_count": 0
+  },
+  "42118353": {
+   "first_publication_date": "2026-05-12",
+   "cited_by_count": 0
+  },
+  "42069411": {
+   "first_publication_date": "2026-05-01",
+   "cited_by_count": 0
+  },
+  "42037644": {
+   "first_publication_date": "2026-04-19",
+   "cited_by_count": 0
+  },
+  "42074261": {
+   "first_publication_date": "2026-04-18",
+   "cited_by_count": 0
+  },
+  "42108129": {
+   "first_publication_date": "2026-04-14",
+   "cited_by_count": 0
+  },
+  "41956350": {
+   "first_publication_date": "2026-04-06",
+   "cited_by_count": 0
+  },
+  "42583136": {
+   "first_publication_date": "2026-03-31",
+   "cited_by_count": 0
+  },
+  "41874348": {
+   "first_publication_date": "2026-03-26",
+   "cited_by_count": 0
+  },
+  "41874861": {
+   "first_publication_date": "2026-03-24",
+   "cited_by_count": 0
+  },
+  "41948718": {
+   "first_publication_date": "2026-03-23",
+   "cited_by_count": 0
+  },
+  "41767599": {
+   "first_publication_date": "2026-02-27",
+   "cited_by_count": 0
+  },
+  "41763911": {
+   "first_publication_date": "2026-02-27",
+   "cited_by_count": 0
+  },
+  "41880688": {
+   "first_publication_date": "2026-02-26",
+   "cited_by_count": 3
+  },
+  "41721133": {
+   "first_publication_date": "2026-02-20",
+   "cited_by_count": 1
+  },
+  "41869197": {
+   "first_publication_date": "2026-02-18",
+   "cited_by_count": 0
+  },
+  "41674449": {
+   "first_publication_date": "2026-02-12",
+   "cited_by_count": 2
+  },
+  "41670862": {
+   "first_publication_date": "2026-02-11",
+   "cited_by_count": 0
+  },
+  "41665597": {
+   "first_publication_date": "2026-02-10",
+   "cited_by_count": 0
+  },
+  "41641639": {
+   "first_publication_date": "2026-02-05",
+   "cited_by_count": 1
+  },
+  "41700861": {
+   "first_publication_date": "2026-02-01",
+   "cited_by_count": 0
+  },
+  "42442909": {
+   "first_publication_date": "2026-01-29",
+   "cited_by_count": 0
+  },
+  "41780958": {
+   "first_publication_date": "2026-01-01",
+   "cited_by_count": 0
+  },
+  "41780960": {
+   "first_publication_date": "2026-01-01",
+   "cited_by_count": 0
+  },
+  "42552063": {
+   "first_publication_date": "2025-08-06",
+   "cited_by_count": 0
+  }
+ }
+}

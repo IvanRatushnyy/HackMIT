@@ -74,6 +74,10 @@ export function Query() {
         setSelectedStep((s) => (s === null || s === i - 2 ? i - 1 : s))
       }
       await finish()
+    }).catch((e: unknown) => {
+      // a rejected POST (backend down, unresolvable pair) is a missing appraisal, not a page stuck on loading
+      console.warn('[elute] query failed', e)
+      if (!cancelled) setPhase('missing')
     })
     return () => {
       cancelled = true
@@ -197,7 +201,17 @@ export function Query() {
   )
 }
 
-function Missing() {
+export function Missing() {
+  if (source.mode === 'live') {
+    return (
+      <div className="empty">
+        <h1 className="display-sm">no appraisal at this address</h1>
+        <p>
+          Live mode appraises one drug for one condition. <Link to="/">Ask again</Link> as “nilotinib for Parkinson’s disease”.
+        </p>
+      </div>
+    )
+  }
   return (
     <div className="empty">
       <h1 className="display-sm">no curated appraisal at this address</h1>

@@ -1,0 +1,299 @@
+{
+ "transport": "direct",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "20105089,23787811,23831022,24600352,24786396,27434297,27434298,27833551,28035939,28571531"
+ },
+ "fetched_at": "2026-09-20T09:04:30+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "28571531",
+    "title": "C-Abl Inhibition; A Novel Therapeutic Target for Parkinson's Disease.",
+    "abstract": "Parkinson's disease (PD) is the most prevalent movement disorder in the world. The major pathological hallmarks of PD are death of dopaminergic neurons and the formation of Lewy bodies. At the moment, there is no cure for PD; current treatments are symptomatic. Investigators are searching for neuroprotective agents and disease modifying strategies to slow the progress of neurodegeneration. However, due to lack of data about the main pathological sequence of PD, many drug targets failed to provide neuroprotective effects in human trials. Recent evidence suggests the involvement of C-Abelson (c-Abl) tyrosine kinase enzyme in the pathogenesis of PD. Through parkin inactivation, alpha synuclein aggregation, and impaired autophagy of toxic elements. Experimental studies showed that (1) c-Abl activation is involved in neurodegeneration and (2) c-Abl inhibition shows neuroprotective effects and prevents dopaminergic neuronal' death. Current evidence from experimental studies and the first in-human trial shows that c-Abl inhibition holds the promise for neuroprotection against PD and therefore, justifies the movement towards larger clinical trials. In this review article, we discussed the role of c-Abl in PD pathogenesis and the findings of preclinical experiments and the first in-human trial. In addition, based on lessons from the last decade and current preclinical evidence, we provide recommendations for future research in this area.",
+    "authors": [
+     {
+      "name": "Abushouk AI"
+     },
+     {
+      "name": "Negida A"
+     },
+     {
+      "name": "Elshenawy RA"
+     },
+     {
+      "name": "Zein H"
+     },
+     {
+      "name": "Hammad AM"
+     }
+    ],
+    "journal": "CNS & neurological disorders drug targets",
+    "pub_date": "2018-04-01",
+    "pub_year": "2018",
+    "doi": "10.2174/1871527316666170602101538",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28571531/",
+    "europepmc_id": "28571531",
+    "europepmc_source": "MED",
+    "cited_by_count": 28
+   },
+   {
+    "pmid": "28035939",
+    "title": "Could MAO-B Inhibitor Withdrawal Rather than Nilotinib Benefit Explain the Dopamine Metabolite Increase in Parkinsonian Study Subjects?",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Schwarzschild MA"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2017-01-01",
+    "pub_year": "2017",
+    "doi": "10.3233/jpd-160975",
+    "pmcid": "PMC5302030",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28035939/",
+    "europepmc_id": "28035939",
+    "europepmc_source": "MED",
+    "cited_by_count": 5
+   },
+   {
+    "pmid": "27833551",
+    "title": "c-Abl Inhibitors Enable Insights into the Pathophysiology and Neuroprotection in Parkinson's Disease.",
+    "abstract": "Parkinson's disease (PD) is a progressive neurodegenerative disorder causing movement disabilities and several non-motor symptoms in afflicted patients. Recent studies in animal models of PD and analyses of brain specimen from PD patients revealed an increase in the level and activity of the non-receptor tyrosine kinase Abelson (c-Abl) in dopaminergic neurons with phosphorylation of protein substrates, such as \u03b1-synuclein and the E3 ubiquitin ligase, Parkin. Most significantly inhibition of c-Abl kinase activity by small molecular compounds used in the clinic to treat human leukemia have shown promising neuroprotective effects in cell and animal models of PD. This has raised hope that similar beneficial outcome may also be observed in the treatment of PD patients by using c-Abl inhibitors. Here we highlight the background for the current optimism, reviewing c-Abl and its relationship to pathophysiological pathways prevailing in PD, as well as discussing issues related to the pharmacology and safety of current c-Abl inhibitors. Clearly more rigorously controlled and well-designed trials are needed before the c-Abl inhibitors can be used in the neuroclinic to possibly benefit an increasing number of PD patients.",
+    "authors": [
+     {
+      "name": "Lindholm D"
+     },
+     {
+      "name": "Pham DD"
+     },
+     {
+      "name": "Cascone A"
+     },
+     {
+      "name": "Eriksson O"
+     },
+     {
+      "name": "Wennerberg K"
+     }
+    ],
+    "journal": "Frontiers in aging neuroscience",
+    "pub_date": "2016-10-26",
+    "pub_year": "2016",
+    "doi": "10.3389/fnagi.2016.00254",
+    "pmcid": "PMC5080529",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27833551/",
+    "europepmc_id": "27833551",
+    "europepmc_source": "MED",
+    "cited_by_count": 35
+   },
+   {
+    "pmid": "27434297",
+    "title": "Nilotinib Effects in Parkinson's disease and Dementia with Lewy bodies.",
+    "abstract": "<h4>Background</h4>We evaluated the effects of low doses of the tyrosine kinase Abelson (Abl) inhibitor Nilotinib, on safety and pharmacokinetics in Parkinson's disease dementia or dementia with Lewy bodies.<h4>Objectives</h4>The primary outcomes of this study were safety and tolerability; pharmacokinetics and target engagement were secondary, while clinical outcomes were exploratory.<h4>Methods</h4>Twelve subjects were randomized into 150\u200amg (n\u200a=\u200a5) or 300\u200amg (n\u200a=\u200a7) groups and received Nilotinib orally every day for 24 weeks.<h4>Results</h4>This study shows that 150\u200amg and 300\u200amg doses of Nilotinib appear to be safe and tolerated in subjects with advanced Parkinson's disease. Nilotinib is detectable in the cerebrospinal fluid (CSF) and seems to engage the target Abl. Motor and cognitive outcomes suggest a possible beneficial effect on clinical outcomes. The CSF levels of homovanillic acid are significantly increased between baseline and 24 weeks of treatment. Exploratory CSF biomarkers were measured.<h4>Conclusions</h4>This small proof-of-concept study lacks a placebo group and participants were not homogenous, resulting in baseline differences between and within groups. This limits the interpretations of the biomarker and clinical data, and any conclusions should be drawn cautiously. Nonetheless, the collective observations suggest that it is warranted to evaluate the safety and efficacy of Nilotinib in larger randomized, double-blind, placebo-controlled trials.",
+    "authors": [
+     {
+      "name": "Pagan F"
+     },
+     {
+      "name": "Hebron M"
+     },
+     {
+      "name": "Valadez EH"
+     },
+     {
+      "name": "Torres-Yaghi Y"
+     },
+     {
+      "name": "Huang X"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016-07-01",
+    "pub_year": "2016",
+    "doi": "10.3233/jpd-160867",
+    "pmcid": "PMC5008228",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434297/",
+    "europepmc_id": "27434297",
+    "europepmc_source": "MED",
+    "cited_by_count": 195
+   },
+   {
+    "pmid": "27434298",
+    "title": "Nilotinib - Differentiating the Hope from\u00a0the\u00a0Hype.",
+    "abstract": "We discuss a report in the current issue on clinical and biochemical findings from a safety trial using the cAbl tyrosine kinase inhibitor Nilotinib (150\u200amg or 300\u200amg given daily for 24 weeks) in a small group of patients with either advanced Parkinson's disease or Dementia with Lewy Bodies. Despite some side effects (one serious), the authors claim that Nilotinib, which is normally used at much higher doses for treating leukemia, is safe and tolerated. Furthermore, they report a possible benefit on motor and cognitive outcomes. We debate the safety of Nilotinib and the reported efficacy signals. We emphasize that due to the small sample size, and lack of a control group, it is impossible to rule out a placebo effect. We briefly discuss a range of aspects surrounding the current and possible future use of this cAbl inhibitor in patients with alpha-synucleinopathy, and what must now be done to obtain definitive information about its safety and efficacy in this population of patients.",
+    "authors": [
+     {
+      "name": "Wyse RK"
+     },
+     {
+      "name": "Brundin P"
+     },
+     {
+      "name": "Sherer TB"
+     }
+    ],
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016-07-01",
+    "pub_year": "2016",
+    "doi": "10.3233/jpd-160904",
+    "pmcid": "PMC5044778",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434298/",
+    "europepmc_id": "27434298",
+    "europepmc_source": "MED",
+    "cited_by_count": 28
+   },
+   {
+    "pmid": "24786396",
+    "title": "The c-Abl inhibitor, nilotinib, protects dopaminergic neurons in a preclinical animal model of Parkinson's disease.",
+    "abstract": "c-Abl is activated in the brain of Parkinson's disease (PD) patients and in 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine (MPTP)-intoxicated mice where it inhibits parkin through tyrosine phosphorylation leading to the accumulation of parkin substrates, and neuronal cell death. In the present study, we evaluated the in vivo efficacy of nilotinib, a brain penetrant c-Abl inhibitor, in the acute MPTP-induced model of PD. Our results show that administration of nilotinib reduces c-Abl activation and the levels of the parkin substrate, PARIS, resulting in prevention of dopamine (DA) neuron loss and behavioral deficits following MPTP intoxication. On the other hand, we observe no reduction in the tyrosine phosphorylation of parkin and the parkin substrate, AIMP2 suggesting that the protective effect of nilotinib may, in part, be parkin-independent or to the pharmacodynamics properties of nilotinib. This study provides a strong rationale for testing other brain permeable c-Abl inhibitors as potential therapeutic agents for the treatment of PD.",
+    "authors": [
+     {
+      "name": "Karuppagounder SS"
+     },
+     {
+      "name": "Brahmachari S"
+     },
+     {
+      "name": "Lee Y"
+     },
+     {
+      "name": "Dawson VL"
+     },
+     {
+      "name": "Dawson TM"
+     }
+    ],
+    "journal": "Scientific reports",
+    "pub_date": "2014-05-02",
+    "pub_year": "2014",
+    "doi": "10.1038/srep04874",
+    "pmcid": "PMC4007078",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24786396/",
+    "europepmc_id": "24786396",
+    "europepmc_source": "MED",
+    "cited_by_count": 198
+   },
+   {
+    "pmid": "24600352",
+    "title": "A novel tyrosine kinase inhibitor AMN107 (nilotinib) normalizes striatal motor behaviors in a mouse model of Parkinson's disease.",
+    "abstract": "Abnormal motor behaviors in Parkinson's disease (PD) result from striatal dysfunction due to an imbalance between dopamine and glutamate transmissions that are integrated by dopamine- and cAMP-regulated phosphoprotein of 32 kDa (DARPP-32). c-Abelson tyrosine kinase (c-Abl) phosphorylates cyclin-dependent kinase 5 (Cdk5) at Tyr15 to increase the activity of Cdk5, which reduces the efficacy of dopaminergic signaling by phosphorylating DARPP-32 at Thr75 in the striatum. Here, we report that in the mouse striatum, a novel c-Abl inhibitor, nilotinib (AMN107), inhibits phosphorylation of both Cdk5 at Tyr15 and DARPP-32 at Thr75, which is negatively regulated by dopamine receptor activation through a D2 receptor-mediated mechanism. Like a D2-agonist, nilotinib synergizes with a D1-agonist for inducing striatal c-Fos expression. Moreover, systemic administration of nilotinib normalizes striatal motor behaviors in a mouse model of PD induced by 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine. These findings suggest that nilotinib could possibly serve as a new and alternative agent for treating PD motor symptoms.",
+    "authors": [
+     {
+      "name": "Tanabe A"
+     },
+     {
+      "name": "Yamamura Y"
+     },
+     {
+      "name": "Kasahara J"
+     },
+     {
+      "name": "Morigaki R"
+     },
+     {
+      "name": "Kaji R"
+     }
+    ],
+    "journal": "Frontiers in cellular neuroscience",
+    "pub_date": "2014-02-20",
+    "pub_year": "2014",
+    "doi": "10.3389/fncel.2014.00050",
+    "pmcid": "PMC3929858",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24600352/",
+    "europepmc_id": "24600352",
+    "europepmc_source": "MED",
+    "cited_by_count": 38
+   },
+   {
+    "pmid": "23831022",
+    "title": "Identification of the recognition sequence and target proteins for DJ-1 protease.",
+    "abstract": "DJ-1, the product of familial Parkinson's disease gene and an oncogene, is a cysteine protease which plays a role in anti-oxidative stress reaction. In this study, we identified the recognition sequence for DJ-1 protease by using recombinant DJ-1 and a peptide library. Protease activity of DJ-1 lacking C-terminal \u03b1-helix (DJ-1\u0394H9) was stronger than that of full-sized DJ-1, and the most susceptible sequence digested by DJ-1\u0394H9 was valine-lysine-valine-alanine (VKVA) under the optimal conditions of pH 5.5 and 0 mM NaCl. Divalent ions, especially Cu\u00b2\u207a, were inhibitory to DJ-1's protease activity. c-abl oncogene 1 product (ABL1) and kinesin family member 1B (KIF1B) containing VKVA were digested by DJ-1\u0394H9.",
+    "authors": [
+     {
+      "name": "Mitsugi H"
+     },
+     {
+      "name": "Niki T"
+     },
+     {
+      "name": "Takahashi-Niki K"
+     },
+     {
+      "name": "Tanimura K"
+     },
+     {
+      "name": "Yoshizawa-Kumagaye K"
+     }
+    ],
+    "journal": "FEBS letters",
+    "pub_date": "2013-07-02",
+    "pub_year": "2013",
+    "doi": "10.1016/j.febslet.2013.06.032",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23831022/",
+    "europepmc_id": "23831022",
+    "europepmc_source": "MED",
+    "cited_by_count": 16
+   },
+   {
+    "pmid": "23787811",
+    "title": "Tyrosine kinase inhibition facilitates autophagic SNCA/\u03b1-synuclein clearance.",
+    "abstract": "The effects of ABL1/ABL inhibition on clearance of SNCA/\u03b1-synuclein were evaluated in animal models of \u03b1-synucleinopathies. Parkinson disease (PD) is a movement disorder characterized by death of dopaminergic substantia nigra (SN) neurons and brain accumulation of SNCA. The tyrosine kinase ABL1 is activated in several neurodegenerative diseases. An increase in ABL1 activity is detected in human postmortem PD brains. Lentiviral expression of SNCA in the mouse SN activates ABL1 via phosphorylation, while lentiviral Abl expression increases SNCA levels. Administration of the brain-penetrant tyrosine kinase inhibitor Nilotinib decreases Abl activity and facilitates autophagic clearance of SNCA in transgenic and lentiviral gene transfer models. Subcellular fractionation demonstrates accumulation of SNCA and hyperphosphorylated MAPT/Tau (p-MAPT) in autophagic vacuoles in SNCA-expressing brains, while Nilotinib treatment leads to protein deposition into the lysosomes, suggesting enhanced autophagic clearance. These data suggest that Nilotinib may be a therapeutic strategy to degrade SNCA in PD and other \u03b1-synucleinopathies.",
+    "authors": [
+     {
+      "name": "Hebron ML"
+     },
+     {
+      "name": "Lonskaya I"
+     },
+     {
+      "name": "Moussa CE"
+     }
+    ],
+    "journal": "Autophagy",
+    "pub_date": "2013-06-19",
+    "pub_year": "2013",
+    "doi": "10.4161/auto.25368",
+    "pmcid": "PMC3748197",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23787811/",
+    "europepmc_id": "23787811",
+    "europepmc_source": "MED",
+    "cited_by_count": 50
+   },
+   {
+    "pmid": "20105089",
+    "title": "Safety and efficacy of nilotinib in chronic phase chronic myeloid leukemia in a patient with Wolf-Parkinson-White disease and hematological resistance after suboptimal response to imatinib at six months.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Cannella L"
+     },
+     {
+      "name": "Breccia M"
+     },
+     {
+      "name": "Loglisci G"
+     },
+     {
+      "name": "Federico V"
+     },
+     {
+      "name": "Santopietro M"
+     }
+    ],
+    "journal": "Acta oncologica (Stockholm, Sweden)",
+    "pub_date": "2010-04-01",
+    "pub_year": "2010",
+    "doi": "10.3109/02841860903521129",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/20105089/",
+    "europepmc_id": "20105089",
+    "europepmc_source": "MED",
+    "cited_by_count": 0
+   }
+  ]
+ }
+}

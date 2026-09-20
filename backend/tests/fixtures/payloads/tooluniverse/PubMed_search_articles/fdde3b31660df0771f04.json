@@ -1,0 +1,458 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_search_articles",
+ "arguments": {
+  "query": "nilotinib AND (Parkinson disease) AND (comment OR letter OR limitation OR \"open-label\" OR critique)",
+  "limit": 100,
+  "include_abstract": false
+ },
+ "fetched_at": "2026-09-20T09:04:15+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "42552063",
+    "title": "Recent Advances in Autophagy and Immunotherapy for the Clearance of Aggregated \u03b1-Synuclein in Parkinson's Disease.",
+    "authors": [
+     "Jannat K",
+     "Lee SB",
+     "Jung HR",
+     "Balakrishnan R",
+     "Kim YS"
+    ],
+    "author_count": 7,
+    "authors_truncated": true,
+    "journal": "Aging and disease",
+    "pub_date": "2025 Aug 6",
+    "pub_year": "2025",
+    "doi": "10.14336/AD.2025.0642",
+    "pmcid": "PMC13437105",
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/42552063/",
+    "doi_url": "https://doi.org/10.14336/AD.2025.0642",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13437105/"
+   },
+   {
+    "pmid": "41874861",
+    "title": "Computational Repurposing of Nilotinib and Radotinib as SIRT2 Inhibitors for Neurodegenerative Diseases.",
+    "authors": [
+     "Majrashi TA",
+     "Alshahrani MY",
+     "Asiri MA",
+     "Zia-Ul-Sabah",
+     "Abohassan M"
+    ],
+    "author_count": 7,
+    "authors_truncated": true,
+    "journal": "Journal of molecular neuroscience : MN",
+    "pub_date": "2026 Mar 24",
+    "pub_year": "2026",
+    "doi": "10.1007/s12031-026-02511-2",
+    "pmcid": null,
+    "article_type": "Journal Article",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41874861/",
+    "doi_url": "https://doi.org/10.1007/s12031-026-02511-2",
+    "pmc_url": null
+   },
+   {
+    "pmid": "41443045",
+    "title": "Comparative In silico evaluation of c-Abl inhibitors for Parkinson's disease therapy.",
+    "authors": [
+     "Kumar DB",
+     "Subramanya SK",
+     "Thakur P"
+    ],
+    "author_count": 3,
+    "authors_truncated": false,
+    "journal": "Biochemical and biophysical research communications",
+    "pub_date": "2026 Jan 25",
+    "pub_year": "2026",
+    "doi": "10.1016/j.bbrc.2025.153175",
+    "pmcid": null,
+    "article_type": "Journal Article, Comparative Study, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41443045/",
+    "doi_url": "https://doi.org/10.1016/j.bbrc.2025.153175",
+    "pmc_url": null
+   },
+   {
+    "pmid": "39952103",
+    "title": "Computational phytochemical screening for Parkinson's disease therapeutics: c-Abl and beyond.",
+    "authors": [
+     "Yasmine J",
+     "Sola P",
+     "Rymbai E",
+     "Dutta BJ",
+     "Buragohain S"
+    ],
+    "author_count": 5,
+    "authors_truncated": false,
+    "journal": "Computational biology and chemistry",
+    "pub_date": "2025 Jun",
+    "pub_year": "2025",
+    "doi": "10.1016/j.compbiolchem.2025.108370",
+    "pmcid": null,
+    "article_type": "Journal Article",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39952103/",
+    "doi_url": "https://doi.org/10.1016/j.compbiolchem.2025.108370",
+    "pmc_url": null
+   },
+   {
+    "pmid": "37721280",
+    "title": "Single-neuron neurodegeneration as a degenerative model for Parkinson's disease.",
+    "authors": [
+     "Huenchuguala S",
+     "Segura-Aguilar J"
+    ],
+    "author_count": 2,
+    "authors_truncated": false,
+    "journal": "Neural regeneration research",
+    "pub_date": "2024 Mar",
+    "pub_year": "2024",
+    "doi": "10.4103/1673-5374.380878",
+    "pmcid": "PMC10581573",
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/37721280/",
+    "doi_url": "https://doi.org/10.4103/1673-5374.380878",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10581573/"
+   },
+   {
+    "pmid": "37572228",
+    "title": "Lewy Body Dementia: An Overview of Promising Therapeutics.",
+    "authors": [
+     "Skylar-Scott IA",
+     "Sha SJ"
+    ],
+    "author_count": 2,
+    "authors_truncated": false,
+    "journal": "Current neurology and neuroscience reports",
+    "pub_date": "2023 Oct",
+    "pub_year": "2023",
+    "doi": "10.1007/s11910-023-01292-0",
+    "pmcid": null,
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/37572228/",
+    "doi_url": "https://doi.org/10.1007/s11910-023-01292-0",
+    "pmc_url": null
+   },
+   {
+    "pmid": "36283251",
+    "title": "Discovery of 4-methyl-3-(pyridin-2-ylamino)benzamide derivatives as C-Abl inhibitors with potential neuroprotective effect.",
+    "authors": [
+     "Yang Z",
+     "Ai Y",
+     "Wan S",
+     "Yang Z",
+     "Li H"
+    ],
+    "author_count": 11,
+    "authors_truncated": true,
+    "journal": "Bioorganic & medicinal chemistry",
+    "pub_date": "2022 Nov 15",
+    "pub_year": "2022",
+    "doi": "10.1016/j.bmc.2022.117069",
+    "pmcid": null,
+    "article_type": "Journal Article, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/36283251/",
+    "doi_url": "https://doi.org/10.1016/j.bmc.2022.117069",
+    "pmc_url": null
+   },
+   {
+    "pmid": "36109747",
+    "title": "Repositioning of drugs for Parkinson's disease and pharmaceutical nanotechnology tools for their optimization.",
+    "authors": [
+     "Hern\u00e1ndez-Parra H",
+     "Cort\u00e9s H",
+     "Avalos-Fuentes JA",
+     "Del Prado-Audelo M",
+     "Flor\u00e1n B"
+    ],
+    "author_count": 8,
+    "authors_truncated": true,
+    "journal": "Journal of nanobiotechnology",
+    "pub_date": "2022 Sep 15",
+    "pub_year": "2022",
+    "doi": "10.1186/s12951-022-01612-5",
+    "pmcid": "PMC9479294",
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/36109747/",
+    "doi_url": "https://doi.org/10.1186/s12951-022-01612-5",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9479294/"
+   },
+   {
+    "pmid": "34622801",
+    "title": "Direct targeting of wild-type glucocerebrosidase by antipsychotic quetiapine improves pathogenic phenotypes in Parkinson's disease models.",
+    "authors": [
+     "Burbulla LF",
+     "Zheng J",
+     "Song P",
+     "Jiang W",
+     "Johnson ME"
+    ],
+    "author_count": 7,
+    "authors_truncated": true,
+    "journal": "JCI insight",
+    "pub_date": "2021 Oct 8",
+    "pub_year": "2021",
+    "doi": "10.1172/jci.insight.148649",
+    "pmcid": "PMC8525588",
+    "article_type": "Journal Article, Research Support, N.I.H., Extramural, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/34622801/",
+    "doi_url": "https://doi.org/10.1172/jci.insight.148649",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8525588/"
+   },
+   {
+    "pmid": "34543463",
+    "title": "Cardiovascular Safety of Nilotinib in Parkinson's Disease.",
+    "authors": [
+     "Tan S",
+     "Baggio D",
+     "Shortt J",
+     "Ko B"
+    ],
+    "author_count": 4,
+    "authors_truncated": false,
+    "journal": "Movement disorders : official journal of the Movement Disorder Society",
+    "pub_date": "2021 Sep",
+    "pub_year": "2021",
+    "doi": "10.1002/mds.28733",
+    "pmcid": null,
+    "article_type": "Letter, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/34543463/",
+    "doi_url": "https://doi.org/10.1002/mds.28733",
+    "pmc_url": null
+   },
+   {
+    "pmid": "33215762",
+    "title": "Long-Term Safety and Clinical Effects of Nilotinib in Parkinson's Disease.",
+    "authors": [
+     "Pagan FL",
+     "Wilmarth B",
+     "Torres-Yaghi Y",
+     "Hebron ML",
+     "Mulki S"
+    ],
+    "author_count": 9,
+    "authors_truncated": true,
+    "journal": "Movement disorders : official journal of the Movement Disorder Society",
+    "pub_date": "2021 Mar",
+    "pub_year": "2021",
+    "doi": "10.1002/mds.28389",
+    "pmcid": "PMC8048914",
+    "article_type": "Journal Article, Randomized Controlled Trial, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/33215762/",
+    "doi_url": "https://doi.org/10.1002/mds.28389",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8048914/"
+   },
+   {
+    "pmid": "32597985",
+    "title": "Dopamine Metabolite Biomarkers and Testing for Disease Modification in Parkinson Disease-Reply.",
+    "authors": [
+     "Moussa C"
+    ],
+    "author_count": 1,
+    "authors_truncated": false,
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Aug 1",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2020.1931",
+    "pmcid": null,
+    "article_type": "Letter, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32597985/",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2020.1931",
+    "pmc_url": null
+   },
+   {
+    "pmid": "32597929",
+    "title": "Dopamine Metabolite Biomarkers and Testing for Disease Modification in Parkinson Disease.",
+    "authors": [
+     "LeWitt PA"
+    ],
+    "author_count": 1,
+    "authors_truncated": false,
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Aug 1",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2020.1928",
+    "pmcid": null,
+    "article_type": "Letter, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32597929/",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2020.1928",
+    "pmc_url": null
+   },
+   {
+    "pmid": "32291831",
+    "title": "Nilotinib Fails to Prevent Synucleinopathy and Cell Loss in a Mouse Model of Multiple System Atrophy.",
+    "authors": [
+     "Lopez-Cuina M",
+     "Guerin PA",
+     "Canron MH",
+     "Delamarre A",
+     "Dehay B"
+    ],
+    "author_count": 8,
+    "authors_truncated": true,
+    "journal": "Movement disorders : official journal of the Movement Disorder Society",
+    "pub_date": "2020 Jul",
+    "pub_year": "2020",
+    "doi": "10.1002/mds.28034",
+    "pmcid": null,
+    "article_type": "Journal Article, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32291831/",
+    "doi_url": "https://doi.org/10.1002/mds.28034",
+    "pmc_url": null
+   },
+   {
+    "pmid": "31841588",
+    "title": "The Narrowing Path for Nilotinib and Other Potential Disease-Modifying Therapies for Parkinson Disease.",
+    "authors": [
+     "Espay AJ",
+     "Hauser RA",
+     "Armstrong MJ"
+    ],
+    "author_count": 3,
+    "authors_truncated": false,
+    "journal": "JAMA neurology",
+    "pub_date": "2020 Mar 1",
+    "pub_year": "2020",
+    "doi": "10.1001/jamaneurol.2019.3983",
+    "pmcid": null,
+    "article_type": "Editorial, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/31841588/",
+    "doi_url": "https://doi.org/10.1001/jamaneurol.2019.3983",
+    "pmc_url": null
+   },
+   {
+    "pmid": "30906562",
+    "title": "Pharmacokinetics and pharmacodynamics of a single dose Nilotinib in individuals with Parkinson's disease.",
+    "authors": [
+     "Pagan FL",
+     "Hebron ML",
+     "Wilmarth B",
+     "Torres-Yaghi Y",
+     "Lawler A"
+    ],
+    "author_count": 17,
+    "authors_truncated": true,
+    "journal": "Pharmacology research & perspectives",
+    "pub_date": "2019 Apr",
+    "pub_year": "2019",
+    "doi": "10.1002/prp2.470",
+    "pmcid": "PMC6412143",
+    "article_type": "Journal Article, Randomized Controlled Trial, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/30906562/",
+    "doi_url": "https://doi.org/10.1002/prp2.470",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6412143/"
+   },
+   {
+    "pmid": "29689247",
+    "title": "Old wines in new bottles: Repurposing opportunities for Parkinson's disease.",
+    "authors": [
+     "Kakkar AK",
+     "Singh H",
+     "Medhi B"
+    ],
+    "author_count": 3,
+    "authors_truncated": false,
+    "journal": "European journal of pharmacology",
+    "pub_date": "2018 Jul 5",
+    "pub_year": "2018",
+    "doi": "10.1016/j.ejphar.2018.04.023",
+    "pmcid": null,
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/29689247/",
+    "doi_url": "https://doi.org/10.1016/j.ejphar.2018.04.023",
+    "pmc_url": null
+   },
+   {
+    "pmid": "27434298",
+    "title": "Nilotinib - Differentiating the Hope from\u00a0the\u00a0Hype.",
+    "authors": [
+     "Wyse RK",
+     "Brundin P",
+     "Sherer TB"
+    ],
+    "author_count": 3,
+    "authors_truncated": false,
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016 Jul 12",
+    "pub_year": "2016",
+    "doi": "10.3233/JPD-160904",
+    "pmcid": "PMC5044778",
+    "article_type": "Journal Article, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434298/",
+    "doi_url": "https://doi.org/10.3233/JPD-160904",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5044778/"
+   },
+   {
+    "pmid": "27434297",
+    "title": "Nilotinib Effects in Parkinson's disease and Dementia with Lewy bodies.",
+    "authors": [
+     "Pagan F",
+     "Hebron M",
+     "Valadez EH",
+     "Torres-Yaghi Y",
+     "Huang X"
+    ],
+    "author_count": 16,
+    "authors_truncated": true,
+    "journal": "Journal of Parkinson's disease",
+    "pub_date": "2016 Jul 11",
+    "pub_year": "2016",
+    "doi": "10.3233/JPD-160867",
+    "pmcid": "PMC5008228",
+    "article_type": "Journal Article, Randomized Controlled Trial",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/27434297/",
+    "doi_url": "https://doi.org/10.3233/JPD-160867",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5008228/"
+   },
+   {
+    "pmid": "23787811",
+    "title": "Tyrosine kinase inhibition facilitates autophagic SNCA/\u03b1-synuclein clearance.",
+    "authors": [
+     "Hebron ML",
+     "Lonskaya I",
+     "Moussa CE"
+    ],
+    "author_count": 3,
+    "authors_truncated": false,
+    "journal": "Autophagy",
+    "pub_date": "2013 Aug",
+    "pub_year": "2013",
+    "doi": "10.4161/auto.25368",
+    "pmcid": "PMC3748197",
+    "article_type": "Journal Article, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23787811/",
+    "doi_url": "https://doi.org/10.4161/auto.25368",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3748197/"
+   },
+   {
+    "pmid": "20105089",
+    "title": "Safety and efficacy of nilotinib in chronic phase chronic myeloid leukemia in a patient with Wolf-Parkinson-White disease and hematological resistance after suboptimal response to imatinib at six months.",
+    "authors": [
+     "Cannella L",
+     "Breccia M",
+     "Loglisci G",
+     "Federico V",
+     "Santopietro M"
+    ],
+    "author_count": 6,
+    "authors_truncated": true,
+    "journal": "Acta oncologica (Stockholm, Sweden)",
+    "pub_date": "2010 Apr",
+    "pub_year": "2010",
+    "doi": "10.3109/02841860903521129",
+    "pmcid": null,
+    "article_type": "Case Reports, Letter",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/20105089/",
+    "doi_url": "https://doi.org/10.3109/02841860903521129",
+    "pmc_url": null
+   }
+  ],
+  "metadata": {
+   "count": 21,
+   "total": 21,
+   "query": "nilotinib AND (Parkinson disease) AND (comment OR letter OR limitation OR \"open-label\" OR critique)",
+   "source": "PubMed"
+  }
+ }
+}

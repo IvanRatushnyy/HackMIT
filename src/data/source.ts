@@ -104,4 +104,7 @@ export class FixtureSource implements DataSource {
   }
 }
 
-export const source: DataSource = new FixtureSource()
+const apiBase = (import.meta.env.VITE_ELUTE_API as string | undefined)?.replace(/\/$/, '')
+
+/** VITE_ELUTE_API=http://localhost:8000/api switches the seam to the backend; unset, the bundle stays fixture-only. */
+export const source: DataSource = apiBase ? new (await import('./api')).ApiSource(apiBase) : new FixtureSource()

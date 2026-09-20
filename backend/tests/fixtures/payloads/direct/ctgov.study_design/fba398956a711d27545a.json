@@ -1,0 +1,29 @@
+{
+ "transport": "direct",
+ "tool": "ctgov.study_design",
+ "arguments": {
+  "nct_id": "NCT03205488"
+ },
+ "fetched_at": "2026-09-20T08:24:03+00:00",
+ "payload": {
+  "nct_id": "NCT03205488",
+  "has_results": true,
+  "official_title": "A Randomized, Double-Blind, Placebo-Controlled, Phase IIa, Parallel Group, Two Cohort Study to Define the Safety, Tolerability, Clinical and Exploratory Biological Activity of the Chronic Administration of Nilotinib in Participants With Parkinson's Disease",
+  "allocation": "RANDOMIZED",
+  "masking": "TRIPLE",
+  "who_masked": [
+   "PARTICIPANT",
+   "CARE_PROVIDER",
+   "INVESTIGATOR"
+  ],
+  "enrollment": 76,
+  "phases": [
+   "PHASE2"
+  ],
+  "study_first_post_date": "2017-07-02",
+  "start_date": "2017-10-16",
+  "primary_completion_date": "2019-08-26",
+  "results_first_post_date": "2020-07-22",
+  "overall_status": "COMPLETED"
+ }
+}

@@ -1,0 +1,584 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "29689247,29897434,30807982,30906562,32291831,40279170,40916393,41148549,41443045,42454992"
+ },
+ "fetched_at": "2026-09-20T09:04:29+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "29689247",
+    "title": "Old wines in new bottles: Repurposing opportunities for Parkinson's disease.",
+    "abstract": "Parkinson's disease (PD) is a chronic progressive neurological disorder characterized by accumulation of Lewy bodies and profound loss of substantia nigra dopaminergic neurons. PD symptomatology is now recognized to include both cardinal motor as well as clinically significant non-motor symptoms. Despite intensive research, the current understanding of molecular mechanisms underlying neurodegeneration in PD is limited and has hampered the development of novel symptomatic and disease modifying therapies. The currently available treatment options are only partially or transiently effective and fail to restore the lost dopaminergic neurons or retard disease progression. Given the escalating drug development costs, lengthening timelines and declining R&D efficiency, industry and academia are increasingly focusing on ways to repurpose existing molecules as an accelerated route for drug discovery. The field of PD therapeutics is witnessing vigorous repurposing activity supported by big data analytics, computational models, and high-throughput drug screening systems. Here we review the mechanisms, efficacy, and safety of several emerging drugs currently aspiring to be repositioned for PD pharmacotherapy.",
+    "authors": [
+     {
+      "name": "Kakkar Ashish Kumar",
+      "affiliation": "Department of Pharmacology, Postgraduate Institute of Medical Education and Research, Chandigarh 160012, India. Electronic address: drashishkakkar@gmail.com."
+     },
+     {
+      "name": "Singh Harmanjit",
+      "affiliation": "Department of Pharmacology, Government Medical College and Hospital Chandigarh, India."
+     },
+     {
+      "name": "Medhi Bikash",
+      "affiliation": "Department of Pharmacology, Postgraduate Institute of Medical Education and Research, Chandigarh 160012, India."
+     }
+    ],
+    "journal": "European journal of pharmacology",
+    "pub_date": "2018 Jul 05",
+    "pub_year": "2018",
+    "doi": "10.1016/j.ejphar.2018.04.023",
+    "doi_url": "https://doi.org/10.1016/j.ejphar.2018.04.023",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/29689247/",
+    "mesh_terms": [
+     "Animals",
+     "Antiparkinson Agents",
+     "Drug Repositioning",
+     "Humans",
+     "Parkinson Disease"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "29897434",
+    "title": "The c-Abl inhibitor, Radotinib HCl, is neuroprotective in a preclinical Parkinson's disease mouse model.",
+    "abstract": "Accumulating evidence suggests that the non-receptor tyrosine kinase c-Abl plays an important role in the progression of Parkinson's disease (PD) and c-Abl inhibition could be neuroprotective in PD and related \u03b1-synucleinopathies. Nilotinib, a c-Abl inhibitor, has shown improved motor and cognitive symptoms in PD patients. However, issues concerning blood-brain barrier (BBB) penetration, lack of selectivity and safety still remain. Radotinib HCl is a selective Bcr-Abl kinase inhibitor that not only effectively access the brain, but also exhibits greater pharmacokinetic properties and safety profiles compared to Nilotinib and other c-Abl inhibitors. Here, we show the neuroprotective efficacy of Radotinib HCl, a brain penetrant c-Abl inhibitor, in a pre-clinical model of PD. Importantly, in vitro studies demonstrate that the treatment of Radotinib HCl protects the \u03b1-synuclein preformed fibrils (PFF)-induced neuronal toxicity, reduces the \u03b1-synuclein PFF-induced Lewy bodies (LB)/Lewy neurites (LN)-like pathology and inhibits the \u03b1-synuclein PFF-induced c-Abl activation in primary cortical neurons. Furthermore, administration of Radotinib HCl inhibits c-Abl activation and prevents dopaminergic neuron loss, neuroinflammation and behavioral deficits following \u03b1-synuclein PFF-induced toxicity in vivo. Taken together, our findings indicate that Radotinib HCl has beneficial neuroprotective effects in PD and provides an evidence that selective and brain permeable c-Abl inhibitors can be potential therapeutic agents for the treatment of PD and related \u03b1-synucleinopathies.",
+    "authors": [
+     {
+      "name": "Lee Saebom",
+      "affiliation": "Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, Johns Hopkins University School of Medicine, Baltimore, MD 21205, USA."
+     },
+     {
+      "name": "Kim Sangjune",
+      "affiliation": "Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, Johns Hopkins University School of Medicine, Baltimore, MD 21205, USA."
+     },
+     {
+      "name": "Park Yong Joo",
+      "affiliation": "The Russell H. Morgan Department of Radiology and Radiological Sciences, Johns Hopkins University School of Medicine, Baltimore, MD 21205, USA."
+     },
+     {
+      "name": "Yun Seung Pil",
+      "affiliation": "Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, Johns Hopkins University School of Medicine, Baltimore, MD 21205, USA."
+     },
+     {
+      "name": "Kwon Seung-Hwan",
+      "affiliation": "Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, Johns Hopkins University School of Medicine, Baltimore, MD 21205, USA."
+     },
+     {
+      "name": "Kim Donghoon",
+      "affiliation": "Neuroregeneration and Stem Cell Programs, Institute for Cell Engineering, Johns Hopkins University School of Medicine, Baltimore, MD 21205, USA."
+     },
+     {
+      "name": "Kim Dong Yeon",
+      "affiliation": "Central Research Institute, Il-Yang Pharmaceutical Co. Ltd., Yongin-si, Gyeonggi-do, Republic of Korea."
+     },
+     {
+      "name": "Shin Jae Soo",
+      "affiliation": "Central Research Institute, Il-Yang Pharmaceutical Co. Ltd., Yongin-si, Gyeonggi-do, Republic of Korea."
+     },
+     {
+      "name": "Cho Dae Jin",
+      "affiliation": "Central Research Institute, Il-Yang Pharmaceutical Co. Ltd., Yongin-si, Gyeonggi-do, Republic of Korea."
+     },
+     {
+      "name": "Lee Gong Yeal",
+      "affiliation": "Central Research Institute, Il-Yang Pharmaceutical Co. Ltd., Yongin-si, Gyeonggi-do, Republic of Korea."
+     }
+    ],
+    "journal": "Human molecular genetics",
+    "pub_date": "2018 Jul 01",
+    "pub_year": "2018",
+    "doi": "10.1093/hmg/ddy143",
+    "doi_url": "https://doi.org/10.1093/hmg/ddy143",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/29897434/",
+    "mesh_terms": [
+     "Animals",
+     "Blood-Brain Barrier",
+     "Brain",
+     "Disease Models, Animal",
+     "Dopamine",
+     "Dopaminergic Neurons",
+     "Humans",
+     "Lewy Bodies",
+     "Mice",
+     "Nerve Degeneration",
+     "Neuroprotective Agents",
+     "Parkinson Disease",
+     "Proto-Oncogene Proteins c-abl",
+     "Pyrimidines",
+     "Sesquiterpenes",
+     "alpha-Synuclein"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, N.I.H., Extramural",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "30807982",
+    "title": "Diffuse Lewy body disease.",
+    "abstract": "Diffuse Lewy body disease, also called dementia with Lewy bodies (DLB), is defined as progressive dementia and pathological Lewy bodies distributed in the central and autonomic nervous systems. The clinical features are dementia, cognitive fluctuations, visual hallucinations, parkinsonism, and REM sleep behavior disorder (RBD). Confirmatory techniques include dopamine transporter imaging, meta-iodobenzylguanidine (MIBG) myocardial scintigraphy, and polysomnography. The pathology finding in DLB is misfolded alpha-synuclein, the main component of Lewy bodies, propagating in the central nervous system. This may interrupt the acetylcholine pathway and activate an inflammatory response. Mutations of several genes have been found in patients with DLB, including SNCA, GBA, and APOE. The differential diagnosis of DLB and Parkinson's disease with dementia (PDD) is a debated issue. Clinical features distinguishing DLB from PDD include the timing of dementia and visual hallucinations, responses to dopaminergic agents and anti-psychotics, and imaging findings. As to the management of DLB, cholinesterase inhibitors are the Level-A recommendation for treating dementia in DLB patients and also are beneficial for treating visual hallucinations and psychotic symptoms. Dopamine agonists have the risk of inducing psychotic symptoms, while levodopa should be used carefully for motor symptoms. Melatonin and clonazepam are effective in controlling RBD. Several other treatment methods are undergoing trials, including pimavanserine, nilotinib, psychological interventions, and behavior therapy.",
+    "authors": [
+     {
+      "name": "Lin Yu Wei",
+      "affiliation": "Taiwan Adventist Hospital, Taipei, Taiwan."
+     },
+     {
+      "name": "Truong Daniel",
+      "affiliation": "The Truong Neuroscience Institute, Orange Coast Memorial Medical Center, Fountain Valley, CA, USA; Departments of Psychiatry and Neuroscience, UC Riverside, Riverside, CA, USA. Electronic address: dtruong@pmdi.org."
+     }
+    ],
+    "journal": "Journal of the neurological sciences",
+    "pub_date": "2019 Apr 15",
+    "pub_year": "2019",
+    "doi": "10.1016/j.jns.2019.02.021",
+    "doi_url": "https://doi.org/10.1016/j.jns.2019.02.021",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/30807982/",
+    "mesh_terms": [
+     "Brain",
+     "Dementia",
+     "Diagnosis, Differential",
+     "Humans",
+     "Lewy Body Disease",
+     "Parkinson Disease"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "30906562",
+    "title": "Pharmacokinetics and pharmacodynamics of a single dose Nilotinib in individuals with Parkinson's disease.",
+    "abstract": "Nilotinib is a broad-based tyrosine kinase inhibitor with the highest affinity to inhibit Abelson (c-Abl) and discoidin domain receptors (DDR1/2). Preclinical evidence indicates that Nilotinib reduces the level of brain alpha-synuclein and attenuates inflammation in models of Parkinson's disease (PD). We previously showed that Nilotinib penetrates the blood-brain barrier (BBB) and potentially improves clinical outcomes in individuals with PD and dementia with Lewy bodies (DLB). We performed a physiologically based population pharmacokinetic/pharmacodynamic (popPK/PD) study to determine the effects of Nilotinib in a cohort of 75 PD participants. Participants were randomized (1:1:1:1:1) into five groups (n\u00a0=\u00a015) and received open-label random single dose (RSD) 150:200:300:400\u00a0mg Nilotinib vs placebo. Plasma and cerebrospinal fluid (CSF) were collected at 1, 2, 3, and 4\u00a0hours after Nilotinib administration. The results show that Nilotinib enters the brain in a dose-independent manner and 200\u00a0mg Nilotinib increases the level of 3,4-Dihydroxyphenylacetic acid (DOPAC) and homovanillic acid (HVA), suggesting alteration to dopamine metabolism. Nilotinib significantly reduces plasma total alpha-synuclein and appears to reduce CSF oligomeric: total alpha-synuclein ratio. Furthermore, Nilotinib significantly increases the CSF level of triggering receptors on myeloid cells (TREM)-2, suggesting an anti-inflammatory effect. Taken together, 200\u00a0mg Nilotinib appears to be an optimal single dose that concurrently reduces inflammation and engages surrogate disease biomarkers, including dopamine metabolism and alpha-synuclein.",
+    "authors": [
+     {
+      "name": "Pagan Fernando L",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Hebron Michaeline L",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Wilmarth Barbara",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Torres-Yaghi Yasar",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Lawler Abigail",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Mundel Elizabeth E",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Yusuf Nadia",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Starr Nathan J",
+      "affiliation": "Translational Neurotherapeutics Program Laboratory for Dementia and Parkinsonism Department of Neurology Georgetown University Medical Center Washington District of Columbia."
+     },
+     {
+      "name": "Arellano Joy",
+      "affiliation": "Movement Disorders Clinic Department of Neurology MedStar Georgetown University Hospital Washington District of Columbia."
+     },
+     {
+      "name": "Howard Helen H",
+      "affiliation": "Movement Disorders Clinic Department of Neurology MedStar Georgetown University Hospital Washington District of Columbia."
+     }
+    ],
+    "journal": "Pharmacology research & perspectives",
+    "pub_date": "2019 Apr",
+    "pub_year": "2019",
+    "doi": "10.1002/prp2.470",
+    "doi_url": "https://doi.org/10.1002/prp2.470",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/30906562/",
+    "mesh_terms": [
+     "3,4-Dihydroxyphenylacetic Acid",
+     "Adult",
+     "Aged",
+     "Aged, 80 and over",
+     "Biomarkers",
+     "Brain",
+     "Cohort Studies",
+     "Dopamine",
+     "Dose-Response Relationship, Drug",
+     "Double-Blind Method",
+     "Drugs, Investigational",
+     "Homovanillic Acid",
+     "Humans",
+     "Membrane Glycoproteins",
+     "Middle Aged",
+     "Parkinson Disease",
+     "Placebos",
+     "Protein Kinase Inhibitors",
+     "Protein-Tyrosine Kinases",
+     "Pyrimidines",
+     "Receptors, Immunologic",
+     "alpha-Synuclein"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Randomized Controlled Trial",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "32291831",
+    "title": "Nilotinib Fails to Prevent Synucleinopathy and Cell Loss in a Mouse Model of Multiple System Atrophy.",
+    "abstract": "BACKGROUND: Multiple system atrophy (MSA) is a rare, untreatable neurodegenerative disorder characterized by accumulation of \u03b1-synuclein in oligodendroglial inclusions. As such, MSA is a synucleinopathy along with Parkinson's disease (PD) and dementia with Lewy bodies. Activation of the abelson tyrosine kinase c-Abl leads to phosphorylation of \u03b1-synuclein at tyrosine 39, thereby promoting its aggregation and subsequent neurodegeneration. The c-Abl inhibitor nilotinib used for the treatment of chronic myeloid leukemia based on data collected in preclinical models of PD might interfere with pathogenic mechanisms that are relevant to PD and dementia with Lewy bodies, which motivated its assessment in an open-label clinical trial in PD and dementia with Lewy bodies patients. The objective of this study was to assess the preclinical efficacy of nilotinib in the specific context of MSA. METHODS: Mice expressing human wild-type \u03b1-synuclein in oligodendrocytes received daily injection of nilotinib (1 or 10 mg/kg) over 12\u2009weeks. Postmortem analysis included the assessment of c-Abl activation, \u03b1-synuclein burden, and dopaminergic neurodegeneration. RESULTS: \u03b1-Synuclein phosphorylated at tyrosine 39 was detected in glial cytoplasmic inclusions in MSA patients. Increased activation of c-Abl and \u03b1-synuclein phosphorylation at tyrosine 39 were found in transgenic mice. Despite significant inhibition of c-Abl and associated reduction of \u03b1-synuclein phosphorylation at tyrosine 39 by 40%, nilotinib failed to reduce \u03b1-synuclein aggregate burden (including phosphorylation at serine 129) in the striatum and cortex or to lessen neurodegeneration in the substantia nigra. CONCLUSIONS: This preclinical study suggests that partial inhibition of c-Abl and reduction of \u03b1-synuclein phosphorylation at tyrosine 39 may not be a relevant target for MSA. \u00a9 2020 International Parkinson and Movement Disorder Society.",
+    "authors": [
+     {
+      "name": "Lopez-Cuina Miguel",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Guerin Paul A",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Canron Marie-H\u00e9l\u00e8ne",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Delamarre Anna",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Dehay Benjamin",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Bezard Erwan",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Meissner Wassilios G",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     },
+     {
+      "name": "Fernagut Pierre-Olivier",
+      "affiliation": "Univ. de Bordeaux, Institut des Maladies Neurod\u00e9g\u00e9n\u00e9ratives, Bordeaux, France."
+     }
+    ],
+    "journal": "Movement disorders : official journal of the Movement Disorder Society",
+    "pub_date": "2020 Jul",
+    "pub_year": "2020",
+    "doi": "10.1002/mds.28034",
+    "doi_url": "https://doi.org/10.1002/mds.28034",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/32291831/",
+    "mesh_terms": [
+     "Animals",
+     "Brain",
+     "Humans",
+     "Mice",
+     "Multiple System Atrophy",
+     "Pyrimidines",
+     "Synucleinopathies",
+     "alpha-Synuclein"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "40279170",
+    "title": "Enhanced plasma and brain concentrations and medulloblastoma cytotoxicity of asciminib and nilotinib by P-glycoprotein inhibition with tariquidar.",
+    "abstract": "ABL1 and ABL2 are putative drivers of medulloblastoma leptomeningeal dissemination. ABL1/ABL2 inhibitors, nilotinib and asciminib, are P-glycoprotein substrates. The purpose of this work is to elucidate P-glycoprotein expression in the brain/brain tumors and to determine if P-glycoprotein inhibition increases plasma and brain concentrations and medulloblastoma cytotoxicity of nilotinib and asciminib. ABCB1 (P-glycoprotein) mRNA expression was analyzed from multiple datasets of brain and brain tumor specimens. Cytotoxicity assays of medulloblastoma cells were conducted. In a mouse model, the pharmacokinetics of asciminib and nilotinib, with and without tariquidar, were determined using LC/MS. ABCB1 mRNA expression varied by brain region and was significantly lower in the cerebellum ( P \u2005<\u20050.05). There was a bimodal increase in brain ABCB1 expression at ages 0-3 and 21-23 ( P \u2005<\u20050.05). ABCB1 expression in pediatric brain tumors was similar to normal brain. The addition of tariquidar significantly reduced medulloblastoma cell viability compared to asciminib alone ( P \u2005<\u20050.01). Tariquidar increased asciminib plasma and brain concentrations at 24\u2005h ( P \u2005=\u20050.0005 and P \u2005=\u20050.0002, respectively) and nilotinib brain concentrations at 3\u2005h ( P \u2005=\u20050.0009). Tariquidar increased the area under the curve (AUC) brain\u2005:\u2005plasma ratio of asciminib from 0.33 to 10.16% and of nilotinib from 1.16 to 9.61%. Tariquidar prolonged the plasma half-life of asciminib from 2.21 to 10.49\u2005h and nilotinib from 7.63 to 14.64\u2005h. P-glycoprotein inhibition increased the brain concentrations, AUC, and half-life of asciminib and nilotinib and increased cytotoxicity in medulloblastoma cells.",
+    "authors": [
+     {
+      "name": "Thompson Eric M",
+      "affiliation": "Department of Neurosurgery, The University of Chicago, Chicago, Illinois."
+     },
+     {
+      "name": "Cheng Lin",
+      "affiliation": "Department of Neurosurgery, The University of Chicago, Chicago, Illinois."
+     },
+     {
+      "name": "Spasojevic Ivan",
+      "affiliation": "Department of Medicine - Oncology, Duke University School of Medicine."
+     }
+    ],
+    "journal": "Anti-cancer drugs",
+    "pub_date": "2025 Sep 01",
+    "pub_year": "2025",
+    "doi": "10.1097/CAD.0000000000001728",
+    "doi_url": "https://doi.org/10.1097/CAD.0000000000001728",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40279170/",
+    "mesh_terms": [
+     "Medulloblastoma",
+     "Animals",
+     "Humans",
+     "Pyrimidines",
+     "Mice",
+     "Brain",
+     "Quinolines",
+     "Cell Line, Tumor",
+     "ATP Binding Cassette Transporter, Subfamily B",
+     "Cerebellar Neoplasms",
+     "Female",
+     "Child",
+     "Child, Preschool",
+     "Male",
+     "Brain Neoplasms",
+     "Infant",
+     "ATP Binding Cassette Transporter, Subfamily B, Member 1",
+     "Antineoplastic Agents",
+     "Young Adult",
+     "Cell Survival",
+     "Niacinamide",
+     "Pyrazoles"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Research Support, Non-U.S. Gov't",
+     "Research Support, N.I.H., Extramural"
+    ]
+   },
+   {
+    "pmid": "40916393",
+    "title": "How I treat Ph+ acute lymphoblastic leukemia.",
+    "abstract": "Philadelphia chromosome-positive acute lymphoblastic leukemia (Ph+ ALL) is characterized by the BCR:ABL1 fusion gene which produces a constitutively active tyrosine kinase which drives disease pathogenesis and is associated with resistance to conventional chemotherapy. Intensive cytotoxic chemotherapy followed by allogeneic hematopoietic stem cell transplantation (HSCT), the historical treatment paradigm for Ph+ ALL, was associated with poor outcomes. The introduction of inhibitors of ABL1 revolutionized the treatment of Ph+ ALL. Imatinib, the first BCR:ABL1 tyrosine kinase inhibitor (TKI), significantly improved survival, and was followed by more potent TKIs (dasatinib, nilotinib, and ponatinib) with activity also against resistance mutations. The introduction of blinatumomab, a CD19-CD3 bispecific T-cell engager, has further transformed the treatment of Ph+ ALL, allowing some patients to be treated without cytotoxic chemotherapy and/or HSCT. Still, HSCT remains an essential treatment option for select high-risk cases. Ongoing investigation focuses on more accurately identifying clinical and genetic features which predict for systemic or central nervous system relapse and determining the most effective approach to successfully risk-adapt therapy, including appropriate allocation to HSCT. This review highlights recent advances in treatment, emphasizing the importance of TKIs, the emerging role of immunotherapy, and the evolving position of HSCT in the management of Ph+ ALL.",
+    "authors": [
+     {
+      "name": "Castro-Mollo Melanie",
+      "affiliation": "Division of Leukemia, Department of Medical Oncology, Dana-Farber Cancer Institute, Boston, MA, USA."
+     },
+     {
+      "name": "DeAngelo Daniel J",
+      "affiliation": "Division of Leukemia, Department of Medical Oncology, Dana-Farber Cancer Institute, Boston, MA, USA."
+     },
+     {
+      "name": "Luskin Marlise R",
+      "affiliation": "Division of Leukemia, Department of Medical Oncology, Dana-Farber Cancer Institute, Boston, MA, USA."
+     }
+    ],
+    "journal": "Future oncology (London, England)",
+    "pub_date": "2025 Oct",
+    "pub_year": "2025",
+    "doi": "10.1080/14796694.2025.2556647",
+    "doi_url": "https://doi.org/10.1080/14796694.2025.2556647",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40916393/",
+    "mesh_terms": [
+     "Humans",
+     "Precursor Cell Lymphoblastic Leukemia-Lymphoma",
+     "Hematopoietic Stem Cell Transplantation",
+     "Protein Kinase Inhibitors",
+     "Fusion Proteins, bcr-abl",
+     "Philadelphia Chromosome",
+     "Antibodies, Bispecific",
+     "Antineoplastic Combined Chemotherapy Protocols",
+     "Combined Modality Therapy",
+     "Immunotherapy",
+     "Treatment Outcome",
+     "Drug Resistance, Neoplasm"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Review"
+    ]
+   },
+   {
+    "pmid": "41148549",
+    "title": "Computational Evaluation of Potential c-Abl Kinase Inhibitors for Parkinson's Disease: QSAR, Docking, Bioisosteric Replacement, ADMET, and MD Simulations.",
+    "abstract": "Inhibiting c-Abl kinase pharmacologically is necessary because of its role in oxidative stress and neurodegeneration. When activated, it causes the accumulation of \u03b1-synuclein and dopaminergic neuron damage, leading to Parkinson's disease (PD). Reports of the effectiveness of c-Abl inhibitors repurposed for PD were accompanied by both hope and numerous concerns. Therefore, there is an urgent need for alternative c-Abl inhibitors. We employed a machine-learning-based QSAR model to identify potential actives against c-Abl kinase, screening selected FDA-approved and phase 1 drugs; optimizing the compounds' structures through bioisostere replacement; conducting molecular docking algorithms (HTVS, SP, XP, and Prime's Molecular Mechanics with Generalized Born and Surface Area (Prime-MMPBSA)); in silico pharmacokinetic profiling; and structural stability and dynamics studies for 200\u00a0ns. From 3605 drugs and 1456 bioisosteres, two bioisosteres of indobufen (indobufen 25 and 22) showed promising potential against c-Abl kinase. As the two bioisosteres returned the closest docking scores (14.880 and\u2009-\u200914.265\u00a0kcal\u00a0mol-1, respectively) to the control drug (nilotinib,\u2009-\u200915.312\u00a0kcal\u00a0mol-1), the Prime-MMGBSA calculations returned\u2009-\u200981.92 and\u2009-\u200984.07\u00a0kcal\u00a0mol-1, respectively; MMPBSA calculations after a 200-ns MD simulation run returned\u2009-\u200948.20\u2009\u00b1\u20093.69\u00a0kcal\u00a0mol-1 and\u2009-\u200949.94\u2009\u00b1\u20093.05\u00a0kcal\u00a0mol-1, respectively. This indicates their stability compared to other test compounds, as supported by the RMSD, RMSF, PCA, and DCCM results. Finally, both bioisosteres interacted with MET 318, ASP 381, TYR 253, ALA 269, and PHE 317 in the c-Abl active site. We present these bioisosteres as potential candidates for the treatment or management of PD targeting c-Abl kinase. However, in vitro and in vivo experiments to validate the findings are urgently required.",
+    "authors": [
+     {
+      "name": "Kadimi Amal",
+      "affiliation": "Laboratory of Biotechnology and Natural Resources Valorization, Faculty of Sciences, Ibn Zohr University, 80060, Agadir, Morocco."
+     },
+     {
+      "name": "Umar Haruna Isiyaku",
+      "affiliation": "Department of Biochemistry, Joseph Ayo Babalola University, Osun State, Osun, Lagos, Nigeria. uhumar@futa.edu.ng."
+     },
+     {
+      "name": "Kumar Neeraj",
+      "affiliation": "Department of Pharmaceutical Chemistry, Bhupal Nobles' College of Pharmacy, Udaipur, Rajasthan, India, 313001."
+     },
+     {
+      "name": "Kuthi Najwa Ahmad",
+      "affiliation": "Department of Chemistry, Faculty of Science, Universiti Teknologi Malaysia (UTM), Johor Bahru, Johor, Malaysia."
+     },
+     {
+      "name": "Ayoade Islamiyyah",
+      "affiliation": "Computer-Aided Therapeutic Discovery and Design (CAT2D) Laboratory, Akure, Nigeria."
+     },
+     {
+      "name": "Babatola Leye Jonathan",
+      "affiliation": "Department of Biochemistry, Joseph Ayo Babalola University, Osun State, Osun, Lagos, Nigeria."
+     },
+     {
+      "name": "Adebayo Adeniyi A",
+      "affiliation": "Department of Biochemistry, Joseph Ayo Babalola University, Osun State, Osun, Lagos, Nigeria."
+     },
+     {
+      "name": "Victor Omoboyede",
+      "affiliation": "Department of Biochemistry, Federal University of Technology, P. M. B. 704, Akure, Ondo State, Nigeria."
+     },
+     {
+      "name": "Makinde Ibrahim Akindeji",
+      "affiliation": "Department of Information Systems, School of Computing (SOC), Federal University of Technology Akure, P.M.B 704, Akure, Nigeria."
+     },
+     {
+      "name": "Bourhia Mohammed",
+      "affiliation": "Laboratory of Biotechnology and Natural Resources Valorization, Faculty of Sciences, Ibn Zohr University, 80060, Agadir, Morocco."
+     }
+    ],
+    "journal": "Applied biochemistry and biotechnology",
+    "pub_date": "2025 Dec",
+    "pub_year": "2025",
+    "doi": "10.1007/s12010-025-05375-1",
+    "doi_url": "https://doi.org/10.1007/s12010-025-05375-1",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41148549/",
+    "mesh_terms": [
+     "Parkinson Disease",
+     "Proto-Oncogene Proteins c-abl",
+     "Quantitative Structure-Activity Relationship",
+     "Protein Kinase Inhibitors",
+     "Molecular Docking Simulation",
+     "Molecular Dynamics Simulation",
+     "Humans",
+     "Machine Learning"
+    ],
+    "publication_types": [
+     "Journal Article"
+    ]
+   },
+   {
+    "pmid": "41443045",
+    "title": "Comparative In silico evaluation of c-Abl inhibitors for Parkinson's disease therapy.",
+    "abstract": "Parkinson's disease (PD), the second most common neurodegenerative disorder, is characterized by the dopaminergic neuronal loss in the substantia nigra and progressive motor deficits. The non-receptor tyrosine kinase c-Abl is aberrantly activated in PD brains and contributes to \u03b1-synuclein pathology, making it an attractive therapeutic target. Although several c-Abl inhibitors have shown neuroprotective effects in preclinical models, most fail in clinical trials due to poor pharmacokinetic profiles and limited brain penetration. Here, we performed a comparative in silico evaluation of five c-Abl inhibitors-Imatinib, Nilotinib, Ponatinib, Risvodetinib, and PD180970. Binding affinity, target specificity, physicochemical and pharmacokinetic properties, blood-brain barrier permeability, and toxicity profiles were systematically assessed and cross-validated. Molecular docking studies revealed that PD180970 exhibited the strongest binding affinity for the kinase domains of both human and mouse c-Abl. To validate these findings, we performed molecular dynamics (MD) simulations and analyzed root mean square deviations (RMSD), root mean square fluctuation (RMSF), hydrogen bonding, and radius of gyration of ligands, which confirmed the superior stability and binding of PD180970. Target prediction analysis indicated that PD180970 and Ponatinib had the highest selectivity with minimal off-target hits. SwissADME profiling further showed that PD180970 possesses favorable pharmacokinetic characteristics. The BBB permeability and toxicity analysis, using ADMETLab and DeepPK, predicted that PD180970 has enhanced blood-brain barrier permeability and a lower toxicity profile compared to the other inhibitors. Together, these integrated computational findings indicate PD180970 as a promising next-generation c-Abl inhibitor and support its prioritisation for further preclinical and clinical studies in PD.",
+    "authors": [
+     {
+      "name": "Kumar Devu B",
+      "affiliation": "School of Biology, Indian Institutes of Science Education and Research-Thiruvananthapuram, Kerala, India."
+     },
+     {
+      "name": "Subramanya Santhosh Kumar",
+      "affiliation": "School of Biology, Indian Institutes of Science Education and Research-Thiruvananthapuram, Kerala, India."
+     },
+     {
+      "name": "Thakur Poonam",
+      "affiliation": "School of Biology, Indian Institutes of Science Education and Research-Thiruvananthapuram, Kerala, India. Electronic address: poonam@iisertvm.ac.in."
+     }
+    ],
+    "journal": "Biochemical and biophysical research communications",
+    "pub_date": "2026 Jan 25",
+    "pub_year": "2026",
+    "doi": "10.1016/j.bbrc.2025.153175",
+    "doi_url": "https://doi.org/10.1016/j.bbrc.2025.153175",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41443045/",
+    "mesh_terms": [
+     "Parkinson Disease",
+     "Proto-Oncogene Proteins c-abl",
+     "Humans",
+     "Animals",
+     "Molecular Docking Simulation",
+     "Protein Kinase Inhibitors",
+     "Molecular Dynamics Simulation",
+     "Mice",
+     "Imidazoles",
+     "Blood-Brain Barrier",
+     "Computer Simulation",
+     "Pyrimidines",
+     "Pyridazines"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Comparative Study",
+     "Research Support, Non-U.S. Gov't"
+    ]
+   },
+   {
+    "pmid": "42454992",
+    "title": "Development and External Validation of a Transcriptome-Based Multivariable Prediction Model for Treatment-Free Remission in Chronic Myeloid Leukemia.",
+    "abstract": "PURPOSE: Treatment-free remission (TFR) is a major therapeutic objective in chronic myeloid leukemia (CML). However, nearly 50% of patients relapse after tyrosine kinase inhibitor (TKI) discontinuation, and no robust predictive biomarker is currently available. METHODS: We profiled peripheral blood cell transcriptomes at imatinib (IMA) discontinuation in patients from the multicenter STIM2 trial (n = 96) to develop a transcriptome-based model predicting TFR by 2 years. A DESEQ2-based machine learning approach was compared with classical machine learning algorithms. The signature was then externally validated in an independent real-world cohort of patients attempting IMA or nilotinib cessation (n = 70). The biologic processes associated with the signature were further explored. RESULTS: We identified a 50-gene signature discriminating patients with sustained 2-year TFR from those experiencing molecular relapse (area under the receiver operating characteristic curve [AUROC], 0.83 [95% CI, 0.73 to 0.93] and 0.75 [95% CI, 0.55 to 1.00] in the training and internal validation cohorts, respectively). The discriminative performance was confirmed in the external test cohort, both as a binary predictor of 2-year TFR (AUROC, 0.71 [95% CI, 0.58 to 0.83] overall; 0.77 [95% CI, 0.61 to 0.92] in IMA-treated patients) and as a time-to-event predictor (log-rank P = .0042). The high TFR-signature group showed a higher proportion of myeloid immune cells and natural killer T cells, with an enrichment in Hedgehog signaling, whereas the low TFR-signature group demonstrated a higher proportion of lymphoid cells with an enrichment in mTOR signaling and a trend for oxidative phosphorylation activation. T-cell receptor and immunoglobulin heavy-chain repertoire analyses showed significantly greater polyclonality in the high TFR-signature group. CONCLUSION: These findings demonstrate that transcriptomic profiling at TKI discontinuation can predict TFR outcomes in patients with CML and provide biologic insights into the mechanisms underlying sustained TFR.",
+    "authors": [
+     {
+      "name": "Alcazer Vincent",
+      "affiliation": "Service d'H\u00e9matologie Clinique, Hospices Civils de Lyon, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Dulucq St\u00e9phanie",
+      "affiliation": "Laboratoire d'H\u00e9matologie, CHU de Bordeaux, INSERM, U1312 BRIC, Universit\u00e9 de Bordeaux, Bordeaux, France."
+     },
+     {
+      "name": "Mosnier Isabelle",
+      "affiliation": "Laboratoire d'H\u00e9matologie, Hospices Civils de Lyon, H\u00f4pital Lyon Sud, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Chabane Kaddour",
+      "affiliation": "Laboratoire d'H\u00e9matologie, Hospices Civils de Lyon, H\u00f4pital Lyon Sud, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Bertin-Mourot Pauline",
+      "affiliation": "Laboratoire d'H\u00e9matologie, Hospices Civils de Lyon, H\u00f4pital Lyon Sud, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Derruau Sandrine",
+      "affiliation": "Laboratoire d'H\u00e9matologie, Hospices Civils de Lyon, H\u00f4pital Lyon Sud, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Balsat Marie",
+      "affiliation": "Service d'H\u00e9matologie Clinique, Hospices Civils de Lyon, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Labussiere-Wallet H\u00e9l\u00e8ne",
+      "affiliation": "Service d'H\u00e9matologie Clinique, Hospices Civils de Lyon, Pierre-B\u00e9nite, France."
+     },
+     {
+      "name": "Sujobert Pierre",
+      "affiliation": "Centre International de Recherche en Infectiologie (CIRI), INSERM U1111, Lyon, France."
+     },
+     {
+      "name": "Mahon Fran\u00e7ois-Xavier",
+      "affiliation": "Service d'H\u00e9matologie Clinique, Institut Bergoni\u00e9, Bordeaux, France."
+     }
+    ],
+    "journal": "Journal of clinical oncology : official journal of the American Society of Clinical Oncology",
+    "pub_date": "2026 Jul 20",
+    "pub_year": "2026",
+    "doi": "10.1200/JCO-25-02948",
+    "doi_url": "https://doi.org/10.1200/JCO-25-02948",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/42454992/",
+    "mesh_terms": [
+     "Adult",
+     "Female",
+     "Humans",
+     "Male",
+     "Middle Aged",
+     "Gene Expression Profiling",
+     "Imatinib Mesylate",
+     "Leukemia, Myelogenous, Chronic, BCR-ABL Positive",
+     "Prediction Algorithms",
+     "Predictive Learning Models",
+     "Predictive Value of Tests",
+     "Protein Kinase Inhibitors",
+     "Remission Induction",
+     "Transcriptome",
+     "Treatment Interruption"
+    ],
+    "publication_types": [
+     "Journal Article",
+     "Multicenter Study",
+     "Validation Study"
+    ]
+   }
+  ],
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=29689247%2C29897434%2C30807982%2C30906562%2C32291831%2C40279170%2C40916393%2C41148549%2C41443045%2C42454992",
+  "count": 10
+ }
+}

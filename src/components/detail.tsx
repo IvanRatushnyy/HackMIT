@@ -315,3 +315,53 @@ export function YourCall({ candidate, cutoff, query, exportHref }: { candidate: 
     </section>
   )
 }
+
+
+const STANCE_WORDS: Record<string, string> = {
+  deprioritize: 'deprioritise',
+  no_clear_prioritization: 'no clear prioritisation',
+  pursue_conditionally: 'pursue conditionally',
+  insufficient_evidence: 'insufficient evidence',
+}
+
+/** Elute's grounded opinion (backend v4.4 §6): the stance with its claims for and against, the unknowns, and what would
+ * change it — never a bare verdict. Rendered only when the record carries one (live appraisals); the scientist's call stays separate. */
+export function EluteOpinion({ candidate }: { candidate: CandidateDetail }) {
+  const r = candidate.recommendation
+  const nq = candidate.next_question
+  if (!r) return null
+  const name = (id: string) => id.replace(/^C_/, '').toLowerCase().replace(/_/g, ' ')
+  return (
+    <section className="section" aria-labelledby="opinion">
+      <h2 className="display-xs" id="opinion">
+        elute’s opinion <span className="muted">· {STANCE_WORDS[r.stance] ?? r.stance}</span>
+      </h2>
+      <p className="section__lede">{r.opinion}</p>
+      <div className="two">
+        <div>
+          <Kicker>supporting the hypothesis</Kicker>
+          <p>{r.supporting_claim_ids.length ? r.supporting_claim_ids.map(name).join(' · ') : 'nothing established or singly supported'}</p>
+          <Kicker>key unknowns</Kicker>
+          <p>{r.key_unknowns.length ? r.key_unknowns.map(name).join(' · ') : 'none'}</p>
+        </div>
+        <div>
+          <Kicker>weakening the hypothesis</Kicker>
+          <p>{r.opposing_claim_ids.length ? r.opposing_claim_ids.map(name).join(' · ') : 'nothing contested or refuted'}</p>
+          <Kicker>what would change this opinion</Kicker>
+          <p>{r.what_would_change_my_mind}</p>
+        </div>
+      </div>
+      {nq && (
+        <div className="call__reason" style={{ marginTop: 16 }}>
+          <Kicker>the question to answer next · {name(nq.gate)}</Kicker>
+          <p>
+            <strong>{nq.next_question}</strong> {nq.why_this_question_matters}
+          </p>
+          <p className="muted">
+            Experiment or data: {nq.suggested_experiment_or_data} — would change the appraisal if: {nq.result_that_would_change_appraisal}
+          </p>
+        </div>
+      )}
+    </section>
+  )
+}

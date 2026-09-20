@@ -17,7 +17,24 @@ export function ProvenanceBlock({ row, cutoff, isToday }: { row: LedgerRow; cuto
     ['extracted', visible.length ? visible.map((r) => `${r.value}    ${r.published}`).join('\n            ') : '—'],
     ['verified', verified],
   ]
-  return <pre className="raw raw-block">{lines.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n')}</pre>
+  const r = row.reasoning
+  const reasoning = r
+    ? [
+        ['question', r.question],
+        ['reasoning', r.reasoning],
+        ['needed', r.evidence_needed],
+        ['tool', `${r.selected_tool} — ${r.tool_selection_reason}`],
+        ['found', r.interpretation],
+        ['changes', r.what_this_changes],
+        ['next', `${r.next_action} — ${r.next_action_reason}`],
+      ]
+    : []
+  return (
+    <pre className="raw raw-block">
+      {lines.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n')}
+      {reasoning.length ? '\n\n— the agent’s thought process —\n' + reasoning.map(([k, val]) => `${k.padEnd(12)}${val}`).join('\n') : ''}
+    </pre>
+  )
 }
 
 export type RowState = 'done' | 'running' | 'pending'

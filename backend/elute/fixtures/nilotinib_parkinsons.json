@@ -1,0 +1,975 @@
+{
+  "drug": "nilotinib",
+  "disease": "Parkinson disease",
+  "resolved": {
+    "drug_chembl_id": "CHEMBL255863",
+    "disease_efo_id": "MONDO_0005180",
+    "target_ensembl_id": "ENSG00000097007",
+    "target_symbol": "ABL1",
+    "disease_name": "Parkinson disease",
+    "drug_name": "nilotinib"
+  },
+  "evidence": [
+    {
+      "key": "fda-label",
+      "source_provider": "open_targets",
+      "source_record_id": "CHEMBL255863|ENSG00000097007|fda-label",
+      "evidence_kind": "mechanism",
+      "statement": "FDA prescribing information for Tasigna (nilotinib), 2007: a BCR-ABL tyrosine kinase inhibitor approved for chronic myeloid leukemia; boxed warning for QT prolongation and sudden deaths.",
+      "source_name": "FDA label (Tasigna), 2007",
+      "source_url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2007/022068lbl.pdf",
+      "publication_date": "2007-10-29",
+      "study_type": "label",
+      "controlled": false,
+      "population": "human",
+      "outcome": "na",
+      "caveats": [],
+      "relevance": [
+        {
+          "claim_id": "C_MECHANISM",
+          "direction": "supports",
+          "statement": "Nilotinib is an approved inhibitor of the ABL1 (BCR-ABL) kinase at clinical doses.",
+          "verbatim_sentence": "Tasigna (nilotinib) is a kinase inhibitor indicated for the treatment of chronic phase and accelerated phase Philadelphia chromosome positive chronic myelogenous leukemia."
+        },
+        {
+          "claim_id": "C_SAFETY",
+          "direction": "contradicts",
+          "statement": "The label carries a boxed warning for QT prolongation and sudden deaths.",
+          "verbatim_sentence": "WARNING: QT PROLONGATION AND SUDDEN DEATHS."
+        }
+      ],
+      "independence_group": "fda|",
+      "authors": [
+        "fda"
+      ],
+      "ledger_step": "L2",
+      "first_author": "FDA",
+      "journal": "Tasigna (nilotinib) prescribing information",
+      "year": 2007,
+      "group": "FDA"
+    },
+    {
+      "key": "kantarjian-2006",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:16775235",
+      "evidence_kind": "publication",
+      "statement": "Open-label phase 1 of nilotinib in 119 patients with imatinib-resistant CML or Ph+ ALL (Kantarjian 2006, NEJM).",
+      "source_name": "Kantarjian 2006, N Engl J Med",
+      "source_url": "https://www.nejm.org/doi/full/10.1056/NEJMoa055104",
+      "publication_date": "2006-06-15",
+      "study_type": "open-label",
+      "controlled": false,
+      "blinded": false,
+      "placebo": false,
+      "sample_size": 119,
+      "outcome": "positive",
+      "population": "human",
+      "caveats": [
+        "open-label",
+        "no-placebo"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_MECHANISM",
+          "direction": "supports",
+          "statement": "Nilotinib inhibited BCR-ABL kinase activity and produced hematologic and cytogenetic responses in imatinib-resistant CML.",
+          "verbatim_sentence": "Nilotinib is a highly selective inhibitor of Bcr-Abl and has activity in imatinib-resistant CML."
+        }
+      ],
+      "independence_group": "kantarjian-h|md anderson",
+      "authors": [
+        "kantarjian-h",
+        "giles-f",
+        "cortes-j"
+      ],
+      "affiliation": "MD Anderson Cancer Center",
+      "ledger_step": "L4",
+      "first_author": "Kantarjian H",
+      "journal": "N Engl J Med",
+      "year": 2006,
+      "group": "Kantarjian (MD Anderson)"
+    },
+    {
+      "key": "ko-2010",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:20823226",
+      "evidence_kind": "publication",
+      "statement": "c-Abl phosphorylates parkin and inhibits its ubiquitin ligase and protective function; increased in postmortem Parkinson's striatum (Ko 2010, PNAS).",
+      "source_name": "Ko 2010, Proc Natl Acad Sci USA",
+      "source_url": "https://www.pnas.org/doi/10.1073/pnas.1006083107",
+      "publication_date": "2010-09-21",
+      "study_type": "preclinical",
+      "controlled": false,
+      "population": "postmortem",
+      "outcome": "positive",
+      "caveats": [
+        "postmortem-tissue",
+        "cell-line"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_DISEASE_RELEVANCE",
+          "direction": "supports",
+          "statement": "c-Abl is activated and parkin is tyrosine-phosphorylated in postmortem Parkinson's striatum.",
+          "verbatim_sentence": "Tyrosine phosphorylation of parkin is increased in the striatum of patients with Parkinson disease."
+        }
+      ],
+      "independence_group": "dawson-t|johns hopkins",
+      "authors": [
+        "ko-h",
+        "dawson-v",
+        "dawson-t"
+      ],
+      "affiliation": "Johns Hopkins University School of Medicine",
+      "ledger_step": "L4",
+      "first_author": "Ko HS",
+      "journal": "Proc Natl Acad Sci USA",
+      "year": 2010,
+      "group": "Dawson (Johns Hopkins)"
+    },
+    {
+      "key": "imam-2011",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:21209202",
+      "evidence_kind": "publication",
+      "statement": "c-Abl-mediated tyrosine phosphorylation of parkin in MPTP mice and in Parkinson's substantia nigra (Imam 2011, J Neurosci).",
+      "source_name": "Imam 2011, J Neurosci",
+      "source_url": "https://www.jneurosci.org/content/31/1/157",
+      "publication_date": "2011-01-05",
+      "study_type": "preclinical",
+      "controlled": false,
+      "population": "animal",
+      "outcome": "positive",
+      "caveats": [
+        "animal-model",
+        "postmortem-tissue"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_DISEASE_RELEVANCE",
+          "direction": "supports",
+          "statement": "c-Abl activation and parkin tyrosine phosphorylation are increased in the substantia nigra of Parkinson's patients and in MPTP-treated mice.",
+          "verbatim_sentence": "c-Abl activation and parkin tyrosine phosphorylation were increased in the substantia nigra of Parkinson disease patients."
+        }
+      ],
+      "independence_group": "imam-s|nctr",
+      "authors": [
+        "imam-s",
+        "ali-s"
+      ],
+      "affiliation": "National Center for Toxicological Research",
+      "ledger_step": "L4",
+      "first_author": "Imam SZ",
+      "journal": "J Neurosci",
+      "year": 2011,
+      "group": "Imam (NCTR/FDA)"
+    },
+    {
+      "key": "mahul-mellier-2014",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:24412932",
+      "evidence_kind": "publication",
+      "statement": "c-Abl phosphorylates alpha-synuclein at Y39 and regulates its degradation; the phosphorylated form is increased in Parkinson's brain (Mahul-Mellier 2014, Hum Mol Genet).",
+      "source_name": "Mahul-Mellier 2014, Hum Mol Genet",
+      "source_url": "https://academic.oup.com/hmg/article/23/11/2858/2900925",
+      "publication_date": "2014-06-01",
+      "study_type": "preclinical",
+      "controlled": false,
+      "population": "cell-line",
+      "outcome": "positive",
+      "caveats": [
+        "cell-line",
+        "postmortem-tissue"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_DISEASE_RELEVANCE",
+          "direction": "supports",
+          "statement": "c-Abl phosphorylates alpha-synuclein at tyrosine 39, and the phosphorylated form is increased in Parkinson's brain tissue.",
+          "verbatim_sentence": "Y39-phosphorylated alpha-synuclein is increased in brains of Parkinson disease patients."
+        }
+      ],
+      "independence_group": "lashuel-h|epfl",
+      "authors": [
+        "mahul-mellier-a",
+        "lashuel-h"
+      ],
+      "affiliation": "EPFL",
+      "ledger_step": "L4",
+      "first_author": "Mahul-Mellier AL",
+      "journal": "Hum Mol Genet",
+      "year": 2014,
+      "group": "Lashuel (EPFL)"
+    },
+    {
+      "key": "hebron-2013",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:23666528",
+      "evidence_kind": "publication",
+      "statement": "In alpha-synuclein transgenic mice, nilotinib increased autophagic clearance of alpha-synuclein, reversed dopamine neuron loss and improved motor behaviour (Hebron 2013, Hum Mol Genet).",
+      "source_name": "Hebron 2013, Hum Mol Genet",
+      "source_url": "https://academic.oup.com/hmg/article/22/16/3315/583034",
+      "publication_date": "2013-08-15",
+      "study_type": "preclinical",
+      "controlled": false,
+      "population": "animal",
+      "outcome": "positive",
+      "caveats": [
+        "animal-model"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_DOWNSTREAM",
+          "direction": "supports",
+          "statement": "In transgenic mice, nilotinib increased autophagic clearance of alpha-synuclein, reversed dopamine neuron loss and improved motor behaviour.",
+          "verbatim_sentence": "Nilotinib reverses loss of dopamine neurons and improves motor behavior via autophagic degradation of alpha-synuclein in Parkinson's disease models."
+        }
+      ],
+      "independence_group": "moussa-c|georgetown",
+      "authors": [
+        "hebron-m",
+        "lonskaya-i",
+        "moussa-c"
+      ],
+      "affiliation": "Georgetown University Medical Center",
+      "ledger_step": "L4",
+      "first_author": "Hebron ML",
+      "journal": "Hum Mol Genet",
+      "year": 2013,
+      "group": "Moussa (Georgetown)"
+    },
+    {
+      "key": "karuppagounder-2014",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:24786396",
+      "evidence_kind": "publication",
+      "statement": "Nilotinib protected dopaminergic neurons and reduced c-Abl activation in the MPTP mouse model (Karuppagounder 2014, Sci Rep).",
+      "source_name": "Karuppagounder 2014, Sci Rep",
+      "source_url": "https://www.nature.com/articles/srep04874",
+      "publication_date": "2014-05-02",
+      "study_type": "preclinical",
+      "controlled": false,
+      "population": "animal",
+      "outcome": "positive",
+      "caveats": [
+        "animal-model"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_DOWNSTREAM",
+          "direction": "supports",
+          "statement": "Nilotinib protected dopaminergic neurons and reduced c-Abl activation in the MPTP mouse model.",
+          "verbatim_sentence": "The c-Abl inhibitor, nilotinib, protects dopaminergic neurons in a preclinical animal model of Parkinson's disease."
+        }
+      ],
+      "independence_group": "dawson-t|johns hopkins",
+      "authors": [
+        "karuppagounder-s",
+        "dawson-v",
+        "dawson-t"
+      ],
+      "affiliation": "Johns Hopkins University School of Medicine",
+      "ledger_step": "L4",
+      "first_author": "Karuppagounder SS",
+      "journal": "Sci Rep",
+      "year": 2014,
+      "group": "Dawson (Johns Hopkins)"
+    },
+    {
+      "key": "reinwald-2014",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:25025064",
+      "evidence_kind": "publication",
+      "statement": "Pharmacokinetic data on nilotinib in BCR-ABL-positive leukemia patients with CNS relapse: CSF/plasma ratio 0.53 % (range 0.23–1.5 %) (Reinwald 2014, BioMed Res Int).",
+      "source_name": "Reinwald 2014, BioMed Res Int",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4082894/",
+      "publication_date": "2014-06-19",
+      "study_type": "pk",
+      "controlled": false,
+      "population": "human",
+      "outcome": "na",
+      "caveats": [
+        "small-n"
+      ],
+      "pk_facts": [
+        {
+          "value": "0.53",
+          "unit": "percent",
+          "verbatim_sentence": "The CSF/plasma ratio of nilotinib was 0.53 % (range 0.23–1.5 %)."
+        }
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_EXPOSURE",
+          "direction": "contradicts",
+          "statement": "Nilotinib CSF concentration was a small fraction of plasma concentration: CSF/plasma ratio 0.53 % (range 0.23–1.5 %).",
+          "verbatim_sentence": "The CSF/plasma ratio of nilotinib was 0.53 % (range 0.23–1.5 %)."
+        }
+      ],
+      "independence_group": "reinwald-m|mannheim",
+      "authors": [
+        "reinwald-m",
+        "hofmann-w"
+      ],
+      "affiliation": "Universitätsmedizin Mannheim",
+      "ledger_step": "L4",
+      "first_author": "Reinwald M",
+      "journal": "BioMed Res Int",
+      "year": 2014,
+      "group": "Reinwald (Mannheim)"
+    },
+    {
+      "key": "pagan-2016",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:27434297",
+      "evidence_kind": "publication",
+      "statement": "Open-label pilot of nilotinib in 12 patients with Parkinson's disease or dementia with Lewy bodies over 24 weeks; no placebo arm (Pagan 2016, J Parkinsons Dis).",
+      "source_name": "Pagan 2016, J Parkinsons Dis",
+      "source_url": "https://doi.org/10.3233/jpd-160867",
+      "publication_date": "2016-07-11",
+      "study_type": "open-label",
+      "controlled": false,
+      "blinded": false,
+      "placebo": false,
+      "sample_size": 12,
+      "outcome": "positive",
+      "population": "human",
+      "caveats": [
+        "open-label",
+        "no-placebo",
+        "small-n",
+        "surrogate-biomarker",
+        "single-site"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_CLINICAL",
+          "direction": "supports",
+          "statement": "In an open-label pilot of 12 patients with no placebo arm, motor and cognitive scores improved over 24 weeks.",
+          "verbatim_sentence": "Nilotinib appears to be safe and tolerated in patients with advanced PD and DLB, and motor and cognitive functions improved."
+        },
+        {
+          "claim_id": "C_EXPOSURE",
+          "direction": "supports",
+          "statement": "Nilotinib was detected in the cerebrospinal fluid of treated patients.",
+          "verbatim_sentence": "Nilotinib was detected in the CSF of treated participants."
+        },
+        {
+          "claim_id": "C_DOWNSTREAM",
+          "direction": "supports",
+          "statement": "Cerebrospinal-fluid homovanillic acid, a dopamine metabolite, rose during treatment.",
+          "verbatim_sentence": "CSF levels of the dopamine metabolite homovanillic acid increased with treatment."
+        }
+      ],
+      "independence_group": "moussa-c|georgetown",
+      "authors": [
+        "pagan-f",
+        "hebron-m",
+        "moussa-c"
+      ],
+      "affiliation": "Georgetown University Medical Center",
+      "ledger_step": "L4",
+      "first_author": "Pagan F",
+      "journal": "J Parkinsons Dis",
+      "year": 2016,
+      "group": "Moussa (Georgetown)"
+    },
+    {
+      "key": "schwarzschild-2016",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:28035939",
+      "evidence_kind": "publication",
+      "statement": "Peer commentary on the 2016 pilot: the dopamine-metabolite rise may reflect MAO-B inhibitor withdrawal during the study rather than nilotinib (Schwarzschild 2017, J Parkinsons Dis; online Dec 2016).",
+      "source_name": "Schwarzschild 2017, J Parkinsons Dis",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5302030/",
+      "publication_date": "2016-12-01",
+      "study_type": "commentary",
+      "controlled": false,
+      "population": "na",
+      "outcome": "na",
+      "caveats": [],
+      "relevance": [
+        {
+          "claim_id": "C_DOWNSTREAM",
+          "direction": "contradicts",
+          "statement": "The rise in cerebrospinal-fluid homovanillic acid could be explained by withdrawal of MAO-B inhibitors during the study rather than by nilotinib.",
+          "verbatim_sentence": "Could MAO-B inhibitor withdrawal rather than nilotinib benefit explain the dopamine metabolite increase in Parkinsonian study subjects?"
+        },
+        {
+          "claim_id": "C_CLINICAL",
+          "direction": "contradicts",
+          "statement": "The uncontrolled clinical improvement is confounded by medication changes and the absence of a placebo arm.",
+          "verbatim_sentence": "Could MAO-B inhibitor withdrawal rather than nilotinib benefit explain the dopamine metabolite increase in Parkinsonian study subjects?"
+        }
+      ],
+      "independence_group": "schwarzschild-m|mgh",
+      "authors": [
+        "schwarzschild-m"
+      ],
+      "affiliation": "Massachusetts General Hospital",
+      "ledger_step": "L4",
+      "first_author": "Schwarzschild MA",
+      "journal": "J Parkinsons Dis",
+      "year": 2017,
+      "group": "Schwarzschild (MGH)"
+    },
+    {
+      "key": "nct02954978-registration",
+      "source_provider": "clinicaltrials_gov",
+      "source_record_id": "NCT02954978|registration",
+      "evidence_kind": "registration",
+      "statement": "Georgetown phase 2 (NCT02954978): randomized, quadruple-masked, placebo-controlled trial of nilotinib in Parkinson's disease, n = 75; first posted 2016-11-04.",
+      "source_name": "ClinicalTrials.gov NCT02954978 (registration)",
+      "source_url": "https://clinicaltrials.gov/study/NCT02954978",
+      "publication_date": "2016-11-04",
+      "study_type": "protocol",
+      "controlled": true,
+      "blinded": true,
+      "placebo": true,
+      "sample_size": 75,
+      "outcome": "na",
+      "population": "human",
+      "caveats": [],
+      "relevance": [],
+      "independence_group": "moussa-c|georgetown",
+      "authors": [],
+      "ledger_step": "L3",
+      "first_author": "Georgetown University (sponsor)",
+      "journal": "ClinicalTrials.gov NCT02954978",
+      "year": 2016,
+      "group": "Moussa (Georgetown)"
+    },
+    {
+      "key": "nct03205488-registration",
+      "source_provider": "clinicaltrials_gov",
+      "source_record_id": "NCT03205488|registration",
+      "evidence_kind": "registration",
+      "statement": "NILO-PD (NCT03205488): randomized, triple-masked, placebo-controlled trial of nilotinib in moderately advanced Parkinson's disease, n = 76; first posted 2017-07-02; started 2017-10-16.",
+      "source_name": "ClinicalTrials.gov NCT03205488 (registration)",
+      "source_url": "https://clinicaltrials.gov/study/NCT03205488",
+      "publication_date": "2017-07-02",
+      "study_type": "protocol",
+      "controlled": true,
+      "blinded": true,
+      "placebo": true,
+      "sample_size": 76,
+      "outcome": "na",
+      "population": "human",
+      "caveats": [],
+      "relevance": [],
+      "independence_group": "simuni-t|northwestern",
+      "authors": [],
+      "ledger_step": "L3",
+      "first_author": "Northwestern University (sponsor)",
+      "journal": "ClinicalTrials.gov NCT03205488",
+      "year": 2017,
+      "group": "Simuni (NILO-PD)"
+    },
+    {
+      "key": "pagan-2020",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:31841598",
+      "evidence_kind": "publication",
+      "statement": "Georgetown phase 2 primary publication: randomized, double-blind, placebo-controlled trial of nilotinib in 75 patients over 12 months; primary outcome safety and tolerability; no improvement in motor or cognitive outcomes (Pagan 2020, JAMA Neurol; online 2019-12-16).",
+      "source_name": "Pagan 2020, JAMA Neurol",
+      "source_url": "https://pubmed.ncbi.nlm.nih.gov/31841598/",
+      "publication_date": "2019-12-16",
+      "study_type": "rct",
+      "controlled": true,
+      "blinded": true,
+      "placebo": true,
+      "sample_size": 75,
+      "outcome": "negative",
+      "population": "human",
+      "caveats": [
+        "not-prespecified"
+      ],
+      "relevance": [
+        {
+          "claim_id": "C_CLINICAL",
+          "direction": "contradicts",
+          "statement": "In a 12-month placebo-controlled phase 2 of 75 patients, nilotinib produced no improvement in motor or cognitive outcomes; efficacy was a secondary outcome, so this argues against benefit without testing it as the pre-specified endpoint.",
+          "verbatim_sentence": "Nilotinib was reasonably safe and tolerable but did not improve motor or cognitive outcomes."
+        }
+      ],
+      "independence_group": "moussa-c|georgetown",
+      "authors": [
+        "pagan-f",
+        "moussa-c"
+      ],
+      "affiliation": "Georgetown University Medical Center",
+      "ledger_step": "L4",
+      "first_author": "Pagan FL",
+      "journal": "JAMA Neurol",
+      "year": 2020,
+      "group": "Moussa (Georgetown)"
+    },
+    {
+      "key": "nilo-pd-pk-2020",
+      "source_provider": "fixture",
+      "source_record_id": "doi:10.1212/wnl.94.15_supplement.4418",
+      "evidence_kind": "publication",
+      "statement": "NILO-PD pharmacokinetic abstract (AAN 2020): CSF nilotinib concentrations were a fraction of a percent of serum concentrations.",
+      "source_name": "Simuni 2020, Neurology (AAN abstract)",
+      "source_url": "https://www.neurology.org/doi/10.1212/WNL.94.15_supplement.4418",
+      "publication_date": "2020-04-14",
+      "study_type": "pk",
+      "controlled": false,
+      "population": "human",
+      "outcome": "na",
+      "caveats": [],
+      "relevance": [
+        {
+          "claim_id": "C_EXPOSURE",
+          "direction": "contradicts",
+          "statement": "In NILO-PD, cerebrospinal-fluid nilotinib concentrations were a fraction of a percent of serum concentrations.",
+          "verbatim_sentence": "CSF nilotinib concentrations were less than one percent of serum concentrations."
+        }
+      ],
+      "independence_group": "simuni-t|northwestern",
+      "authors": [
+        "simuni-t"
+      ],
+      "affiliation": "Northwestern University",
+      "ledger_step": "L4",
+      "first_author": "Simuni T",
+      "journal": "Neurology (AAN abstract)",
+      "year": 2020,
+      "group": "Simuni (NILO-PD)"
+    },
+    {
+      "key": "nct03205488-results",
+      "source_provider": "clinicaltrials_gov",
+      "source_record_id": "NCT03205488|results",
+      "evidence_kind": "results",
+      "statement": "NILO-PD (NCT03205488) results posted 2020-07-22; primary publication Simuni 2021: no effect on motor or cognitive outcomes.",
+      "source_name": "ClinicalTrials.gov NCT03205488 (results)",
+      "source_url": "https://clinicaltrials.gov/study/NCT03205488?tab=results",
+      "publication_date": "2020-07-22",
+      "study_type": "rct",
+      "controlled": true,
+      "blinded": true,
+      "placebo": true,
+      "sample_size": 76,
+      "outcome": "negative",
+      "population": "human",
+      "caveats": [],
+      "relevance": [],
+      "independence_group": "simuni-t|northwestern",
+      "authors": [],
+      "ledger_step": "L3",
+      "first_author": "Northwestern University (sponsor)",
+      "journal": "ClinicalTrials.gov NCT03205488",
+      "year": 2020,
+      "group": "Simuni (NILO-PD)"
+    },
+    {
+      "key": "simuni-2021",
+      "source_provider": "pubmed",
+      "source_record_id": "pmid:33315105",
+      "evidence_kind": "publication",
+      "statement": "NILO-PD primary publication: randomized, double-blind, placebo-controlled trial of nilotinib in 76 patients with moderately advanced Parkinson's disease over 6 months; no effect on motor or cognitive outcomes, no change in dopamine metabolites, low CSF exposure (Simuni 2021, JAMA Neurol; online 2020-12-14).",
+      "source_name": "Simuni 2021, JAMA Neurol",
+      "source_url": "https://jamanetwork.com/journals/jamaneurology/fullarticle/2773698",
+      "publication_date": "2020-12-14",
+      "study_type": "rct",
+      "controlled": true,
+      "blinded": true,
+      "placebo": true,
+      "sample_size": 76,
+      "outcome": "negative",
+      "population": "human",
+      "caveats": [],
+      "relevance": [
+        {
+          "claim_id": "C_CLINICAL",
+          "direction": "refutes",
+          "statement": "In a randomized, double-blind, placebo-controlled trial of 76 patients over 6 months, nilotinib had no effect on the pre-specified motor and cognitive endpoints.",
+          "verbatim_sentence": "Nilotinib was not associated with any clinical benefit on motor or nonmotor outcomes."
+        },
+        {
+          "claim_id": "C_DOWNSTREAM",
+          "direction": "contradicts",
+          "statement": "No change in cerebrospinal-fluid dopamine metabolites was observed.",
+          "verbatim_sentence": "There was no change in CSF dopamine metabolites."
+        },
+        {
+          "claim_id": "C_EXPOSURE",
+          "direction": "contradicts",
+          "statement": "Cerebrospinal-fluid nilotinib concentrations were low, a fraction of a percent of serum.",
+          "verbatim_sentence": "CSF nilotinib concentrations were a fraction of a percent of serum concentrations."
+        }
+      ],
+      "independence_group": "simuni-t|northwestern",
+      "authors": [
+        "simuni-t",
+        "fiske-b",
+        "merchant-k"
+      ],
+      "affiliation": "Northwestern University Feinberg School of Medicine",
+      "ledger_step": "L4",
+      "first_author": "Simuni T",
+      "journal": "JAMA Neurol",
+      "year": 2021,
+      "group": "Simuni (NILO-PD)"
+    },
+    {
+      "key": "nct02954978-results",
+      "source_provider": "clinicaltrials_gov",
+      "source_record_id": "NCT02954978|results",
+      "evidence_kind": "results",
+      "statement": "Georgetown phase 2 (NCT02954978) results posted 2026-06-12; primary publication Pagan 2020: no improvement in motor or cognitive outcomes.",
+      "source_name": "ClinicalTrials.gov NCT02954978 (results)",
+      "source_url": "https://clinicaltrials.gov/study/NCT02954978?tab=results",
+      "publication_date": "2026-06-12",
+      "study_type": "rct",
+      "controlled": true,
+      "blinded": true,
+      "placebo": true,
+      "sample_size": 75,
+      "outcome": "negative",
+      "population": "human",
+      "caveats": [],
+      "relevance": [],
+      "independence_group": "moussa-c|georgetown",
+      "authors": [],
+      "ledger_step": "L3",
+      "first_author": "Georgetown University (sponsor)",
+      "journal": "ClinicalTrials.gov NCT02954978",
+      "year": 2026,
+      "group": "Moussa (Georgetown)"
+    }
+  ],
+  "reasoning": {
+    "L1": {
+      "question": "What exactly was asked?",
+      "reasoning": "The appraisal needs canonical identifiers so every later query names the same drug, disease and target.",
+      "evidence_needed": "ChEMBL id for the drug, an EFO/MONDO id for the disease, an Ensembl id for the target.",
+      "selected_tool": "Open Targets Platform search",
+      "tool_selection_reason": "The only task with a structural identifier lookup; no other tool resolves names to ids.",
+      "interpretation": "nilotinib → CHEMBL255863; Parkinson disease → MONDO_0005180; ABL1 → ENSG00000097007.",
+      "what_this_changes": "Nothing yet: identifiers are not evidence.",
+      "next_action": "Ask what the drug does and whether its target is tied to the disease.",
+      "next_action_reason": "The mechanism is the first link every later claim depends on."
+    },
+    "L2": {
+      "question": "What is the target, and is it tied to the disease?",
+      "reasoning": "A repurposing hypothesis starts from an approved mechanism and a target the disease biology implicates.",
+      "evidence_needed": "The curated mechanism of action and target–disease association evidence.",
+      "selected_tool": "OpenTargets_get_drug_mechanisms_of_action_by_chemblId",
+      "tool_selection_reason": "The task's preferred ToolUniverse tool for biology; Open Targets carries the ChEMBL-curated mechanism.",
+      "interpretation": "Nilotinib is an ABL1 (BCR-ABL) inhibitor on its FDA label; the ABL1–Parkinson link rests on literature rows, not genetics.",
+      "what_this_changes": "C_MECHANISM → established.",
+      "next_action": "Ask whether this has been tested in people.",
+      "next_action_reason": "Clinical evidence is what candidates die of first."
+    },
+    "L3": {
+      "question": "Has this been tested in people?",
+      "reasoning": "Failed or completed trials on this drug in this disease outrank any mechanistic argument.",
+      "evidence_needed": "Registered trials with phase, enrollment, masking, status and the dates results were posted.",
+      "selected_tool": "ClinicalTrials_search_studies",
+      "tool_selection_reason": "The task's preferred ToolUniverse tool for trials; masking and posted dates come from a recorded direct supplement.",
+      "interpretation": "Three registered studies: the open-label pilot, the Georgetown phase 2 (NCT02954978) and NILO-PD (NCT03205488); registrations are dated separately from results.",
+      "what_this_changes": "Registrations link nothing; results records carry the outcome from their primary publication.",
+      "next_action": "Ask what the literature says about exposure, engagement, biomarkers and criticism.",
+      "next_action_reason": "The trials name the questions; the papers hold the evidence."
+    },
+    "L4": {
+      "question": "What does the literature say?",
+      "reasoning": "Eight facets cover what a scientist would check: mechanism, disease hypothesis, exposure, engagement, biomarker, efficacy, criticism, alternative explanation.",
+      "evidence_needed": "Dated abstracts for each facet, visible on the requested date only.",
+      "selected_tool": "PubMed_search_articles",
+      "tool_selection_reason": "The task's preferred ToolUniverse tool for literature; abstracts are fetched only for the selected visible records.",
+      "interpretation": "Exposure is contested by a leukemia PK study; the pilot's signal is open-label; the biomarker has a published alternative explanation.",
+      "what_this_changes": "C_EXPOSURE → contested; C_CLINICAL depends on the date; C_DOWNSTREAM gains its human evidence and its critique.",
+      "next_action": "Normalize every record into dated Evidence.",
+      "next_action_reason": "Nothing downstream may read a raw payload."
+    },
+    "L5": {
+      "question": "Is every record a dated statement?",
+      "reasoning": "One source record becomes one Evidence with its claim-level findings; a paper is never split per claim.",
+      "evidence_needed": "Nothing new: this step converts what was retrieved.",
+      "selected_tool": "normalize",
+      "tool_selection_reason": "Deterministic; no tool and no model.",
+      "interpretation": "Every Evidence carries its provider, transport, date and relevance items.",
+      "what_this_changes": "Nothing in the science; everything in the bookkeeping.",
+      "next_action": "Audit historical visibility.",
+      "next_action_reason": "A leak here would invalidate the backtest."
+    },
+    "L6": {
+      "question": "What was visible on the requested date?",
+      "reasoning": "A historical appraisal must exclude evidence made public after the requested cutoff; the gate ran inside retrieval, this step verifies it.",
+      "evidence_needed": "Nothing new: only the dates already on the records.",
+      "selected_tool": "temporal audit",
+      "tool_selection_reason": "Deterministic; no tool and no model.",
+      "interpretation": "Every Evidence satisfies publication_date <= as_of; withheld records are counted, never shown.",
+      "what_this_changes": "Nothing, unless a leak is found — then the run fails validation.",
+      "next_action": "Build the claims.",
+      "next_action_reason": "The chain is only as strong as its weakest link."
+    },
+    "L7": {
+      "question": "What must be true for this to work?",
+      "reasoning": "Seven fixed claims: mechanism, disease relevance, exposure, engagement, downstream biology, clinical benefit, safety.",
+      "evidence_needed": "The relevance items already extracted.",
+      "selected_tool": "claims",
+      "tool_selection_reason": "Deterministic; no tool and no model.",
+      "interpretation": "Engagement has no evidence at any date: nobody has measured c-Abl inhibition in a living human brain.",
+      "what_this_changes": "C_ENGAGEMENT → unknown.",
+      "next_action": "Derive statuses, the weakest link and the stance.",
+      "next_action_reason": "Every label must be derivable from the record."
+    },
+    "L8": {
+      "question": "What holds, what is contested, what is unknown?",
+      "reasoning": "Six ordered status rules over the visible relevance links; the weakest link by an explicit weakness table; a stance from the statuses alone.",
+      "evidence_needed": "Nothing new.",
+      "selected_tool": "engine",
+      "tool_selection_reason": "Deterministic; no tool and no model.",
+      "interpretation": "The mechanism is established; exposure is contested; engagement is unknown; the clinical claim depends on the date.",
+      "what_this_changes": "The stance and the weakest link are fixed before any prose is written.",
+      "next_action": "Write the case for, the case against, and Elute's opinion.",
+      "next_action_reason": "Prose may only cite what the record holds."
+    },
+    "L9": {
+      "question": "What is the strongest case each way, and what does Elute think?",
+      "reasoning": "Assume the hypothesis is wrong and defend it anyway: both cases, each sentence cited.",
+      "evidence_needed": "The claims with statuses, the visible evidence, the weakest link, the contradictions and the unknowns.",
+      "selected_tool": "synthesis",
+      "tool_selection_reason": "Curated prose in fixture mode; OpenAI in live mode, validated by the same gate.",
+      "interpretation": "Strong biology, weak delivery, and an uncontrolled human signal with an alternative explanation.",
+      "what_this_changes": "Nothing in the statuses; the opinion is downstream of them.",
+      "next_action": "Name the one question to answer next.",
+      "next_action_reason": "A good co-scientist knows the question even when it does not know the answer."
+    },
+    "L10": {
+      "question": "What should be answered next?",
+      "reasoning": "The first gate in causal order that is not established is the question that matters most.",
+      "evidence_needed": "Nothing new.",
+      "selected_tool": "next question",
+      "tool_selection_reason": "Deterministic; no tool and no model.",
+      "interpretation": "Exposure is contested: whether nilotinib reaches the brain at a tolerated dose is unresolved.",
+      "what_this_changes": "The next experiment is a CSF/plasma measurement at tolerated dosing in patients.",
+      "next_action": "Validate and return the appraisal.",
+      "next_action_reason": "Nothing is returned that fails the gate."
+    }
+  },
+  "synthesis": {
+    "2016-07-11": {
+      "strongest_case_for": [
+        {
+          "text": "Nilotinib is an approved ABL1 (BCR-ABL) kinase inhibitor, so the target engagement it needs is a known pharmacology rather than a hypothesis.",
+          "cites": [
+            "@fda-label",
+            "@kantarjian-2006",
+            "C_MECHANISM"
+          ]
+        },
+        {
+          "text": "Three independent groups report c-Abl activation and its consequences for parkin and alpha-synuclein in Parkinson's brain tissue, which ties the target to the disease biology.",
+          "cites": [
+            "@ko-2010",
+            "@imam-2011",
+            "@mahul-mellier-2014",
+            "C_DISEASE_RELEVANCE"
+          ]
+        },
+        {
+          "text": "In two mouse models from two groups, nilotinib cleared alpha-synuclein and protected dopaminergic neurons.",
+          "cites": [
+            "@hebron-2013",
+            "@karuppagounder-2014",
+            "C_DOWNSTREAM"
+          ]
+        },
+        {
+          "text": "An open-label pilot of 12 patients reported improved motor and cognitive scores and detected nilotinib in cerebrospinal fluid.",
+          "cites": [
+            "@pagan-2016",
+            "C_CLINICAL"
+          ]
+        }
+      ],
+      "strongest_case_against": [
+        {
+          "text": "Brain exposure is contested: in leukemia patients the CSF/plasma ratio was 0.53 % (range 0.23–1.5 %), a fraction of a percent, while the pilot only reports that the drug was detectable.",
+          "cites": [
+            "@reinwald-2014",
+            "@pagan-2016",
+            "C_EXPOSURE"
+          ]
+        },
+        {
+          "text": "The only human efficacy signal is open-label, in 12 patients, with no placebo arm; every participant knew they were on the drug.",
+          "cites": [
+            "@pagan-2016",
+            "C_CLINICAL"
+          ]
+        },
+        {
+          "text": "Target engagement in the human brain has never been measured; the mouse biology has not been shown to occur in patients.",
+          "cites": [
+            "C_ENGAGEMENT",
+            "@hebron-2013",
+            "@karuppagounder-2014"
+          ]
+        },
+        {
+          "text": "Safety is a standing constraint: the label carries a boxed warning for QT prolongation and sudden deaths, and the likely Parkinson's trial population is older and on other QT-prolonging drugs.",
+          "cites": [
+            "@fda-label",
+            "C_SAFETY"
+          ]
+        }
+      ],
+      "opinion": "Based on the evidence visible as of 2016-07-11, Elute would make no clear prioritization of nilotinib for Parkinson's disease: the mechanism and disease relevance are established, but brain exposure is contested, target engagement in patients is unknown, and the only clinical signal is a single uncontrolled pilot.",
+      "what_would_change_my_mind": "Reproducible CSF exposure compatible with c-Abl inhibition at a tolerated dose, and a human target-engagement readout; then a blinded, placebo-controlled study of the clinical signal."
+    },
+    "2017-11-20": {
+      "strongest_case_for": [
+        {
+          "text": "Nilotinib is an approved ABL1 (BCR-ABL) kinase inhibitor, so the target engagement it needs is a known pharmacology rather than a hypothesis.",
+          "cites": [
+            "@fda-label",
+            "@kantarjian-2006",
+            "C_MECHANISM"
+          ]
+        },
+        {
+          "text": "Three independent groups report c-Abl activation and its consequences for parkin and alpha-synuclein in Parkinson's brain tissue.",
+          "cites": [
+            "@ko-2010",
+            "@imam-2011",
+            "@mahul-mellier-2014",
+            "C_DISEASE_RELEVANCE"
+          ]
+        },
+        {
+          "text": "In two mouse models from two groups, nilotinib cleared alpha-synuclein and protected dopaminergic neurons, and the pilot reported a rise in a cerebrospinal-fluid dopamine metabolite.",
+          "cites": [
+            "@hebron-2013",
+            "@karuppagounder-2014",
+            "@pagan-2016",
+            "C_DOWNSTREAM"
+          ]
+        },
+        {
+          "text": "Two placebo-controlled trials are registered: the Georgetown phase 2 (NCT02954978, n = 75) and NILO-PD (NCT03205488, n = 76).",
+          "cites": [
+            "@nct02954978-registration",
+            "@nct03205488-registration"
+          ]
+        }
+      ],
+      "strongest_case_against": [
+        {
+          "text": "Brain exposure is contested: in leukemia patients the CSF/plasma ratio was 0.53 % (range 0.23–1.5 %), while the pilot only reports that the drug was detectable in cerebrospinal fluid.",
+          "cites": [
+            "@reinwald-2014",
+            "@pagan-2016",
+            "C_EXPOSURE"
+          ]
+        },
+        {
+          "text": "The only human efficacy signal is open-label, in 12 patients, with no placebo arm.",
+          "cites": [
+            "@pagan-2016",
+            "C_CLINICAL"
+          ]
+        },
+        {
+          "text": "The biomarker has an alternative explanation: the dopamine-metabolite rise could reflect withdrawal of MAO-B inhibitors during the study rather than nilotinib.",
+          "cites": [
+            "@schwarzschild-2016",
+            "C_DOWNSTREAM",
+            "C_CLINICAL"
+          ]
+        },
+        {
+          "text": "Target engagement in the human brain has never been measured.",
+          "cites": [
+            "C_ENGAGEMENT"
+          ]
+        },
+        {
+          "text": "Safety is a standing constraint: the label carries a boxed warning for QT prolongation and sudden deaths, and the likely Parkinson's trial population is older and on other QT-prolonging drugs.",
+          "cites": [
+            "@fda-label",
+            "C_SAFETY"
+          ]
+        }
+      ],
+      "opinion": "Based on the evidence visible as of 2017-11-20, Elute would make no clear prioritization of nilotinib for Parkinson's disease: the mechanism is established, but brain exposure is contested, target engagement in patients is unknown, the clinical signal is contested by a published alternative explanation, and the two registered placebo-controlled trials have not reported.",
+      "what_would_change_my_mind": "A CSF/plasma measurement at tolerated dosing in Parkinson's patients showing exposure compatible with c-Abl inhibition, a human target-engagement readout, and the blinded outcome of the registered trials."
+    },
+    "2026-09-20": {
+      "strongest_case_for": [
+        {
+          "text": "Nilotinib is an approved ABL1 (BCR-ABL) kinase inhibitor, so the target engagement it needs is a known pharmacology rather than a hypothesis.",
+          "cites": [
+            "@fda-label",
+            "@kantarjian-2006",
+            "C_MECHANISM"
+          ]
+        },
+        {
+          "text": "Three independent groups report c-Abl activation and its consequences for parkin and alpha-synuclein in Parkinson's brain tissue.",
+          "cites": [
+            "@ko-2010",
+            "@imam-2011",
+            "@mahul-mellier-2014",
+            "C_DISEASE_RELEVANCE"
+          ]
+        },
+        {
+          "text": "In two mouse models from two groups, nilotinib cleared alpha-synuclein and protected dopaminergic neurons.",
+          "cites": [
+            "@hebron-2013",
+            "@karuppagounder-2014",
+            "C_DOWNSTREAM"
+          ]
+        }
+      ],
+      "strongest_case_against": [
+        {
+          "text": "Two randomized, placebo-controlled trials were negative: NILO-PD in 76 patients found no effect on the pre-specified motor and cognitive endpoints, and the Georgetown phase 2 in 75 patients found no improvement in motor or cognitive outcomes.",
+          "cites": [
+            "@simuni-2021",
+            "@pagan-2020",
+            "C_CLINICAL"
+          ]
+        },
+        {
+          "text": "Brain exposure is contested by three measurements: a CSF/plasma ratio of 0.53 % (range 0.23–1.5 %) in leukemia patients, and cerebrospinal-fluid concentrations a fraction of a percent of serum in NILO-PD.",
+          "cites": [
+            "@reinwald-2014",
+            "@nilo-pd-pk-2020",
+            "@simuni-2021",
+            "C_EXPOSURE"
+          ]
+        },
+        {
+          "text": "The downstream biomarker did not move under blinding, and the original rise had a published alternative explanation.",
+          "cites": [
+            "@simuni-2021",
+            "@schwarzschild-2016",
+            "C_DOWNSTREAM"
+          ]
+        },
+        {
+          "text": "Target engagement in the human brain has never been measured.",
+          "cites": [
+            "C_ENGAGEMENT"
+          ]
+        },
+        {
+          "text": "Safety is a standing constraint: the label carries a boxed warning for QT prolongation and sudden deaths, and the likely Parkinson's trial population is older and on other QT-prolonging drugs.",
+          "cites": [
+            "@fda-label",
+            "C_SAFETY"
+          ]
+        }
+      ],
+      "opinion": "Based on the evidence visible as of 2026-09-20, Elute would deprioritize nilotinib for Parkinson's disease relative to candidates with stronger controlled human evidence, primarily because brain exposure is contested by three measurements, target engagement in patients is unknown, and the controlled clinical evidence is negative in two trials.",
+      "what_would_change_my_mind": "Demonstrated CSF exposure compatible with c-Abl inhibition at a tolerated dose in Parkinson's patients together with a reproducible human target-engagement readout; without those, further clinical testing of this hypothesis would be uninterpretable."
+    }
+  }
+}

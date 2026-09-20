@@ -1,0 +1,928 @@
+{
+ "transport": "direct",
+ "tool": "OpenTargets_get_evidence_by_datasource",
+ "arguments": {
+  "efoId": "MONDO_0005180",
+  "ensemblId": "ENSG00000097007",
+  "size": 50
+ },
+ "fetched_at": "2026-09-20T08:24:02+00:00",
+ "payload": {
+  "status": "success",
+  "data": {
+   "disease": {
+    "id": "MONDO_0005180",
+    "name": "Parkinson disease",
+    "evidences": {
+     "count": 150,
+     "rows": [
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 1,
+       "resourceScore": 128,
+       "literature": [
+        "29103051"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.95,
+       "resourceScore": 95,
+       "literature": [
+        "29897434"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.77,
+       "resourceScore": 77,
+       "literature": [
+        "36590096"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.76,
+       "resourceScore": 76,
+       "literature": [
+        "34816484"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.66,
+       "resourceScore": 66,
+       "literature": [
+        "36406767"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.63,
+       "resourceScore": 63,
+       "literature": [
+        "32299471"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.57,
+       "resourceScore": 57,
+       "literature": [
+        "27833551"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.5,
+       "resourceScore": 50,
+       "literature": [
+        "40022229"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.48,
+       "resourceScore": 48,
+       "literature": [
+        "24786396"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.4,
+       "resourceScore": 40,
+       "literature": [
+        "23741470"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.39,
+       "resourceScore": 39,
+       "literature": [
+        "29022905"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.38,
+       "resourceScore": 38,
+       "literature": [
+        "40988055"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.33,
+       "resourceScore": 33,
+       "literature": [
+        "30505273"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.28,
+       "resourceScore": 28,
+       "literature": [
+        "24412932"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.28,
+       "resourceScore": 28,
+       "literature": [
+        "36652533"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.26,
+       "resourceScore": 26,
+       "literature": [
+        "32498644"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.24,
+       "resourceScore": 24,
+       "literature": [
+        "30919310"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.22,
+       "resourceScore": 22,
+       "literature": [
+        "28078567"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.22,
+       "resourceScore": 22,
+       "literature": [
+        "38273763"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.21,
+       "resourceScore": 21,
+       "literature": [
+        "37626851"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.21,
+       "resourceScore": 21,
+       "literature": [
+        "34581802"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "clinical_precedence",
+       "datatypeId": "clinical",
+       "score": 0.2,
+       "resourceScore": null,
+       "literature": [
+        "27434297",
+        "31841599",
+        "34786477",
+        "40680102"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "clinical_precedence",
+       "datatypeId": "clinical",
+       "score": 0.2,
+       "resourceScore": null,
+       "literature": [
+        "40680102"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "clinical_precedence",
+       "datatypeId": "clinical",
+       "score": 0.2,
+       "resourceScore": null,
+       "literature": [
+        "33315105",
+        "40680102"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.19,
+       "resourceScore": 19,
+       "literature": [
+        "21209200"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.19,
+       "resourceScore": 19,
+       "literature": [
+        "40636304"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.19,
+       "resourceScore": 19,
+       "literature": [
+        "39952103"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.18,
+       "resourceScore": 18,
+       "literature": [
+        "30692753"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.16,
+       "resourceScore": 16,
+       "literature": [
+        "28571531"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.16,
+       "resourceScore": 16,
+       "literature": [
+        "36079767"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.16,
+       "resourceScore": 16,
+       "literature": [
+        "38006642"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.16,
+       "resourceScore": 16,
+       "literature": [
+        "37500382"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.16,
+       "resourceScore": 16,
+       "literature": [
+        "34583507"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.16,
+       "resourceScore": 16,
+       "literature": [
+        "41443045"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.15,
+       "resourceScore": 15,
+       "literature": [
+        "35900397"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.15,
+       "resourceScore": 15,
+       "literature": [
+        "30165626"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.15,
+       "resourceScore": 15,
+       "literature": [
+        "36717298"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.13,
+       "resourceScore": 13,
+       "literature": [
+        "41634026"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.13,
+       "resourceScore": 13,
+       "literature": [
+        "27657053"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.12,
+       "resourceScore": 12,
+       "literature": [
+        "41721133"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.12,
+       "resourceScore": 12,
+       "literature": [
+        "27338353"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.12,
+       "resourceScore": 12,
+       "literature": [
+        "37712438"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.12,
+       "resourceScore": 12,
+       "literature": [
+        "38251063"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.12,
+       "resourceScore": 12,
+       "literature": [
+        "38422699"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.11,
+       "resourceScore": 11,
+       "literature": [
+        "31164822"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.1,
+       "resourceScore": 10,
+       "literature": [
+        "38273156"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "clinical_precedence",
+       "datatypeId": "clinical",
+       "score": 0.1,
+       "resourceScore": null,
+       "literature": [
+        "40680102"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "europepmc",
+       "datatypeId": "literature",
+       "score": 0.1,
+       "resourceScore": 10,
+       "literature": [
+        "24416311"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "clinical_precedence",
+       "datatypeId": "clinical",
+       "score": 0.1,
+       "resourceScore": null,
+       "literature": [
+        "40680102"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      },
+      {
+       "datasourceId": "clinical_precedence",
+       "datatypeId": "clinical",
+       "score": 0.1,
+       "resourceScore": null,
+       "literature": [
+        "40680102"
+       ],
+       "disease": {
+        "id": "MONDO_0005180",
+        "name": "Parkinson disease"
+       },
+       "target": {
+        "id": "ENSG00000097007",
+        "approvedSymbol": "ABL1"
+       },
+       "urls": []
+      }
+     ]
+    }
+   }
+  }
+ }
+}

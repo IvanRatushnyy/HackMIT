@@ -2,7 +2,7 @@
 
 Drug-repurposing decision support that always shows the case against.
 
-Given a condition, an approved drug, or a drug–condition pair, elute organizes the evidence the way a skeptical scientist would: the strongest objections first, every link in the mechanism chain labeled **established / contested / single-source / unknown / refuted** with its sources one click away, safety as a reason rather than a banner, the prerequisites a trial would have to assume, and the scientist's own call in their own words. It never recommends. Built for the Regeneron challenge at HackMIT 2026.
+Given a condition, an approved drug, or a drug–condition pair, elute organizes the evidence the way a skeptical scientist would: the strongest objections first, every link in the mechanism labeled **established / contested / single-source / unknown / refuted** with its sources one click away, safety as a reason rather than a banner, the five prerequisites a trial would have to assume, the scientist's own call in their own words, and the agent's thought process as a ledger — what each step reasoned, why, and on what evidence. It never recommends. Built for one user, the accountable translational scientist, for the Regeneron challenge at HackMIT 2026. The product is specified in `PRD Elute.md` (v2.2).
 
 To elute is to wash a mixture through a column so its compounds come out one at a time, separated. The tool does the same to a hypothesis: what is known comes apart from what is merely believed.
 
@@ -36,23 +36,31 @@ Every claim in a chain carries dated evidence. At a chosen date, only evidence p
 
 - **Nilotinib for Parkinson's disease** is hand-curated from dated primary sources (Pagan 2016, Reinwald 2014, Schwarzschild 2016, Simuni 2021, and the mechanism literature), with three evidence dates.
 - **The other candidates** (ambroxol, exenatide, isradipine, simvastatin; metformin for Parkinson's, Alzheimer's and colorectal adenoma) are **drafts**: structurally complete, entered from memory of the literature, not yet verified against the papers. They are marked *draft* in the interface and listed on the Sources page. Where a citation is uncertain the link is a PubMed search rather than an identifier.
-- **The ledger** is a scripted sequence with real source names, not a recorded live run; the interface says so.
+- **The ledger** is a scripted sequence with real source names, not a recorded live run; the interface says so. The backend that records a live run (`docs/BACKEND_PLAN.md` v4.4: three verified ToolUniverse tools with direct API fallbacks, OpenAI at bounded steps, an `as_of` backtest, an evidence-grounded opinion) is being built now.
 - **The pathway panel is live.** Targets, Reactome pathway memberships, tractability and subcellular location come from the Open Targets GraphQL API at view time; the diagram is Reactome's exporter; STRING is the fallback picture. Only the drug → target link is ever marked as curated (ChEMBL mechanism of action); every later link is labelled "not curated" and stands on its cited papers. Route and barrier are from the record.
+- **The five prerequisites** on `main` are the v1 five; PRD v2.2 renames them (brain exposure at tolerated doses · target engagement measured in patients · benefit under blinding · biomarker validated against an alternative · safety acceptable in the likely population). The rename lands with the backend adapter.
 
 The Sources page and every export carry the data note. This is not a medical device, not a clinical decision tool, and not a prescribing aid.
 
-## The test we hold ourselves to
+## The exams we hold ourselves to
 
-> A domain expert who has never seen the tool, shown the Detail view for one candidate, can within two minutes and without being told what to decide (a) state the strongest argument against the candidate and (b) name its weakest evidentiary link.
+> **Design.** A domain expert who has never seen the tool, shown the Detail view for one candidate, can within two minutes and without being told what to decide (a) state the strongest argument against the candidate and (b) name its weakest evidentiary link.
 
 Three people who did not build the interface, the nilotinib case, verbatim answers, pass = 2 of 3 on both. **Result: not yet run.** It will be reported here either way.
+
+> **Recognition.** A scientist looks at the pathway drawing and says *"that's a known pathway"* or *"that's novel"* without being told.
+
+**Result: not yet run** (the drawing is not yet on `main`).
 
 ## Layout of the repo
 
 ```
-PRD Elute.md                 the product requirements document
+PRD Elute.md                 the product requirements document, v2.2 — the truth
+CLAUDE.md                    project context: what elute is, principles, state of the build
+docs/BACKEND_PLAN.md         the backend plan, v3
+docs/sponsor-conversations.md what the sponsor judge asked for
 DESIGN.md, design/           the design system: type, color, 8px grid, the shard, glass
-docs/superpowers/specs/      the frontend design spec and its review history
+docs/superpowers/specs/      the frontend design spec (v4) and its review history
 src/data/types.ts            the fixture contract a backend fills
 src/data/source.ts           the DataSource seam; FixtureSource replays bundled JSON
 src/lib/evidence.ts          label rules, cutoff filtering, ordering, publishability

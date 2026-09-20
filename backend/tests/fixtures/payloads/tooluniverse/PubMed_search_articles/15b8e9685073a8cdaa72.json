@@ -1,0 +1,188 @@
+{
+ "transport": "tooluniverse",
+ "tool": "PubMed_search_articles",
+ "arguments": {
+  "query": "(ABL1) AND (Parkinson disease)",
+  "limit": 100,
+  "include_abstract": false
+ },
+ "fetched_at": "2026-09-20T09:04:22+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "41880688",
+    "title": "Targeting of kinases to treat neurodegenerative diseases.",
+    "authors": [
+     "Shomali T",
+     "Trempe JF"
+    ],
+    "author_count": 2,
+    "authors_truncated": false,
+    "journal": "Pharmacological reviews",
+    "pub_date": "2026 May",
+    "pub_year": "2026",
+    "doi": "10.1016/j.pharmr.2026.100128",
+    "pmcid": "PMC13197926",
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41880688/",
+    "doi_url": "https://doi.org/10.1016/j.pharmr.2026.100128",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13197926/"
+   },
+   {
+    "pmid": "41721133",
+    "title": "The 201 Trial: a placebo-controlled randomized phase 2 study of safety and tolerance of the c-Abl kinase inhibitor risvodetinib in untreated Parkinson's disease.",
+    "authors": [
+     "Werner MH",
+     "McGarry A",
+     "Meyer C",
+     "Mancino E",
+     "Klint C"
+    ],
+    "author_count": 43,
+    "authors_truncated": true,
+    "journal": "Nature aging",
+    "pub_date": "2026 Mar",
+    "pub_year": "2026",
+    "doi": "10.1038/s43587-026-01084-4",
+    "pmcid": "PMC13004677",
+    "article_type": "Journal Article, Randomized Controlled Trial, Clinical Trial, Phase II",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/41721133/",
+    "doi_url": "https://doi.org/10.1038/s43587-026-01084-4",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13004677/"
+   },
+   {
+    "pmid": "39757940",
+    "title": "Nonreceptor tyrosine kinase ABL1 regulates lysosomal acidification by phosphorylating the ATP6V1B2 subunit of the vacuolar-type H(+)-ATPase.",
+    "authors": [
+     "Song C",
+     "Dong Q",
+     "Yao Y",
+     "Cui Y",
+     "Zhang C"
+    ],
+    "author_count": 13,
+    "authors_truncated": true,
+    "journal": "Autophagy",
+    "pub_date": "2025 Jun",
+    "pub_year": "2025",
+    "doi": "10.1080/15548627.2024.2448913",
+    "pmcid": "PMC12087662",
+    "article_type": "Journal Article, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39757940/",
+    "doi_url": "https://doi.org/10.1080/15548627.2024.2448913",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12087662/"
+   },
+   {
+    "pmid": "39647393",
+    "title": "Chemotherapeutic potential of radotinib against blood and solid tumors: A beacon of hope in drug repurposing.",
+    "authors": [
+     "Manoharan S",
+     "Perumal E"
+    ],
+    "author_count": 2,
+    "authors_truncated": false,
+    "journal": "Bioorganic chemistry",
+    "pub_date": "2025 Jan",
+    "pub_year": "2025",
+    "doi": "10.1016/j.bioorg.2024.108017",
+    "pmcid": null,
+    "article_type": "Journal Article, Review, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/39647393/",
+    "doi_url": "https://doi.org/10.1016/j.bioorg.2024.108017",
+    "pmc_url": null
+   },
+   {
+    "pmid": "28078567",
+    "title": "The c-Abl inhibitor in Parkinson disease.",
+    "authors": [
+     "Zhou ZH",
+     "Wu YF",
+     "Wang XM",
+     "Han YZ"
+    ],
+    "author_count": 4,
+    "authors_truncated": false,
+    "journal": "Neurological sciences : official journal of the Italian Neurological Society and of the Italian Society of Clinical Neurophysiology",
+    "pub_date": "2017 Apr",
+    "pub_year": "2017",
+    "doi": "10.1007/s10072-016-2808-2",
+    "pmcid": null,
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/28078567/",
+    "doi_url": "https://doi.org/10.1007/s10072-016-2808-2",
+    "pmc_url": null
+   },
+   {
+    "pmid": "24936253",
+    "title": "12q24 locus association with type 1 diabetes: SH2B3 or ATXN2?",
+    "authors": [
+     "Auburger G",
+     "Gispert S",
+     "Lahut S",
+     "Om\u00fcr O",
+     "Damrath E"
+    ],
+    "author_count": 7,
+    "authors_truncated": true,
+    "journal": "World journal of diabetes",
+    "pub_date": "2014 Jun 15",
+    "pub_year": "2014",
+    "doi": "10.4239/wjd.v5.i3.316",
+    "pmcid": "PMC4058736",
+    "article_type": "Journal Article, Review",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24936253/",
+    "doi_url": "https://doi.org/10.4239/wjd.v5.i3.316",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4058736/"
+   },
+   {
+    "pmid": "23831022",
+    "title": "Identification of the recognition sequence and target proteins for DJ-1 protease.",
+    "authors": [
+     "Mitsugi H",
+     "Niki T",
+     "Takahashi-Niki K",
+     "Tanimura K",
+     "Yoshizawa-Kumagaye K"
+    ],
+    "author_count": 8,
+    "authors_truncated": true,
+    "journal": "FEBS letters",
+    "pub_date": "2013 Aug 19",
+    "pub_year": "2013",
+    "doi": "10.1016/j.febslet.2013.06.032",
+    "pmcid": null,
+    "article_type": "Journal Article, Research Support, Non-U.S. Gov't",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23831022/",
+    "doi_url": "https://doi.org/10.1016/j.febslet.2013.06.032",
+    "pmc_url": null
+   },
+   {
+    "pmid": "23787811",
+    "title": "Tyrosine kinase inhibition facilitates autophagic SNCA/\u03b1-synuclein clearance.",
+    "authors": [
+     "Hebron ML",
+     "Lonskaya I",
+     "Moussa CE"
+    ],
+    "author_count": 3,
+    "authors_truncated": false,
+    "journal": "Autophagy",
+    "pub_date": "2013 Aug",
+    "pub_year": "2013",
+    "doi": "10.4161/auto.25368",
+    "pmcid": "PMC3748197",
+    "article_type": "Journal Article, Comment",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23787811/",
+    "doi_url": "https://doi.org/10.4161/auto.25368",
+    "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3748197/"
+   }
+  ],
+  "metadata": {
+   "count": 8,
+   "total": 8,
+   "query": "(ABL1) AND (Parkinson disease)",
+   "source": "PubMed"
+  }
+ }
+}

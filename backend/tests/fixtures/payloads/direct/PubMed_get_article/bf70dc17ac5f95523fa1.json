@@ -1,0 +1,314 @@
+{
+ "transport": "direct",
+ "tool": "PubMed_get_article",
+ "arguments": {
+  "pmid": "20105089,21827214,23666528,23831022,24091670,24100660,24297888,24386307,24600352,24786396"
+ },
+ "fetched_at": "2026-09-20T09:47:58+00:00",
+ "payload": {
+  "status": "success",
+  "data": [
+   {
+    "pmid": "24786396",
+    "title": "The c-Abl inhibitor, nilotinib, protects dopaminergic neurons in a preclinical animal model of Parkinson's disease.",
+    "abstract": "c-Abl is activated in the brain of Parkinson's disease (PD) patients and in 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine (MPTP)-intoxicated mice where it inhibits parkin through tyrosine phosphorylation leading to the accumulation of parkin substrates, and neuronal cell death. In the present study, we evaluated the in vivo efficacy of nilotinib, a brain penetrant c-Abl inhibitor, in the acute MPTP-induced model of PD. Our results show that administration of nilotinib reduces c-Abl activation and the levels of the parkin substrate, PARIS, resulting in prevention of dopamine (DA) neuron loss and behavioral deficits following MPTP intoxication. On the other hand, we observe no reduction in the tyrosine phosphorylation of parkin and the parkin substrate, AIMP2 suggesting that the protective effect of nilotinib may, in part, be parkin-independent or to the pharmacodynamics properties of nilotinib. This study provides a strong rationale for testing other brain permeable c-Abl inhibitors as potential therapeutic agents for the treatment of PD.",
+    "authors": [
+     {
+      "name": "Karuppagounder SS"
+     },
+     {
+      "name": "Brahmachari S"
+     },
+     {
+      "name": "Lee Y"
+     },
+     {
+      "name": "Dawson VL"
+     },
+     {
+      "name": "Dawson TM"
+     }
+    ],
+    "journal": "Scientific reports",
+    "pub_date": "2014-05-02",
+    "pub_year": "2014",
+    "doi": "10.1038/srep04874",
+    "pmcid": "PMC4007078",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24786396/",
+    "europepmc_id": "24786396",
+    "europepmc_source": "MED",
+    "cited_by_count": 198
+   },
+   {
+    "pmid": "24600352",
+    "title": "A novel tyrosine kinase inhibitor AMN107 (nilotinib) normalizes striatal motor behaviors in a mouse model of Parkinson's disease.",
+    "abstract": "Abnormal motor behaviors in Parkinson's disease (PD) result from striatal dysfunction due to an imbalance between dopamine and glutamate transmissions that are integrated by dopamine- and cAMP-regulated phosphoprotein of 32 kDa (DARPP-32). c-Abelson tyrosine kinase (c-Abl) phosphorylates cyclin-dependent kinase 5 (Cdk5) at Tyr15 to increase the activity of Cdk5, which reduces the efficacy of dopaminergic signaling by phosphorylating DARPP-32 at Thr75 in the striatum. Here, we report that in the mouse striatum, a novel c-Abl inhibitor, nilotinib (AMN107), inhibits phosphorylation of both Cdk5 at Tyr15 and DARPP-32 at Thr75, which is negatively regulated by dopamine receptor activation through a D2 receptor-mediated mechanism. Like a D2-agonist, nilotinib synergizes with a D1-agonist for inducing striatal c-Fos expression. Moreover, systemic administration of nilotinib normalizes striatal motor behaviors in a mouse model of PD induced by 1-methyl-4-phenyl-1,2,3,6-tetrahydropyridine. These findings suggest that nilotinib could possibly serve as a new and alternative agent for treating PD motor symptoms.",
+    "authors": [
+     {
+      "name": "Tanabe A"
+     },
+     {
+      "name": "Yamamura Y"
+     },
+     {
+      "name": "Kasahara J"
+     },
+     {
+      "name": "Morigaki R"
+     },
+     {
+      "name": "Kaji R"
+     }
+    ],
+    "journal": "Frontiers in cellular neuroscience",
+    "pub_date": "2014-02-20",
+    "pub_year": "2014",
+    "doi": "10.3389/fncel.2014.00050",
+    "pmcid": "PMC3929858",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24600352/",
+    "europepmc_id": "24600352",
+    "europepmc_source": "MED",
+    "cited_by_count": 38
+   },
+   {
+    "pmid": "24386307",
+    "title": "Ubiquitination increases parkin activity to promote autophagic \u03b1-synuclein clearance.",
+    "abstract": "Parkinson's disease (PD) is a movement disorder associated with genetic and age related causes. Although autosomal recessive early onset PD linked to parkin mutations does not exhibit \u03b1-Synuclein accumulation, while autosomal dominant and sporadic PD manifest with \u03b1-Synuclein inclusions, loss of dopaminergic substantia nigra neurons is a common denominator in PD. Here we show that decreased parkin ubiquitination and loss of parkin stability impair interaction with Beclin-1 and alter \u03b1-Synuclein degradation, leading to death of dopaminergic neurons. Tyrosine kinase inhibition increases parkin ubiquitination and interaction with Beclin-1, promoting autophagic \u03b1-Synuclein clearance and nigral neuron survival. However, loss of parkin via deletion increases \u03b1-Synuclein in the blood compared to the brain, suggesting that functional parkin prevents \u03b1-Synuclein release into the blood. These studies demonstrate that parkin ubiquitination affects its protein stability and E3 ligase activity, possibly leading to \u03b1-Synuclein sequestration and subsequent clearance.",
+    "authors": [
+     {
+      "name": "Lonskaya I"
+     },
+     {
+      "name": "Desforges NM"
+     },
+     {
+      "name": "Hebron ML"
+     },
+     {
+      "name": "Moussa CE"
+     }
+    ],
+    "journal": "PloS one",
+    "pub_date": "2013-12-26",
+    "pub_year": "2013",
+    "doi": "10.1371/journal.pone.0083914",
+    "pmcid": "PMC3873413",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24386307/",
+    "europepmc_id": "24386307",
+    "europepmc_source": "MED",
+    "cited_by_count": 71
+   },
+   {
+    "pmid": "24297888",
+    "title": "Bioluminescent imaging of drug efflux at the blood-brain barrier mediated by the transporter ABCG2.",
+    "abstract": "ATP-binding cassette (ABC) transporters are a group of transmembrane proteins that maintain chemical homeostasis through efflux of compounds out of organelles and cells. Among other functions, ABC transporters play a key role in protecting the brain parenchyma by efflux of xenobiotics from capillary endothelial cells at the blood-brain barrier (BBB). They also prevent the entry of therapeutic drugs at the BBB, thereby limiting their efficacy. One of the key transporters playing this role is ABCG2. Although other ABC transporters can be studied through various imaging modalities, no specific probe exists for imaging ABCG2 function in vivo. Here we show that D-luciferin, the endogenous substrate of firefly luciferase, is a specific substrate for ABCG2. We hypothesized that ABCG2 function at the BBB could be evaluated by using bioluminescence imaging in transgenic mice expressing firefly luciferase in the brain. Bioluminescence signal in the brain of mice increased with coadministration of the ABCG2 inhibitors Ko143, gefitinib, and nilotinib, but not an ABCB1 inhibitor. This method for imaging ABCG2 function at the BBB will facilitate understanding of the function and pharmacokinetic inhibition of this transporter.",
+    "authors": [
+     {
+      "name": "Bakhsheshian J"
+     },
+     {
+      "name": "Wei BR"
+     },
+     {
+      "name": "Chang KE"
+     },
+     {
+      "name": "Shukla S"
+     },
+     {
+      "name": "Ambudkar SV"
+     }
+    ],
+    "journal": "Proceedings of the National Academy of Sciences of the United States of America",
+    "pub_date": "2013-12-02",
+    "pub_year": "2013",
+    "doi": "10.1073/pnas.1312159110",
+    "pmcid": "PMC3870704",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24297888/",
+    "europepmc_id": "24297888",
+    "europepmc_source": "MED",
+    "cited_by_count": 40
+   },
+   {
+    "pmid": "24100660",
+    "title": "Efficacy of the dual PI3K and mTOR inhibitor NVP-BEZ235 in combination with nilotinib against BCR-ABL-positive leukemia cells involves the ABL kinase domain mutation.",
+    "abstract": "Imatinib, an ABL tyrosine kinase inhibitor (TKI), has shown clinical efficacy against chronic myeloid leukemia (CML). However, a substantial number of patients develop resistance to imatinib treatment due to the emergence of clones carrying mutations in the protein BCR-ABL. The phosphoinositide 3 kinase (PI3K)/Akt/mammalian target of rapamycin (mTOR) pathway regulates various processes, including cell proliferation, cell survival, and antiapoptosis activity. In this study, we investigated the efficacy of NVP-BEZ235, a dual PI3K and mTOR inhibitor, using BCR-ABL-positive cell lines. Treatment with NVP-BEZ235 for 48 h inhibited cell growth and induced apoptosis. The phosphorylation of the AKT kinase, eukaryotic initiation factor 4-binding protein 1 (4E-BP1), and p70 S6 kinase were decreased after NVP-BEZ235 treatment. The combination of NVP-BEZ235 with a BCR-ABL kinase inhibitor, imatinib, or nilotinib, induced a more pronounced colony growth inhibition, whereas the combination of NVP-BEZ235 and nilotinib was more effective in inducing apoptosis and reducing the phosphorylation of AKT, 4E-BP1, and S6 kinase. NVP-BEZ235 in combination with nilotinib also inhibited tumor growth in a xenograft model and inhibited the growth of primary T315I mutant cells and ponatinib-resistant cells. Taken together, these results suggest that administration of the dual PI3K and mTOR inhibitor NVP-BEZ235 may be an effective strategy against BCR-ABL mutant cells and may enhance the cytotoxic effects of nilotinib in ABL TKI-resistant BCR-ABL mutant cells.",
+    "authors": [
+     {
+      "name": "Okabe S"
+     },
+     {
+      "name": "Tauchi T"
+     },
+     {
+      "name": "Tanaka Y"
+     },
+     {
+      "name": "Kitahara T"
+     },
+     {
+      "name": "Kimura S"
+     }
+    ],
+    "journal": "Cancer biology & therapy",
+    "pub_date": "2013-11-08",
+    "pub_year": "2014",
+    "doi": "10.4161/cbt.26725",
+    "pmcid": "PMC3928137",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24100660/",
+    "europepmc_id": "24100660",
+    "europepmc_source": "MED",
+    "cited_by_count": 34
+   },
+   {
+    "pmid": "24091670",
+    "title": "PI3K/mTOR pathway inhibitors sensitize chronic myeloid leukemia stem cells to nilotinib and restore the response of progenitors to nilotinib in the presence of stem cell factor.",
+    "abstract": "Nilotinib is a second-generation tyrosine kinase inhibitor, designed to specifically inhibit break-point cluster region (BCR)-Abelson (ABL) and developed to treat chronic myeloid leukemia (CML) in patients showing a resistance to imatinib. We previously demonstrated that nilotinib-induced apoptosis was reduced by stem cell factor (SCF) addition. Here, the SCF-activated survival pathway was investigated. BCR-ABL expression was accompanied by the activation of the SCF receptor: c-KIT. Nilotinib inhibited this activation that was restored by SCF binding. Parallel variations were observed for mammaliam target of rapamycin (mTOR) kinase and mTOR complex 1 substrate S6K. The inhibition of mTORC1 restored the response of BCR-ABL cell lines to nilotinib in the presence of SCF. PI3K inhibition restored nilotinib-induced apoptosis. On hematopoietic progenitors from CML patient's bone marrows, mTORC1 inhibition also restored nilotinib sensitivity in the presence of SCF, confirming its involvement in SCF-activated survival pathway. However, this pathway seems not to be involved in the nilotinib-induced resistance of the CML stem cell population. Conversely, PI3K inhibition sensitized both CML progenitors and stem cells to nilotinib, suggesting that, downstream PI3K, two different kinase pathways are activated in CML progenitor and stem cell populations.",
+    "authors": [
+     {
+      "name": "Airiau K"
+     },
+     {
+      "name": "Mahon FX"
+     },
+     {
+      "name": "Josselin M"
+     },
+     {
+      "name": "Jeanneteau M"
+     },
+     {
+      "name": "Belloc F"
+     }
+    ],
+    "journal": "Cell death & disease",
+    "pub_date": "2013-10-03",
+    "pub_year": "2013",
+    "doi": "10.1038/cddis.2013.309",
+    "pmcid": "PMC3824646",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/24091670/",
+    "europepmc_id": "24091670",
+    "europepmc_source": "MED",
+    "cited_by_count": 59
+   },
+   {
+    "pmid": "23831022",
+    "title": "Identification of the recognition sequence and target proteins for DJ-1 protease.",
+    "abstract": "DJ-1, the product of familial Parkinson's disease gene and an oncogene, is a cysteine protease which plays a role in anti-oxidative stress reaction. In this study, we identified the recognition sequence for DJ-1 protease by using recombinant DJ-1 and a peptide library. Protease activity of DJ-1 lacking C-terminal \u03b1-helix (DJ-1\u0394H9) was stronger than that of full-sized DJ-1, and the most susceptible sequence digested by DJ-1\u0394H9 was valine-lysine-valine-alanine (VKVA) under the optimal conditions of pH 5.5 and 0 mM NaCl. Divalent ions, especially Cu\u00b2\u207a, were inhibitory to DJ-1's protease activity. c-abl oncogene 1 product (ABL1) and kinesin family member 1B (KIF1B) containing VKVA were digested by DJ-1\u0394H9.",
+    "authors": [
+     {
+      "name": "Mitsugi H"
+     },
+     {
+      "name": "Niki T"
+     },
+     {
+      "name": "Takahashi-Niki K"
+     },
+     {
+      "name": "Tanimura K"
+     },
+     {
+      "name": "Yoshizawa-Kumagaye K"
+     }
+    ],
+    "journal": "FEBS letters",
+    "pub_date": "2013-07-02",
+    "pub_year": "2013",
+    "doi": "10.1016/j.febslet.2013.06.032",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23831022/",
+    "europepmc_id": "23831022",
+    "europepmc_source": "MED",
+    "cited_by_count": 16
+   },
+   {
+    "pmid": "23666528",
+    "title": "Nilotinib reverses loss of dopamine neurons and improves motor behavior via autophagic degradation of \u03b1-synuclein in Parkinson's disease models.",
+    "abstract": "Parkinson's disease is a movement disorder characterized by death of dopaminergic substantia nigra (SN) neurons and brain accumulation of \u03b1-synuclein. The tyrosine kinase Abl is activated in neurodegeneration. Here, we show that lentiviral expression of \u03b1-synuclein in the mouse SN leads to Abl activation (phosphorylation) and lentiviral Abl expression increases \u03b1-synuclein levels, in agreement with Abl activation in PD brains. Administration of the tyrosine kinase inhibitor nilotinib decreases Abl activity and ameliorates autophagic clearance of \u03b1-synuclein in transgenic and lentiviral gene transfer models. Subcellular fractionation shows accumulation of \u03b1-synuclein and hyper-phosphorylated Tau (p-Tau) in autophagic vacuoles in \u03b1-synuclein expressing brains, but nilotinib enhances protein deposition into the lysosomes. Nilotinib is used for adult leukemia treatment and it enters the brain within US Food and Drug Administration approved doses, leading to autophagic degradation of \u03b1-synuclein, protection of SN neurons and amelioration of motor performance. These data suggest that nilotinib may be a therapeutic strategy to degrade \u03b1-synuclein in PD and other \u03b1-synucleinopathies.",
+    "authors": [
+     {
+      "name": "Hebron ML"
+     },
+     {
+      "name": "Lonskaya I"
+     },
+     {
+      "name": "Moussa CE"
+     }
+    ],
+    "journal": "Human molecular genetics",
+    "pub_date": "2013-05-10",
+    "pub_year": "2013",
+    "doi": "10.1093/hmg/ddt192",
+    "pmcid": "PMC3723316",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/23666528/",
+    "europepmc_id": "23666528",
+    "europepmc_source": "MED",
+    "cited_by_count": 271
+   },
+   {
+    "pmid": "21827214",
+    "title": "Clinical pharmacokinetics of tyrosine kinase inhibitors: focus on pyrimidines, pyridines and pyrroles.",
+    "abstract": "Pyrimidine (imatinib, dasatinib, nilotinib and pazopanib), pyridine (sorafenib) and pyrrole (sunitinib) tyrosine kinase inhibitors (TKIs) are multi-targeted TKIs with high activity towards several families of receptor and non-receptor tyrosine kinases involved in angiogenesis, tumour growth and metastatic progression of cancer. These orally administered TKIs have quite diverse characteristics with regard to absorption from the gastrointestinal tract. Absolute bioavailability in humans has been investigated only for imatinib (almost 100%) and pazopanib (14-39%; n\u2009=\u20093). On the basis of human radioactivity data, dasatinib is considered to be well absorbed after oral administration (19% and 0.1% of the total radioactivity were excreted as unchanged dasatinib in the faeces and urine, respectively). Quite low absolute bioavailability under fasted conditions is assumed for nilotinib (31%), sorafenib (50%) and sunitinib (50%). Imatinib, dasatinib and sunitinib exhibit dose-proportional increases in their area under the plasma concentration-time curve values over their therapeutic dose ranges. Less than dose-proportional increases were observed for nilotinib at doses \u2265400\u2009mg/day and for sorafenib and pazopanib at doses \u2265800\u2009mg/day. At steady state, the accumulation ratios are 1.5-2.5 (unchanged imatinib), 2.0 (nilotinib once-daily dosing), 3.4 (nilotinib twice-daily dosing), 1.2-4.5 (pazopanib), 5.7-6.4 (sorafenib) and 3.0-4.5 (sunitinib). Concomitant intake of a high-fat meal does not alter exposure to imatinib, dasatinib and sunitinib but leads to considerably increased bioavailability of nilotinib and pazopanib and decreased bioavailability of sorafenib. With the exception of pazopanib, the TKIs described here have large apparent volumes of distribution, exceeding the volume of body water by at least 4-fold. Very low penetration into the central nervous system in humans has been reported for imatinib and dasatinib, but there are currently no published human data for nilotinib, pazopanib, sorafenib or sunitinib. All TKIs that have been described are more than 90% bound to the plasma proteins: \u03b1(1)-acid glycoprotein and/or albumin. They are metabolized primarily via cytochrome P450 (CYP) 3A4, the only exception being sorafenib, for which uridine diphosphate glucuronosyltransferase 1A9 is the other main enzyme involved. Active metabolites of imatinib and sunitinib contribute to their antitumour activity. Although some patient demographics have been identified as significant co-factors that partly explain interindividual variability in exposure to TKIs, these findings have not been regarded as sufficient to recommend age-, sex-, bodyweight- or ethnicity-specific dose adjustment. Systemic exposure to imatinib, sorafenib and pazopanib increases in patients with hepatic impairment, and reduction of the initial therapeutic dose is recommended in this subpopulation. The starting dose of imatinib should also be reduced in renally impaired subjects. Because the solubility of dasatinib is pH dependent, co-administration of histamine H(2)-receptor antagonists and proton pump inhibitors with dasatinib should be avoided. With the exception of sorafenib, systemic exposure to TKIs is significantly decreased/increased by co-administration of potent CYP3A4 inducers/inhibitors, and so it is strongly recommended that the TKI dose is adjusted or that such co-administration is avoided. Caution is also recommended for co-administration of CYP3A4 substrates with TKIs, especially for those with a narrow therapeutic index. However, current recommendations with regard to dose adjustment of TKIs need to be validated in clinical studies. Further investigations are needed to explain the large interindividual variability in the pharmacokinetics of these drugs and to assess theclinical relevance of their interaction potential and inhibitory effects on metabolizing enzymes and transporters.",
+    "authors": [
+     {
+      "name": "Di Gion P"
+     },
+     {
+      "name": "Kanefendt F"
+     },
+     {
+      "name": "Lindauer A"
+     },
+     {
+      "name": "Scheffler M"
+     },
+     {
+      "name": "Doroshyenko O"
+     }
+    ],
+    "journal": "Clinical pharmacokinetics",
+    "pub_date": "2011-09-01",
+    "pub_year": "2011",
+    "doi": "10.2165/11593320-000000000-00000",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/21827214/",
+    "europepmc_id": "21827214",
+    "europepmc_source": "MED",
+    "cited_by_count": 160
+   },
+   {
+    "pmid": "20105089",
+    "title": "Safety and efficacy of nilotinib in chronic phase chronic myeloid leukemia in a patient with Wolf-Parkinson-White disease and hematological resistance after suboptimal response to imatinib at six months.",
+    "abstract": null,
+    "authors": [
+     {
+      "name": "Cannella L"
+     },
+     {
+      "name": "Breccia M"
+     },
+     {
+      "name": "Loglisci G"
+     },
+     {
+      "name": "Federico V"
+     },
+     {
+      "name": "Santopietro M"
+     }
+    ],
+    "journal": "Acta oncologica (Stockholm, Sweden)",
+    "pub_date": "2010-04-01",
+    "pub_year": "2010",
+    "doi": "10.3109/02841860903521129",
+    "pmcid": null,
+    "url": "https://pubmed.ncbi.nlm.nih.gov/20105089/",
+    "europepmc_id": "20105089",
+    "europepmc_source": "MED",
+    "cited_by_count": 0
+   }
+  ]
+ }
+}

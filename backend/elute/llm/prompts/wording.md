@@ -1,0 +1,1 @@
+Reword, for a scientist, why the given next question matters. You are handed the question, the gate and its status, the suggested experiment, and the result that would change the appraisal. One paragraph; cite the claim id; add no new facts or numbers.

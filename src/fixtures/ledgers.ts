@@ -100,7 +100,8 @@ export const parkinsonsLedger: Ledger = {
         verified: human,
       },
       records: [
-        { value: 'NCT02954978 · NILO-PD · phase 2 · n = 76 · blinded', published: '2016-11-04', source: 'nct02954978' },
+        { value: 'NCT02954978 · Georgetown phase 2 · n = 75 · blinded', published: '2016-11-04', source: 'nct02954978' },
+        { value: 'NCT03205488 · NILO-PD · phase 2 · n = 76 · blinded', published: '2017-07-02', source: 'nct03205488' },
         { value: 'Exenatide-PD (phase 2) · n = 62 · blinded', published: '2014-01-01', source: 'athauda-2017' },
         { value: 'Exenatide-PD3 · n = 194 · blinded', published: '2019-01-01', source: 'vijiaratnam-2025' },
         { value: 'STEADY-PD III · n = 336 · blinded', published: '2014-11-01', source: 'steady-pd-iii-2020' },
