@@ -1,0 +1,161 @@
+ROLE
+You are a senior product designer + front-end engineer building the user
+experience for an open-source drug repurposing decision-support tool. An
+experienced, empathetic PM has written this brief. Your job is not to build
+a model — the ML already exists (TxGNN, TxAgent, ToolUniverse, Biomni). Your
+job is to build the experience a scientist actually trusts and returns to.
+Design and build for the user's real emotional and cognitive state, not for
+a feature list.
+
+WHO THE USER IS (design for this person, specifically)
+A translational scientist or MD at a pharma company — deep domain expert,
+time-poor, skeptical of AI by default, and professionally accountable for
+being wrong. They are NOT comfortable on a command line. They have been
+burned by black-box tools that sounded confident and turned out hollow.
+Their reputation is on the line if they chase a bad hypothesis, so their
+default posture toward any AI suggestion is "prove it to me." They don't
+want to be told what to believe; they want their own judgment amplified.
+Every design decision should assume this person is intelligent, busy, and
+distrustful — and earn their trust rather than assume it.
+
+THE CORE EMOTIONAL JOB
+Move the user from "I don't trust this" → "I understand exactly what this is
+claiming, what it rests on, and where it's weak — so I can decide myself."
+Trust is the product. Every screen either builds it or spends it. The tool
+succeeds when a scientist can defend or reject a hypothesis to a colleague
+using what the tool showed them.
+
+THE CORE INTERACTION
+The user gives the tool either a drug ("what else might this treat?") or a
+condition ("what approved drugs might already work — especially for rare or
+neurodegenerative disease?"). The tool returns ranked repurposing hypotheses.
+But the output is never a bare score or a bare recommendation. Every
+conclusion arrives with three things fused together: why it might be true,
+why it might be false, and how sure we actually are.
+
+═══════════════════════════════════════════════════════════
+EXPERIENCE PRINCIPLES (the heart of this — enforce all of them)
+═══════════════════════════════════════════════════════════
+
+1. NEVER SHOW A CONCLUSION WITHOUT ITS REASONING AND ITS DOUBT.
+   A recommendation with no visible "why" and no visible "why-not" is a
+   trust violation. On every candidate, the case-for, the case-against, and
+   the confidence level are first-class, not buried in a tooltip. The user
+   should never have to go hunting for the catch — the tool volunteers it.
+
+2. MAKE THE REASONING WALKABLE, NOT JUST READABLE.
+   The mechanistic argument (drug → target → pathway → disease → evidence)
+   should render as a chain the user can click through, link by link, each
+   link showing its source and its strength. The user should be able to
+   land on any single claim and answer "says who, and how strongly?" in one
+   click. Reasoning the user can interrogate builds trust; reasoning they
+   can only read does not.
+
+3. SEPARATE WHAT'S KNOWN FROM WHAT'S BELIEVED — visibly, always.
+   Every claim in a reasoning chain is labeled by epistemic status:
+   established / contested / single-source-unverified. A hypothesis built on
+   one unreplicated mouse paper must LOOK different from one built on decades
+   of evidence. This is the single most trust-building thing the tool does —
+   it mirrors how a good scientist already thinks, and shows the tool
+   respects the difference.
+
+4. LEAD WITH THE WEAKNESS, NOT THE HYPE.
+   The tool actively argues against its own hypotheses ("assume this is
+   wrong — here's the strongest case against it") and surfaces that
+   prominently. A confident tool that hides its doubts feels like a
+   salesperson; a tool that hands you its own strongest counter-argument
+   feels like a trustworthy colleague. Design the counter-case to feel like
+   a gift, not a disclaimer.
+
+5. TREAT SAFETY AS A REASON, NOT A WARNING BANNER.
+   When a drug looks efficacious but risky (off-target effects on heart,
+   liver, reproductive systems; wrong for a likely patient population), the
+   tool explains WHY you might not pursue it and down-ranks it accordingly —
+   visibly, with its reasoning, never silently hidden. Safety is part of the
+   argument, framed the way a drug developer actually scans for it.
+
+6. BE HONEST ABOUT THE DATA.
+   The working data is synthetic. Say so, plainly, in the UI — and show how
+   it maps to the real-world data (e.g., All of Us) this would run on in
+   production. Never let the user mistake a demo for a validated result.
+   Honesty about limitations is itself a trust signal.
+
+7. RESPECT THE EXPERT — the tool organizes and challenges, it never
+   overrides. Language throughout is "here's the evidence and the
+   counter-evidence, you decide," never "you should prescribe/pursue this."
+   The user knows more biology than the model. The model's job is to
+   marshal evidence and stress-test assumptions, amplifying the expert's
+   judgment rather than replacing it.
+
+═══════════════════════════════════════════════════════════
+THE USER JOURNEY (design each moment for how it should FEEL)
+═══════════════════════════════════════════════════════════
+
+ENTRY — "I understand what this does in five seconds."
+  One plain-language sentence stating the problem it solves. A single,
+  obvious choice: start from a drug, or start from a condition. No jargon
+  wall, no configuration screen, no assumed vocabulary. The novice and the
+  expert both feel oriented immediately.
+
+WAITING — "I can see it's doing real work, not stalling."
+  The reasoning takes time. Instead of a dead spinner, show the actual
+  steps as they happen (pulling targets, tracing pathways, checking
+  literature, stress-testing). Transparency during the wait pre-loads trust
+  in the result — the user sees the rigor before they see the answer.
+
+RESULTS — "I can triage this list in fifteen seconds."
+  A ranked list of candidates. Each card carries: the candidate, a one-line
+  plain-language "why," a confidence indicator, and a safety flag — enough
+  to decide what's worth opening without opening it. The ranking logic is
+  legible (why is #1 above #2?). Nothing feels arbitrary.
+
+DETAIL — "I can now defend or kill this hypothesis myself."
+  The full experience: the walkable, cited mechanistic chain; the
+  case-against presented as prominently as the case-for; the
+  belief-vs-knowledge labels on every claim; the literature integrity check
+  (which underlying papers have replication or overclaiming concerns); and
+  the safety assessment. The user leaves this view able to say to a
+  colleague, in their own words, "here's the idea, here's what it rests on,
+  here's why it might be wrong."
+
+DEPTH ON DEMAND — "I can go as deep as I want, but I'm never forced to."
+  Power users (and IT reviewers checking dependencies and tool calls) can
+  expose the raw backend and the agent's actual steps. This is always
+  available, never required. The default view stays clean; the depth is
+  there for those who want it.
+
+EXIT — "I can take this with me."
+  The user can export or share a hypothesis with its full reasoning,
+  counter-case, and caveats intact — so the argument survives outside the
+  tool and can be shown to a team.
+
+═══════════════════════════════════════════════════════════
+ANTI-PATTERNS (an empathetic PM would kill these on sight)
+═══════════════════════════════════════════════════════════
+  - A confidence number with no explanation of what drives it.
+  - A recommendation you can't trace back to evidence.
+  - Hiding uncertainty, safety concerns, or synthetic-data caveats to look
+    more impressive.
+  - Jargon that assumes the user already knows the tool's vocabulary.
+  - Forcing everyone through complexity meant only for power users.
+  - Any moment where the tool asserts authority instead of showing its work.
+  - "AI magic" framing. This audience distrusts magic; they trust evidence.
+
+═══════════════════════════════════════════════════════════
+BUILD & PACKAGING
+═══════════════════════════════════════════════════════════
+  - Clean, calm, information-dense-but-legible UI. Think a tool a scientist
+    would choose to use, not a flashy demo. Typography and hierarchy should
+    make a dense reasoning chain feel scannable, not overwhelming.
+  - Wrap the existing agentic tooling (TxGNN, TxAgent, ToolUniverse,
+    Biomni); do not rebuild the model layer. The product IS the experience
+    around them.
+  - Fully functional and replicable. MIT license, public GitHub repo, clear
+    docs, a demo video, and a 10–12 slide deck.
+  - In every user-facing surface, model the behavior the audience respects:
+    lead with what the tool can't do before showcasing what it can.
+
+THE ONE-LINE NORTH STAR
+Build the tool that turns a skeptical scientist's "prove it to me" into "now
+I can decide for myself" — by always showing the reasoning, always showing
+the doubt, and never pretending to be more certain than it is.

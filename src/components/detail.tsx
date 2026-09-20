@@ -180,7 +180,7 @@ export function Mechanism({ candidate, cutoff, sourcesHref }: { candidate: Candi
   )
 }
 
-function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref: string }) {
+export function ClaimEvidence({ r, sourcesHref }: { r: LabelResult; sourcesHref: string }) {
   const rows: { dir: string; s: Source }[] = [
     ...r.supports.map((s) => ({ dir: 'for', s })),
     ...r.against.map((s) => ({ dir: 'against', s })),

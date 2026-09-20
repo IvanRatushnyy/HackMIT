@@ -811,3 +811,87 @@
 .paste__facts dd {
   margin: 0;
 }
+/* Pathway: the chain as a graph beside the curated diagram, fine print beneath */
+.pathway__status {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-muted);
+}
+.pathway__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+.pathway__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.pathway__graph {
+  height: 256px;
+  background: var(--color-surface);
+  border: var(--line-width) solid var(--color-line);
+}
+.pathway__claim {
+  font-size: var(--text-lg);
+  line-height: var(--line-4);
+  font-weight: var(--weight-medium);
+  max-width: var(--measure);
+}
+.pathway__plate {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.pathway__plate img {
+  display: block;
+  width: 100%;
+  height: 288px;
+  object-fit: contain;
+  object-position: center;
+  background: var(--color-surface);
+  border: var(--line-width) solid var(--color-line);
+  filter: grayscale(1) contrast(0.92) opacity(0.85);
+  transition: filter var(--duration-slow) var(--ease-out);
+}
+.pathway__plate:hover img {
+  filter: none;
+}
+.pathway__plate > p {
+  height: 288px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--line-width) dashed var(--color-line);
+  margin: 0;
+}
+.pathway__caption {
+  font-size: var(--text-xs);
+  line-height: var(--line-2);
+  color: var(--color-ink-muted);
+}
+.pathway__fine {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 136px 1fr;
+  row-gap: var(--space-xs);
+  column-gap: var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: var(--line-3);
+}
+.pathway__fine dt {
+  color: var(--color-ink-muted);
+}
+.pathway__fine dd {
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .pathway__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.pathway__graph--drawing {
+  height: 340px;
+}

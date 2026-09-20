@@ -83,6 +83,7 @@ export const provenance: Provenance = {
   summary:
     'Fixture mode · not a clinical decision tool · curated from dated public sources; draft and synthetic values are marked. Would run on Open Targets, ChEMBL, ClinicalTrials.gov, PubMed, openFDA and All of Us.',
   production_sources: [
+    'Open Targets Platform and Reactome, fetched live by the pathway panel (drug → targets → curated pathways, tractability, subcellular location; diagram export); STRING as the fallback picture',
     'Open Targets Platform (disease → target genetic evidence; identifier resolution)',
     'ChEMBL (target → approved drug, mechanism of action)',
     'PrimeKG and Reactome (mechanism paths)',

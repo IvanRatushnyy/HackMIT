@@ -110,11 +110,34 @@ export type Claim = {
   short: string // the link's caption under the label word: "inhibits ABL1"
   text: string // the full claim
   scope?: string // e.g. "in mouse models", shown after the label word
+  genes?: string[] // HGNC symbols the node stands for; lets the pathway layer match curated targets
   evidence: ClaimEvidence[]
   override?: Timeline<{ label: Label; why: string }>
 }
 
 export type Chain = { drug: string; condition: string; claims: Claim[] }
+
+// ---- Pathway drawing ------------------------------------------------------------------
+// The hypothesis drawn as biology: compartments the drug must cross, molecules, and actions.
+// Every action that is part of the hypothesis points at the chain claim that carries its evidence,
+// so its label and sources are derived, never restated. Actions without a claim are background
+// biology nobody disputes, drawn in the quiet register.
+
+export type MoleculeKind = 'drug' | 'protein' | 'process' | 'cell' | 'outcome'
+export type ActionKind = 'inhibits' | 'activates' | 'phosphorylates' | 'promotes' | 'prevents' | 'crosses' | 'improves' | 'causes'
+
+export type Compartment = { id: string; label: string }
+export type Molecule = { id: string; label: string; kind: MoleculeKind; compartment: string; at: [number, number] } // at: unit square
+export type Action = { id: string; from: string; to: string; kind: ActionKind; word: string; claim?: ClaimId; arc?: number }
+export type PathwayDrawing = { compartments: Compartment[]; molecules: Molecule[]; actions: Action[] }
+
+/** How the drug has to reach the target: the fine print under the pathway (Henry, second meeting). */
+export type Delivery = {
+  route: string // "oral"
+  compartment: string // where the target sits: "intracellular kinase; cytosol and nucleus"
+  barrier: string // "blood–brain barrier; CSF/plasma 0.53 %"
+  sources: SourceId[]
+}
 
 export type Safety = {
   severity: 'boxed' | 'warning' | 'none' // none: the label was reviewed and nothing is flagged
@@ -154,6 +177,9 @@ export type CandidateDetail = {
   condition_slug: QuerySlug
   drug_slug: QuerySlug
   mechanism: string // the one-liner on the row: "nilotinib → ABL1 → α-synuclein clearance"
+  chembl_id?: string // lets the pathway layer ask Open Targets for the drug's curated targets and pathways
+  delivery?: Delivery
+  drawing?: PathwayDrawing // the hypothesis as biology; without it the pathway panel draws the chain
   curation: 'curated' | 'draft' // draft: structurally complete, sources not yet verified by a human
   cutoffs: Cutoff[]
   sources: Source[]

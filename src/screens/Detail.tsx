@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Header } from '../components/frame'
 import { AsOfControl, BeforeTrial, Mechanism, Objections, SafetyPanel, YourCall } from '../components/detail'
+import { Pathway } from '../components/Pathway'
 import { bestEvidenceText, DriverBar, OutcomeChip } from '../components/evidence'
 import { source } from '../data/source'
 import type { CandidateDetail, Cutoff, QueryRecord } from '../data/types'
@@ -87,13 +88,16 @@ export function Detail() {
             <Objections candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
           </div>
           <div className="arrive" style={{ '--i': 2 } as React.CSSProperties}>
+            <Pathway candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
+          </div>
+          <div className="arrive" style={{ '--i': 3 } as React.CSSProperties}>
             <Mechanism candidate={c} cutoff={cutoff} sourcesHref={sourcesHref} />
           </div>
-          <div className="two arrive" style={{ '--i': 3 } as React.CSSProperties}>
+          <div className="two arrive" style={{ '--i': 4 } as React.CSSProperties}>
             <SafetyPanel candidate={c} cutoff={cutoff} />
             <BeforeTrial candidate={c} cutoff={cutoff} isToday={isToday} />
           </div>
-          <div className="arrive" style={{ '--i': 4 } as React.CSSProperties}>
+          <div className="arrive" style={{ '--i': 5 } as React.CSSProperties}>
             <YourCall candidate={c} cutoff={cutoff} query={query} exportHref={exportHref} />
           </div>
         </div>

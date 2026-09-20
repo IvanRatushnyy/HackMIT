@@ -221,6 +221,41 @@ export const nilotinib: CandidateDetail = {
   condition_slug: 'parkinsons-disease',
   drug_slug: 'nilotinib',
   mechanism: 'nilotinib → ABL1 → α-synuclein clearance',
+  chembl_id: 'CHEMBL255863',
+  delivery: {
+    route: 'oral, 150–300 mg twice daily',
+    compartment: 'intracellular kinase: cytosol and nucleus (UniProt via Open Targets)',
+    barrier: 'blood–brain barrier; CSF/plasma 0.53 % (0.23–1.5 %); P-glycoprotein substrate',
+    sources: [S.reinwald_2014, S.nilopd_pk_2020],
+  },
+  drawing: {
+    compartments: [
+      { id: 'blood', label: 'blood' },
+      { id: 'brain', label: 'brain · substantia nigra' },
+      { id: 'patient', label: 'patient' },
+    ],
+    molecules: [
+      { id: 'nilo_b', label: 'nilotinib', kind: 'drug', compartment: 'blood', at: [0.07, 0.55] },
+      { id: 'nilo_n', label: 'nilotinib', kind: 'drug', compartment: 'brain', at: [0.26, 0.55] },
+      { id: 'cabl', label: 'c-Abl', kind: 'protein', compartment: 'brain', at: [0.41, 0.55] },
+      { id: 'parkin', label: 'parkin', kind: 'protein', compartment: 'brain', at: [0.54, 0.3] },
+      { id: 'asyn', label: 'α-synuclein', kind: 'protein', compartment: 'brain', at: [0.54, 0.85] },
+      { id: 'clear', label: 'α-syn clearance', kind: 'process', compartment: 'brain', at: [0.69, 0.3] },
+      { id: 'neuron', label: 'dopaminergic neuron loss', kind: 'cell', compartment: 'brain', at: [0.72, 0.85] },
+      { id: 'decline', label: 'motor and cognitive decline', kind: 'outcome', compartment: 'patient', at: [0.93, 0.55] },
+    ],
+    actions: [
+      { id: 'a1', from: 'nilo_b', to: 'nilo_n', kind: 'crosses', word: 'crosses the barrier', claim: 'c4' },
+      { id: 'a2', from: 'nilo_n', to: 'cabl', kind: 'inhibits', word: 'inhibits', claim: 'c1' },
+      { id: 'a3', from: 'cabl', to: 'parkin', kind: 'phosphorylates', word: 'phosphorylates, inactivates', claim: 'c2' },
+      { id: 'a4', from: 'cabl', to: 'asyn', kind: 'phosphorylates', word: 'phosphorylates', claim: 'c2' },
+      { id: 'a5', from: 'parkin', to: 'clear', kind: 'promotes', word: 'promotes', claim: 'c3' },
+      { id: 'a6', from: 'clear', to: 'neuron', kind: 'prevents', word: 'prevents', claim: 'c3' },
+      { id: 'a7', from: 'asyn', to: 'neuron', kind: 'causes', word: 'aggregates, kills' },
+      { id: 'a8', from: 'neuron', to: 'decline', kind: 'causes', word: 'causes' },
+      { id: 'a9', from: 'nilo_n', to: 'decline', kind: 'improves', word: 'improves outcomes', claim: 'c5', arc: -176 },
+    ],
+  },
   curation: 'curated',
   cutoffs: [
     {
@@ -288,6 +323,7 @@ export const nilotinib: CandidateDetail = {
       {
         id: 'c1',
         node: 'ABL1',
+        genes: ['ABL1'],
         short: 'inhibits ABL1',
         text: 'Nilotinib inhibits the ABL1 kinase at clinical doses.',
         evidence: [
@@ -298,6 +334,7 @@ export const nilotinib: CandidateDetail = {
       {
         id: 'c2',
         node: 'c-Abl in PD brain',
+        genes: ['ABL1'],
         short: 'c-Abl active in PD brain',
         text: 'c-Abl is activated in the Parkinson’s brain.',
         scope: 'in postmortem tissue',
@@ -310,6 +347,7 @@ export const nilotinib: CandidateDetail = {
       {
         id: 'c3',
         node: 'α-syn clearance',
+        genes: ['SNCA', 'PRKN'],
         short: 'clears α-syn in mice',
         text: 'Inhibiting c-Abl clears α-synuclein and protects dopamine neurons.',
         scope: 'in mouse models',
